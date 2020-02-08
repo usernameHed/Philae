@@ -39,6 +39,8 @@ namespace philae.gravity.attractor
         private Vector3 _oldScale = new Vector3(-1, -1, -1);
 
         public Vector3 Position { get { return (transform.position); } }
+        public Quaternion Rotation { get { return (transform.rotation); } }
+        public Vector3 LocalScale { get { return (transform.localScale); } }
 
         /// <summary>
         /// CALLED ONLY when creating the attractor from editor, NEVER AFTER
@@ -59,7 +61,7 @@ namespace philae.gravity.attractor
         {
             for (int i = 0; i < _attractorListerLogic.Count; i++)
             {
-                _attractorListerLogic[i].Lister.AddAttractor(this);
+                _attractorListerLogic[i]?.Lister?.AddAttractor(this);
             }
         }
 
@@ -67,7 +69,7 @@ namespace philae.gravity.attractor
         {
             for (int i = 0; i < _attractorListerLogic.Count; i++)
             {
-                _attractorListerLogic[i].Lister.RemoveAttractor(this);
+                _attractorListerLogic[i]?.Lister?.RemoveAttractor(this);
             }
         }
 

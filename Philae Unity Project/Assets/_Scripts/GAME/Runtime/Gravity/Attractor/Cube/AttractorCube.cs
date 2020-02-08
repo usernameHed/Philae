@@ -18,22 +18,25 @@ namespace philae.gravity.attractor
         {
             base.InitOnCreation(attractorListerLogic);
             Debug.Log("here init always ?");
+            _cube = new ExtCube(Position, Rotation, LocalScale);
         }
 
         public override Vector3 GetClosestPoint(Graviton graviton, out bool canApplyGravity)
         {
-            canApplyGravity = false;
-            return (Vector3.zero);
+            Vector3 closestPoint = _cube.GetClosestPoint(graviton.Position);
+            canApplyGravity = true;
+            return (closestPoint);
         }
 
         public override void Move()
         {
-
+            _cube.MoveSphape(Position, Rotation, LocalScale);
         }
 
 #if UNITY_EDITOR
         protected override void DrawRange(Color color)
         {
+            _cube.Draw(color);
             //ExtDrawGuizmos.DebugWireSphere(transform.position, Color.gray, _sphere.Radius);
             ExtDrawGuizmos.DebugWireSphere(Position, color, _maxRangeWithScale);
         }

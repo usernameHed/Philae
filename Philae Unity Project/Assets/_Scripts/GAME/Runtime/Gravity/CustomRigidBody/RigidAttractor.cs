@@ -10,12 +10,6 @@ namespace philae.gravity.physicsBody
     [ExecuteInEditMode]
     public class RigidAttractor : PhysicBody
     {
-        [SerializeField]
-        private FmodEventEmitter _impact;
 
-        private void OnCollisionEnter(Collision collision)
-        {
-            SoundManager.Instance.PlaySound(_impact);
-        }
     }
 }

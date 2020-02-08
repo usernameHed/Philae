@@ -30,7 +30,7 @@ namespace philae.gravity.attractor.logic
         {
             foreach (Attractor attractor in _attractorLister)
             {
-                attractor.CustomUpdateIfCanMove();
+                attractor?.CustomUpdateIfCanMove();
             }
         }
     }

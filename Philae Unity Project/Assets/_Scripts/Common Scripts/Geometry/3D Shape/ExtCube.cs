@@ -22,6 +22,14 @@ namespace hedCommon.geometry.shape3d
         private Vector3 _p7;
         private Vector3 _p8;
 
+        private Vector3 _vx;
+        private Vector3 _vy;
+        private Vector3 _vz;
+
+        private float _vxSquared;
+        private float _vySquared;
+        private float _vzSquared;
+
 
         public ExtCube(Vector3 position, Quaternion rotation, Vector3 localScale) : this()
         {
@@ -47,6 +55,14 @@ namespace hedCommon.geometry.shape3d
             _p6 = _cubeMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(-size.x, size.y, size.z) * 0.5f));
             _p7 = _cubeMatrix.MultiplyPoint3x4(Vector3.zero + ((size) * 0.5f));
             _p8 = _cubeMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(size.x, size.y, -size.z) * 0.5f));
+
+            _vx = (_p4 - _p1);
+            _vy = (_p5 - _p1);
+            _vz = (_p2 - _p1);
+
+            _vxSquared = _vx.LengthSquared();
+            _vySquared = _vy.LengthSquared();
+            _vzSquared = _vz.LengthSquared();
         }
 
         public void Draw(Color color)
@@ -92,21 +108,17 @@ namespace hedCommon.geometry.shape3d
             }
 #endif
 
-            Vector3 u = _p1 - _p2;
-            Vector3 v = _p1 - _p4;
-            Vector3 w = _p1 - _p5;
-
-            float ux = ExtVector3.DotProduct(u, x);
-            float vx = ExtVector3.DotProduct(v, x);
-            float wx = ExtVector3.DotProduct(w, x);
+            float ux = ExtVector3.DotProduct(-_vz, x);
+            float vx = ExtVector3.DotProduct(-_vx, x);
+            float wx = ExtVector3.DotProduct(-_vy, x);
 
 
-            float uP1 = ExtVector3.DotProduct(u, _p1);
-            float uP2 = ExtVector3.DotProduct(u, _p2);
-            float vP1 = ExtVector3.DotProduct(v, _p1);
-            float vP4 = ExtVector3.DotProduct(v, _p4);
-            float wP1 = ExtVector3.DotProduct(w, _p1);
-            float wP5 = ExtVector3.DotProduct(w, _p5);
+            float uP1 = ExtVector3.DotProduct(-_vz, _p1);
+            float uP2 = ExtVector3.DotProduct(-_vz, _p2);
+            float vP1 = ExtVector3.DotProduct(-_vx, _p1);
+            float vP4 = ExtVector3.DotProduct(-_vx, _p4);
+            float wP1 = ExtVector3.DotProduct(-_vy, _p1);
+            float wP5 = ExtVector3.DotProduct(-_vy, _p5);
 
             bool isUBetween = ux.IsBetween(uP2, uP1);
             bool isVBetween = vx.IsBetween(vP4, vP1);
@@ -114,6 +126,33 @@ namespace hedCommon.geometry.shape3d
 
             bool isInside = isUBetween && isVBetween && isWBetween;
             return (isInside);
+        }
+
+        /// <summary>
+        /// Return the closest point on the surface of the cube, from a given point x
+        /// 
+        ///      6 - 7
+        ///    /   /
+        ///  5 - 8
+        /// 
+        ///     2 - 3
+        ///   /   /
+        ///  1 - 4
+        ///  
+        /// </summary>
+        public Vector3 GetClosestPoint(Vector3 x)
+        {
+            float tx = ExtVector3.DotProduct(x - _p1, _vx) / _vxSquared;
+            float ty = ExtVector3.DotProduct(x - _p1, _vy) / _vySquared;
+            float tz = ExtVector3.DotProduct(x - _p1, _vz) / _vzSquared;
+
+            tx = tx < 0 ? 0 : tx > 1 ? 1 : tx;
+            ty = ty < 0 ? 0 : ty > 1 ? 1 : ty;
+            tz = tz < 0 ? 0 : tz > 1 ? 1 : tz;
+
+            Vector3 closestPoint = tx * _vx + ty * _vy + tz * _vz + _p1;
+
+            return (closestPoint);
         }
 
         //Returns true if a line segment (made up of linePoint1 and linePoint2) is fully or partially in a rectangle

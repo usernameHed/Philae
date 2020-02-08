@@ -389,6 +389,11 @@ namespace hedCommon.extension.runtime
             return (a.x * b.x + a.y * b.y + a.z * b.z);
         }
 
+        public static float LengthSquared(this Vector3 a)
+        {
+            return (DotProduct(a, a));
+        }
+
         //This function calculates a signed (+ or - sign instead of being ambiguous) dot product. It is basically used
         //to figure out whether a vector is positioned to the left or right of another vector. The way this is done is
         //by calculating a vector perpendicular to one of the vectors and using that as a reference. This is because
