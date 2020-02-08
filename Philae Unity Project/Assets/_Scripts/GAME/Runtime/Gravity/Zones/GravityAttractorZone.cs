@@ -76,6 +76,7 @@ namespace philae.gravity.zones
             }
         }
 
+        [Button]
         public void Init(ZonesLister zonesLister)
         {
             if (_scalerZoneReference == null)

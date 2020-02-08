@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5416466520114392404}
   - component: {fileID: 4565394342054342756}
   - component: {fileID: 944002704061009675}
+  - component: {fileID: 1235414961}
   m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5416466520114392403}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 135.73999, y: 0, z: -14.130001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -63,11 +64,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SettingsGlobal: {fileID: 11400000, guid: 8a8d77476a1cbc842b42150b078f9f26, type: 2}
   SettingsLocal:
-    Gravity: 9.81
+    Gravity: 5.27
     AddMinRange: 0
     AddMaxRange: 0
     MinRange: 0
-    MaxRange: 100
+    MaxRange: 0
     IsKinematic: 1
   _rigidAttractor: {fileID: 4565394342054342756}
   _parent: {fileID: 0}
@@ -94,8 +95,10 @@ MonoBehaviour:
     ConstrainY: 0
     ConstrainZ: 0
   _velocityVector: {x: 0, y: 0, z: 0}
+  _lastVelocityVector: {x: 0, y: 0, z: 0}
   _rigidbody: {fileID: 944002704061009675}
   _initialPush: {fileID: 0}
+  _impact: {fileID: 0}
 --- !u!54 &944002704061009675
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -112,3 +115,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 0
+--- !u!114 &1235414961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5416466520114392403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d4ee8f6c1b59749bdd2da154dc81fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sleepThreshold: 0.005
+  _solverIteration: 6
+  _maxDepenetrationVelocity: 9999
+  _centerOfMassChanged: 0
+  _defaultCenterOfMass: {x: 0, y: 0, z: 0}

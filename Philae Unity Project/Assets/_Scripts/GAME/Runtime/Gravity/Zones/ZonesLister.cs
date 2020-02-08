@@ -20,18 +20,6 @@ namespace philae.gravity.zones
         [SerializeField, ReadOnly]
         private List<GravityAttractorZone> _zones = new List<GravityAttractorZone>(100);
 
-        /*
-        public void OnLoadedSceneEditor()
-        {
-            Init();
-        }
-
-        public void OnCompile()
-        {
-            Init();
-        }
-        */
-
         [Button]
         public void Init()
         {

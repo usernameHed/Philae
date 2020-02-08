@@ -69,12 +69,10 @@ namespace philae.gravity.attractor.logic
                 {
                     jetPackApplied = true;
                     _cachedForceInformation.ForceJetPack = graviton.GravitonJetPack.ForceJetPack(_cachedForceInformation.SquaredDist);
-                    _cachedForceInformation.ForceAccelerationInsideJetPack = graviton.GravitonJetPack.ForceAcceleration(graviton.GetAccelerationNormalized, _cachedForceInformation.NormalizedDirection);
                 }
                 else
                 {
                     _cachedForceInformation.ForceJetPack = 0;
-                    _cachedForceInformation.ForceAccelerationInsideJetPack = Vector3.zero;
                 }
                 
                 ForceToFill[currentIndex] = _cachedForceInformation;

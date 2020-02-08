@@ -16,4 +16,4 @@ MonoBehaviour:
   ConstrainPosition:
     ConstrainX: 0
     ConstrainY: 0
-    ConstrainZ: 1
+    ConstrainZ: 0

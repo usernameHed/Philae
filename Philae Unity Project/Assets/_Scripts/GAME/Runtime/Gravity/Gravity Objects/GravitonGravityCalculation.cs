@@ -37,9 +37,8 @@ namespace philae.gravity.graviton
 
             public bool CanApplyJetPack;
             public float ForceJetPack;
-            public Vector3 ForceAccelerationInsideJetPack;
 
-            public AttractorInformation(Vector3 point, float gravity, float squaredDist, Vector3 normalizedDirection, bool isCloseEnoughforJetPack, float forceJetPack, Vector3 forceAccelerationInsideJetPack)
+            public AttractorInformation(Vector3 point, float gravity, float squaredDist, Vector3 normalizedDirection, bool isCloseEnoughforJetPack, float forceJetPack)
             {
                 PointOfAttraction = point;
                 Gravity = gravity;
@@ -47,14 +46,12 @@ namespace philae.gravity.graviton
                 NormalizedDirection = normalizedDirection;
                 CanApplyJetPack = isCloseEnoughforJetPack;
                 ForceJetPack = forceJetPack;
-                ForceAccelerationInsideJetPack = forceAccelerationInsideJetPack;
             }
         }
 
         public AttractorInformation[] AttractorForces = new AttractorInformation[MAX_ATTRACTOR_ON_GRAVITON_PER_FRAME];
         private float[] ForceAmount = new float[MAX_ATTRACTOR_ON_GRAVITON_PER_FRAME];
         private float[] ForceJetPackAmount = new float[MAX_ATTRACTOR_ON_GRAVITON_PER_FRAME];
-        private float[] ForceAccelerationAmount = new float[MAX_ATTRACTOR_ON_GRAVITON_PER_FRAME];
         private int _closestAttractorIndex = -1;
         private int _lastIndex = -1;
         public int LastIndex { get { return (_lastIndex); } }
@@ -131,13 +128,6 @@ namespace philae.gravity.graviton
             Vector3 forceJetPack = AttractorForces[_closestAttractorIndex].NormalizedDirection * forceJetPackAmount;
             sumForce += forceJetPack;
 
-            if (_graviton.SettingsLocal.DoAcceleration)
-            {
-                ForceAccelerationAmount[_closestAttractorIndex] = -forceJetPackAmount * _graviton.SettingsLocal.AccelerationForceOnLowGravity;
-                Vector3 additionalForce = AttractorForces[_closestAttractorIndex].ForceAccelerationInsideJetPack * ForceAccelerationAmount[_closestAttractorIndex];
-                sumForce += additionalForce;
-            }
-
             for (int i = 0; i < _lastIndex; i++)
             {
                 if (i == _closestAttractorIndex)
@@ -159,13 +149,6 @@ namespace philae.gravity.graviton
                 forceJetPackAmount = _graviton.SettingsLocal.Mass * ForceJetPackAmount[i];
                 forceJetPack = AttractorForces[i].NormalizedDirection * forceJetPackAmount;
 
-                if (_graviton.SettingsLocal.DoAcceleration)
-                {
-                    ForceAccelerationAmount[i] = -forceJetPackAmount * _graviton.SettingsLocal.AccelerationForceOnLowGravity;
-                    Vector3 additionalForce = AttractorForces[i].ForceAccelerationInsideJetPack * ForceAccelerationAmount[i];
-                    sumForce += additionalForce;
-                }
-
                 sumForce += forceAttraction;
                 sumForce += forceJetPack;
             }
@@ -186,10 +169,6 @@ namespace philae.gravity.graviton
                 Debug.DrawLine(_graviton.Position, AttractorForces[i].PointOfAttraction, Color.blue);
                 ExtDrawGuizmos.DrawArrow(_graviton.Position, AttractorForces[i].NormalizedDirection * ForceAmount[i], Color.white);
                 ExtDrawGuizmos.DrawArrow(_graviton.Position, AttractorForces[i].NormalizedDirection * ForceJetPackAmount[i], Color.cyan);
-                if (_graviton.SettingsLocal.DoAcceleration)
-                {
-                    ExtDrawGuizmos.DrawArrow(_graviton.Position, AttractorForces[i].ForceAccelerationInsideJetPack * ForceAccelerationAmount[i], Color.yellow);
-                }
             }
             ExtDrawGuizmos.DrawArrow(_graviton.Position, _currentGravityVector, Color.green);
         }

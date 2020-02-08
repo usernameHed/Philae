@@ -7,7 +7,6 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static philae.gravity.graviton.GravitonGravityCalculation;
 
 namespace philae.gravity.graviton
 {
@@ -46,15 +45,11 @@ namespace philae.gravity.graviton
             {
                 if (isInJetPack && !_isInJetPack)
                 {
-                    //Debug.Log("play sound here");
                     _isInJetPack = true;
-                    //SoundManager.Instance.PlaySound(GravityIn);
                 }
                 else if (!isInJetPack && _isInJetPack)
                 {
-                    //Debug.Log("out");
                     _isInJetPack = false;
-                    //SoundManager.Instance.PlaySound(GravityIn, false);
                 }
             }
         }
@@ -64,10 +59,7 @@ namespace philae.gravity.graviton
             float squaredRadius = _gravitonSettingsLocal.RadiusJetPack * _gravitonSettingsLocal.RadiusJetPack;
             float currentDistDifference = squaredDist - squaredRadius;
 
-            //return (basicRepulsion + inverseDistance/*  * currentDistDifference * currentDistDifference*/);
-            float force = (_gravitonSettingsLocal.JetPackMultiply) ?
-                _gravitonSettingsLocal.JetPackForce * currentDistDifference
-                : -_gravitonSettingsLocal.JetPackForce + currentDistDifference;
+            float force = _gravitonSettingsLocal.JetPackForce * currentDistDifference;
             force *= _gravitonSettingsLocal.Mass;
             return (force);
         }
@@ -96,10 +88,7 @@ namespace philae.gravity.graviton
 
         private void OnDestroy()
         {
-            if (SoundManager.Instance)
-            {
-                SoundManager.Instance.PlaySound(GravityIn, false);
-            }
+
         }
     }
 }

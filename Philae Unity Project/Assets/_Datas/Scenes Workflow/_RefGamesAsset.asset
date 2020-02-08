@@ -14,8 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _listSceneToLoad:
   - {fileID: 11400000, guid: 6fb122ff03efb9d49aa4a986b3fa2616, type: 2}
-  - {fileID: 11400000, guid: 7baf394fca738934ba84c63f3dc43c6c, type: 2}
-  - {fileID: 11400000, guid: be29026dba8638a4e9911653aabd1e70, type: 2}
-  - {fileID: 11400000, guid: 9a061a422d936454ab6fa1077269abe4, type: 2}
-  - {fileID: 11400000, guid: 6f84005d60de4e84597d18cce954f4ec, type: 2}
-  LastIndexUsed: 4
+  LastIndexUsed: 0

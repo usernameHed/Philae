@@ -36,10 +36,6 @@ namespace philae.data.gravity
         //jetPack
         public float RadiusJetPack = 3f;
         public float JetPackForce = 1f;
-        public bool JetPackMultiply = true;
-
-        public bool DoAcceleration = true;
-        public float AccelerationForceOnLowGravity = 1f;
 
         //max speed
         public float MaxSpeed = 10f;

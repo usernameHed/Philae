@@ -116,8 +116,8 @@ GameObject:
   - component: {fileID: 8085158086894689177}
   - component: {fileID: 2306671404111087987}
   - component: {fileID: 7340676147351111003}
-  - component: {fileID: 6454295260858406821}
   - component: {fileID: 800585259919288106}
+  - component: {fileID: 6718862725474836749}
   m_Layer: 11
   m_Name: Sphere
   m_TagString: Untagged
@@ -178,12 +178,13 @@ MonoBehaviour:
   _rigidAttractor: {fileID: 2306671404111087987}
   _parent: {fileID: 0}
   _attractorListerLogic: {fileID: 0}
-  _minRangeWithScale: 0
-  _maxRangeWithScale: 0
-  _gravitonsInside: []
+  _minRangeWithScale: 0.5
+  _maxRangeWithScale: 0.5
+  _gravitonsInside:
+  - {fileID: 0}
   _sphere:
-    Radius: 1
-    Position: {x: 0, y: 0, z: 0}
+    Radius: 0.5
+    Position: {x: -6.96, y: 15.95, z: 0}
 --- !u!33 &6694344886706845968
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -265,26 +266,10 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 8
+  m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6454295260858406821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7820571223686434274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee594e099357e5a42861caf9f63a4ecf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _constrains:
-    ConstrainX: 0
-    ConstrainY: 0
-    ConstrainZ: 1
 --- !u!135 &800585259919288106
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -298,3 +283,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6718862725474836749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7820571223686434274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d4ee8f6c1b59749bdd2da154dc81fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sleepThreshold: 0.005
+  _solverIteration: 6
+  _maxDepenetrationVelocity: 9999
+  _centerOfMassChanged: 0
+  _defaultCenterOfMass: {x: 0, y: 0, z: 0}

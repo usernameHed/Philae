@@ -16,27 +16,27 @@ namespace philae.editor.extension.zone
         [MenuItem("GameObject/Philae/Zone/Sphere", false, -1)]
         private static void ZoneSphere()
         {
-            CreateZone(ZoneSettingsLocal.Shape.SPHERE);
+            CreateZone("Zone Sphere");
         }
         [MenuItem("GameObject/Philae/Zone/Cube", false, -1)]
         private static void ZoneCube()
         {
-            CreateZone(ZoneSettingsLocal.Shape.CUBE);
+            CreateZone("Zone Cube");
         }
         [MenuItem("GameObject/Philae/Zone/Cylinder", false, -1)]
         private static void ZoneCylinder()
         {
-            CreateZone(ZoneSettingsLocal.Shape.CYLINDER);
+            CreateZone("Zone Cylindre");
         }
         [MenuItem("GameObject/Philae/Zone/Capsule", false, -1)]
         private static void ZoneCapsule()
         {
-            CreateZone(ZoneSettingsLocal.Shape.CAPSULE);
+            CreateZone("Zone Capsule");
         }
 
-        private static void CreateZone(ZoneSettingsLocal.Shape shape)
+        private static void CreateZone(string zoneName)
         {
-            GameObject instance = ExtPrefabsEditor.InstantiatePrefabsFromAssetPrefabPath("Zone/Zone Gravity");
+            GameObject instance = ExtPrefabsEditor.InstantiatePrefabsWithLinkFromAssetPrefabPath("Zone/" + zoneName);
 
             GravityAttractorZone zone = instance.GetComponent<GravityAttractorZone>();
             zone.GetScalerZoneReference.gameObject.hideFlags = HideFlags.NotEditable;
@@ -49,9 +49,8 @@ namespace philae.editor.extension.zone
             hiddedTools.ColorText = Color.yellow;
             hiddedTools.HideHandle = true;
 
-            zone.Init(ZonesLister.Instance);
-            zone.ShapeZone = shape;
-
+            //zone.Init(ZonesLister.Instance);
+            //zone.ShapeZone = shape
 
             ZonesLister.Instance.Init();
         }
