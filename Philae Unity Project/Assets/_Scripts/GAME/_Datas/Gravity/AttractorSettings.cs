@@ -30,9 +30,9 @@ namespace philae.data.gravity
         [OnValueChanged("OnAddMaxRangeChanged")]
         public bool AddMaxRange = false;
 
-        [OnValueChanged("OnMinRangeChanged"), Range(0, 100), ShowIf("AddMinRange")]
+        [OnValueChanged("OnMinRangeChanged"), Range(0, 10), ShowIf("AddMinRange")]
         public float MinRange = 0f;
-        [OnValueChanged("OnMaxRangeChanged"), Range(0, 100), ShowIf("AddMaxRange")]
+        [OnValueChanged("OnMaxRangeChanged"), Range(0, 10), ShowIf("AddMaxRange")]
         public float MaxRange = 0f;
         [OnValueChanged("OnKinematicChange")]
         public bool IsKinematic = true;

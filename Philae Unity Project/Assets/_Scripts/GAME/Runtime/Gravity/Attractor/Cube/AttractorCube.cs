@@ -24,8 +24,12 @@ namespace philae.gravity.attractor
         public override Vector3 GetClosestPoint(Graviton graviton, out bool canApplyGravity)
         {
             Vector3 closestPoint = _cube.GetClosestPoint(graviton.Position);
-            canApplyGravity = true;
-            return (closestPoint);
+
+            Vector3 position = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
+            canApplyGravity = !outOfRange;
+            AddOrRemoveGravitonFromList(graviton, canApplyGravity);
+
+            return (position);
         }
 
         public override void Move()
@@ -37,8 +41,8 @@ namespace philae.gravity.attractor
         protected override void DrawRange(Color color)
         {
             _cube.Draw(color);
-            //ExtDrawGuizmos.DebugWireSphere(transform.position, Color.gray, _sphere.Radius);
-            ExtDrawGuizmos.DebugWireSphere(Position, color, _maxRangeWithScale);
+            _cube.DrawWithExtraSize(Color.gray, new Vector3(_minRangeWithScale, _minRangeWithScale, _minRangeWithScale));
+            _cube.DrawWithExtraSize(color, new Vector3(_maxRangeWithScale, _maxRangeWithScale, _maxRangeWithScale));
         }
 #endif
     }

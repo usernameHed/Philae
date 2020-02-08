@@ -22,13 +22,20 @@ namespace hedCommon.geometry.shape3d
         private Vector3 _p7;
         private Vector3 _p8;
 
-        private Vector3 _vx;
-        private Vector3 _vy;
-        private Vector3 _vz;
+        private Vector3 _v41;
+        private Vector3 _v51;
+        private Vector3 _v21;
 
-        private float _vxSquared;
-        private float _vySquared;
-        private float _vzSquared;
+        private float _v41Squared;
+        private float _v51Squared;
+        private float _v21Squared;
+
+        private float _uP1;
+        private float _uP2;
+        private float _vP1;
+        private float _vP4;
+        private float _wP1;
+        private float _wP5;
 
 
         public ExtCube(Vector3 position, Quaternion rotation, Vector3 localScale) : this()
@@ -40,6 +47,13 @@ namespace hedCommon.geometry.shape3d
             UpdateMatrix();
         }
 
+        ///      6 - 7
+        ///    /   /
+        ///  5 - 8
+        /// 
+        ///     2 - 3
+        ///   /   /
+        ///  1 - 4
         private void UpdateMatrix()
         {
             _cubeMatrix = ExtMatrix.GetMatrixTRS(_position, _rotation, _localScale);
@@ -56,19 +70,46 @@ namespace hedCommon.geometry.shape3d
             _p7 = _cubeMatrix.MultiplyPoint3x4(Vector3.zero + ((size) * 0.5f));
             _p8 = _cubeMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(size.x, size.y, -size.z) * 0.5f));
 
-            _vx = (_p4 - _p1);
-            _vy = (_p5 - _p1);
-            _vz = (_p2 - _p1);
+            _v41 = (_p4 - _p1);
+            _v21 = (_p2 - _p1);
+            _v51 = (_p5 - _p1);
 
-            _vxSquared = _vx.LengthSquared();
-            _vySquared = _vy.LengthSquared();
-            _vzSquared = _vz.LengthSquared();
+            _v41Squared = _v41.LengthSquared();
+            _v21Squared = _v21.LengthSquared();
+            _v51Squared = _v51.LengthSquared();
+
+            _uP1 = ExtVector3.DotProduct(-_v21, _p1);
+            _uP2 = ExtVector3.DotProduct(-_v21, _p2);
+            _vP1 = ExtVector3.DotProduct(-_v41, _p1);
+            _vP4 = ExtVector3.DotProduct(-_v41, _p4);
+            _wP1 = ExtVector3.DotProduct(-_v51, _p1);
+            _wP5 = ExtVector3.DotProduct(-_v51, _p5);
         }
 
         public void Draw(Color color)
         {
 #if UNITY_EDITOR
             ExtDrawGuizmos.DrawLocalCube(_p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8, color);
+#endif
+        }
+
+        public void DrawWithExtraSize(Color color, Vector3 extraSize)
+        {
+            Matrix4x4 cubeMatrix = ExtMatrix.GetMatrixTRS(_position, _rotation, _localScale + extraSize);
+
+            Vector3 size = Vector3.one;
+
+            Vector3 p1 = cubeMatrix.MultiplyPoint3x4(Vector3.zero + ((-size) * 0.5f));
+            Vector3 p2 = cubeMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(-size.x, -size.y, size.z) * 0.5f));
+            Vector3 p3 = cubeMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(size.x, -size.y, size.z) * 0.5f));
+            Vector3 p4 = cubeMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(size.x, -size.y, -size.z) * 0.5f));
+
+            Vector3 p5 = cubeMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(-size.x, size.y, -size.z) * 0.5f));
+            Vector3 p6 = cubeMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(-size.x, size.y, size.z) * 0.5f));
+            Vector3 p7 = cubeMatrix.MultiplyPoint3x4(Vector3.zero + ((size) * 0.5f));
+            Vector3 p8 = cubeMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(size.x, size.y, -size.z) * 0.5f));
+#if UNITY_EDITOR
+            ExtDrawGuizmos.DrawLocalCube(p1, p2, p3, p4, p5, p6, p7, p8, color);
 #endif
         }
 
@@ -108,21 +149,13 @@ namespace hedCommon.geometry.shape3d
             }
 #endif
 
-            float ux = ExtVector3.DotProduct(-_vz, x);
-            float vx = ExtVector3.DotProduct(-_vx, x);
-            float wx = ExtVector3.DotProduct(-_vy, x);
+            float ux = ExtVector3.DotProduct(-_v21, x);
+            float vx = ExtVector3.DotProduct(-_v41, x);
+            float wx = ExtVector3.DotProduct(-_v51, x);
 
-
-            float uP1 = ExtVector3.DotProduct(-_vz, _p1);
-            float uP2 = ExtVector3.DotProduct(-_vz, _p2);
-            float vP1 = ExtVector3.DotProduct(-_vx, _p1);
-            float vP4 = ExtVector3.DotProduct(-_vx, _p4);
-            float wP1 = ExtVector3.DotProduct(-_vy, _p1);
-            float wP5 = ExtVector3.DotProduct(-_vy, _p5);
-
-            bool isUBetween = ux.IsBetween(uP2, uP1);
-            bool isVBetween = vx.IsBetween(vP4, vP1);
-            bool isWBetween = wx.IsBetween(wP5, wP1);
+            bool isUBetween = ux.IsBetween(_uP2, _uP1);
+            bool isVBetween = vx.IsBetween(_vP4, _vP1);
+            bool isWBetween = wx.IsBetween(_wP5, _wP1);
 
             bool isInside = isUBetween && isVBetween && isWBetween;
             return (isInside);
@@ -142,15 +175,15 @@ namespace hedCommon.geometry.shape3d
         /// </summary>
         public Vector3 GetClosestPoint(Vector3 x)
         {
-            float tx = ExtVector3.DotProduct(x - _p1, _vx) / _vxSquared;
-            float ty = ExtVector3.DotProduct(x - _p1, _vy) / _vySquared;
-            float tz = ExtVector3.DotProduct(x - _p1, _vz) / _vzSquared;
+            float tx = ExtVector3.DotProduct(x - _p1, _v41) / _v41Squared;
+            float ty = ExtVector3.DotProduct(x - _p1, _v51) / _v51Squared;
+            float tz = ExtVector3.DotProduct(x - _p1, _v21) / _v21Squared;
 
             tx = tx < 0 ? 0 : tx > 1 ? 1 : tx;
             ty = ty < 0 ? 0 : ty > 1 ? 1 : ty;
             tz = tz < 0 ? 0 : tz > 1 ? 1 : tz;
 
-            Vector3 closestPoint = tx * _vx + ty * _vy + tz * _vz + _p1;
+            Vector3 closestPoint = tx * _v41 + ty * _v51 + tz * _v21 + _p1;
 
             return (closestPoint);
         }
@@ -163,11 +196,11 @@ namespace hedCommon.geometry.shape3d
             bool pointAInside = false;
             bool pointBInside = false;
 
-            pointAInside = IsPointInRectangle(linePoint1, rectA, rectC, rectB, rectD);
+            pointAInside = IsPointIn2DRectangle(linePoint1, rectA, rectC, rectB, rectD);
 
             if (!pointAInside)
             {
-                pointBInside = IsPointInRectangle(linePoint2, rectA, rectC, rectB, rectD);
+                pointBInside = IsPointIn2DRectangle(linePoint2, rectA, rectC, rectB, rectD);
             }
 
             //none of the points are inside, so check if a line is crossing
@@ -195,7 +228,7 @@ namespace hedCommon.geometry.shape3d
 
         //Returns true if "point" is in a rectangle mad up of RectA to RectD. The line point is assumed to be on the same 
         //plane as the rectangle. If the point is not on the plane, use ProjectPointOnPlane() first.
-        public static bool IsPointInRectangle(Vector3 point, Vector3 rectA, Vector3 rectC, Vector3 rectB, Vector3 rectD)
+        public static bool IsPointIn2DRectangle(Vector3 point, Vector3 rectA, Vector3 rectC, Vector3 rectB, Vector3 rectD)
         {
             Vector3 vector;
             Vector3 linePoint;

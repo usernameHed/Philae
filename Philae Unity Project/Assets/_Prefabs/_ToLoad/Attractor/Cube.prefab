@@ -68,7 +68,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SettingsGlobal: {fileID: 11400000, guid: 8a8d77476a1cbc842b42150b078f9f26, type: 2}
   SettingsLocal:
-    Gravity: 5.27
+    Gravity: 9.81
     AddMinRange: 0
     AddMaxRange: 0
     MinRange: 0
@@ -79,7 +79,8 @@ MonoBehaviour:
   - {fileID: 0}
   _minRangeWithScale: 0
   _maxRangeWithScale: 0
-  _gravitonsInside: []
+  _gravitonsInside:
+  - {fileID: 0}
 --- !u!114 &4565394342054342756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,7 +103,6 @@ MonoBehaviour:
   _lastVelocityVector: {x: 0, y: 0, z: 0}
   _rigidbody: {fileID: 944002704061009675}
   _initialPush: {fileID: 0}
-  _impact: {fileID: 0}
 --- !u!54 &944002704061009675
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -161,7 +161,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 912ccffde6865ab4194b9cb2748becc7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
