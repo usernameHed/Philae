@@ -28,14 +28,19 @@ namespace philae.gravity.attractor.logic
         public void AddAttractor(Attractor attractor)
         {
             bool added = _attractors.AddIfNotContain(attractor);
-
-            Debug.Log("add: " + attractor + "(" + added + ")", attractor);
+            if (added)
+            {
+                Debug.Log("add: " + attractor + "(" + added + ")", attractor);
+            }
         }
 
         public void RemoveAttractor(Attractor attractor)
         {
-            Debug.Log("remove: " + attractor, attractor);
-            _attractors.Remove(attractor);
+            bool removed = _attractors.Remove(attractor);
+            if (removed)
+            {
+                Debug.Log("remove: " + attractor, attractor);
+            }
         }
 
         public IEnumerator<Attractor> GetEnumerator()

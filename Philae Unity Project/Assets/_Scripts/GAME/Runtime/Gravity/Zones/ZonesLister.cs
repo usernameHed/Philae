@@ -1,6 +1,8 @@
 ﻿using hedCommon.extension.runtime;
 using hedCommon.singletons;
 using philae.data.gravity;
+using philae.gravity.attractor;
+using philae.gravity.attractor.logic;
 using philae.gravity.graviton;
 using Sirenix.OdinInspector;
 using System.Collections;
@@ -19,6 +21,8 @@ namespace philae.gravity.zones
         private List<GravityAttractorZone> _zonesAddidive = new List<GravityAttractorZone>(50);
         [SerializeField, ReadOnly]
         private List<GravityAttractorZone> _zones = new List<GravityAttractorZone>(100);
+
+        private List<AttractorListerLogic> _cachedAttractors = new List<AttractorListerLogic>(100);
 
         [Button]
         public void Init()
@@ -134,6 +138,24 @@ namespace philae.gravity.zones
             }
 
             return (isInsideAZone);
+        }
+
+        public List<AttractorListerLogic> GetZonesInWichAttractorIs(Attractor attractor)
+        {
+            _cachedAttractors.Clear();
+            for (int i = 0; i < _zones.Count; i++)
+            {
+                if (IsPointIsInsideZone(_zones[i], attractor.Position))
+                {
+                    _cachedAttractors.Add(_zones[i].AttractorLogic);
+                }
+            }
+            return (_cachedAttractors);
+        }
+
+        public bool IsPointIsInsideZone(GravityAttractorZone zone, Vector3 point)
+        {
+            return (zone.IsInsideShape(point));
         }
 
         /// <summary>

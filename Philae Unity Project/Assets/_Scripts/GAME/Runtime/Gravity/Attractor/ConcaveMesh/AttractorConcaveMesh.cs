@@ -10,7 +10,7 @@ namespace philae.gravity.attractor
     {
         public Mesh Mesh;
 
-        public override void InitOnCreation(AttractorListerLogic attractorListerLogic)
+        public override void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {
             base.InitOnCreation(attractorListerLogic);
         }

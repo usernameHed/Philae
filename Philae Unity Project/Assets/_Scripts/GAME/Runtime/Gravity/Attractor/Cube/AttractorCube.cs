@@ -14,7 +14,7 @@ namespace philae.gravity.attractor
         [SerializeField, ReadOnly]
         private ExtCube _cube = default;
 
-        public override void InitOnCreation(AttractorListerLogic attractorListerLogic)
+        public override void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {
             base.InitOnCreation(attractorListerLogic);
             Debug.Log("here init always ?");
@@ -35,7 +35,7 @@ namespace philae.gravity.attractor
         protected override void DrawRange(Color color)
         {
             //ExtDrawGuizmos.DebugWireSphere(transform.position, Color.gray, _sphere.Radius);
-            ExtDrawGuizmos.DebugWireSphere(transform.position, color, _maxRangeWithScale);
+            ExtDrawGuizmos.DebugWireSphere(Position, color, _maxRangeWithScale);
         }
 #endif
     }

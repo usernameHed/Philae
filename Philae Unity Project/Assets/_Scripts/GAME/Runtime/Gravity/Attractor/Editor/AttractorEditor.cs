@@ -42,18 +42,6 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             _attractor = GetTarget<Attractor>();
-            SetupParentZone();
-        }
-
-        private void SetupParentZone()
-        {
-            this.UpdateEditor();
-            Transform parent = this.GetValue<Transform>("_parent");
-            if (parent == null)
-            {
-                this.SetValue<Transform>("_parent", _attractor.transform.parent);
-                this.ApplyModification();
-            }
         }
 
         /// <summary>
@@ -68,7 +56,11 @@ namespace philae.gravity.attractor
 
         public override void ShowTinyEditorContent()
         {
-            GUILayout.Button("Play");
+            if (GUILayout.Button("Fill Auto Zones"))
+            {
+                _attractor.AutomaticlySetupZone();
+                EditorUtility.SetDirty(_attractor);
+            }
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
@@ -78,7 +70,7 @@ namespace philae.gravity.attractor
                 return;
             }
             SetStaticIfNotMovable();
-            LockAttractorTransform();
+            //LockAttractorTransform();
         }
 
         /// <summary>
@@ -96,6 +88,7 @@ namespace philae.gravity.attractor
             }
         }
 
+        /*
         private void LockAttractorTransform()
         {
             this.UpdateEditor();
@@ -136,5 +129,6 @@ namespace philae.gravity.attractor
                 return;
             }
         }
+        */
     }
 }

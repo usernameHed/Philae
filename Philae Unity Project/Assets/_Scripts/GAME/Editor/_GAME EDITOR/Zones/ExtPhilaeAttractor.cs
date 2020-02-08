@@ -71,14 +71,8 @@ namespace philae.editor.extension.attractor
             GameObject instanceShere = ExtPrefabsEditor.InstantiatePrefabsWithLinkFromAssetPrefabPath("Attractor/" + nameAttractor);
 
             Attractor attractor = instanceShere.GetComponent<Attractor>();
-            AttractorListerLogic lister = GetParentLister(attractor);
+            List<AttractorListerLogic> lister = attractor.AutomaticlySetupZone();
             attractor.InitOnCreation(lister);
-        }
-
-        private static AttractorListerLogic GetParentLister(Attractor attractor)
-        {
-            AttractorListerLogic lister = attractor.GetExtComponentInParents<AttractorListerLogic>(99, true);
-            return (lister);
         }
 
         // Validate the menu item defined by the function above.
@@ -94,19 +88,22 @@ namespace philae.editor.extension.attractor
         [MenuItem("GameObject/Philae/Attractor/Spline", true)]
         [MenuItem("GameObject/Philae/Attractor/Triangle", true)]
         private static bool ValidateCreateZone()
-        {
+        {            
             if (Selection.activeTransform == null)
             {
-                throw new System.Exception("Can't create Attractor outside a zone !");
+                return (true);
             }
+            
             if (Selection.activeTransform.gameObject.GetExtComponentInParents<Attractor>(99, true) != null)
             {
                 throw new System.Exception("Can't create Attractor inside another Attractor");
             }
+            /*
             if (Selection.activeTransform.gameObject.GetExtComponentInParents<AttractorListerLogic>(99, true) == null)
             {
                 throw new System.Exception("Can't create Attractor outside a zone !");
             }
+            */
             return (true);
         }
     }

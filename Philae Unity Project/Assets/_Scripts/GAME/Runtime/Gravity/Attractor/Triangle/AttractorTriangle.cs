@@ -8,7 +8,7 @@ namespace philae.gravity.attractor
 {
     public class AttractorTriangle : Attractor
     {
-        public override void InitOnCreation(AttractorListerLogic attractorListerLogic)
+        public override void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {
             base.InitOnCreation(attractorListerLogic);
         }

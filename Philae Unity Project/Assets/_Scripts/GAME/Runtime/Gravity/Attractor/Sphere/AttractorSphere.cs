@@ -14,7 +14,7 @@ namespace philae.gravity.attractor
         [SerializeField, ReadOnly]
         private ExtSphere _sphere = default;
 
-        public override void InitOnCreation(AttractorListerLogic attractorListerLogic)
+        public override void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {
             base.InitOnCreation(attractorListerLogic);
         }
@@ -32,15 +32,15 @@ namespace philae.gravity.attractor
         /// </summary>
         public override void Move()
         {
-            _sphere.Position = transform.position;
+            _sphere.Position = Position;
             _sphere.Radius = _minRangeWithScale;
         }
 
 #if UNITY_EDITOR
         protected override void DrawRange(Color color)
         {
-            ExtDrawGuizmos.DebugWireSphere(transform.position, Color.gray, _sphere.Radius);
-            ExtDrawGuizmos.DebugWireSphere(transform.position, color, _maxRangeWithScale);
+            ExtDrawGuizmos.DebugWireSphere(Position, Color.gray, _sphere.Radius);
+            ExtDrawGuizmos.DebugWireSphere(Position, color, _maxRangeWithScale);
         }
 #endif
     }

@@ -22,11 +22,11 @@ namespace philae.gravity.attractor
         [SerializeField]
         protected RigidAttractor _rigidAttractor = default;
 
-        [SerializeField, ReadOnly]
-        protected Transform _parent;
-        [SerializeField, ReadOnly]
-        protected AttractorListerLogic _attractorListerLogic;
-        public GravityAttractorZone Zone { get {  return (_attractorListerLogic?.Zone); } }
+        //[SerializeField, ReadOnly]
+        //protected Transform _parent;
+        [SerializeField]
+        protected List<AttractorListerLogic> _attractorListerLogic;
+        //public GravityAttractorZone Zone { get {  return (_attractorListerLogic?.Zone); } }
 
         [SerializeField, ReadOnly]
         protected float _minRangeWithScale = 0f;
@@ -38,19 +38,49 @@ namespace philae.gravity.attractor
 
         private Vector3 _oldScale = new Vector3(-1, -1, -1);
 
+        public Vector3 Position { get { return (transform.position); } }
+
         /// <summary>
         /// CALLED ONLY when creating the attractor from editor, NEVER AFTER
         /// </summary>
         /// <param name="attractorListerLogic"></param>
-        public virtual void InitOnCreation(AttractorListerLogic attractorListerLogic)
+        public virtual void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {
             _attractorListerLogic = attractorListerLogic;
-            _attractorListerLogic.Lister.AddAttractor(this);
-            _parent = transform.parent;
+            SetupLinkToAttractorListers();
+
             transform.hasChanged = false;
             _oldScale = new Vector3(-1, -1, -1);
             _rigidAttractor.IsKinematic = true;
             Init();
+        }
+
+        private void SetupLinkToAttractorListers()
+        {
+            for (int i = 0; i < _attractorListerLogic.Count; i++)
+            {
+                _attractorListerLogic[i].Lister.AddAttractor(this);
+            }
+        }
+
+        private void RemoveLinkToAttractorListers()
+        {
+            for (int i = 0; i < _attractorListerLogic.Count; i++)
+            {
+                _attractorListerLogic[i].Lister.RemoveAttractor(this);
+            }
+        }
+
+        /// <summary>
+        /// here fill automaticly zones
+        /// </summary>
+        /// <returns></returns>
+        public List<AttractorListerLogic> AutomaticlySetupZone()
+        {
+            RemoveLinkToAttractorListers();
+            _attractorListerLogic = ZonesLister.Instance.GetZonesInWichAttractorIs(this);
+            SetupLinkToAttractorListers();
+            return (_attractorListerLogic);
         }
 
 #if UNITY_EDITOR
@@ -67,11 +97,7 @@ namespace philae.gravity.attractor
 
         private void SetupOnLoad()
         {
-            if (!_attractorListerLogic)
-            {
-                return;
-            }
-            _attractorListerLogic.Lister.AddAttractor(this);
+            SetupLinkToAttractorListers();
 
             _gravitonsInside.Clear();
 
@@ -95,11 +121,7 @@ namespace philae.gravity.attractor
             SettingsLocal.GravityChanged -= OnGravityChanged;
             SettingsLocal.OnKinematicChanged -= OnKinematicChanged;
 
-            if (_attractorListerLogic != null)
-            {
-                _attractorListerLogic.Lister.RemoveAttractor(this);
-            }
-
+            RemoveLinkToAttractorListers();
         }
 
         private void MinMaxRangeChanged()
