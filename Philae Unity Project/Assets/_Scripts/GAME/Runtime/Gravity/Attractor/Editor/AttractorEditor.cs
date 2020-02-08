@@ -17,6 +17,8 @@ namespace philae.gravity.attractor
     {
         protected Attractor _attractor;
 
+        private Transform _parent;
+
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
         /// by telling it who we are (a Transform Inspector)
@@ -42,6 +44,7 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             _attractor = GetTarget<Attractor>();
+            _parent = _attractor.transform.parent;
         }
 
         /// <summary>
@@ -70,7 +73,7 @@ namespace philae.gravity.attractor
                 return;
             }
             SetStaticIfNotMovable();
-            //LockAttractorTransform();
+            LockAttractorTransform();
         }
 
         /// <summary>
@@ -88,35 +91,12 @@ namespace philae.gravity.attractor
             }
         }
 
-        /*
+        
         private void LockAttractorTransform()
         {
             this.UpdateEditor();
-            Transform parent = GetProperty("_parent").GetValue<Transform>();
-
-            if (_attractor.transform == parent)
+            if (_attractor.transform == _parent)
             {
-                return;
-            }
-
-
-            //here we don't find any AttractorLister, that's mean we are outside, go back inside from the last parent !
-            AttractorListerLogic lister = _attractor.transform.GetExtComponentInParents<AttractorListerLogic>(99, false);
-            if (lister == null)
-            {
-                _attractor.transform.SetParent(parent);
-                this.ApplyModification();
-                Debug.LogError("attractor can't leave outside a parent zone");
-                return;
-            }
-
-            //here the lister found is not the same as the lister saved, do a transfert !
-            AttractorListerLogic current = this.GetValue<AttractorListerLogic>("_attractorListerLogic");
-            if (lister != current)
-            {
-                AttractorListerLogic currentLister = this.GetValue<AttractorListerLogic>("_attractorListerLogic");
-                currentLister.Lister.RemoveAttractor(_attractor);
-                _attractor.InitOnCreation(lister);
                 return;
             }
 
@@ -124,11 +104,11 @@ namespace philae.gravity.attractor
             Attractor otherAttractor = _attractor.transform.GetExtComponentInParents<Attractor>(99, false);
             if (otherAttractor != null)
             {
-                _attractor.transform.SetParent(parent);
+                _attractor.transform.SetParent(null);
                 Debug.LogError("Can't have Attractor inside another Attractor");
                 return;
             }
         }
-        */
+        
     }
 }

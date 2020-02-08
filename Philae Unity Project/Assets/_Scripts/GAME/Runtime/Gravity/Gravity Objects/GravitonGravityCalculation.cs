@@ -15,7 +15,7 @@ namespace philae.gravity.graviton
     [Serializable]
     public class GravitonGravityCalculation
     {
-        private const int MAX_ATTRACTOR_ON_GRAVITON_PER_FRAME = 5;
+        private const int MAX_ATTRACTOR_ON_GRAVITON_PER_FRAME = 10;
         private Graviton _graviton;
         private GravitonZoneLocalizer _gravitonZones;
 
