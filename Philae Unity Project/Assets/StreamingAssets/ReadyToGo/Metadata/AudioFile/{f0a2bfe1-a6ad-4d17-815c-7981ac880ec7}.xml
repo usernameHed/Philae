@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{f0a2bfe1-a6ad-4d17-815c-7981ac880ec7}">
+		<property name="assetPath">
+			<value>OLD STUFF TESTS/Engine_01.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>39.333333333333336</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{99eaadf0-d79c-4a56-9347-52750db30287}</destination>
+		</relationship>
+	</object>
+</objects>

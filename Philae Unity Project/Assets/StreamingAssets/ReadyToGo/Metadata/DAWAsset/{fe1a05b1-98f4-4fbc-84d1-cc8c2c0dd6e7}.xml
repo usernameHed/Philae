@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="DAWAsset" id="{fe1a05b1-98f4-4fbc-84d1-cc8c2c0dd6e7}">
+		<property name="assetPath">
+			<value>PHILAE_MAIN MUSIC_03.RPP.link/PHILAE_MAIN MUSIC_04 MAIN THEME  DRUMS.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>197.6470625</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{99eaadf0-d79c-4a56-9347-52750db30287}</destination>
+		</relationship>
+		<relationship name="project">
+			<destination>{ae0d2eac-3e1a-490b-8d62-d0bbd8e4b7fe}</destination>
+		</relationship>
+	</object>
+</objects>

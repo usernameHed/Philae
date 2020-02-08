@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{b24cd08a-88ed-4d27-afd4-052e8f1a5ffc}">
+		<property name="assetPath">
+			<value>OLD STUFF TESTS/SF-CK Mechanics Metal Movement 34-VariFi_01-20.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.0780725623582768</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{99eaadf0-d79c-4a56-9347-52750db30287}</destination>
+		</relationship>
+	</object>
+</objects>

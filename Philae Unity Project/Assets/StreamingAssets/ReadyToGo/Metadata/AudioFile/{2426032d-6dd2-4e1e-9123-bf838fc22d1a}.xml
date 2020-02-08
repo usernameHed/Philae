@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{2426032d-6dd2-4e1e-9123-bf838fc22d1a}">
+		<property name="assetPath">
+			<value>OLD STUFF TESTS/spiks-002.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.55152083333333335</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{99eaadf0-d79c-4a56-9347-52750db30287}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="DAWProject" id="{ae0d2eac-3e1a-490b-8d62-d0bbd8e4b7fe}">
+		<property name="assetPath">
+			<value>PHILAE_MAIN MUSIC_03.RPP.link/</value>
+		</property>
+		<property name="dawProjectPath">
+			<value>PHILAE_MAIN MUSIC_03.RPP</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{99eaadf0-d79c-4a56-9347-52750db30287}</destination>
+		</relationship>
+	</object>
+</objects>
