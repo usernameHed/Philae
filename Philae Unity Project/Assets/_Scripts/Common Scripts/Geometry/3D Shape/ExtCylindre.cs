@@ -12,11 +12,11 @@ namespace hedCommon.geometry.shape3d
         private Vector3 _position;
         private Quaternion _rotation;
         private Vector3 _localScale;
-        [SerializeField, ReadOnly]
+        [SerializeField]
         protected float _radius;
         public float Radius { get { return (_radius); } }
         private float _radiusSquared;
-        [SerializeField, ReadOnly]
+        [SerializeField]
         private float _lenght;
         public float Lenght { get { return (_lenght); } }
         private float _lenghtSquared;

@@ -35,15 +35,34 @@ namespace philae.data.gravity
             CYLINDER = 30,
             CAPSULE = 40,
         }
+        [OnValueChanged("IsSphapeZoneChanged")]
         public Shape ShapeZone = Shape.SPHERE;
         [OnValueChanged("IsActiveZoneChanged")]
         public bool IsActiveZone = true;
 
+        public UnityAction IsSphapeZoneChange;
         public UnityAction IsActiveZoneChange;
 
+        /// <summary>
+        /// called by Odin Inspector
+        /// </summary>
+        private void IsSphapeZoneChanged()
+        {
+            if (IsSphapeZoneChange != null)
+            {
+                IsSphapeZoneChange.Invoke();
+            }
+        }
+
+        /// <summary>
+        /// called by OdinInspector
+        /// </summary>
         private void IsActiveZoneChanged()
         {
-            IsActiveZoneChange.Invoke();
+            if (IsActiveZoneChange != null)
+            {
+                IsActiveZoneChange.Invoke();
+            }
         }
     }
 }

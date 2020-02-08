@@ -21,7 +21,7 @@ namespace philae.gravity.zones
         typeof(AttractorsUpdater))]
     public class GravityAttractorZone : SerializedMonoBehaviour
     {
-        [FoldoutGroup("Settings"), InlineEditor]
+        [FoldoutGroup("Settings"), InlineEditor, OnValueChanged("OnChangeJonction")]
         public ZoneSettings SettingsGlobal = default;
         [FoldoutGroup("Settings"), SerializeField]
         public ZoneSettingsLocal SettingsLocal = new ZoneSettingsLocal();
@@ -53,6 +53,11 @@ namespace philae.gravity.zones
             _refZoneLister.FillZones();
         }
 
+        public void OnChangeJonction()
+        {
+            _refZoneLister.FillZones();
+        }
+
         private List<Graviton> _gravitonsInside = new List<Graviton>();
         public bool IsZoneEmpty() => _gravitonsInside.Count == 0;
 
@@ -76,7 +81,6 @@ namespace philae.gravity.zones
             }
         }
 
-        [Button]
         public void Init(ZonesLister zonesLister)
         {
             if (_scalerZoneReference == null)
@@ -104,15 +108,20 @@ namespace philae.gravity.zones
 
             SettingsLocal.IsActiveZoneChange -= IsActiveZoneChanged;
             SettingsLocal.IsActiveZoneChange += IsActiveZoneChanged;
+            SettingsLocal.IsSphapeZoneChange -= SphapeZoneChanged;
+            SettingsLocal.IsSphapeZoneChange += SphapeZoneChanged;
             OnGravitonEnterZone -= OnEnterInZone;
             OnGravitonEnterZone += OnEnterInZone;
             OnGravitonLeaveZone -= OnLeaveZone;
             OnGravitonLeaveZone += OnLeaveZone;
         }
 
+        private void SphapeZoneChanged()
+        {
+            CreateShape();
+        }
 
-
-
+        [Button]
         private void CreateShape()
         {
             switch (SettingsLocal.ShapeZone)
@@ -133,9 +142,7 @@ namespace philae.gravity.zones
                     CurrentZone = new ZoneCapsule();
                     CurrentZone.Init(this);
                     break;
-
             }
-            
         }
 
         public void AddGraviton(Graviton graviton)
@@ -238,6 +245,7 @@ namespace philae.gravity.zones
         private void OnDestroy()
         {
             SettingsLocal.IsActiveZoneChange -= IsActiveZoneChanged;
+            SettingsLocal.IsSphapeZoneChange -= SphapeZoneChanged;
             OnGravitonEnterZone -= OnEnterInZone;
             OnGravitonLeaveZone -= OnLeaveZone;
             if (ZonesLister.Instance == null)

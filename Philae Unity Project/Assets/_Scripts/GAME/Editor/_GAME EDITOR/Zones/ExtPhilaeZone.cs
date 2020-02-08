@@ -26,7 +26,7 @@ namespace philae.editor.extension.zone
         [MenuItem("GameObject/Philae/Zone/Cylinder", false, -1)]
         private static void ZoneCylinder()
         {
-            CreateZone("Zone Cylindre");
+            CreateZone("Zone Cylinder");
         }
         [MenuItem("GameObject/Philae/Zone/Capsule", false, -1)]
         private static void ZoneCapsule()

@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3156696025954553132}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.5362005, y: 7.07253, z: -10.116323}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7540866624066562471}
@@ -65,20 +65,35 @@ MonoBehaviour:
       Entry: 10
       Data: 0
     - Name: Capsule
-      Entry: 6
+      Entry: 7
+      Data: 1|hedCommon.geometry.shape3d.ExtCapsule, Assembly-CSharp
+    - Name: _radius
+      Entry: 4
+      Data: 1
+    - Name: _lenght
+      Entry: 4
+      Data: 2
+    - Name: SphereBottom
+      Entry: 5
+      Data: true
+    - Name: SphereTop
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
       Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: OnGravitonEnterZone
       Entry: 7
-      Data: 1|philae.gravity.zones.GravityAttractorZone+OnGravitonEnter, Assembly-CSharp
+      Data: 2|philae.gravity.zones.GravityAttractorZone+OnGravitonEnter, Assembly-CSharp
     - Name: target
       Entry: 10
       Data: 0
     - Name: declaringType
       Entry: 7
-      Data: 2|System.RuntimeType, mscorlib
+      Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: philae.gravity.zones.GravityAttractorZone, Assembly-CSharp
@@ -90,7 +105,7 @@ MonoBehaviour:
       Data: OnEnterInZone
     - Name: delegateType
       Entry: 7
-      Data: 3|System.RuntimeType, mscorlib
+      Data: 4|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: philae.gravity.zones.GravityAttractorZone+OnGravitonEnter, Assembly-CSharp
@@ -99,13 +114,13 @@ MonoBehaviour:
       Data: 
     - Name: signature
       Entry: 7
-      Data: 4|System.Type[], mscorlib
+      Data: 5|System.Type[], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 5|System.RuntimeType, mscorlib
+      Data: 6|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: philae.gravity.graviton.Graviton, Assembly-CSharp
@@ -123,28 +138,28 @@ MonoBehaviour:
       Data: 
     - Name: OnGravitonLeaveZone
       Entry: 7
-      Data: 6|philae.gravity.zones.GravityAttractorZone+OnGravitonEnter, Assembly-CSharp
+      Data: 7|philae.gravity.zones.GravityAttractorZone+OnGravitonEnter, Assembly-CSharp
     - Name: target
       Entry: 10
       Data: 0
     - Name: declaringType
       Entry: 9
-      Data: 2
+      Data: 3
     - Name: methodName
       Entry: 1
       Data: OnLeaveZone
     - Name: delegateType
       Entry: 9
-      Data: 3
+      Data: 4
     - Name: signature
       Entry: 7
-      Data: 7|System.Type[], mscorlib
+      Data: 8|System.Type[], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 9
-      Data: 5
+      Data: 6
     - Name: 
       Entry: 13
       Data: 
@@ -236,7 +251,7 @@ GameObject:
   - component: {fileID: 7540866624066562473}
   - component: {fileID: 7540866624066562472}
   m_Layer: 0
-  m_Name: Zone Sphere (1)
+  m_Name: Zone Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -250,8 +265,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7540866624066562470}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14.746686, y: -6.901371, z: -3.8264008}
-  m_LocalScale: {x: 27.658398, y: 27.658398, z: 27.658398}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 3156696025954553126}
   m_RootOrder: 0
