@@ -66,7 +66,7 @@ MonoBehaviour:
       Data: 0
     - Name: Cylindre
       Entry: 7
-      Data: 1|hedCommon.geometry.shape3d.ExtCylindre, Assembly-CSharp
+      Data: 1|hedCommon.geometry.shape3d.ExtCylinder, Assembly-CSharp
     - Name: _radius
       Entry: 4
       Data: 1
@@ -292,5 +292,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8917cee51d502cd4d9d84beb77865798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isActive: 1
+  _isActive: 0
   _otherTarget: {fileID: 3156696025954553126}

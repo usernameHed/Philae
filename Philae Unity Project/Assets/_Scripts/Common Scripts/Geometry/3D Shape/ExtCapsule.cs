@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace hedCommon.geometry.shape3d
 {
-    public class ExtCapsule : ExtCylindre
+    public class ExtCapsule : ExtCylinder
     {
         public bool SphereBottom = true;
         public bool SphereTop = true;

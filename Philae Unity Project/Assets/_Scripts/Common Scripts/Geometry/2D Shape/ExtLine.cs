@@ -42,6 +42,12 @@ namespace hedCommon.geometry.shape2d
 
         public double Project(Vector3 p) => ExtVector3.DotProduct(Delta, p - A) / LengthSquared;
 
+        /// <summary>
+        /// https://diego.assencio.com/?index=ec3d5dfdfc0b6a0d147a656f0af332bd
+        /// </summary>
+        /// <param name="c"></param>
+        /// <param name="nullIfOutside"></param>
+        /// <returns></returns>
         public Vector3 ClosestPointTo(Vector3 c, bool nullIfOutside)
         {
             // Project c onto ab, but deferring divide by Dot(ab, ab)

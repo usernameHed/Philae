@@ -1,6 +1,5 @@
 ﻿using hedCommon.extension.runtime;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace hedCommon.geometry.shape2d
@@ -8,26 +7,38 @@ namespace hedCommon.geometry.shape2d
     /// <summary>
     /// a 3D plane
     /// </summary>
+    [Serializable]
     public struct ExtPlane
     {
         public Vector3 Point;
-        public Vector3 Direction;
+        public Vector3 Normal;
 
-        public ExtPlane(Vector3 point, Vector3 direction)
+        public ExtPlane(Vector3 point, Vector3 normal)
         {
             Point = point;
-            Direction = direction;
+            Normal = normal;
+        }
+
+        public void Draw(Color color)
+        {
+            Debug.DrawRay(Point, Normal, color);
+        }
+
+        public void MoveShape(Vector3 point, Vector3 normal)
+        {
+            Point = point;
+            Normal = normal;
         }
 
         public bool IsAbove(Vector3 q)
         {
-            bool isAbove = ExtVector3.DotProduct(q - Point, Direction) > 0;
+            bool isAbove = ExtVector3.DotProduct(q - Point, Normal) > 0;
             return (isAbove);
         }
 
         public static Vector3 ProjectPointInPlane(ExtPlane plane, Vector3 pointToProject)
         {
-            return (pointToProject - (Vector3.Project(pointToProject - plane.Point, plane.Direction.normalized)));
+            return (pointToProject - (Vector3.Project(pointToProject - plane.Point, plane.Normal.normalized)));
         }
 
         //This function returns a point which is a projection from a point to a plane.
@@ -65,7 +76,7 @@ namespace hedCommon.geometry.shape2d
 
         public static bool PlanePlaneIntersection(ExtPlane plane1, ExtPlane plane2, out Vector3 linePoint, out Vector3 lineVec)
         {
-            return (PlanePlaneIntersection(plane1.Point, plane1.Direction, plane2.Point, plane2.Direction, out linePoint, out lineVec));
+            return (PlanePlaneIntersection(plane1.Point, plane1.Normal, plane2.Point, plane2.Normal, out linePoint, out lineVec));
         }
 
         //Find the line of intersection between two planes.
@@ -113,8 +124,8 @@ namespace hedCommon.geometry.shape2d
         public static Vector3 PlaneLineIntersection(Ray ray, ExtPlane plane)
         {
             var diff = ray.origin - plane.Point;
-            var prod1 = Vector3.Dot(diff, plane.Direction);
-            var prod2 = Vector3.Dot(ray.direction, plane.Direction);
+            var prod1 = Vector3.Dot(diff, plane.Normal);
+            var prod2 = Vector3.Dot(ray.direction, plane.Normal);
             var prod3 = prod1 / prod2;
             return ray.origin - ray.direction * prod3;
         }
@@ -137,8 +148,8 @@ namespace hedCommon.geometry.shape2d
             intersection = Vector3.zero;
 
             //calculate the distance between the linePoint and the line-plane intersection point
-            dotNumerator = Vector3.Dot((plane.Point - ray.origin), plane.Direction);
-            dotDenominator = Vector3.Dot(ray.direction, plane.Direction);
+            dotNumerator = Vector3.Dot((plane.Point - ray.origin), plane.Normal);
+            dotDenominator = Vector3.Dot(ray.direction, plane.Normal);
 
             //line and plane are not parallel
             if (dotDenominator != 0.0f)

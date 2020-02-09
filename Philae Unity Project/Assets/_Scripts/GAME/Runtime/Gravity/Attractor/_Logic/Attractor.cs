@@ -212,7 +212,7 @@ namespace philae.gravity.attractor
 
             if (range > 0)
             {
-                Vector3 realPos = posCenter + (posEntity - posCenter).normalized * range;
+                Vector3 realPos = posCenter + (posEntity - posCenter).FastNormalized() * range;
                 lenghtCenterToPlayer = (posEntity - posCenter).sqrMagnitude;
                 float lenghtCenterToRangeMax = (realPos - posCenter).sqrMagnitude;
                 if (lenghtCenterToRangeMax > lenghtCenterToPlayer)

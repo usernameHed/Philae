@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace philae.gravity.attractor
 {
-    public class AttractorCapsule : AttractorCylindre
+    public class AttractorCapsule : AttractorCylinder
     {
         public bool ClosedUp = false;
         public bool ClosedDown = false;

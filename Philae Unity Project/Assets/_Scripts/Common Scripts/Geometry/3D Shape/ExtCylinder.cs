@@ -1,17 +1,26 @@
 ﻿using hedCommon.extension.runtime;
 using hedCommon.geometry.shape2d;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace hedCommon.geometry.shape3d
 {
-    public class ExtCylindre
+    [Serializable]
+    public class ExtCylinder
     {
         private Vector3 _position;
         private Quaternion _rotation;
         private Vector3 _localScale;
+
+        [SerializeField]
+        private ExtCircle _circle1;
+        [SerializeField]
+        private ExtCircle _circle2;
+
+
         [SerializeField]
         protected float _radius;
         public float Radius { get { return (_radius); } }
@@ -24,13 +33,14 @@ namespace hedCommon.geometry.shape3d
         protected float _realRadius;
         private float _realSquaredRadius;
 
-        private Matrix4x4 _cubeMatrix;
+        private Matrix4x4 _cylinderMatrix;
         protected Vector3 _p1;
         protected Vector3 _p2;
         private Vector3 _delta;
+        private Vector3 _deltaNormalized;
         private float _deltaSquared;
 
-        public ExtCylindre(Vector3 position,
+        public ExtCylinder(Vector3 position,
             Quaternion rotation,
             Vector3 localScale,
             float radius,
@@ -43,26 +53,50 @@ namespace hedCommon.geometry.shape3d
             _lenght = lenght;
             _lenghtSquared = _lenght * _lenght;
             _radiusSquared = _radius * _radius;
-            _realRadius = _radius * _localScale.Maximum();
+            _realRadius = _radius * MaxXY(_localScale);
             _realSquaredRadius = _realRadius * _realRadius;
             UpdateMatrix();
         }
 
         private void UpdateMatrix()
         {
-            _cubeMatrix = Matrix4x4.TRS(_position, _rotation, _localScale * _radius);
+            _cylinderMatrix = Matrix4x4.TRS(_position, _rotation, _localScale * _radius);
             Vector3 size = new Vector3(0, _lenght / 2, 0);
-            _p1 = _cubeMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
-            _p2 = _cubeMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
+            _p1 = _cylinderMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
+            _p2 = _cylinderMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
             _delta = _p2 - _p1;
-            _deltaSquared = _delta.sqrMagnitude;
+            _deltaNormalized = _delta.FastNormalized();
+            _deltaSquared = ExtVector3.DotProduct(_delta, _delta);
+
+            _circle1.MoveSphape(_p1, -_cylinderMatrix.Up(), _realRadius);
+            _circle2.MoveSphape(_p2, _cylinderMatrix.Up(), _realRadius);
         }
 
         public virtual void Draw(Color color)
         {
 #if UNITY_EDITOR
-            ExtDrawGuizmos.DrawCylinder(_p1, _p2, color, _realRadius);
+            //ExtDrawGuizmos.DrawCylinder(_p1, _p2, color, _realRadius);
+            //Debug.DrawLine(_p1, _p2, color);
+            _circle1.Draw(color, false, "1");
+            _circle2.Draw(color, false, "2");
 #endif
+        }
+
+        public void DrawWithExtraSize(Color color, Vector3 extraSize)
+        {
+#if UNITY_EDITOR
+            Matrix4x4 cylinderMatrix = Matrix4x4.TRS(_position, _rotation, (_localScale + extraSize) * _radius);
+            Vector3 size = new Vector3(0, _lenght / 2, 0);
+            Vector3 p1 = cylinderMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
+            Vector3 p2 = cylinderMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
+            float realRadius = _radius * MaxXY(_localScale + extraSize);
+            ExtDrawGuizmos.DrawCylinder(p1, p2, color, realRadius);
+#endif
+        }
+
+        private float MaxXY(Vector3 size)
+        {
+            return (Mathf.Max(size.x, size.z));
         }
 
         public virtual void MoveSphape(Vector3 position, Quaternion rotation, Vector3 localScale)
@@ -70,7 +104,7 @@ namespace hedCommon.geometry.shape3d
             _position = position;
             _rotation = rotation;
             _localScale = localScale;
-            _realRadius = _radius * _localScale.Maximum();
+            _realRadius = _radius * MaxXY(_localScale);
             _realSquaredRadius = _realRadius * _realRadius;
             UpdateMatrix();
         }
@@ -87,7 +121,7 @@ namespace hedCommon.geometry.shape3d
         {
             _radius = radius;
             _radiusSquared = _radius * _radius;
-            _realRadius = _radius * _localScale.Maximum();
+            _realRadius = _radius * MaxXY(_localScale);
             _realSquaredRadius = _realRadius * _realRadius;
             UpdateMatrix();
         }
@@ -103,7 +137,7 @@ namespace hedCommon.geometry.shape3d
         /// <summary>
         /// return true if the position is inside the sphape
         /// </summary>
-        public virtual bool IsInsideShape(Vector3 pointToTest)
+        public virtual bool IsInsideShape(Vector3 k)
         {
 #if UNITY_EDITOR
             if (_p1 == _p2 || _radius == 0)
@@ -112,7 +146,7 @@ namespace hedCommon.geometry.shape3d
             }
 #endif
 
-            Vector3 pDir = pointToTest - _p1;
+            Vector3 pDir = k - _p1;
             float dot = Vector3.Dot(_delta, pDir);
 
             if (dot < 0f || dot > _deltaSquared)
@@ -129,6 +163,35 @@ namespace hedCommon.geometry.shape3d
             else
             {
                 return (true);
+            }
+        }
+
+        /// <summary>
+        /// Return the closest point on the surface of the cylinder
+        /// https://diego.assencio.com/?index=ec3d5dfdfc0b6a0d147a656f0af332bd
+        ///   
+        /// </summary>
+        public Vector3 GetClosestPoint(Vector3 k)
+        {
+            float dist = ExtVector3.DotProduct(k - _p1, _delta);
+
+            //k projection is outside the [_p1, _p2] interval, closest to _p1
+            if (dist <= 0.0f)
+            {
+                return (_circle1.GetClosestPointOnDisc(k));
+            }
+            //k projection is outside the [_p1, p2] interval, closest to _p2
+            else if (dist >= _deltaSquared)
+            {
+                return (_circle2.GetClosestPointOnDisc(k));
+            }
+            //k projection is inside the [_p1, p2] interval
+            else
+            {
+                dist = dist / _deltaSquared;
+                Vector3 pointOnLine = _p1 + dist * _delta;
+                Vector3 pointOnSurfaceLine = pointOnLine + ((k - pointOnLine).FastNormalized() * _realRadius);
+                return (pointOnSurfaceLine);
             }
         }
 

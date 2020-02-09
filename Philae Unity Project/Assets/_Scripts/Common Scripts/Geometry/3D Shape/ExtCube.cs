@@ -1,11 +1,13 @@
 ﻿using hedCommon.extension.runtime;
 using hedCommon.geometry.shape2d;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace hedCommon.geometry.shape3d
 {
+    [Serializable]
     public struct ExtCube
     {
         private Vector3 _position;
@@ -95,6 +97,7 @@ namespace hedCommon.geometry.shape3d
 
         public void DrawWithExtraSize(Color color, Vector3 extraSize)
         {
+#if UNITY_EDITOR
             Matrix4x4 cubeMatrix = ExtMatrix.GetMatrixTRS(_position, _rotation, _localScale + extraSize);
 
             Vector3 size = Vector3.one;
@@ -108,7 +111,6 @@ namespace hedCommon.geometry.shape3d
             Vector3 p6 = cubeMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(-size.x, size.y, size.z) * 0.5f));
             Vector3 p7 = cubeMatrix.MultiplyPoint3x4(Vector3.zero + ((size) * 0.5f));
             Vector3 p8 = cubeMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(size.x, size.y, -size.z) * 0.5f));
-#if UNITY_EDITOR
             ExtDrawGuizmos.DrawLocalCube(p1, p2, p3, p4, p5, p6, p7, p8, color);
 #endif
         }
@@ -140,7 +142,7 @@ namespace hedCommon.geometry.shape3d
         /// w = 1 - 5               w = (1 - 2) × (1 - 4)
         /// 
         /// </summary>
-        public bool IsInsideShape(Vector3 x)
+        public bool IsInsideShape(Vector3 k)
         {
 #if UNITY_EDITOR
             if (_p1 == _p2 && _p1 == _p4 && _p1 == _p5)
@@ -149,9 +151,9 @@ namespace hedCommon.geometry.shape3d
             }
 #endif
 
-            float ux = ExtVector3.DotProduct(-_v21, x);
-            float vx = ExtVector3.DotProduct(-_v41, x);
-            float wx = ExtVector3.DotProduct(-_v51, x);
+            float ux = ExtVector3.DotProduct(-_v21, k);
+            float vx = ExtVector3.DotProduct(-_v41, k);
+            float wx = ExtVector3.DotProduct(-_v51, k);
 
             bool isUBetween = ux.IsBetween(_uP2, _uP1);
             bool isVBetween = vx.IsBetween(_vP4, _vP1);
@@ -173,11 +175,11 @@ namespace hedCommon.geometry.shape3d
         ///  1 - 4
         ///  
         /// </summary>
-        public Vector3 GetClosestPoint(Vector3 x)
+        public Vector3 GetClosestPoint(Vector3 k)
         {
-            float tx = ExtVector3.DotProduct(x - _p1, _v41) / _v41Squared;
-            float ty = ExtVector3.DotProduct(x - _p1, _v51) / _v51Squared;
-            float tz = ExtVector3.DotProduct(x - _p1, _v21) / _v21Squared;
+            float tx = ExtVector3.DotProduct(k - _p1, _v41) / _v41Squared;
+            float ty = ExtVector3.DotProduct(k - _p1, _v51) / _v51Squared;
+            float tz = ExtVector3.DotProduct(k - _p1, _v21) / _v21Squared;
 
             tx = tx < 0 ? 0 : tx > 1 ? 1 : tx;
             ty = ty < 0 ? 0 : ty > 1 ? 1 : ty;

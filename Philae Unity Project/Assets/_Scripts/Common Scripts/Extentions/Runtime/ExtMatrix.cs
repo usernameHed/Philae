@@ -111,6 +111,24 @@ namespace hedCommon.extension.runtime
             return Quaternion.LookRotation(forward, upwards);
         }
 
+        public static Vector3 Forward(this Matrix4x4 matrix)
+        {
+            Vector3 forward;//= matrix.GetColumn(2);
+            forward.x = matrix.m02;
+            forward.y = matrix.m12;
+            forward.z = matrix.m22;
+            return (forward);
+        }
+
+        public static Vector3 Up(this Matrix4x4 matrix)
+        {
+            Vector3 upwards;//= matrix.GetColumn(1);
+            upwards.x = matrix.m01;
+            upwards.y = matrix.m11;
+            upwards.z = matrix.m21;
+            return (upwards);
+        }
+
         public static Vector3 ExtractScale(this Matrix4x4 matrix)
         {
             /*

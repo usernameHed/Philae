@@ -10,12 +10,12 @@ namespace philae.gravity.zones
     [Serializable]
     public class ZoneCylinder : Zone
     {
-        public ExtCylindre Cylindre;
+        public ExtCylinder Cylindre;
 
         public override void Init(GravityAttractorZone zone)
         {
             base.Init(zone);
-            Cylindre = new ExtCylindre(ZonePhysic.GetScalerZoneReference.position,
+            Cylindre = new ExtCylinder(ZonePhysic.GetScalerZoneReference.position,
                 ZonePhysic.GetScalerZoneReference.rotation,
                 ZonePhysic.GetScalerZoneReference.localScale,
                 1f,

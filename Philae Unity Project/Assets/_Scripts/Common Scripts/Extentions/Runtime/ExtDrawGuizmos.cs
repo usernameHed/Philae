@@ -1155,11 +1155,17 @@ namespace hedCommon.extension.runtime
         /// <param name='radius'>
         /// 	- The radius of the circle.
         /// </param>
-        public static void DrawCircle(Vector3 position, Vector3 up, Color color, float radius = 1.0f)
+        public static void DrawCircle(Vector3 position, Vector3 up, Color color, float radius = 1.0f, bool displayNormal = false, string index = "1")
         {
             up = ((up == Vector3.zero) ? Vector3.up : up).normalized * radius;
             Vector3 _forward = Vector3.Slerp(up, -up, 0.5f);
             Vector3 _right = Vector3.Cross(up, _forward).normalized * radius;
+
+            Handles.Label(position + Vector3.down * 0.03f + Vector3.right * 0.03f, index);
+            if (displayNormal)
+            {
+                Debug.DrawRay(position, up, color);
+            }
 
             Matrix4x4 matrix = new Matrix4x4();
 
@@ -1266,6 +1272,9 @@ namespace hedCommon.extension.runtime
             Vector3 up = (end - start).normalized * radius;
             Vector3 forward = Vector3.Slerp(up, -up, 0.5f);
             Vector3 right = Vector3.Cross(up, forward).normalized * radius;
+
+            Handles.Label(start + Vector3.down * 0.03f + Vector3.right * 0.03f, "1");
+            Handles.Label(end + Vector3.down * 0.03f + Vector3.right * 0.03f, "2");
 
             //Radial circles
             ExtDrawGuizmos.DrawCircle(start, up, color, radius);
