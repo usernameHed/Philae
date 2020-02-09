@@ -26,15 +26,11 @@ namespace philae.gravity.attractor
         public override Vector3 GetClosestPoint(Graviton graviton, out bool canApplyGravity)
         {
             Vector3 closestPoint = _cylinder.GetClosestPoint(graviton.Position);
-            canApplyGravity = true;
-            return (closestPoint);
+            Vector3 position = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
+            canApplyGravity = !outOfRange;
+            AddOrRemoveGravitonFromList(graviton, canApplyGravity);
 
-
-            //Vector3 position = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
-            //canApplyGravity = !outOfRange;
-            //AddOrRemoveGravitonFromList(graviton, canApplyGravity);
-
-            //return (position);
+            return (position);
         }
 
         public void ChangeCylinderSettings()
@@ -51,8 +47,8 @@ namespace philae.gravity.attractor
         protected override void DrawRange(Color color)
         {
             _cylinder.Draw(color);
-            //_cylinder.DrawWithExtraSize(Color.gray, new Vector3(_minRangeWithScale, _minRangeWithScale / 2, _minRangeWithScale));
-            //_cylinder.DrawWithExtraSize(color, new Vector3(_maxRangeWithScale, _maxRangeWithScale / 2, _maxRangeWithScale));
+            _cylinder.DrawWithExtraSize(Color.gray, new Vector3(_minRangeWithScale, _minRangeWithScale / 2, _minRangeWithScale));
+            _cylinder.DrawWithExtraSize(color, new Vector3(_maxRangeWithScale, _maxRangeWithScale / 2, _maxRangeWithScale));
         }
 #endif
     }

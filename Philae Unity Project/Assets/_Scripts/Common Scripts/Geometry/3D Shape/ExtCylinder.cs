@@ -75,8 +75,7 @@ namespace hedCommon.geometry.shape3d
         public virtual void Draw(Color color)
         {
 #if UNITY_EDITOR
-            //ExtDrawGuizmos.DrawCylinder(_p1, _p2, color, _realRadius);
-            //Debug.DrawLine(_p1, _p2, color);
+            Debug.DrawLine(_p1, _p2, color);
             _circle1.Draw(color, false, "1");
             _circle2.Draw(color, false, "2");
 #endif
@@ -85,12 +84,24 @@ namespace hedCommon.geometry.shape3d
         public void DrawWithExtraSize(Color color, Vector3 extraSize)
         {
 #if UNITY_EDITOR
+            if (extraSize.Maximum() <= 1f)
+            {
+                return;
+            }
+
             Matrix4x4 cylinderMatrix = Matrix4x4.TRS(_position, _rotation, (_localScale + extraSize) * _radius);
             Vector3 size = new Vector3(0, _lenght / 2, 0);
             Vector3 p1 = cylinderMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
             Vector3 p2 = cylinderMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
             float realRadius = _radius * MaxXY(_localScale + extraSize);
             ExtDrawGuizmos.DrawCylinder(p1, p2, color, realRadius);
+
+            /*
+            ExtCircle circle1 = new ExtCircle(p1, -cylinderMatrix.Up(), realRadius);
+            ExtCircle circle2 = new ExtCircle(p2, cylinderMatrix.Up(), realRadius);
+            circle1.Draw(color, false, "1");
+            circle2.Draw(color, false, "2");
+            */
 #endif
         }
 

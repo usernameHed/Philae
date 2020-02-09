@@ -1133,37 +1133,37 @@ PrefabInstance:
     - target: {fileID: 8405064908452197666, guid: 63de361ceef8896478b1f5e127f2cd33,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.68
+      value: -7.47
       objectReference: {fileID: 0}
     - target: {fileID: 8405064908452197666, guid: 63de361ceef8896478b1f5e127f2cd33,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 53.16
+      value: 52.18
       objectReference: {fileID: 0}
     - target: {fileID: 8405064908452197666, guid: 63de361ceef8896478b1f5e127f2cd33,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -101.82
+      value: -100.82
       objectReference: {fileID: 0}
     - target: {fileID: 8405064908452197666, guid: 63de361ceef8896478b1f5e127f2cd33,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.3864634
+      value: -0.37123403
       objectReference: {fileID: 0}
     - target: {fileID: 8405064908452197666, guid: 63de361ceef8896478b1f5e127f2cd33,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.31826168
+      value: -0.33590147
       objectReference: {fileID: 0}
     - target: {fileID: 8405064908452197666, guid: 63de361ceef8896478b1f5e127f2cd33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.6365184
+      value: -0.663131
       objectReference: {fileID: 0}
     - target: {fileID: 8405064908452197666, guid: 63de361ceef8896478b1f5e127f2cd33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5866855
+      value: 0.5564287
       objectReference: {fileID: 0}
     - target: {fileID: 8405064908452197666, guid: 63de361ceef8896478b1f5e127f2cd33,
         type: 3}
@@ -1183,7 +1183,7 @@ PrefabInstance:
     - target: {fileID: 8405064908452197666, guid: 63de361ceef8896478b1f5e127f2cd33,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -462.279
+      value: -467.614
       objectReference: {fileID: 0}
     - target: {fileID: 8405064908452197666, guid: 63de361ceef8896478b1f5e127f2cd33,
         type: 3}
@@ -1199,6 +1199,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 7.6928062
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _gravitonsInside.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
         type: 3}
@@ -1244,6 +1249,86 @@ PrefabInstance:
         type: 3}
       propertyPath: SettingsLocal.AddMaxRange
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _cylinder._circle1._plane.Point.x
+      value: -15.038448
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _cylinder._circle1._plane.Point.y
+      value: 53.837975
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _cylinder._circle1._plane.Point.z
+      value: -101.24199
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _cylinder._circle1._plane.Normal.x
+      value: -3.6792243
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _cylinder._circle1._plane.Normal.y
+      value: 0.40398875
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _cylinder._circle1._plane.Normal.z
+      value: 0.17900607
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _cylinder._circle1._radius
+      value: 3.8464031
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _cylinder._circle2._plane.Point.x
+      value: -0.32155132
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _cylinder._circle2._plane.Point.y
+      value: 52.222023
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _cylinder._circle2._plane.Point.z
+      value: -101.95801
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _cylinder._circle2._plane.Normal.x
+      value: 3.6792243
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _cylinder._circle2._plane.Normal.y
+      value: -0.40398875
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _cylinder._circle2._plane.Normal.z
+      value: -0.17900607
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _cylinder._circle2._radius
+      value: 3.8464031
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _applyGravityOnTop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405064908452197692, guid: 63de361ceef8896478b1f5e127f2cd33,
+        type: 3}
+      propertyPath: _gravitonsInside.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5157967371886098904, guid: 63de361ceef8896478b1f5e127f2cd33,
         type: 3}
