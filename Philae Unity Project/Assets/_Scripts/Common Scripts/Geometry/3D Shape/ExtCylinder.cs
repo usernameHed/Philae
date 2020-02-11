@@ -12,14 +12,15 @@ namespace hedCommon.geometry.shape3d
     public class ExtCylinder
     {
         private Vector3 _position;
+        public Vector3 Position { get { return (_position); } }
         private Quaternion _rotation;
+        public Quaternion Rotation { get { return (_rotation); } }
         private Vector3 _localScale;
 
         [SerializeField]
         private ExtCircle _circle1;
         [SerializeField]
         private ExtCircle _circle2;
-
 
         [SerializeField]
         protected float _radius;
@@ -32,6 +33,7 @@ namespace hedCommon.geometry.shape3d
 
         protected float _realRadius;
         private float _realSquaredRadius;
+        public float RealRadius { get { return (_realRadius); } }
 
         private Matrix4x4 _cylinderMatrix;
         protected Vector3 _p1;

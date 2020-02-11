@@ -1,6 +1,7 @@
 ﻿using BetterHandles;
 using hedCommon.extension.editor;
 using hedCommon.extension.runtime;
+using hedCommon.geometry.shape2d;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -10,6 +11,13 @@ namespace hedCommon.extension.editor
 {
     public static class ExtHandle
     {
+        public enum DrawOutlineType
+        {
+            MIDDLE,
+            INSIDE,
+            OUTSIDE,
+        }
+
         private static Free2DMoveHandle free2DMoveHandle = new Free2DMoveHandle();
 
         public static void DoMultiHandle(Transform toMove, out bool hasChanged)
@@ -168,6 +176,33 @@ namespace hedCommon.extension.editor
             Handles.color = newColor;
             Handles.CircleHandleCap(0, position, rotation, HandleUtility.GetHandleSize(position) * sizeRatio, EventType.Repaint);
             Handles.color = old;
+        }
+
+        public static void DrawCircleThickness(ExtCircle circle, int thickness, DrawOutlineType drawOutlineType = DrawOutlineType.MIDDLE, float space = 0.01f)
+        {
+            int start = 0;
+            int end = thickness;
+
+            switch (drawOutlineType)
+            {
+                case DrawOutlineType.MIDDLE:
+                    start = -thickness / 2;
+                    end = thickness / 2;
+                    break;
+                case DrawOutlineType.INSIDE:
+                    start = -thickness;
+                    end = 0;
+                    break;
+                case DrawOutlineType.OUTSIDE:
+                    start = 0;
+                    end = thickness;
+                    break;
+            }
+
+            for (int i = start; i < end; i++)
+            {
+                Handles.DrawWireDisc(circle.Point, circle.Normal, circle.Radius + space * i);
+            }
         }
     }
 }

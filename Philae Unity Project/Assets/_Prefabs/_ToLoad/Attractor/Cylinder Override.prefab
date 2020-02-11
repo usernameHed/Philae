@@ -63,26 +63,27 @@ MonoBehaviour:
   - {fileID: 0}
   _minRangeWithScale: 0
   _maxRangeWithScale: 0
-  _gravitonsInside:
-  - {fileID: 0}
+  _gravitonsInside: []
   _cylinder:
     _circle1:
       _plane:
-        Point: {x: -0.24503613, y: 52.091755, z: -100.08}
-        Normal: {x: 1.932482, y: -0.11912356, z: 0}
+        Point: {x: 0, y: -3.8723, z: 0}
+        Normal: {x: -0, y: -1.93615, z: -0}
       _radius: 1.93615
     _circle2:
       _plane:
-        Point: {x: -7.974964, y: 52.56825, z: -100.08}
-        Normal: {x: -1.932482, y: 0.11912356, z: -0}
+        Point: {x: 0, y: 3.8723, z: 0}
+        Normal: {x: 0, y: 1.93615, z: 0}
       _radius: 1.93615
     _radius: 0.5
     _lenght: 4
-  _gravityOverride:
-    ApplyGravityOnTopFace: 1
-    ApplyGravityOnTopExtremity: 1
-    ApplyGravityOnBottomFace: 1
-    AppluGravityOnBottomExtremity: 1
+  GravityOverride:
+    Disc1:
+      Face: 1
+      Borders: 1
+    Disc2:
+      Face: 1
+      Borders: 1
 --- !u!114 &890260964629075816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,7 +179,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 912ccffde6865ab4194b9cb2748becc7, type: 2}
+  - {fileID: 2100000, guid: 9a6259ea2af4a4c11845a939c87ed614, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

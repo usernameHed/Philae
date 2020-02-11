@@ -79,8 +79,7 @@ MonoBehaviour:
   - {fileID: 0}
   _minRangeWithScale: 0
   _maxRangeWithScale: 0
-  _gravitonsInside:
-  - {fileID: 0}
+  _gravitonsInside: []
 --- !u!114 &4565394342054342756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,7 +160,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 912ccffde6865ab4194b9cb2748becc7, type: 2}
+  - {fileID: 2100000, guid: 9a6259ea2af4a4c11845a939c87ed614, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

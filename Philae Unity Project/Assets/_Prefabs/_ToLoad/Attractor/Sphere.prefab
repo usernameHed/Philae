@@ -176,15 +176,14 @@ MonoBehaviour:
     MaxRange: 0.5
     IsKinematic: 0
   _rigidAttractor: {fileID: 2306671404111087987}
-  _parent: {fileID: 0}
-  _attractorListerLogic: {fileID: 0}
+  _attractorListerLogic:
+  - {fileID: 0}
   _minRangeWithScale: 0.5
   _maxRangeWithScale: 0.5
-  _gravitonsInside:
-  - {fileID: 0}
+  _gravitonsInside: []
   _sphere:
     Radius: 0.5
-    Position: {x: -6.96, y: 15.95, z: 0}
+    Position: {x: 0, y: 0, z: 0}
 --- !u!33 &6694344886706845968
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -210,7 +209,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 912ccffde6865ab4194b9cb2748becc7, type: 2}
+  - {fileID: 2100000, guid: 9a6259ea2af4a4c11845a939c87ed614, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -253,7 +252,6 @@ MonoBehaviour:
   _lastVelocityVector: {x: 0, y: 0, z: 0}
   _rigidbody: {fileID: 7340676147351111003}
   _initialPush: {fileID: 0}
-  _impact: {fileID: 616291559616719235}
 --- !u!54 &7340676147351111003
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -17,11 +17,13 @@ namespace philae.gravity.attractor.gravityOverride
     {
         public GravityOverrideDisc Disc1;
         public GravityOverrideDisc Disc2;
+        public bool Trunk;
 
-        public GravityOverrideCylinder(GravityOverrideDisc disc1, GravityOverrideDisc disc2)
+        public GravityOverrideCylinder(GravityOverrideDisc disc1, GravityOverrideDisc disc2, bool trunk)
         {
             Disc1 = disc1;
             Disc2 = disc2;
+            Trunk = trunk;
         }
     }
 }
