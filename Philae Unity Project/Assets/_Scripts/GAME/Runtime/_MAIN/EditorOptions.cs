@@ -9,6 +9,8 @@ public class EditorOptions : SingletonMono<EditorOptions>
     [ShowInInspector]
     public static bool ShowZones = true;
     [ShowInInspector]
+    public static bool ShowGravityOverride = true;
+    [ShowInInspector]
     public static Color ColorZonesInactive = Color.gray;
     [ShowInInspector]
     public static Color ColorWhenNothinngInside = Color.red;

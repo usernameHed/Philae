@@ -13,6 +13,8 @@ namespace hedCommon.geometry.shape2d
     {
         [SerializeField]
         private ExtPlane _plane;
+        public Vector3 Point { get { return (_plane.Point); } }
+        public Vector3 Normal { get { return (_plane.Normal); } }
         [SerializeField]
         private float _radius;
         public float Radius { get { return (_radius); } }

@@ -45,6 +45,11 @@ namespace hedCommon.extension.editor
             return (editor.serializedObject.FindProperty(propertie));
         }
 
+        public static SerializedProperty GetPropertie(this SerializedProperty editor, string propertie)
+        {
+            return (editor.FindPropertyRelative(propertie));
+        }
+
         public static T GetValue<T>(this Editor editor, string propertieName)
         {
             SerializedProperty property = editor.GetPropertie(propertieName);

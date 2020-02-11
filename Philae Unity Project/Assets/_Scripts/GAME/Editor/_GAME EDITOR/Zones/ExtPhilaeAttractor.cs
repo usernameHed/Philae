@@ -29,6 +29,12 @@ namespace philae.editor.extension.attractor
         {
             CreateAttractor("Cylinder");
         }
+
+        [MenuItem("GameObject/Philae/Attractor/Cylinder Override", false, -1)]
+        private static void AttractorCylinderOverride()
+        {
+            CreateAttractor("Cylinder Override");
+        }
         [MenuItem("GameObject/Philae/Attractor/Capsule", false, -1)]
         private static void AttractorCapsule()
         {
@@ -80,6 +86,7 @@ namespace philae.editor.extension.attractor
         [MenuItem("GameObject/Philae/Attractor/Sphere", true)]
         [MenuItem("GameObject/Philae/Attractor/Cube", true)]
         [MenuItem("GameObject/Philae/Attractor/Cylinder", true)]
+        [MenuItem("GameObject/Philae/Attractor/Cylinder Override", true)]
         [MenuItem("GameObject/Philae/Attractor/Capsule", true)]
         [MenuItem("GameObject/Philae/Attractor/Concave Mesh", true)]
         [MenuItem("GameObject/Philae/Attractor/Concave Mesh", true)]

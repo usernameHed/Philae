@@ -79,7 +79,7 @@ namespace philae.gravity.zones
 
         private void LockZoneTransform()
         {
-            Transform parent = GetProperty("_parent").GetValue<Transform>();
+            Transform parent = this.GetPropertie("_parent").GetValue<Transform>();
 
             if (_zone.transform == parent)
             {

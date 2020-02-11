@@ -21,7 +21,10 @@ namespace philae.gravity.attractor.logic
             _refZone = gravityAttractorZone;
             for (int i = 0; i < _attractors.Count; i++)
             {
-                _attractors[i].Init();
+                if (_attractors[i] != null)
+                {
+                    _attractors[i].Init();
+                }
             }
         }
 

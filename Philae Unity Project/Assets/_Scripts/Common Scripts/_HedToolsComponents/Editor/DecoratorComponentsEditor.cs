@@ -114,11 +114,6 @@ namespace ExtUnityComponents
             return _editorInstance;
         }
 
-        protected SerializedProperty GetProperty(string property)
-        {
-            return (serializedObject.FindProperty(property));
-        }
-
         #endregion
 
         /// <summary>
