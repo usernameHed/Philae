@@ -88,7 +88,7 @@ namespace philae.gravity.attractor
 
             ExtCylinder cylinder = this.GetPropertie("_cylinder").GetValue<ExtCylinder>();
 
-            _attractor.GravityOverride = ExtGravityOverrideEditor.DrawCylinder(cylinder, _attractor.GravityOverride, out bool hasChanged);
+            _attractor.GravityOverride = ExtGravityOverrideEditor.DrawCylinder(cylinder, circle1, circle2, _attractor.GravityOverride, out bool hasChanged);
             //_attractor.GravityOverride.Disc1 = ExtGravityOverrideEditor.DrawDisc(circle1, _attractor.GravityOverride.Disc1, _attractor.Rotation, out bool hasChanged);
             //_attractor.GravityOverride.Disc2 = ExtGravityOverrideEditor.DrawDisc(circle2, _attractor.GravityOverride.Disc2, _attractor.Rotation, out hasChanged);
 

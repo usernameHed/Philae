@@ -18,7 +18,7 @@ namespace philae.gravity.attractor.gravityOverride
             bool topFace = discGravity.Face;
             bool topExtremity = discGravity.Borders;
 
-            Handles.color = Color.clear;
+            Handles.color = Color.red;
             if (!Event.current.alt && Handles.Button(circle.Point,
                 refRotation * Quaternion.LookRotation(Vector3.up),
                 circle.Radius,
@@ -41,7 +41,7 @@ namespace philae.gravity.attractor.gravityOverride
                 Handles.color = new Color(1, 0, 0, 0.5f);
                 ExtHandle.DrawCircleThickness(circle, 50, ExtHandle.DrawOutlineType.INSIDE);
             }
-            Handles.color = Color.clear;
+            Handles.color = Color.red;
             if (!Event.current.alt && Handles.Button(circle.Point,
                 refRotation * Quaternion.LookRotation(Vector3.up),
                 circle.Radius / 10 * 7,
@@ -56,12 +56,30 @@ namespace philae.gravity.attractor.gravityOverride
             return (discGravity);
         }
 
-        public static GravityOverrideCylinder DrawCylinder(ExtCylinder cylinder, GravityOverrideCylinder cylinderGravity, out bool hasChanged)
+        public static GravityOverrideCylinder DrawCylinder(ExtCylinder cylinder, ExtCircle circle1, ExtCircle circle2, GravityOverrideCylinder cylinderGravity, out bool hasChanged)
         {
             hasChanged = false;
 
-            if (!cylinderGravity.Trunk)
+            cylinderGravity.Disc1 = ExtGravityOverrideEditor.DrawDisc(circle1, cylinderGravity.Disc1, cylinder.Rotation, out hasChanged);
+            cylinderGravity.Disc2 = ExtGravityOverrideEditor.DrawDisc(circle2, cylinderGravity.Disc2, cylinder.Rotation, out hasChanged);
+            cylinderGravity.Trunk = ExtGravityOverrideEditor.DrawLine(cylinderGravity.Trunk, cylinder.Position, cylinder.Rotation * Quaternion.LookRotation(Vector3.up), cylinder.P1, cylinder.P2, out hasChanged);
+
+            return (cylinderGravity);
+        }
+
+        public static bool DrawLine(bool trunk, Vector3 position, Quaternion rotation, Vector3 p1, Vector3 p2, out bool hasChanged)
+        {
+            hasChanged = false;
+
+            if (!trunk)
             {
+                float scaleCylinder = (p1 - p2).magnitude;
+                Matrix4x4 scaleMatrix = Matrix4x4.TRS(position, rotation, new Vector3(0.5f, 0.5f, scaleCylinder));
+                using (new Handles.DrawingScope(scaleMatrix))
+                {
+                    Handles.CylinderHandleCap(0, Vector3.zero, Quaternion.identity, 1, EventType.Repaint);
+                }
+                /*
                 if (Event.current.type == EventType.Repaint)
                 {
                     Handles.color = new Color(1, 0, 0, 0.5f);
@@ -71,21 +89,45 @@ namespace philae.gravity.attractor.gravityOverride
                                 cylinder.RealRadius * 2 / 10 * 8, EventType.Repaint);
 
                 }
+                */
             }
-
-            Handles.color = Color.cyan;
-            if (!Event.current.alt && Handles.Button(cylinder.Position,
-                cylinder.Rotation * Quaternion.LookRotation(Vector3.up),
-                cylinder.RealRadius * 2,
-                cylinder.RealRadius, Handles.ArrowHandleCap))
+            Handles.color = Color.red;
+            if (!Event.current.alt && Handles.Button(
+                position,
+                rotation,
+                (p1 - p2).magnitude,
+                (p1 - p2).magnitude,
+                LineHandleCap))
             {
                 Debug.Log("extremity pressed");
-                cylinderGravity.Trunk = !cylinderGravity.Trunk;
-
+                trunk = !trunk;
+                hasChanged = true;
                 Event.current.Use();
             }
+            return (trunk);
+        }
 
-            return (cylinderGravity);
+        public static void LineHandleCap(int controlId, Vector3 position, Quaternion rotation, float size, EventType eventType)
+        {
+            Vector3 sideways = rotation * new Vector3(0, 0, size / 2);
+            Vector3 p1 = position - sideways;
+            Vector3 p2 = position + sideways;
+            /*
+            Vector3 sidewaysHandle = rotation * new Vector3(0, 0, size * 2);
+            Vector3 p1Handle = position - sidewaysHandle;
+            Vector3 p2Handle = position + sidewaysHandle;
+            */
+            switch (eventType)
+            {
+                case (EventType.Layout):
+                    float distance = HandleUtility.DistanceToLine(p1, p2);
+                    HandleUtility.AddControl(controlId, distance);
+                    break;
+                case (EventType.Repaint):
+
+                    Handles.DrawPolyLine(p1, p2);
+                    break;
+            }
         }
         //end of class
     }

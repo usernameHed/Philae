@@ -37,7 +37,10 @@ namespace hedCommon.geometry.shape3d
 
         private Matrix4x4 _cylinderMatrix;
         protected Vector3 _p1;
+        public Vector3 P1 { get { return (_p1); } }
+
         protected Vector3 _p2;
+        public Vector3 P2 { get { return (_p2); } }
         private Vector3 _delta;
         private Vector3 _deltaNormalized;
         private float _deltaSquared;
