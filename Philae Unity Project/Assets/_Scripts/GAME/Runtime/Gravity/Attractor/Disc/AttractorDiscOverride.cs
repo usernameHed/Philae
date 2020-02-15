@@ -18,9 +18,11 @@ namespace philae.gravity.attractor
         {
             Vector3 closestPoint = _disc.GetClosestPointIfWeCan(graviton.Position, out canApplyGravity, GravityOverride);
             Vector3 position = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
-            canApplyGravity = !outOfRange;
+            if (outOfRange)
+            {
+                canApplyGravity = false;
+            }
             AddOrRemoveGravitonFromList(graviton, canApplyGravity);
-
             return (position);
         }
     }
