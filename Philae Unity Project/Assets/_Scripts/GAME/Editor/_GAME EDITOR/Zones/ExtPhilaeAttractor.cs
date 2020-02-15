@@ -24,17 +24,32 @@ namespace philae.editor.extension.attractor
         {
             CreateAttractor("Cube");
         }
+        [MenuItem("GameObject/Philae/Attractor/Cube Override", false, -1)]
+        private static void AttractorCubeOverride()
+        {
+            CreateAttractor("Cube Override");
+        }
+        [MenuItem("GameObject/Philae/Attractor/Disc", false, -1)]
+        private static void AttractorDisc()
+        {
+            CreateAttractor("Disc");
+        }
+        [MenuItem("GameObject/Philae/Attractor/Disc Override", false, -1)]
+        private static void AttractorDiscOverride()
+        {
+            CreateAttractor("Disc Override");
+        }
         [MenuItem("GameObject/Philae/Attractor/Cylinder", false, -1)]
         private static void AttractorCylinder()
         {
             CreateAttractor("Cylinder");
         }
-
         [MenuItem("GameObject/Philae/Attractor/Cylinder Override", false, -1)]
         private static void AttractorCylinderOverride()
         {
             CreateAttractor("Cylinder Override");
         }
+
         [MenuItem("GameObject/Philae/Attractor/Capsule", false, -1)]
         private static void AttractorCapsule()
         {
@@ -85,6 +100,9 @@ namespace philae.editor.extension.attractor
         // The menu item will be disabled if this function returns false.
         [MenuItem("GameObject/Philae/Attractor/Sphere", true)]
         [MenuItem("GameObject/Philae/Attractor/Cube", true)]
+        [MenuItem("GameObject/Philae/Attractor/Cube Override", true)]
+        [MenuItem("GameObject/Philae/Attractor/Disc", true)]
+        [MenuItem("GameObject/Philae/Attractor/Disc Override", true)]
         [MenuItem("GameObject/Philae/Attractor/Cylinder", true)]
         [MenuItem("GameObject/Philae/Attractor/Cylinder Override", true)]
         [MenuItem("GameObject/Philae/Attractor/Capsule", true)]

@@ -1,5 +1,6 @@
 ﻿using hedCommon.extension.runtime;
 using hedCommon.geometry.shape2d;
+using philae.gravity.attractor.gravityOverride;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -155,13 +156,6 @@ namespace hedCommon.geometry.shape3d
         /// </summary>
         public virtual bool IsInsideShape(Vector3 k)
         {
-#if UNITY_EDITOR
-            if (_p1 == _p2 || _radius == 0)
-            {
-                return (false);
-            }
-#endif
-
             Vector3 pDir = k - _p1;
             float dot = Vector3.Dot(_delta, pDir);
 
@@ -211,6 +205,41 @@ namespace hedCommon.geometry.shape3d
             }
         }
 
+        public Vector3 GetClosestPointIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideCylinder gravityOverride)
+        {
+            if (!gravityOverride.CanApplyGravity)
+            {
+                canApplyGravity = false;
+                return (k);
+            }
+
+            canApplyGravity = true;
+            float dist = ExtVector3.DotProduct(k - _p1, _delta);
+            //k projection is outside the [_p1, _p2] interval, closest to _p1
+            if (dist <= 0.0f)
+            {
+                return (_circle1.GetClosestPointOnDiscIfWeCan(k, out canApplyGravity, gravityOverride.Disc1));
+            }
+            //k projection is outside the [_p1, p2] interval, closest to _p2
+            else if (dist >= _deltaSquared)
+            {
+                return (_circle2.GetClosestPointOnDiscIfWeCan(k, out canApplyGravity, gravityOverride.Disc2));
+            }
+            //k projection is inside the [_p1, p2] interval
+            else
+            {
+                if (!gravityOverride.Trunk)
+                {
+                    canApplyGravity = false;
+                    return (k);
+                }
+
+                dist = dist / _deltaSquared;
+                Vector3 pointOnLine = _p1 + dist * _delta;
+                Vector3 pointOnSurfaceLine = pointOnLine + ((k - pointOnLine).FastNormalized() * _realRadius);
+                return (pointOnSurfaceLine);
+            }
+        }
         //end class
     }
     //end nameSpace

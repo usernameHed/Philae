@@ -10,13 +10,13 @@ using UnityEngine;
 
 namespace philae.gravity.attractor
 {
-    public class AttractorCylinderOverride : AttractorCylinder
+    public class AttractorDiscOverride : AttractorDisc
     {
-        public GravityOverrideCylinder GravityOverride;
+        public GravityOverrideDisc GravityOverride;
 
         public override Vector3 GetClosestPoint(Graviton graviton, out bool canApplyGravity)
         {
-            Vector3 closestPoint = _cylinder.GetClosestPointIfWeCan(graviton.Position, out canApplyGravity, GravityOverride);
+            Vector3 closestPoint = _disc.GetClosestPointIfWeCan(graviton.Position, out canApplyGravity, GravityOverride);
             Vector3 position = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
             canApplyGravity = !outOfRange;
             AddOrRemoveGravitonFromList(graviton, canApplyGravity);

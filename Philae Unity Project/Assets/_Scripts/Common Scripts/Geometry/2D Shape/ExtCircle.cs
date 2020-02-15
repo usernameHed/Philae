@@ -1,5 +1,6 @@
 ﻿using hedCommon.extension.runtime;
 using hedCommon.geometry.shape2d;
+using philae.gravity.attractor.gravityOverride;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -91,13 +92,57 @@ namespace hedCommon.geometry.shape2d
             //project point to a plane
             Vector3 kProjected = ExtPlane.ProjectPointInPlane(_plane, k);
 
-            //if dist² < radius², we are inside the circle
+            //if dist² < radius², this projected point is inside the circle
             float distSquared = (kProjected - _plane.Point).sqrMagnitude;
             bool isInsideShape = distSquared < _radiusSquared;
             if (isInsideShape)
             {
                 return (kProjected);
             }
+            //return the closest point on the circle
+            Vector3 pointExtremity = _plane.Point + (kProjected - _plane.Point).FastNormalized() * _radius;
+            return (pointExtremity);
+        }
+
+        /// <summary>
+        /// return the closest point on the disc from K, if the GravityInfo permit it
+        /// </summary>
+        /// <param name="k"></param>
+        /// <param name="canApplyGravity"></param>
+        /// <param name="gravityDisc"></param>
+        /// <returns></returns>
+        public Vector3 GetClosestPointOnDiscIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideDisc gravityDisc)
+        {
+            if (!gravityDisc.CanApplyGravity)
+            {
+                canApplyGravity = false;
+                return (k);
+            }
+
+            canApplyGravity = true;
+
+            //project point to a plane
+            Vector3 kProjected = ExtPlane.ProjectPointInPlane(_plane, k);
+
+            //if dist² < radius², this projected point is inside the circle
+            float distSquared = (kProjected - _plane.Point).sqrMagnitude;
+            bool isInsideShape = distSquared < _radiusSquared;
+            if (isInsideShape)
+            {
+                if (!gravityDisc.Face)
+                {
+                    canApplyGravity = false;
+                    return (k);
+                }
+                return (kProjected);
+            }
+
+            if (!gravityDisc.Borders)
+            {
+                canApplyGravity = false;
+                return (k);
+            }
+
             //return the closest point on the circle
             Vector3 pointExtremity = _plane.Point + (kProjected - _plane.Point).FastNormalized() * _radius;
             return (pointExtremity);

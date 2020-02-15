@@ -632,48 +632,60 @@ namespace hedCommon.extension.runtime
         /// </summary>
         public static Vector3 GetMeanOfXPoints(Vector3[] arrayVect, out Vector3 sizeBoundingBox, bool middleBoundingBox = true)
         {
+            return (GetMeanOfXPoints(out sizeBoundingBox, middleBoundingBox, arrayVect));
+        }
+
+        public static Vector3 GetMeanOfXPoints(params Vector3[] points)
+        {
+            return (GetMeanOfXPoints(out Vector3 sizeBoundingBox, false, points));
+        }
+
+        public static Vector3 GetMeanOfXPoints(out Vector3 sizeBoundingBox, bool middleBoundingBox = true, params Vector3[] points)
+        {
             sizeBoundingBox = Vector2.zero;
 
-            if (arrayVect.Length == 0)
+            if (points.Length == 0)
+            {
                 return (ExtVector3.GetNullVector());
+            }
 
             if (!middleBoundingBox)
             {
                 Vector3 sum = Vector3.zero;
-                for (int i = 0; i < arrayVect.Length; i++)
+                for (int i = 0; i < points.Length; i++)
                 {
-                    sum += arrayVect[i];
+                    sum += points[i];
                 }
-                return (sum / arrayVect.Length);
+                return (sum / points.Length);
             }
             else
             {
-                if (arrayVect.Length == 1)
-                    return (arrayVect[0]);
+                if (points.Length == 1)
+                    return (points[0]);
 
-                float xMin = arrayVect[0].x;
-                float yMin = arrayVect[0].y;
-                float zMin = arrayVect[0].z;
-                float xMax = arrayVect[0].x;
-                float yMax = arrayVect[0].y;
-                float zMax = arrayVect[0].z;
+                float xMin = points[0].x;
+                float yMin = points[0].y;
+                float zMin = points[0].z;
+                float xMax = points[0].x;
+                float yMax = points[0].y;
+                float zMax = points[0].z;
 
-                for (int i = 1; i < arrayVect.Length; i++)
+                for (int i = 1; i < points.Length; i++)
                 {
-                    if (arrayVect[i].x < xMin)
-                        xMin = arrayVect[i].x;
-                    if (arrayVect[i].x > xMax)
-                        xMax = arrayVect[i].x;
+                    if (points[i].x < xMin)
+                        xMin = points[i].x;
+                    if (points[i].x > xMax)
+                        xMax = points[i].x;
 
-                    if (arrayVect[i].y < yMin)
-                        yMin = arrayVect[i].y;
-                    if (arrayVect[i].y > yMax)
-                        yMax = arrayVect[i].y;
+                    if (points[i].y < yMin)
+                        yMin = points[i].y;
+                    if (points[i].y > yMax)
+                        yMax = points[i].y;
 
-                    if (arrayVect[i].z < zMin)
-                        zMin = arrayVect[i].z;
-                    if (arrayVect[i].z > zMax)
-                        zMax = arrayVect[i].z;
+                    if (points[i].z < zMin)
+                        zMin = points[i].z;
+                    if (points[i].z > zMax)
+                        zMax = points[i].z;
                 }
                 Vector3 lastMiddle = new Vector3((xMin + xMax) / 2, (yMin + yMax) / 2, (zMin + zMax) / 2);
                 sizeBoundingBox.x = Mathf.Abs(xMin - xMax);
@@ -683,6 +695,8 @@ namespace hedCommon.extension.runtime
                 return (lastMiddle);
             }
         }
+
+        
 
         /// <summary>
         /// get la bisection de 2 vecteur

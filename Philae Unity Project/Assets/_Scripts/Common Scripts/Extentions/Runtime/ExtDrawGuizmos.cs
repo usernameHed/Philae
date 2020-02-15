@@ -1060,13 +1060,16 @@ namespace hedCommon.extension.runtime
         /// <summary>
         /// https://math.stackexchange.com/questions/1472049/check-if-a-point-is-inside-a-rectangular-shaped-area-3d
         /// 
-        ///      6 - 7
-        ///    /   /
-        ///  5 - 8
-        /// 
-        ///     2 - 3
-        ///   /   /
-        ///  1 - 4
+        ///      6 ------------ 7
+        ///    / |            / |
+        ///  5 ------------ 8   |
+        ///  |   |          |   |
+        ///  |   |          |   |
+        ///  |   |          |   |
+        ///  |  2 ----------|-- 3
+        ///  |/             | /
+        ///  1 ------------ 4
+        ///  
         /// 
         /// </summary>
         public static void DrawLocalCube(Matrix4x4 space, Vector3 size, Color color, Vector3 center = default(Vector3))
@@ -1089,24 +1092,27 @@ namespace hedCommon.extension.runtime
         }
 
 #if UNITY_EDITOR
-        public static void DrawLocalCube(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, Vector3 p5, Vector3 p6, Vector3 p7, Vector3 p8, Color color)
+
+        ///      6 ------------ 7            . ------------ .
+        ///    / |            / |          / |    5       / |
+        ///  5 ------------ 8   |        . ------------ .   |
+        ///  |   |          |   |        |   |          |   |
+        ///  |   |          |   |        | 4 |     3    | 2 |
+        ///  |   |          |   |        |   |   1      |   |
+        ///  |  2 ----------|-- 3        |  . ----------|-- .
+        ///  |/             | /          |/       6     | /
+        ///  1 ------------ 4            . ------------ .
+        ///  
+        public static void DrawLocalCube(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, Vector3 p5, Vector3 p6, Vector3 p7, Vector3 p8, Color color, bool drawFaces = false, bool drawPoints = false)
         {
             Color oldColor = Gizmos.color;
             Gizmos.color = color;
-            Handles.Label(p1 + Vector3.down * 0.03f + Vector3.right * 0.03f, "1");
-            Handles.Label(p2 + Vector3.down * 0.03f + Vector3.right * 0.03f, "2");
-            Handles.Label(p3 + Vector3.down * 0.03f + Vector3.right * 0.03f, "3");
-            Handles.Label(p4 + Vector3.down * 0.03f + Vector3.right * 0.03f, "4");
+            
 
             Gizmos.DrawLine(p1, p2);
             Gizmos.DrawLine(p2, p3);
             Gizmos.DrawLine(p3, p4);
             Gizmos.DrawLine(p4, p1);
-
-            Handles.Label(p5 + Vector3.down * 0.03f + Vector3.right * 0.03f, "5");
-            Handles.Label(p6 + Vector3.down * 0.03f + Vector3.right * 0.03f, "6");
-            Handles.Label(p7 + Vector3.down * 0.03f + Vector3.right * 0.03f, "7");
-            Handles.Label(p8 + Vector3.down * 0.03f + Vector3.right * 0.03f, "8");
 
             Gizmos.DrawLine(p5, p8);
             Gizmos.DrawLine(p8, p7);
@@ -1117,6 +1123,29 @@ namespace hedCommon.extension.runtime
             Gizmos.DrawLine(p4, p8);
             Gizmos.DrawLine(p3, p7);
             Gizmos.DrawLine(p2, p6);
+
+            if (drawFaces)
+            {
+                Handles.Label(ExtVector3.GetMeanOfXPoints(p1, p5, p8, p4), "1");
+                Handles.Label(ExtVector3.GetMeanOfXPoints(p4, p8, p7, p3), "2");
+                Handles.Label(ExtVector3.GetMeanOfXPoints(p2, p3, p7, p6), "3");
+                Handles.Label(ExtVector3.GetMeanOfXPoints(p1, p2, p6, p5), "4");
+                Handles.Label(ExtVector3.GetMeanOfXPoints(p5, p6, p7, p8), "5");
+                Handles.Label(ExtVector3.GetMeanOfXPoints(p1, p2, p3, p4), "6");
+            }
+
+            if (drawPoints)
+            {
+                Handles.Label(p1 + Vector3.down * 0.03f + Vector3.right * 0.03f, "1");
+                Handles.Label(p2 + Vector3.down * 0.03f + Vector3.right * 0.03f, "2");
+                Handles.Label(p3 + Vector3.down * 0.03f + Vector3.right * 0.03f, "3");
+                Handles.Label(p4 + Vector3.down * 0.03f + Vector3.right * 0.03f, "4");
+
+                Handles.Label(p5 + Vector3.down * 0.03f + Vector3.right * 0.03f, "5");
+                Handles.Label(p6 + Vector3.down * 0.03f + Vector3.right * 0.03f, "6");
+                Handles.Label(p7 + Vector3.down * 0.03f + Vector3.right * 0.03f, "7");
+                Handles.Label(p8 + Vector3.down * 0.03f + Vector3.right * 0.03f, "8");
+            }
 
             Gizmos.color = oldColor;
         }

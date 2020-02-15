@@ -1,5 +1,4 @@
-﻿using hedCommon.extension.runtime;
-using hedCommon.geometry.shape3d;
+﻿using hedCommon.geometry.shape3d;
 using philae.gravity.attractor.logic;
 using philae.gravity.graviton;
 using Sirenix.OdinInspector;
@@ -9,22 +8,21 @@ using UnityEngine;
 
 namespace philae.gravity.attractor
 {
-    public class AttractorCube : Attractor
+    public class AttractorDisc : Attractor
     {
-        [SerializeField, ReadOnly]
-        protected ExtCube _cube = default;
+        [SerializeField, OnValueChanged("ChangeDiscSettings", true)]
+        protected ExtDisc _disc = default;
+
 
         public override void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {
             base.InitOnCreation(attractorListerLogic);
-            Debug.Log("here init always ?");
-            _cube = new ExtCube(Position, Rotation, LocalScale);
+            _disc = new ExtDisc(Position, Rotation, LocalScale, 0.5f);
         }
 
         public override Vector3 GetClosestPoint(Graviton graviton, out bool canApplyGravity)
         {
-            Vector3 closestPoint = _cube.GetClosestPoint(graviton.Position);
-
+            Vector3 closestPoint = _disc.GetClosestPoint(graviton.Position);
             Vector3 position = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
             canApplyGravity = !outOfRange;
             AddOrRemoveGravitonFromList(graviton, canApplyGravity);
@@ -32,17 +30,22 @@ namespace philae.gravity.attractor
             return (position);
         }
 
+        public void ChangeDiscSettings()
+        {
+            _disc.MoveSphape(Position, Rotation, LocalScale, _disc.Radius);
+        }
+
         public override void Move()
         {
-            _cube.MoveSphape(Position, Rotation, LocalScale);
+            _disc.MoveSphape(Position, Rotation, LocalScale);
         }
 
 #if UNITY_EDITOR
         protected override void DrawRange(Color color)
         {
-            _cube.Draw(color, true, true);
-            _cube.DrawWithExtraSize(Color.gray, new Vector3(_minRangeWithScale, _minRangeWithScale, _minRangeWithScale));
-            _cube.DrawWithExtraSize(color, new Vector3(_maxRangeWithScale, _maxRangeWithScale, _maxRangeWithScale));
+            _disc.Draw(color);
+            _disc.DrawWithExtraSize(Color.gray, new Vector3(_minRangeWithScale, _minRangeWithScale / 2, _minRangeWithScale));
+            _disc.DrawWithExtraSize(color, new Vector3(_maxRangeWithScale, _maxRangeWithScale / 2, _maxRangeWithScale));
         }
 #endif
     }

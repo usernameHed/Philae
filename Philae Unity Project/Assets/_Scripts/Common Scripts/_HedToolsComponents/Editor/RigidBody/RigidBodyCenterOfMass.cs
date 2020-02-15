@@ -151,7 +151,10 @@ namespace ExtUnityComponents
                 }
                 ShowTinyEditor();
             }
-            ExtHandle.DrawSphereArrow(Color.green, _currentTarget.transform.position + _currentTarget.centerOfMass, 0.1f);
+            ExtHandle.DrawSphereArrow(Color.green, _currentTarget.transform.position
+                + _currentTarget.transform.forward * _currentTarget.centerOfMass.z
+                + _currentTarget.transform.right * _currentTarget.centerOfMass.x
+                + _currentTarget.transform.up * _currentTarget.centerOfMass.y, 0.1f);
         }
 
 

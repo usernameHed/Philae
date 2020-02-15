@@ -13,10 +13,10 @@ using UnityEngine.Rendering;
 
 namespace philae.gravity.attractor
 {
-    [CustomEditor(typeof(AttractorCylinderOverride), true)]
-    public class AttractorCylinderOverrideEditor : AttractorEditor
+    [CustomEditor(typeof(AttractorDiscOverride), true)]
+    public class AttractorDiscOverrideEditor : AttractorEditor
     {
-        protected new AttractorCylinderOverride _attractor;
+        protected new AttractorDiscOverride _attractor;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -25,8 +25,8 @@ namespace philae.gravity.attractor
         ///   witch doesn't have a Unity Editor, you can call base() without parametter:
         ///   : base()
         /// </summary>
-        public AttractorCylinderOverrideEditor()
-            : base(false, "Cylinder")
+        public AttractorDiscOverrideEditor()
+            : base(false, "Disc")
         {
 
         }
@@ -37,7 +37,7 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractor = (AttractorCylinderOverride)GetTarget<Attractor>(); 
+            _attractor = (AttractorDiscOverride)GetTarget<Attractor>(); 
         }
 
         /// <summary>
@@ -64,15 +64,13 @@ namespace philae.gravity.attractor
                 return;
             }
 
-            ExtCircle circle1 = this.GetPropertie("_cylinder").GetPropertie("_circle1").GetValue<ExtCircle>();
-            ExtCircle circle2 = this.GetPropertie("_cylinder").GetPropertie("_circle2").GetValue<ExtCircle>();
+            //ExtDisc disc = this.GetPropertie("_disc").GetValue<ExtDisc>();
+            ExtCircle circle = this.GetPropertie("_disc").GetPropertie("_circle").GetValue<ExtCircle>();
 
-            ExtCylinder cylinder = this.GetPropertie("_cylinder").GetValue<ExtCylinder>();
-
-            GravityOverrideCylinder gravityCylinder = ExtGravityOverrideEditor.DrawCylinder(cylinder, circle1, circle2, _attractor.GravityOverride, out bool hasChanged);
+            GravityOverrideDisc gravityDisc = ExtGravityOverrideEditor.DrawDisc(circle, _attractor.GravityOverride, _attractor.Rotation, out bool hasChanged);
             if (hasChanged)
             {
-                _attractor.GravityOverride = gravityCylinder;
+                _attractor.GravityOverride = gravityDisc;
                 _attractor.GravityOverride.SetupGravity();
                 EditorUtility.SetDirty(_attractor);
             }

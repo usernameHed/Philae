@@ -20,7 +20,7 @@ namespace philae.gravity.zones
 
         public override void Draw()
         {
-            Cube.Draw(base.GetColor());
+            Cube.Draw(base.GetColor(), false, false);
         }
 
         public override void Move(Vector3 newPosition, Quaternion rotation, Vector3 localScale)

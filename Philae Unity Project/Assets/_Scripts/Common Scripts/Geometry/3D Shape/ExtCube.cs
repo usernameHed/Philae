@@ -1,5 +1,6 @@
 ﻿using hedCommon.extension.runtime;
 using hedCommon.geometry.shape2d;
+using philae.gravity.attractor.gravityOverride;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,18 +12,21 @@ namespace hedCommon.geometry.shape3d
     public struct ExtCube
     {
         private Vector3 _position;
+        public Vector3 Position { get { return (_position); } }
         private Quaternion _rotation;
+        public Quaternion Rotation { get { return (_rotation); } }
         private Vector3 _localScale;
 
         private Matrix4x4 _cubeMatrix;
-        private Vector3 _p1;
-        private Vector3 _p2;
-        private Vector3 _p3;
-        private Vector3 _p4;
-        private Vector3 _p5;
-        private Vector3 _p6;
-        private Vector3 _p7;
-        private Vector3 _p8;
+
+        private Vector3 _p1;   public Vector3 P1 { get { return (_p1); } }
+        private Vector3 _p2;   public Vector3 P2 { get { return (_p1); } }
+        private Vector3 _p3;   public Vector3 P3 { get { return (_p1); } }
+        private Vector3 _p4;   public Vector3 P4 { get { return (_p1); } }
+        private Vector3 _p5;   public Vector3 P5 { get { return (_p1); } }
+        private Vector3 _p6;   public Vector3 P6 { get { return (_p1); } }
+        private Vector3 _p7;   public Vector3 P7 { get { return (_p1); } }
+        private Vector3 _p8;   public Vector3 P8 { get { return (_p1); } }
 
         private Vector3 _v41;
         private Vector3 _v51;
@@ -49,13 +53,16 @@ namespace hedCommon.geometry.shape3d
             UpdateMatrix();
         }
 
-        ///      6 - 7
-        ///    /   /
-        ///  5 - 8
-        /// 
-        ///     2 - 3
-        ///   /   /
-        ///  1 - 4
+        ///
+        ///      6 ------------ 7
+        ///    / |            / |
+        ///  5 ------------ 8   |
+        ///  |   |          |   |
+        ///  |   |          |   |
+        ///  |   |          |   |
+        ///  |  2 ----------|-- 3
+        ///  |/             | /
+        ///  1 ------------ 4
         private void UpdateMatrix()
         {
             _cubeMatrix = ExtMatrix.GetMatrixTRS(_position, _rotation, _localScale);
@@ -88,10 +95,10 @@ namespace hedCommon.geometry.shape3d
             _wP5 = ExtVector3.DotProduct(-_v51, _p5);
         }
 
-        public void Draw(Color color)
+        public void Draw(Color color, bool drawFace, bool drawPoints)
         {
 #if UNITY_EDITOR
-            ExtDrawGuizmos.DrawLocalCube(_p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8, color);
+            ExtDrawGuizmos.DrawLocalCube(_p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8, color, drawFace, drawPoints);
 #endif
         }
 
@@ -127,14 +134,16 @@ namespace hedCommon.geometry.shape3d
         /// <summary>
         /// return true if the position is inside the sphape
         /// https://math.stackexchange.com/questions/1472049/check-if-a-point-is-inside-a-rectangular-shaped-area-3d
-        /// 
-        ///      6 - 7
-        ///    /   /
-        ///  5 - 8
-        /// 
-        ///     2 - 3
-        ///   /   /
-        ///  1 - 4
+        ///
+        ///      6 ------------ 7
+        ///    / |            / |
+        ///  5 ------------ 8   |
+        ///  |   |          |   |
+        ///  |   |          |   |
+        ///  |   |          |   |
+        ///  |  2 ----------|-- 3
+        ///  |/             | /
+        ///  1 ------------ 4
         ///  
         /// perpendiculare:         not perpendiculare:
         /// u = 1 - 2               u = (1 - 4) × (1 - 5)
@@ -165,18 +174,64 @@ namespace hedCommon.geometry.shape3d
 
         /// <summary>
         /// Return the closest point on the surface of the cube, from a given point x
-        /// 
-        ///      6 - 7
-        ///    /   /
-        ///  5 - 8
-        /// 
-        ///     2 - 3
-        ///   /   /
-        ///  1 - 4
+        ///
+        ///      6 ------------ 7
+        ///    / |            / |
+        ///  5 ------------ 8   |
+        ///  |   |          |   |
+        ///  |   |          |   |
+        ///  |   |          |   |
+        ///  |  2 ----------|-- 3
+        ///  |/             | /
+        ///  1 ------------ 4
         ///  
         /// </summary>
         public Vector3 GetClosestPoint(Vector3 k)
         {
+            Vector3 vK1 = k - _p1;
+            float tx = ExtVector3.DotProduct(vK1, _v41) / _v41Squared;
+            float ty = ExtVector3.DotProduct(vK1, _v51) / _v51Squared;
+            float tz = ExtVector3.DotProduct(vK1, _v21) / _v21Squared;
+
+            tx = ExtMathf.SetBetween(tx, 0, 1);
+            ty = ExtMathf.SetBetween(ty, 0, 1);
+            tz = ExtMathf.SetBetween(tz, 0, 1);
+
+            Vector3 closestPoint = tx * _v41
+                                    + ty * _v51
+                                    + tz * _v21
+                                    + _p1;
+
+            return (closestPoint);
+        }
+
+        ///
+        ///      6 ------------ 7
+        ///    / |    3       / |
+        ///  5 ------------ 8   |       
+        ///  |   |          |   |      
+        ///  | 5 |     6    | 2 |     ------8-----  
+        ///  |   |   1      |   |                   
+        ///  |  2 ----------|-- 3                   
+        ///  |/       4     | /     |       3      | 
+        ///  1 ------------ 4                       
+        ///                                         
+        ///          6 ------6----- 5 ------2----- 8 -----10----- 7       -       
+        ///          |              |              |              |               
+        ///          |              |              |              |               
+        ///          5      5       1       1      3       2      11       6       |
+        ///          |              |              |              |               
+        ///          |              |              |              |               
+        ///          2 ------7----- 1 ------4----- 4 ------12---- 3       -
+        ///                                         
+        ///                                         
+        ///                         |       4      |  
+        ///                                         
+        ///                                         
+        ///                           ------9-----       
+        public bool GetClosestPointIfWeCan(Vector3 k, GravityOverrideCube gravityOverrideCube, out Vector3 closestPoint)
+        {
+
             float tx = ExtVector3.DotProduct(k - _p1, _v41) / _v41Squared;
             float ty = ExtVector3.DotProduct(k - _p1, _v51) / _v51Squared;
             float tz = ExtVector3.DotProduct(k - _p1, _v21) / _v21Squared;
@@ -185,9 +240,9 @@ namespace hedCommon.geometry.shape3d
             ty = ty < 0 ? 0 : ty > 1 ? 1 : ty;
             tz = tz < 0 ? 0 : tz > 1 ? 1 : tz;
 
-            Vector3 closestPoint = tx * _v41 + ty * _v51 + tz * _v21 + _p1;
+            closestPoint = tx * _v41 + ty * _v51 + tz * _v21 + _p1;
 
-            return (closestPoint);
+            return (true);
         }
 
         //Returns true if a line segment (made up of linePoint1 and linePoint2) is fully or partially in a rectangle
