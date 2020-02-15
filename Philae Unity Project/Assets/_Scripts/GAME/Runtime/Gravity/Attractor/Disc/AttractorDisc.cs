@@ -1,4 +1,5 @@
-﻿using hedCommon.geometry.shape3d;
+﻿using hedCommon.extension.runtime;
+using hedCommon.geometry.shape3d;
 using philae.gravity.attractor.logic;
 using philae.gravity.graviton;
 using Sirenix.OdinInspector;
@@ -44,8 +45,14 @@ namespace philae.gravity.attractor
         protected override void DrawRange(Color color)
         {
             _disc.Draw(color);
-            _disc.DrawWithExtraSize(Color.gray, new Vector3(_minRangeWithScale, _minRangeWithScale / 2, _minRangeWithScale));
-            _disc.DrawWithExtraSize(color, new Vector3(_maxRangeWithScale, _maxRangeWithScale / 2, _maxRangeWithScale));
+            if (_minRangeWithScale > 0)
+            {
+                ExtDrawGuizmos.DebugWireSphere(Position, Color.gray, _disc.RealRadius + _minRangeWithScale / 2);
+            }
+            if (_maxRangeWithScale > 0)
+            {
+                ExtDrawGuizmos.DebugWireSphere(Position, color, _disc.RealRadius + _maxRangeWithScale / 2);
+            }
         }
 #endif
     }

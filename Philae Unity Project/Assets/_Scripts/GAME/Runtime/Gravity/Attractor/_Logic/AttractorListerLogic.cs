@@ -59,6 +59,7 @@ namespace philae.gravity.attractor.logic
                 {
                     continue;
                 }
+
                 //save information into the slot [currentIndex]
                 _cachedForceInformation.PointOfAttraction = closestPointToAttractor;
                 _cachedForceInformation.Gravity = attractor.SettingsLocal.Gravity;
