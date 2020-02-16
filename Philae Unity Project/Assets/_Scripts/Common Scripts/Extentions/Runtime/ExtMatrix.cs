@@ -186,6 +186,31 @@ namespace hedCommon.extension.runtime
             Quaternion myRot = transform.rotation;
             transform.rotation *= Quaternion.Inverse(myRot) * rot * myRot;
         }
+
+        /// <summary>
+        /// doesn't return a good TRS matrix, but a good rotation matrix !
+        /// usage:
+        /// Matrix4x4 rotationMatrix = ExtMatrix.LookAt(p1, p2, Vector3.up);
+        /// Quaternion rotation = rotationMatrix.ExtractRotation();
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="up"></param>
+        /// <returns></returns>
+        public static Matrix4x4 LookAt(Vector3 from, Vector3 to, Vector3 up)
+        {
+            Vector3 forward = (from - to).normalized;
+            Vector3 right = ExtVector3.CrossProduct(up.normalized, forward);
+            up = ExtVector3.CrossProduct(forward, right);
+
+            Matrix4x4 rotation = new Matrix4x4();
+            rotation.SetColumn(0, new Vector4(right.x, right.y, right.z, 1));
+            rotation.SetColumn(1, new Vector4(up.x, up.y, up.z, 1));
+            rotation.SetColumn(2, new Vector4(forward.x, forward.y, forward.z, 1));
+            rotation.SetColumn(3, new Vector4(from.x, from.y, from.z, 1));
+            return (rotation);
+        }
+
         //end of class
     }
     //end of nameSpace

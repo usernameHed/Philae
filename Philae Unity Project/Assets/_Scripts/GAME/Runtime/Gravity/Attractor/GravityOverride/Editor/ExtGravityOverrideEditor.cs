@@ -40,6 +40,7 @@ namespace philae.gravity.attractor.gravityOverride
         {
             hasChanged = false;
             bool changed = hasChanged;
+            /*
             cubeGravity.Face1 = DrawRectangle(cube, out changed);   hasChanged = (changed) ? true : hasChanged;
             cubeGravity.Face2 = DrawRectangle(cube, out changed);   hasChanged = (changed) ? true : hasChanged;
             cubeGravity.Face3 = DrawRectangle(cube, out changed);   hasChanged = (changed) ? true : hasChanged;
@@ -68,7 +69,7 @@ namespace philae.gravity.attractor.gravityOverride
             cubeGravity.Point6 = DrawPoint(cubeGravity.Point6, cube.P6, out changed);   hasChanged = (changed) ? true : hasChanged;
             cubeGravity.Point7 = DrawPoint(cubeGravity.Point7, cube.P7, out changed);   hasChanged = (changed) ? true : hasChanged;
             cubeGravity.Point8 = DrawPoint(cubeGravity.Point8, cube.P8, out changed);   hasChanged = (changed) ? true : hasChanged;
-
+            */
             return (cubeGravity);
         }
 
@@ -84,11 +85,11 @@ namespace philae.gravity.attractor.gravityOverride
             hasChanged = false;
             bool changed = hasChanged;
 
-            cylinderGravity.Disc1 = ExtGravityOverrideEditor.DrawDisc(circle1, cylinderGravity.Disc1, cylinder.Rotation, out changed);
+            cylinderGravity.Disc1 = ExtGravityOverrideEditor.DrawDisc(circle1, cylinderGravity.Disc1/*, cylinder.Rotation*/, out changed);
             hasChanged = (changed) ? true : hasChanged;
-            cylinderGravity.Disc2 = ExtGravityOverrideEditor.DrawDisc(circle2, cylinderGravity.Disc2, cylinder.Rotation, out changed);
+            cylinderGravity.Disc2 = ExtGravityOverrideEditor.DrawDisc(circle2, cylinderGravity.Disc2/*, cylinder.Rotation*/, out changed);
             hasChanged = (changed) ? true : hasChanged;
-            cylinderGravity.Trunk = ExtGravityOverrideEditor.DrawLine(cylinderGravity.Trunk, cylinder.Position, cylinder.Rotation * Quaternion.LookRotation(Vector3.up), cylinder.P1, cylinder.P2, out changed);
+            cylinderGravity.Trunk = ExtGravityOverrideEditor.DrawLine(cylinderGravity.Trunk, cylinder.P1, cylinder.P2, out changed);
             hasChanged = (changed) ? true : hasChanged;
             return (cylinderGravity);
         }
@@ -96,16 +97,16 @@ namespace philae.gravity.attractor.gravityOverride
         /// <summary>
         /// draw a disc
         /// </summary>
-        public static GravityOverrideDisc DrawDisc(ExtCircle circle, GravityOverrideDisc discGravity, Quaternion refRotation, out bool hasChanged)
+        public static GravityOverrideDisc DrawDisc(ExtCircle circle, GravityOverrideDisc discGravity, out bool hasChanged)
         {
             hasChanged = false;
-
+            Quaternion rotation = ExtQuaternion.QuaternionFromVectorDirector(circle.Normal);
             bool topFace = discGravity.Face;
             bool topExtremity = discGravity.Borders;
 
             Handles.color = Color.red;
             if (!Event.current.alt && Handles.Button(circle.Point,
-                refRotation * Quaternion.LookRotation(Vector3.up),
+                rotation,
                 circle.Radius,
                 circle.Radius, Handles.CircleHandleCap))
             {
@@ -114,7 +115,6 @@ namespace philae.gravity.attractor.gravityOverride
                 hasChanged = true;
                 Event.current.Use();
             }
-
 
             if (!topFace)
             {
@@ -128,7 +128,7 @@ namespace philae.gravity.attractor.gravityOverride
             }
             Handles.color = Color.red;
             if (!Event.current.alt && Handles.Button(circle.Point,
-                refRotation * Quaternion.LookRotation(Vector3.up),
+                rotation,
                 circle.Radius / 10 * 7,
                 circle.Radius / 10 * 7, Handles.CircleHandleCap))
             {
@@ -144,14 +144,18 @@ namespace philae.gravity.attractor.gravityOverride
         /// <summary>
         /// draw a line
         /// </summary>
-        public static bool DrawLine(bool trunk, Vector3 position, Quaternion rotation, Vector3 p1, Vector3 p2, out bool hasChanged)
+        public static bool DrawLine(bool trunk, Vector3 p1, Vector3 p2, out bool hasChanged)
         {
             hasChanged = false;
 
+            Vector3 direction = (p1 - p2);
+            Vector3 middle = ExtVector3.GetMeanOfXPoints(p1, p2);
+            Quaternion rotation = ExtQuaternion.QuaternionFromLine(p1, p2);
+
+            float scaleCylinder = direction.magnitude;
             if (!trunk)
             {
-                float scaleCylinder = (p1 - p2).magnitude;
-                Matrix4x4 scaleMatrix = Matrix4x4.TRS(position, rotation, new Vector3(0.5f, 0.5f, scaleCylinder));
+                Matrix4x4 scaleMatrix = Matrix4x4.TRS(middle, rotation, new Vector3(0.5f, 0.5f, scaleCylinder));
                 using (new Handles.DrawingScope(scaleMatrix))
                 {
                     Handles.CylinderHandleCap(0, Vector3.zero, Quaternion.identity, 1, EventType.Repaint);
@@ -159,10 +163,10 @@ namespace philae.gravity.attractor.gravityOverride
             }
             Handles.color = Color.red;
             if (!Event.current.alt && Handles.Button(
-                position,
+                middle,
                 rotation,
-                (p1 - p2).magnitude,
-                (p1 - p2).magnitude,
+                scaleCylinder,
+                scaleCylinder,
                 LineHandleCap))
             {
                 Debug.Log("extremity pressed");

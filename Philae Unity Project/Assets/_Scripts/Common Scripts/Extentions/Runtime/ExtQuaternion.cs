@@ -653,11 +653,22 @@ namespace hedCommon.extension.runtime
         /// <param name="v1"></param>
         /// <param name="v2"></param>
         /// <returns></returns>
-        public static Quaternion FromToRotation(Vector3 v1, Vector3 v2)
+        public static Quaternion QuaternionFromLine(Vector3 p1, Vector3 p2)
         {
-            var a = Vector3.Cross(v1, v2);
-            var w = Mathf.Sqrt(v1.sqrMagnitude * v2.sqrMagnitude) + Vector3.Dot(v1, v2);
-            return new Quaternion(a.x, a.y, a.z, w);
+            Matrix4x4 rotationMatrix = ExtMatrix.LookAt(p1, p2, Vector3.up);
+            Quaternion rotation = rotationMatrix.ExtractRotation();
+            return (rotation);
+        }
+
+        /// <summary>
+        /// from a Vector3 director, create a good quaternion, without gimbal lock !
+        /// (use more calculation to avoid gimbal lock)
+        /// <returns></returns>
+        public static Quaternion QuaternionFromVectorDirector(Vector3 normal)
+        {
+            Matrix4x4 rotationMatrix = ExtMatrix.LookAt(normal, normal * 2, Vector3.up);
+            Quaternion rotation = rotationMatrix.ExtractRotation();
+            return (rotation);
         }
 
         /// <summary>
