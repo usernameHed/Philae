@@ -83,6 +83,56 @@ namespace philae.gravity.attractor.gravityOverride
     ///                                         
     ///                           ------9-----  
     [Serializable]
+    public struct GravityOverrideQuad
+    {
+        [OnValueChanged("SetupGravity")] public bool Face1;
+
+        [OnValueChanged("SetupGravity")] public bool Line1;
+        [OnValueChanged("SetupGravity")] public bool Line2;
+        [OnValueChanged("SetupGravity")] public bool Line3;
+        [OnValueChanged("SetupGravity")] public bool Line4;
+
+        [OnValueChanged("SetupGravity")] public bool Point1;
+        [OnValueChanged("SetupGravity")] public bool Point2;
+        [OnValueChanged("SetupGravity")] public bool Point3;
+        [OnValueChanged("SetupGravity")] public bool Point4;
+
+        [SerializeField, ReadOnly]
+        private bool _canApplyGravity;
+        public bool CanApplyGravity { get { return (_canApplyGravity); } }
+
+        public void SetupGravity()
+        {
+            _canApplyGravity = Face1 || Line1 || Line2 || Line3 || Line4 || Point1 || Point2 || Point3 || Point4;
+            Debug.Log("setup gravity of cube ! " + _canApplyGravity);
+        }
+    }
+
+    ///
+    ///      6 ------------ 7
+    ///    / |    3       / |
+    ///  5 ------------ 8   |       
+    ///  |   |          |   |      
+    ///  | 5 |     6    | 2 |     ------8-----  
+    ///  |   |   1      |   |                   
+    ///  |  2 ----------|-- 3                   
+    ///  |/       4     | /     |       3      | 
+    ///  1 ------------ 4                       
+    ///                                         
+    ///          6 ------6----- 5 ------2----- 8 -----10----- 7       -       
+    ///          |              |              |              |               
+    ///          |              |              |              |               
+    ///          5      5       1       1      3       2      11       6       |
+    ///          |              |              |              |               
+    ///          |              |              |              |               
+    ///          2 ------7----- 1 ------4----- 4 ------12---- 3       -
+    ///                                         
+    ///                                         
+    ///                         |       4      |  
+    ///                                         
+    ///                                         
+    ///                           ------9-----  
+    [Serializable]
     public struct GravityOverrideCube
     {
         [OnValueChanged("SetupGravity")]  public bool Face1;

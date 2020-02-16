@@ -73,10 +73,10 @@ namespace philae.gravity.attractor.gravityOverride
             return (cubeGravity);
         }
 
-        public static bool DrawRectangle(ExtCube cube, out bool hasChanged)
+        public static GravityOverrideQuad DrawQuad(ExtQuad quad, GravityOverrideQuad quadGravity, out bool hasChanged)
         {
             hasChanged = false;
-            return (false);
+            return (quadGravity);
         }
 
 

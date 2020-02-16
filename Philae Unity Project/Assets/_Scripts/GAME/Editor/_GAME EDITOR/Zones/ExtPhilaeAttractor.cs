@@ -76,6 +76,11 @@ namespace philae.editor.extension.attractor
         {
             CreateAttractor("Quad");
         }
+        [MenuItem("GameObject/Philae/Attractor/Quad Override", false, -1)]
+        private static void AttractorQuadOverride()
+        {
+            CreateAttractor("Quad Override");
+        }
         [MenuItem("GameObject/Philae/Attractor/Spline", false, -1)]
         private static void AttractorSpline()
         {
@@ -110,6 +115,7 @@ namespace philae.editor.extension.attractor
         [MenuItem("GameObject/Philae/Attractor/Concave Mesh", true)]
         [MenuItem("GameObject/Philae/Attractor/Line", true)]
         [MenuItem("GameObject/Philae/Attractor/Quad", true)]
+        [MenuItem("GameObject/Philae/Attractor/Quad Override", true)]
         [MenuItem("GameObject/Philae/Attractor/Spline", true)]
         [MenuItem("GameObject/Philae/Attractor/Triangle", true)]
         private static bool ValidateCreateZone()

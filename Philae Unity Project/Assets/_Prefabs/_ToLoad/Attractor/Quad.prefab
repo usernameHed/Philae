@@ -72,49 +72,47 @@ MonoBehaviour:
     MaxRange: 0
     IsKinematic: 1
   _rigidAttractor: {fileID: 6214925749471155251}
-  _attractorListerLogic:
-  - {fileID: 0}
+  _attractorListerLogic: []
   _minRangeWithScale: 0
   _maxRangeWithScale: 0
-  _gravitonsInside:
-  - {fileID: 0}
+  _gravitonsInside: []
   _quad:
-    _position: {x: -45.87, y: 61.49, z: -151.19}
-    _rotation: {x: -0, y: -0, z: -0, w: 1}
+    _position: {x: 136.914, y: 0, z: -14.982}
+    _rotation: {x: 0, y: 0, z: 0, w: 1}
     _localScale: {x: 1, y: 1, z: 1}
     _plane:
-      Point: {x: -45.87, y: 61.49, z: -151.19}
+      Point: {x: 136.914, y: 0, z: -14.982}
       Normal: {x: 0, y: 1, z: 0}
       _allowBottom: 1
     _quadMatrix:
       e00: 1
       e01: 0
       e02: 0
-      e03: -45.87
+      e03: 136.914
       e10: 0
       e11: 1
       e12: 0
-      e13: 61.49
+      e13: 0
       e20: 0
       e21: 0
       e22: 1
-      e23: -151.19
+      e23: -14.982
       e30: 0
       e31: 0
       e32: 0
       e33: 1
-    _p1: {x: -46.37, y: 60.99, z: -151.69}
-    _p2: {x: -46.37, y: 60.99, z: -150.69}
-    _p3: {x: -45.37, y: 60.99, z: -150.69}
-    _p4: {x: -45.37, y: 60.99, z: -151.69}
+    _p1: {x: 136.414, y: 0, z: -15.482}
+    _p2: {x: 136.414, y: 0, z: -14.482}
+    _p3: {x: 137.414, y: 0, z: -14.482}
+    _p4: {x: 137.414, y: 0, z: -15.482}
     _v41: {x: 1, y: 0, z: 0}
     _v21: {x: 0, y: 0, z: 1}
     _v41Squared: 1
     _v21Squared: 1
-    _uP1: 151.69
-    _uP2: 150.69
-    _vP1: 46.37
-    _vP4: 45.37
+    _uP1: 15.482
+    _uP2: 14.482
+    _vP1: -136.414
+    _vP4: -137.414
 --- !u!114 &6214925749471155251
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 ﻿using hedCommon.extension.runtime;
+using philae.gravity.attractor.gravityOverride;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -181,6 +182,16 @@ namespace hedCommon.geometry.shape2d
                                     + _p1;
 
             return (closestPoint);
+        }
+
+        public Vector3 GetClosestPointIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideQuad gravityQuad)
+        {
+            if (!_plane.AllowBottom && !_plane.IsAbove(k))
+            {
+                canApplyGravity = false;
+                return (k);
+            }
+            return (GetClosestPoint(k, out canApplyGravity));
         }
 
         /*
