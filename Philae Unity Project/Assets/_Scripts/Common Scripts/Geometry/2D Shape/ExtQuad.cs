@@ -36,11 +36,11 @@ namespace hedCommon.geometry.shape2d
         [SerializeField, ReadOnly]
         private Vector3 _p1; public Vector3 P1 { get { return (_p1); } }
         [SerializeField, ReadOnly]
-        private Vector3 _p2; public Vector3 P2 { get { return (_p1); } }
+        private Vector3 _p2; public Vector3 P2 { get { return (_p2); } }
         [SerializeField, ReadOnly]
-        private Vector3 _p3; public Vector3 P3 { get { return (_p1); } }
+        private Vector3 _p3; public Vector3 P3 { get { return (_p3); } }
         [SerializeField, ReadOnly]
-        private Vector3 _p4; public Vector3 P4 { get { return (_p1); } }
+        private Vector3 _p4; public Vector3 P4 { get { return (_p4); } }
 
         [SerializeField, ReadOnly]
         private Vector3 _v41;
@@ -75,10 +75,10 @@ namespace hedCommon.geometry.shape2d
 
             Vector3 size = Vector3.one;
 
-            _p1 = _quadMatrix.MultiplyPoint3x4(Vector3.zero + ((-size) * 0.5f));
-            _p2 = _quadMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(-size.x, -size.y, size.z) * 0.5f));
-            _p3 = _quadMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(size.x, -size.y, size.z) * 0.5f));
-            _p4 = _quadMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(size.x, -size.y, -size.z) * 0.5f));
+            _p1 = _quadMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(-size.x, 0, -size.z) * 0.5f));
+            _p2 = _quadMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(-size.x, 0, size.z) * 0.5f));
+            _p3 = _quadMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(size.x, 0, size.z) * 0.5f));
+            _p4 = _quadMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(size.x, 0, -size.z) * 0.5f));
 
             _v41 = (_p4 - _p1);
             _v21 = (_p2 - _p1);
@@ -97,7 +97,7 @@ namespace hedCommon.geometry.shape2d
         public void Draw(Color color, bool drawFace, bool drawPoints)
         {
 #if UNITY_EDITOR
-            ExtDrawGuizmos.DrawLocalQuad(this, color, drawFace, drawPoints);
+            ExtDrawGuizmos.DrawLocalQuad(this, color, drawFace, drawPoints, true);
 #endif
         }
 

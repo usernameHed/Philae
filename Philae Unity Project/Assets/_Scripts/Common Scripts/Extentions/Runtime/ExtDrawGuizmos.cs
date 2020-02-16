@@ -1175,10 +1175,7 @@ namespace hedCommon.extension.runtime
             Color oldColor = Gizmos.color;
             Gizmos.color = color;
 
-            DebugWireSphere(p1);
-            DebugWireSphere(p2);
-            DebugWireSphere(p3);
-            DebugWireSphere(p4);
+            
 
             Gizmos.DrawLine(p1, p2);
             Gizmos.DrawLine(p2, p3);
