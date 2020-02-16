@@ -84,11 +84,13 @@ MonoBehaviour:
         Point: {x: 138.54, y: -5.680422, z: -15.440001}
         Normal: {x: -0, y: -5.680422, z: -0}
       _radius: 5.680422
+      _allowBottom: 1
     _circle2:
       _plane:
         Point: {x: 138.54, y: 5.680422, z: -15.440001}
         Normal: {x: 0, y: 5.680422, z: 0}
       _radius: 5.680422
+      _allowBottom: 1
     _radius: 1
     _lenght: 2
 --- !u!114 &5504001546216768255

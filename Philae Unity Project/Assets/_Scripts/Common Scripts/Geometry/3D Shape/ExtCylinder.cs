@@ -188,12 +188,12 @@ namespace hedCommon.geometry.shape3d
             //k projection is outside the [_p1, _p2] interval, closest to _p1
             if (dist <= 0.0f)
             {
-                return (_circle1.GetClosestPointOnDisc(k));
+                return (_circle1.GetClosestPointOnDisc(k, out bool canApplyGravity));
             }
             //k projection is outside the [_p1, p2] interval, closest to _p2
             else if (dist >= _deltaSquared)
             {
-                return (_circle2.GetClosestPointOnDisc(k));
+                return (_circle2.GetClosestPointOnDisc(k, out bool canApplyGravity));
             }
             //k projection is inside the [_p1, p2] interval
             else

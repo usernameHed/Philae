@@ -118,9 +118,9 @@ namespace hedCommon.geometry.shape3d
         /// https://diego.assencio.com/?index=ec3d5dfdfc0b6a0d147a656f0af332bd
         ///   
         /// </summary>
-        public Vector3 GetClosestPoint(Vector3 k)
+        public Vector3 GetClosestPoint(Vector3 k, out bool canApplyGravity)
         {
-            return (_circle.GetClosestPointOnDisc(k));
+            return (_circle.GetClosestPointOnDisc(k, out canApplyGravity));
         }
 
         public Vector3 GetClosestPointIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideDisc gravityOverride)

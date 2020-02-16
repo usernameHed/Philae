@@ -26,7 +26,12 @@ namespace philae.gravity.attractor
             Vector3 closestPoint = _cube.GetClosestPoint(graviton.Position);
 
             Vector3 position = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
-            canApplyGravity = !outOfRange;
+
+            canApplyGravity = true;
+            if (outOfRange)
+            {
+                canApplyGravity = false;
+            }
             AddOrRemoveGravitonFromList(graviton, canApplyGravity);
 
             return (position);

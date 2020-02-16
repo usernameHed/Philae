@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Reflection;
 using UnityEditor;
+using hedCommon.geometry.shape2d;
 
 namespace hedCommon.extension.runtime
 {
@@ -1230,6 +1231,16 @@ namespace hedCommon.extension.runtime
 
             Gizmos.color = oldColor;
         }
+
+        public static void DrawCircle(ExtCircle circle, Color color, float radius = 1.0f, bool displayNormal = false, string index = "1")
+        {
+            DrawCircle(circle.Point, circle.Normal, color, radius, displayNormal, index);
+            if (displayNormal && circle.AllowBottom)
+            {
+                Debug.DrawRay(circle.Point, -circle.Normal, color);
+            }
+        }
+
 
         /// <summary>
         /// 	- Draws a circle.

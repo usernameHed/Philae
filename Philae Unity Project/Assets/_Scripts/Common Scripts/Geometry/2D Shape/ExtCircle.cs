@@ -18,6 +18,10 @@ namespace hedCommon.geometry.shape2d
         public Vector3 Normal { get { return (_plane.Normal); } }
         [SerializeField]
         private float _radius;
+        [SerializeField, Tooltip("if true, allow calculation of closestPoints / IsInsideShape of point that are below plane")]
+        private bool _allowBottom;
+        public bool AllowBottom { get { return (_allowBottom); } }
+
         public float Radius { get { return (_radius); } }
 
         private float _radiusSquared;
@@ -36,14 +40,14 @@ namespace hedCommon.geometry.shape2d
         public void Draw(Color color, bool displayNormal = false, string index = "1")
         {
 #if UNITY_EDITOR
-            ExtDrawGuizmos.DrawCircle(_plane.Point, _plane.Normal, color, _radius, displayNormal, index);
+            ExtDrawGuizmos.DrawCircle(this, color, _radius, displayNormal, index);
 #endif
         }
 
         public void DrawWithExtraSize(Color color, float extraSize, bool displayNormal = false, string index = "1")
         {
 #if UNITY_EDITOR
-            ExtDrawGuizmos.DrawCircle(_plane.Point, _plane.Normal, color, _radius + extraSize, displayNormal, index);
+            ExtDrawGuizmos.DrawCircle(this, color, _radius + extraSize, displayNormal, index);
 #endif
         }
 
@@ -73,6 +77,11 @@ namespace hedCommon.geometry.shape2d
         /// <returns></returns>
         public bool IsInsideShapeWithProjection(Vector3 k)
         {
+            if (!AllowBottom && !_plane.IsAbove(k))
+            {
+                return (false);
+            }
+
             Vector3 kProjected = ExtPlane.ProjectPointInPlane(_plane, k);
             float distSquared = (kProjected - _plane.Point).sqrMagnitude;
             return (distSquared < _radiusSquared);
@@ -80,6 +89,11 @@ namespace hedCommon.geometry.shape2d
 
         public bool IsInsideShape(Vector3 k)
         {
+            if (!AllowBottom && !_plane.IsAbove(k))
+            {
+                return (false);
+            }
+
             float distSquared = (k - _plane.Point).sqrMagnitude;
             return (distSquared < _radiusSquared);
         }
@@ -87,8 +101,14 @@ namespace hedCommon.geometry.shape2d
         /// <summary>
         /// Return the closest point on the disc from k
         /// </summary>
-        public Vector3 GetClosestPointOnDisc(Vector3 k)
+        public Vector3 GetClosestPointOnDisc(Vector3 k, out bool canApplyGravity)
         {
+            canApplyGravity = true;
+            if (!AllowBottom && !_plane.IsAbove(k))
+            {
+                canApplyGravity = false;
+            }
+
             //project point to a plane
             Vector3 kProjected = ExtPlane.ProjectPointInPlane(_plane, k);
 
@@ -113,7 +133,7 @@ namespace hedCommon.geometry.shape2d
         /// <returns></returns>
         public Vector3 GetClosestPointOnDiscIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideDisc gravityDisc)
         {
-            if (!gravityDisc.CanApplyGravity)
+            if (!gravityDisc.CanApplyGravity || (!AllowBottom && !_plane.IsAbove(k)))
             {
                 canApplyGravity = false;
                 return (k);

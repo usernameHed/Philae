@@ -14,7 +14,7 @@ using UnityEngine.Rendering;
 namespace philae.gravity.attractor
 {
     [CustomEditor(typeof(AttractorDiscOverride), true)]
-    public class AttractorDiscOverrideEditor : AttractorEditor
+    public class AttractorDiscOverrideEditor : AttractorDiscEditor
     {
         protected new AttractorDiscOverride _attractor;
 
@@ -26,7 +26,7 @@ namespace philae.gravity.attractor
         ///   : base()
         /// </summary>
         public AttractorDiscOverrideEditor()
-            : base(false, "Disc")
+            : base(false, "Disc Override")
         {
 
         }
