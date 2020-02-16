@@ -2,7 +2,7 @@
 
 namespace hedCommon.geometry.shape2d
 {
-
+    /*
     /// <summary>
     /// a perfect quad OR triangle (3 points)
     /// </summary>
@@ -43,4 +43,5 @@ namespace hedCommon.geometry.shape2d
             return (triangle.ClosestPointTo(p));
         }
     }
+    */
 }

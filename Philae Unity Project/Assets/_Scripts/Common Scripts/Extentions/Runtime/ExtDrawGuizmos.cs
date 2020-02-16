@@ -1150,6 +1150,56 @@ namespace hedCommon.extension.runtime
 
             Gizmos.color = oldColor;
         }
+
+        ///
+        ///     2 ------------- 3 
+        ///   /       1       /   
+        ///  1 ------------ 4     
+
+        public static void DrawLocalQuad(ExtQuad quad, Color color, bool drawFaces = false, bool drawPoints = false, bool drawNormal = false)
+        {
+            DrawLocalQuad(quad.P1, quad.P2, quad.P3, quad.P4, color, drawFaces, drawPoints);
+            Debug.DrawRay(quad.Position, quad.Normal, color);
+            if (drawNormal && quad.AllowBottom)
+            {
+                Debug.DrawRay(quad.Position, -quad.Normal, color);
+            }
+        }
+
+        ///
+        ///     2 ------------- 3 
+        ///   /       1       /   
+        ///  1 ------------ 4     
+        public static void DrawLocalQuad(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, Color color, bool drawFaces = false, bool drawPoints = false)
+        {
+            Color oldColor = Gizmos.color;
+            Gizmos.color = color;
+
+            DebugWireSphere(p1);
+            DebugWireSphere(p2);
+            DebugWireSphere(p3);
+            DebugWireSphere(p4);
+
+            Gizmos.DrawLine(p1, p2);
+            Gizmos.DrawLine(p2, p3);
+            Gizmos.DrawLine(p3, p4);
+            Gizmos.DrawLine(p4, p1);
+
+            if (drawFaces)
+            {
+                Handles.Label(ExtVector3.GetMeanOfXPoints(p1, p2, p3, p4), "1");
+            }
+
+            if (drawPoints)
+            {
+                Handles.Label(p1 + Vector3.down * 0.03f + Vector3.right * 0.03f, "1");
+                Handles.Label(p2 + Vector3.down * 0.03f + Vector3.right * 0.03f, "2");
+                Handles.Label(p3 + Vector3.down * 0.03f + Vector3.right * 0.03f, "3");
+                Handles.Label(p4 + Vector3.down * 0.03f + Vector3.right * 0.03f, "4");
+            }
+
+            Gizmos.color = oldColor;
+        }
 #endif
 
 

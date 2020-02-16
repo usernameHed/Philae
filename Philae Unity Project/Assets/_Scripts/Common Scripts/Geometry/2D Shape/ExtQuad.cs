@@ -1,4 +1,6 @@
 ﻿using hedCommon.extension.runtime;
+using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,44 +11,179 @@ namespace hedCommon.geometry.shape2d
     /// <summary>
     /// a perfect 3D Quad, with 3 points
     /// </summary>
+    [Serializable]
     public struct ExtQuad
     {
-        public readonly Vector3 A;
-        public readonly Vector3 B;
-        public readonly Vector3 C;
-        private Vector3 AB;
-        private Vector3 AC;
-        private float maxdistA;
-        private float maxdistC;
+        [SerializeField, ReadOnly]
+        private Vector3 _position;
+        public Vector3 Position { get { return (_position); } }
+        [SerializeField, ReadOnly]
+        private Quaternion _rotation;
+        public Quaternion Rotation { get { return (_rotation); } }
+        [SerializeField, ReadOnly]
+        private Vector3 _localScale;
 
-        public bool unidirectionnal;
-        public bool inverseDirection;
-        public bool noGravityBorders;
 
-        private readonly Vector3 TriNorm;
-        public readonly Vector3 TriNormNormalize;
 
-        public ExtQuad(Vector3 a, Vector3 b, Vector3 c,
-            bool _unidirectionnal, bool _inverseDirection,
-            bool _noGravityBorders)
+        [SerializeField]
+        private ExtPlane _plane;
+        public bool AllowBottom { get { return (_plane.AllowBottom); }}
+        public Vector3 Normal { get { return (_plane.Normal); } }
+
+        [SerializeField, ReadOnly]
+        private Matrix4x4 _quadMatrix;
+
+        [SerializeField, ReadOnly]
+        private Vector3 _p1; public Vector3 P1 { get { return (_p1); } }
+        [SerializeField, ReadOnly]
+        private Vector3 _p2; public Vector3 P2 { get { return (_p1); } }
+        [SerializeField, ReadOnly]
+        private Vector3 _p3; public Vector3 P3 { get { return (_p1); } }
+        [SerializeField, ReadOnly]
+        private Vector3 _p4; public Vector3 P4 { get { return (_p1); } }
+
+        [SerializeField, ReadOnly]
+        private Vector3 _v41;
+        [SerializeField, ReadOnly]
+        private Vector3 _v21;
+        [SerializeField, ReadOnly]
+        private float _v41Squared;
+        [SerializeField, ReadOnly]
+        private float _v21Squared;
+
+        [SerializeField, ReadOnly]
+        private float _uP1;
+        [SerializeField, ReadOnly]
+        private float _uP2;
+        [SerializeField, ReadOnly]
+        private float _vP1;
+        [SerializeField, ReadOnly]
+        private float _vP4;
+
+        public ExtQuad(Vector3 position, Quaternion rotation, Vector3 localScale) : this()
         {
-            A = a;
-            B = b;
-            C = c;
+            _position = position;
+            _rotation = rotation;
+            _localScale = localScale;
 
-            AB = B - A;
-            AC = C - A;
-            maxdistA = Vector3.Dot(AB, AB);
-            maxdistC = Vector3.Dot(AC, AC);
-
-            unidirectionnal = _unidirectionnal;
-            inverseDirection = _inverseDirection;
-            noGravityBorders = _noGravityBorders;
-
-            TriNorm = Vector3.Cross(a - b, a - c);
-            TriNormNormalize = TriNorm.normalized;
+            UpdateMatrix();
         }
 
+        private void UpdateMatrix()
+        {
+            _quadMatrix = ExtMatrix.GetMatrixTRS(_position, _rotation, _localScale);
+
+            Vector3 size = Vector3.one;
+
+            _p1 = _quadMatrix.MultiplyPoint3x4(Vector3.zero + ((-size) * 0.5f));
+            _p2 = _quadMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(-size.x, -size.y, size.z) * 0.5f));
+            _p3 = _quadMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(size.x, -size.y, size.z) * 0.5f));
+            _p4 = _quadMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(size.x, -size.y, -size.z) * 0.5f));
+
+            _v41 = (_p4 - _p1);
+            _v21 = (_p2 - _p1);
+
+            _v41Squared = _v41.LengthSquared();
+            _v21Squared = _v21.LengthSquared();
+
+            _uP1 = ExtVector3.DotProduct(-_v21, _p1);
+            _uP2 = ExtVector3.DotProduct(-_v21, _p2);
+            _vP1 = ExtVector3.DotProduct(-_v41, _p1);
+            _vP4 = ExtVector3.DotProduct(-_v41, _p4);
+
+            _plane.MoveShape(_position, _quadMatrix.Up());
+        }
+
+        public void Draw(Color color, bool drawFace, bool drawPoints)
+        {
+#if UNITY_EDITOR
+            ExtDrawGuizmos.DrawLocalQuad(this, color, drawFace, drawPoints);
+#endif
+        }
+
+        public void DrawWithExtraSize(Color color, Vector3 extraSize, bool drawFace, bool drawPoints)
+        {
+#if UNITY_EDITOR
+            Matrix4x4 cubeMatrix = ExtMatrix.GetMatrixTRS(_position, _rotation, _localScale + extraSize);
+
+            Vector3 size = Vector3.one;
+
+            Vector3 p1 = cubeMatrix.MultiplyPoint3x4(Vector3.zero + ((-size) * 0.5f));
+            Vector3 p2 = cubeMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(-size.x, -size.y, size.z) * 0.5f));
+            Vector3 p3 = cubeMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(size.x, -size.y, size.z) * 0.5f));
+            Vector3 p4 = cubeMatrix.MultiplyPoint3x4(Vector3.zero + (new Vector3(size.x, -size.y, -size.z) * 0.5f));
+            ExtDrawGuizmos.DrawLocalQuad(p1, p2, p3, p4, color, drawFace, drawPoints);
+#endif
+        }
+
+        public void MoveSphape(Vector3 position, Quaternion rotation, Vector3 localScale)
+        {
+            _position = position;
+            _rotation = rotation;
+            _localScale = localScale;
+            UpdateMatrix();
+        }
+
+        /// <summary>
+        /// return true if the position is inside the sphape
+        ///     2 ------------- 3 
+        ///   /               /   
+        ///  1 ------------ 4     
+        /// 
+        /// </summary>
+        public bool IsInsideShape(Vector3 k)
+        {
+#if UNITY_EDITOR
+            if (_p1 == _p2 && _p1 == _p4)
+            {
+                return (false);
+            }
+#endif
+            if (!_plane.AllowBottom && !_plane.IsAbove(k))
+            {
+                return (false);
+            }
+
+            float ux = ExtVector3.DotProduct(-_v21, k);
+            float vx = ExtVector3.DotProduct(-_v41, k);
+
+            bool isUBetween = ux.IsBetween(_uP2, _uP1);
+            bool isVBetween = vx.IsBetween(_vP4, _vP1);
+
+            bool isInside = isUBetween && isVBetween;
+            return (isInside);
+        }
+
+        /// <summary>
+        /// return closest point IF point is not bellow with the settings set to false
+        /// </summary>
+        /// <param name="k"></param>
+        /// <param name="canApplyGravity"></param>
+        /// <returns></returns>
+        public Vector3 GetClosestPoint(Vector3 k, out bool canApplyGravity)
+        {
+            if (!_plane.AllowBottom && !_plane.IsAbove(k))
+            {
+                canApplyGravity = false;
+                return (k);
+            }
+            canApplyGravity = true;
+
+            Vector3 vK1 = k - _p1;
+            float tx = ExtVector3.DotProduct(vK1, _v41) / _v41Squared;
+            float tz = ExtVector3.DotProduct(vK1, _v21) / _v21Squared;
+
+            tx = ExtMathf.SetBetween(tx, 0, 1);
+            tz = ExtMathf.SetBetween(tz, 0, 1);
+
+            Vector3 closestPoint = tx * _v41
+                                    + tz * _v21
+                                    + _p1;
+
+            return (closestPoint);
+        }
+
+        /*
         private Vector3 GetGoodPointUnidirectionnal(Vector3 p, Vector3 foundPosition)
         {
             //Vector3 projectedOnPlane = TriPlane.Project(EdgeAb.A, TriNorm.normalized, p);
@@ -84,11 +221,9 @@ namespace hedCommon.geometry.shape2d
             else if (dist > 0.0f)
                 q += (dist / maxdistC) * AC;
 
-            //if (unidirectionnal)
-            //    return (GetGoodPointUnidirectionnal(p, q));
-
             return (q);
         }
+        */
     }
 
 }

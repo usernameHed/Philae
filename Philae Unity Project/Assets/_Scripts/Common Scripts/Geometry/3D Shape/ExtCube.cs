@@ -1,6 +1,7 @@
 ﻿using hedCommon.extension.runtime;
 using hedCommon.geometry.shape2d;
 using philae.gravity.attractor.gravityOverride;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,36 +12,59 @@ namespace hedCommon.geometry.shape3d
     [Serializable]
     public struct ExtCube
     {
+        [SerializeField, ReadOnly]
         private Vector3 _position;
         public Vector3 Position { get { return (_position); } }
+        [SerializeField, ReadOnly]
         private Quaternion _rotation;
         public Quaternion Rotation { get { return (_rotation); } }
+        [SerializeField, ReadOnly]
         private Vector3 _localScale;
-
+        [SerializeField, ReadOnly]
         private Matrix4x4 _cubeMatrix;
 
+        [SerializeField, ReadOnly]
         private Vector3 _p1;   public Vector3 P1 { get { return (_p1); } }
+        [SerializeField, ReadOnly]
         private Vector3 _p2;   public Vector3 P2 { get { return (_p1); } }
+        [SerializeField, ReadOnly]
         private Vector3 _p3;   public Vector3 P3 { get { return (_p1); } }
+        [SerializeField, ReadOnly]
         private Vector3 _p4;   public Vector3 P4 { get { return (_p1); } }
+        [SerializeField, ReadOnly]
         private Vector3 _p5;   public Vector3 P5 { get { return (_p1); } }
+        [SerializeField, ReadOnly]
         private Vector3 _p6;   public Vector3 P6 { get { return (_p1); } }
+        [SerializeField, ReadOnly]
         private Vector3 _p7;   public Vector3 P7 { get { return (_p1); } }
+        [SerializeField, ReadOnly]
         private Vector3 _p8;   public Vector3 P8 { get { return (_p1); } }
 
+        [SerializeField, ReadOnly]
         private Vector3 _v41;
+        [SerializeField, ReadOnly]
         private Vector3 _v51;
+        [SerializeField, ReadOnly]
         private Vector3 _v21;
 
+        [SerializeField, ReadOnly]
         private float _v41Squared;
+        [SerializeField, ReadOnly]
         private float _v51Squared;
+        [SerializeField, ReadOnly]
         private float _v21Squared;
 
+        [SerializeField, ReadOnly]
         private float _uP1;
+        [SerializeField, ReadOnly]
         private float _uP2;
+        [SerializeField, ReadOnly]
         private float _vP1;
+        [SerializeField, ReadOnly]
         private float _vP4;
+        [SerializeField, ReadOnly]
         private float _wP1;
+        [SerializeField, ReadOnly]
         private float _wP5;
 
 
@@ -133,8 +157,7 @@ namespace hedCommon.geometry.shape3d
 
         /// <summary>
         /// return true if the position is inside the sphape
-        /// https://math.stackexchange.com/questions/1472049/check-if-a-point-is-inside-a-rectangular-shaped-area-3d
-        ///
+        /// 
         ///      6 ------------ 7
         ///    / |            / |
         ///  5 ------------ 8   |

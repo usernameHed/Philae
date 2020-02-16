@@ -13,10 +13,15 @@ namespace hedCommon.geometry.shape2d
         public Vector3 Point;
         public Vector3 Normal;
 
-        public ExtPlane(Vector3 point, Vector3 normal)
+        [SerializeField, Tooltip("if true, allow calculation of closestPoints / IsInsideShape of point that are below plane")]
+        private bool _allowBottom;
+        public bool AllowBottom { get { return (_allowBottom); } }
+
+        public ExtPlane(Vector3 point, Vector3 normal, bool allowBottom)
         {
             Point = point;
             Normal = normal;
+            _allowBottom = allowBottom;
         }
 
         public void Draw(Color color)
@@ -218,7 +223,7 @@ namespace hedCommon.geometry.shape2d
             Vector3 temp;
             ExtLine.ClosestPointsOnTwoLines(out planePoint, out temp, middleAB, middleABtoC, middleAC, middleACtoB);
 
-            return (new ExtPlane(planePoint, planeNormal));
+            return (new ExtPlane(planePoint, planeNormal, true));
         }
         //end class
     }

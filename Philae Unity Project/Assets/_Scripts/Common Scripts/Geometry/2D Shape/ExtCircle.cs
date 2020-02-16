@@ -18,9 +18,7 @@ namespace hedCommon.geometry.shape2d
         public Vector3 Normal { get { return (_plane.Normal); } }
         [SerializeField]
         private float _radius;
-        [SerializeField, Tooltip("if true, allow calculation of closestPoints / IsInsideShape of point that are below plane")]
-        private bool _allowBottom;
-        public bool AllowBottom { get { return (_allowBottom); } }
+        public bool AllowBottom { get { return (_plane.AllowBottom); } }
 
         public float Radius { get { return (_radius); } }
 

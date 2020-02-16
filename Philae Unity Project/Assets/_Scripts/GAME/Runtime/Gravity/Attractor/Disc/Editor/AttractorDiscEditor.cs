@@ -45,7 +45,7 @@ namespace philae.gravity.attractor
         {
             this.UpdateEditor();
             base.ShowTinyEditorContent();
-            bool allowDown = this.GetPropertie("_disc").GetPropertie("_circle").GetPropertie("_allowBottom").boolValue;
+            bool allowDown = this.GetPropertie("_disc").GetPropertie("_circle").GetPropertie("_plane").GetPropertie("_allowBottom").boolValue;
 
             bool allowDownChange = GUILayout.Toggle(allowDown, "Allow Down", EditorStyles.miniButton);
             if (allowDownChange != allowDown)
@@ -53,7 +53,8 @@ namespace philae.gravity.attractor
                 Debug.Log("ici !");
                 SerializedProperty disc = this.GetPropertie("_disc");
                 SerializedProperty circle = disc.GetPropertie("_circle");
-                SerializedProperty allowBottom = circle.GetPropertie("_allowBottom");
+                SerializedProperty plane = circle.GetPropertie("_plane");
+                SerializedProperty allowBottom = plane.GetPropertie("_allowBottom");
                 allowBottom.boolValue = allowDownChange;
                 this.ApplyModification();
             }
