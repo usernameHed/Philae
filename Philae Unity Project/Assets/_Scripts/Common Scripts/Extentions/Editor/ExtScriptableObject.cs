@@ -57,6 +57,34 @@ namespace hedCommon.extension.editor
             EditorUtility.FocusProjectWindow();
             return (asset);
         }
+
+        /// <summary>
+        //	From a given U asset, create an T asset (this asset T inherite from U)
+        // then fill T with datas of U
+        /// </summary>
+        public static T DuplicateChildToParentWithInheritance<T, U>(U otherAsset, string infoAsset, string directoryChild) where T : ScriptableObject where U : ScriptableObject
+        {
+            T asset = ScriptableObject.CreateInstance<T>();
+
+            string path = AssetDatabase.GetAssetPath(otherAsset);
+            if (path == "")
+            {
+                path = "Assets";
+            }
+            else if (Path.GetExtension(path) != "")
+            {
+                path = path.Replace(Path.GetFileName(AssetDatabase.GetAssetPath(otherAsset)), "");
+            }
+
+            string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + directoryChild + "/" + otherAsset.name + infoAsset + ".asset");
+            AssetDatabase.CreateAsset(asset, assetPathAndName);
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            EditorUtility.FocusProjectWindow();
+            Selection.activeObject = asset;
+            return (asset);
+        }
     }
 
 }

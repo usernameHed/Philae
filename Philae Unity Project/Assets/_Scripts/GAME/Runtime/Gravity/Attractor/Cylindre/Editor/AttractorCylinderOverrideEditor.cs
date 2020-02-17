@@ -1,10 +1,12 @@
 ﻿using ExtUnityComponents;
+using feerik.editor.utils;
 using hedCommon.extension.editor;
 using hedCommon.extension.runtime;
 using hedCommon.geometry.shape2d;
 using hedCommon.geometry.shape3d;
 using philae.gravity.attractor.gravityOverride;
 using philae.gravity.attractor.line;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -64,18 +66,21 @@ namespace philae.gravity.attractor
                 return;
             }
 
+            this.UpdateEditor();
             ExtCircle circle1 = this.GetPropertie("_cylinder").GetPropertie("_circle1").GetValue<ExtCircle>();
             ExtCircle circle2 = this.GetPropertie("_cylinder").GetPropertie("_circle2").GetValue<ExtCircle>();
 
             ExtCylinder cylinder = this.GetPropertie("_cylinder").GetValue<ExtCylinder>();
 
-            GravityOverrideCylinder gravityCylinder = ExtGravityOverrideEditor.DrawCylinder(cylinder, circle1, circle2, _attractor.GravityOverride, out bool hasChanged);
+            GravityOverrideCylinder gravityCylinder = ExtGravityOverrideEditor.DrawCylinder(cylinder, circle1, circle2, _attractor.GravityOverride, 0.5f, out bool hasChanged);
+
             if (hasChanged)
             {
-                _attractor.GravityOverride = gravityCylinder;
-                _attractor.GravityOverride.SetupGravity();
-                EditorUtility.SetDirty(_attractor);
+                gravityCylinder.SetupGravity();
+                ExtGravityOverrideEditor.ApplyModificationToCylinder(this.GetPropertie("GravityOverride"), gravityCylinder);
+                this.ApplyModification();
             }
+
         }
     }
 }

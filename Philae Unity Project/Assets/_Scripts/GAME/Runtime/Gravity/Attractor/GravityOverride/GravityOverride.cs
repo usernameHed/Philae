@@ -164,20 +164,13 @@ namespace philae.gravity.attractor.gravityOverride
         [OnValueChanged("SetupGravity")]  public bool Point7;
         [OnValueChanged("SetupGravity")]  public bool Point8;
 
-        [SerializeField, ReadOnly]
-        private bool _canApplyGravity;
-        [SerializeField, ReadOnly]
-        private bool _canApplyGravityBordersAndFace1;
-        [SerializeField, ReadOnly]
-        private bool _canApplyGravityBordersAndFace2;
-        [SerializeField, ReadOnly]
-        private bool _canApplyGravityBordersAndFace3;
-        [SerializeField, ReadOnly]
-        private bool _canApplyGravityBordersAndFace4;
-        [SerializeField, ReadOnly]
-        private bool _canApplyGravityBordersAndFace5;
-        [SerializeField, ReadOnly]
-        private bool _canApplyGravityBordersAndFace6;
+        [SerializeField, ReadOnly]        private bool _canApplyGravity;
+        [SerializeField, ReadOnly]        private bool _canApplyGravityBordersAndFace1; public bool CanApplyGravityBordersAndFace1 { get { return (_canApplyGravityBordersAndFace1); } }
+        [SerializeField, ReadOnly]        private bool _canApplyGravityBordersAndFace2; public bool CanApplyGravityBordersAndFace2 { get { return (_canApplyGravityBordersAndFace2); } }
+        [SerializeField, ReadOnly]        private bool _canApplyGravityBordersAndFace3; public bool CanApplyGravityBordersAndFace3 { get { return (_canApplyGravityBordersAndFace3); } }
+        [SerializeField, ReadOnly]        private bool _canApplyGravityBordersAndFace4; public bool CanApplyGravityBordersAndFace4 { get { return (_canApplyGravityBordersAndFace4); } }
+        [SerializeField, ReadOnly]        private bool _canApplyGravityBordersAndFace5; public bool CanApplyGravityBordersAndFace5 { get { return (_canApplyGravityBordersAndFace5); } }
+        [SerializeField, ReadOnly]        private bool _canApplyGravityBordersAndFace6; public bool CanApplyGravityBordersAndFace6 { get { return (_canApplyGravityBordersAndFace6); } }
         public bool CanApplyGravity { get { return (_canApplyGravity); } }
 
         public void SetupGravity()

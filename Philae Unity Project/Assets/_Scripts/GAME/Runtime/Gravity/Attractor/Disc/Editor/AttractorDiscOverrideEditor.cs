@@ -63,16 +63,15 @@ namespace philae.gravity.attractor
             {
                 return;
             }
-
-            //ExtDisc disc = this.GetPropertie("_disc").GetValue<ExtDisc>();
+            this.UpdateEditor();
             ExtCircle circle = this.GetPropertie("_disc").GetPropertie("_circle").GetValue<ExtCircle>();
 
-            GravityOverrideDisc gravityDisc = ExtGravityOverrideEditor.DrawDisc(circle, _attractor.GravityOverride,/* _attractor.Rotation,*/ out bool hasChanged);
+            GravityOverrideDisc gravityDisc = ExtGravityOverrideEditor.DrawDisc(circle, _attractor.GravityOverride, allowBottom: circle.AllowBottom, alpha: 0.5f, out bool hasChanged);
             if (hasChanged)
             {
-                _attractor.GravityOverride = gravityDisc;
-                _attractor.GravityOverride.SetupGravity();
-                EditorUtility.SetDirty(_attractor);
+                gravityDisc.SetupGravity();
+                ExtGravityOverrideEditor.ApplyModificationToDisc(this.GetPropertie("GravityOverride"), gravityDisc);
+                this.ApplyModification();
             }
         }
     }

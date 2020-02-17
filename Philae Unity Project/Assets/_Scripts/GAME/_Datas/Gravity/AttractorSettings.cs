@@ -86,7 +86,10 @@ namespace philae.data.gravity
                     MaxRange = MinRange + 5;
                 }
             }
-            MinMaxRangeChanged.Invoke();
+            if (MinMaxRangeChanged != null)
+            {
+                MinMaxRangeChanged.Invoke();
+            }
         }
 
         private void OnMaxRangeChanged()
@@ -95,8 +98,10 @@ namespace philae.data.gravity
             {
                 MaxRange = MinRange + 0.01f;
             }
-
-            MinMaxRangeChanged.Invoke();
+            if (MinMaxRangeChanged != null)
+            {
+                MinMaxRangeChanged.Invoke();
+            }
         }
 
         private void OnMinRangeChanged()
@@ -109,7 +114,10 @@ namespace philae.data.gravity
             {
                 MaxRange = ExtMathf.SetBetween(MaxRange, MinRange, 100);
             }
-            MinMaxRangeChanged.Invoke();
+            if (MinMaxRangeChanged != null)
+            {
+                MinMaxRangeChanged.Invoke();
+            }
         }
     }
 

@@ -11,6 +11,9 @@ namespace hedCommon.geometry.shape2d
 
     /// <summary>
     /// a perfect 3D Quad, with 3 points
+    ///     2 ------------- 3 
+    ///   /               /   
+    ///  1 ------------ 4  
     /// </summary>
     [Serializable]
     public struct ExtQuad
@@ -23,6 +26,7 @@ namespace hedCommon.geometry.shape2d
         public Quaternion Rotation { get { return (_rotation); } }
         [SerializeField, ReadOnly]
         private Vector3 _localScale;
+        public Vector3 LocalScale { get { return (_localScale); } }
 
 
 
@@ -44,9 +48,9 @@ namespace hedCommon.geometry.shape2d
         private Vector3 _p4; public Vector3 P4 { get { return (_p4); } }
 
         [SerializeField, ReadOnly]
-        private Vector3 _v41;
+        private Vector3 _v41; public Vector3 V41 { get { return (_v41); } }
         [SerializeField, ReadOnly]
-        private Vector3 _v21;
+        private Vector3 _v21; public Vector3 V21 { get { return (_v21); } }
         [SerializeField, ReadOnly]
         private float _v41Squared;
         [SerializeField, ReadOnly]
@@ -60,6 +64,11 @@ namespace hedCommon.geometry.shape2d
         private float _vP1;
         [SerializeField, ReadOnly]
         private float _vP4;
+
+        [SerializeField, ReadOnly]
+        private float _lengthX; public float LenghtX { get { return (_lengthX); } }
+        [SerializeField, ReadOnly]
+        private float _lengthY; public float LenghtY { get { return (_lengthY); } }
 
         public ExtQuad(Vector3 position, Quaternion rotation, Vector3 localScale) : this()
         {
@@ -83,6 +92,9 @@ namespace hedCommon.geometry.shape2d
 
             _v41 = (_p4 - _p1);
             _v21 = (_p2 - _p1);
+
+            _lengthX = _v41.magnitude;
+            _lengthY = _v21.magnitude;
 
             _v41Squared = _v41.LengthSquared();
             _v21Squared = _v21.LengthSquared();

@@ -63,15 +63,16 @@ namespace philae.gravity.attractor
             {
                 return;
             }
+            this.UpdateEditor();
 
             ExtQuad quad = this.GetPropertie("_quad").GetValue<ExtQuad>();
 
-            GravityOverrideQuad gravityDisc = ExtGravityOverrideEditor.DrawQuad(quad, _attractor.GravityOverride, out bool hasChanged);
+            GravityOverrideQuad gravityQuad = ExtGravityOverrideEditor.DrawQuadWithBorders(quad, _attractor.GravityOverride, out bool hasChanged);
             if (hasChanged)
             {
-                _attractor.GravityOverride = gravityDisc;
-                _attractor.GravityOverride.SetupGravity();
-                EditorUtility.SetDirty(_attractor);
+                gravityQuad.SetupGravity();
+                ExtGravityOverrideEditor.ApplyModificationToQuad(this.GetPropertie("GravityOverride"), gravityQuad);
+                this.ApplyModification();
             }
         }
     }

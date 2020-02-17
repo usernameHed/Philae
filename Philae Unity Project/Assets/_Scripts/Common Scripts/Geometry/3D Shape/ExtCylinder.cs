@@ -17,6 +17,7 @@ namespace hedCommon.geometry.shape3d
         private Quaternion _rotation;
         public Quaternion Rotation { get { return (_rotation); } }
         private Vector3 _localScale;
+        public Vector3 LocalScale { get { return (_localScale); } }
 
         [SerializeField]
         private ExtCircle _circle1;

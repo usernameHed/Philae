@@ -50,7 +50,6 @@ namespace philae.gravity.attractor
             bool allowDownChange = GUILayout.Toggle(allowDown, "Allow Down", EditorStyles.miniButton);
             if (allowDownChange != allowDown)
             {
-                Debug.Log("ici !");
                 SerializedProperty quad = this.GetPropertie("_quad");
                 SerializedProperty plane = quad.GetPropertie("_plane");
                 SerializedProperty allowBottom = plane.GetPropertie("_allowBottom");
