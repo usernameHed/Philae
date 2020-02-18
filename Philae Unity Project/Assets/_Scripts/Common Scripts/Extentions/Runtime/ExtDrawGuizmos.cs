@@ -1129,10 +1129,10 @@ namespace hedCommon.extension.runtime
             {
                 Handles.Label(ExtVector3.GetMeanOfXPoints(p1, p5, p8, p4), "1");
                 Handles.Label(ExtVector3.GetMeanOfXPoints(p4, p8, p7, p3), "2");
-                Handles.Label(ExtVector3.GetMeanOfXPoints(p2, p3, p7, p6), "3");
-                Handles.Label(ExtVector3.GetMeanOfXPoints(p1, p2, p6, p5), "4");
-                Handles.Label(ExtVector3.GetMeanOfXPoints(p5, p6, p7, p8), "5");
-                Handles.Label(ExtVector3.GetMeanOfXPoints(p1, p2, p3, p4), "6");
+                Handles.Label(ExtVector3.GetMeanOfXPoints(p5, p6, p7, p8), "3");
+                Handles.Label(ExtVector3.GetMeanOfXPoints(p2, p1, p4, p3), "4");
+                Handles.Label(ExtVector3.GetMeanOfXPoints(p2, p6, p5, p1), "5");
+                Handles.Label(ExtVector3.GetMeanOfXPoints(p3, p7, p6, p2), "6");
             }
 
             if (drawPoints)
@@ -1261,9 +1261,6 @@ namespace hedCommon.extension.runtime
             Vector3 _lastPoint = position + matrix.MultiplyPoint3x4(new Vector3(Mathf.Cos(0), 0, Mathf.Sin(0)));
             Vector3 _nextPoint = Vector3.zero;
 
-            Color oldColor = Gizmos.color;
-            Gizmos.color = (color == default(Color)) ? Color.white : color;
-
             for (var i = 0; i < 91; i++)
             {
                 _nextPoint.x = Mathf.Cos((i * 4) * Mathf.Deg2Rad);
@@ -1272,11 +1269,10 @@ namespace hedCommon.extension.runtime
 
                 _nextPoint = position + matrix.MultiplyPoint3x4(_nextPoint);
 
-                Gizmos.DrawLine(_lastPoint, _nextPoint);
+                Debug.DrawLine(_lastPoint, _nextPoint, (color == default(Color)) ? Color.white : color);
                 _lastPoint = _nextPoint;
             }
 
-            Gizmos.color = oldColor;
         }
 
         public static void DrawCircle(ExtCircle circle, Color color, float radius = 1.0f, bool displayNormal = false, string index = "1")

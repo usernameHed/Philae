@@ -3,6 +3,8 @@ using System;
 using System.Text;
 using System.Security.Cryptography;
 using System.Collections.Generic;
+using hedCommon.extension.runtime.range;
+using hedCommon.extension.runtime.animationCurve;
 
 namespace hedCommon.extension.runtime
 {
@@ -16,7 +18,6 @@ namespace hedCommon.extension.runtime
         /// </summary>
         private static readonly RNGCryptoServiceProvider RandomGenerator = new RNGCryptoServiceProvider();
 
-        #region core script
         /// <summary>
         /// generate a random based on static hash
         /// </summary>
@@ -26,6 +27,49 @@ namespace hedCommon.extension.runtime
         {
             System.Random random = new System.Random(seed.GetHashCode());
             return (random);
+        }
+
+        /// <summary>
+        /// http://blog.s-schoener.com/2018-05-05-animation-curves/
+        /// 
+        /// Large y values mean that the corresponding x values are very likely.
+        /// 
+        /// let's try with a curve like that:
+        /// y
+        /// 
+        /// 1
+        /// |-----                 -----
+        /// |     |               | 
+        /// |     |               | 
+        /// |     |               | 
+        /// |     |               | 
+        /// |     |_______________| 
+        /// 0 ----0.2-------------0.8------ 1  x
+        /// 
+        /// here the function will give from 0 to 0.2 with high chance, 
+        /// and from 0.8 to 1 with high chance
+        /// 
+        /// and never from 0.2 to 0.8
+        /// 
+        /// </summary>
+        /// <param name="minimum"></param>
+        /// <param name="maximum"></param>
+        /// <param name="animationCurveNormalized"></param>
+        /// <returns></returns>
+        public static float GetRandomNumber(float minimum, float maximum, AnimationCurve animationCurveNormalized)
+        {
+            AnimationCurveSampler sampler = new AnimationCurveSampler(animationCurveNormalized);
+            // use this to sample according to the density given by the curve:
+            float evaluateFunc = sampler.Sample();
+
+            //float percent = GetRandomNumber(0, 1f);
+            //float evaluateInverse = animationCurveNormalized.Evaluate(percent);
+            return (ExtMathf.Remap(evaluateFunc, 0, 1, minimum, maximum));
+        }
+
+        public static float GetRandomNumber(FloatRandomRange floatRange)
+        {
+            return (GetRandomNumber(floatRange.Minimum, floatRange.Maximum, floatRange.Curve));
         }
 
         /// <summary>
@@ -424,6 +468,5 @@ namespace hedCommon.extension.runtime
 
             return specialCode.ToChar();
         }
-        #endregion
     }
 }

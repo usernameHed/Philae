@@ -79,6 +79,22 @@ namespace hedCommon.geometry.shape2d
             UpdateMatrix();
         }
 
+        ///     2 ------------- 3 
+        ///   /               /   
+        ///  1 ------------ 4  
+        public ExtQuad(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4) : this()
+        {
+            _position = ExtVector3.GetMeanOfXPoints(p1, p2, p3, p4);
+            Vector3 x = p1 - p2;
+            Vector3 y = p1 - p4;
+
+            Vector3 up = ExtVector3.CrossProduct(x, y);
+            _rotation = ExtRotation.QuaternionFromVectorDirector(up, x);
+            _rotation = ExtRotation.RotateQuaternion(_rotation, new Vector3(-90, 0, 0));
+            _localScale = new Vector3(y.magnitude, 1, x.magnitude);
+            UpdateMatrix();
+        }
+
         private void UpdateMatrix()
         {
             _quadMatrix = ExtMatrix.GetMatrixTRS(_position, _rotation, _localScale);

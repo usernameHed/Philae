@@ -69,6 +69,7 @@ MonoBehaviour:
       _plane:
         Point: {x: -44.36015, y: 55.18979, z: -137.17}
         Normal: {x: 0, y: 5, z: 0}
+        _allowBottom: 0
       _radius: 5
     _radius: 5
   GravityOverride:
@@ -152,7 +153,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8405064908452197665}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 75ea2bacaf5d8e74aaf1bf2d15f80f02, type: 2}
 --- !u!23 &5157967371886098904
 MeshRenderer:
   m_ObjectHideFlags: 0

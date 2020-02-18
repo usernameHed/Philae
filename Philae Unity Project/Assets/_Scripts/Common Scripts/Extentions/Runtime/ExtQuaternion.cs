@@ -647,31 +647,6 @@ namespace hedCommon.extension.runtime
         }
 
         /// <summary>
-        /// A cleaner version of FromToRotation, Quaternion.FromToRotation for some reason can only handle down to #.## precision.
-        /// This will result in true 7 digits of precision down to depths of 0.00000# (depth tested so far).
-        /// </summary>
-        /// <param name="v1"></param>
-        /// <param name="v2"></param>
-        /// <returns></returns>
-        public static Quaternion QuaternionFromLine(Vector3 p1, Vector3 p2)
-        {
-            Matrix4x4 rotationMatrix = ExtMatrix.LookAt(p1, p2, Vector3.up);
-            Quaternion rotation = rotationMatrix.ExtractRotation();
-            return (rotation);
-        }
-
-        /// <summary>
-        /// from a Vector3 director, create a good quaternion, without gimbal lock !
-        /// (use more calculation to avoid gimbal lock)
-        /// <returns></returns>
-        public static Quaternion QuaternionFromVectorDirector(Vector3 normal)
-        {
-            Matrix4x4 rotationMatrix = ExtMatrix.LookAt(normal, normal * 2, Vector3.up);
-            Quaternion rotation = rotationMatrix.ExtractRotation();
-            return (rotation);
-        }
-
-        /// <summary>
         /// Get the rotation that would be applied to 'start' to end up at 'end'.
         /// </summary>
         /// <param name="start"></param>

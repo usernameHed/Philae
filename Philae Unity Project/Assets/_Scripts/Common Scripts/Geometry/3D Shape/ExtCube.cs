@@ -1,4 +1,5 @@
 ﻿using hedCommon.extension.runtime;
+using hedCommon.extension.runtime.range;
 using hedCommon.geometry.shape2d;
 using philae.gravity.attractor.gravityOverride;
 using Sirenix.OdinInspector;
@@ -20,25 +21,26 @@ namespace hedCommon.geometry.shape3d
         public Quaternion Rotation { get { return (_rotation); } }
         [SerializeField, ReadOnly]
         private Vector3 _localScale;
+        public Vector3 LocalScale { get { return (_localScale); } }
         [SerializeField, ReadOnly]
         private Matrix4x4 _cubeMatrix;
 
         [SerializeField, ReadOnly]
         private Vector3 _p1;   public Vector3 P1 { get { return (_p1); } }
         [SerializeField, ReadOnly]
-        private Vector3 _p2;   public Vector3 P2 { get { return (_p1); } }
+        private Vector3 _p2;   public Vector3 P2 { get { return (_p2); } }
         [SerializeField, ReadOnly]
-        private Vector3 _p3;   public Vector3 P3 { get { return (_p1); } }
+        private Vector3 _p3;   public Vector3 P3 { get { return (_p3); } }
         [SerializeField, ReadOnly]
-        private Vector3 _p4;   public Vector3 P4 { get { return (_p1); } }
+        private Vector3 _p4;   public Vector3 P4 { get { return (_p4); } }
         [SerializeField, ReadOnly]
-        private Vector3 _p5;   public Vector3 P5 { get { return (_p1); } }
+        private Vector3 _p5;   public Vector3 P5 { get { return (_p5); } }
         [SerializeField, ReadOnly]
-        private Vector3 _p6;   public Vector3 P6 { get { return (_p1); } }
+        private Vector3 _p6;   public Vector3 P6 { get { return (_p6); } }
         [SerializeField, ReadOnly]
-        private Vector3 _p7;   public Vector3 P7 { get { return (_p1); } }
+        private Vector3 _p7;   public Vector3 P7 { get { return (_p7); } }
         [SerializeField, ReadOnly]
-        private Vector3 _p8;   public Vector3 P8 { get { return (_p1); } }
+        private Vector3 _p8;   public Vector3 P8 { get { return (_p8); } }
 
         [SerializeField, ReadOnly]
         private Vector3 _v41;
@@ -342,6 +344,37 @@ namespace hedCommon.geometry.shape3d
                 return (false);
             }
         }
+
+        /// <summary>
+        /// from a given point in space, order the face, from the closest to the farrest from the point
+        /// 
+        ///         cube
+        ///      6 ------------ 7
+        ///    / |    3       / |
+        ///  5 ------------ 8   | 
+        ///  |   |          |   |   -----------  point
+        ///  | 5 |     6    | 2 | 
+        ///  |   |   1      |   | 
+        ///  |  2 ----------|-- 3 
+        ///  |/       4     | /   
+        ///  1 ------------ 4     
+        /// </summary>
+        /// <returns></returns>
+        public static FloatRange[] GetOrdersOfFaceFromPoint(ExtCube cube, Vector3 point)
+        {
+            FloatRange[] faceDistance = new FloatRange[6];
+
+            faceDistance[0] = new FloatRange(1, ExtVector3.DistanceSquared(ExtVector3.GetMeanOfXPoints(cube.P1, cube.P5, cube.P8, cube.P4), point));
+            faceDistance[1] = new FloatRange(2, ExtVector3.DistanceSquared(ExtVector3.GetMeanOfXPoints(cube.P4, cube.P8, cube.P7, cube.P3), point));
+            faceDistance[2] = new FloatRange(3, ExtVector3.DistanceSquared(ExtVector3.GetMeanOfXPoints(cube.P5, cube.P6, cube.P7, cube.P8), point));
+            faceDistance[3] = new FloatRange(4, ExtVector3.DistanceSquared(ExtVector3.GetMeanOfXPoints(cube.P1, cube.P2, cube.P3, cube.P4), point));
+            faceDistance[4] = new FloatRange(5, ExtVector3.DistanceSquared(ExtVector3.GetMeanOfXPoints(cube.P2, cube.P6, cube.P5, cube.P1), point));
+            faceDistance[5] = new FloatRange(6, ExtVector3.DistanceSquared(ExtVector3.GetMeanOfXPoints(cube.P3, cube.P7, cube.P6, cube.P2), point));
+
+            faceDistance = FloatRange.Sort(faceDistance);
+            return (faceDistance);
+        }
+
         //end class
     }
     //end nameSpace

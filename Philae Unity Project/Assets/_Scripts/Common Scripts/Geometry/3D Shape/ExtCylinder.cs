@@ -65,6 +65,28 @@ namespace hedCommon.geometry.shape3d
             UpdateMatrix();
         }
 
+        public ExtCylinder(Vector3 p1, Vector3 p2, float radius)
+        {
+            _position = ExtVector3.GetMeanOfXPoints(p1, p2);
+            _rotation = ExtRotation.QuaternionFromLine(p1, p2, Vector3.up);
+            _rotation = ExtRotation.RotateQuaternion(_rotation, new Vector3(90, 0, 0));
+
+            _localScale = new Vector3(1, 1, 1);
+
+            _cylinderMatrix = Matrix4x4.TRS(_position, _rotation, _localScale * 1);
+
+
+            _radius = 0.25f;
+            _lenght = ExtVector3.Distance(p2, p1) * 0.8f;
+
+            _lenghtSquared = _lenght * _lenght;
+            _radiusSquared = _radius * _radius;
+            _realRadius = _radius * MaxXY(_localScale);
+            _realSquaredRadius = _realRadius * _realRadius;
+
+            UpdateMatrix();
+        }
+
         private void UpdateMatrix()
         {
             _cylinderMatrix = Matrix4x4.TRS(_position, _rotation, _localScale * _radius);
@@ -204,6 +226,11 @@ namespace hedCommon.geometry.shape3d
                 Vector3 pointOnSurfaceLine = pointOnLine + ((k - pointOnLine).FastNormalized() * _realRadius);
                 return (pointOnSurfaceLine);
             }
+        }
+
+        public float GetDistanceFromPoint(Vector3 k)
+        {
+            return (GetClosestPoint(k).magnitude);
         }
 
         public Vector3 GetClosestPointIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideCylinder gravityOverride)

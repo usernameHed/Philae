@@ -63,14 +63,15 @@ namespace philae.gravity.attractor
             {
                 return;
             }
-
+            this.UpdateEditor();
             ExtCube cube = this.GetPropertie("_cube").GetValue<ExtCube>();
             GravityOverrideCube gravityCube = ExtGravityOverrideEditor.DrawCube(cube, _attractor.GravityOverride, out bool hasChanged);
             if (hasChanged)
             {
-                _attractor.GravityOverride = gravityCube;
-                _attractor.GravityOverride.SetupGravity();
-                EditorUtility.SetDirty(_attractor);
+                gravityCube.SetupGravity();
+                ExtGravityOverrideEditor.ApplyModificationToCube(this.GetPropertie("GravityOverride"), gravityCube);
+                this.ApplyModification();
+
             }
         }
     }
