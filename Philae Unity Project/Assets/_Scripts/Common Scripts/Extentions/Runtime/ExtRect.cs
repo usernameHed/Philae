@@ -124,27 +124,24 @@ namespace hedCommon.extension.runtime
             return r;
         }
 
-        public static void SetX(this RectTransform rectTransform, float x)
+        public static void SetRectX(this RectTransform rectTransform, float x)
         {
             rectTransform.anchoredPosition = new Vector2(x, rectTransform.anchoredPosition.y);
         }
 
-        public static float GetX(this RectTransform rectTransform)
+        public static float GetRectX(this RectTransform rectTransform)
         {
             return (rectTransform.anchoredPosition.x);
         }
 
-
-
-        public static void SetY(this RectTransform rectTransform, float y)
+        public static void SetRectY(this RectTransform rectTransform, float y)
         {
             rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, y);
         }
-        public static float GetY(this RectTransform rectTransform)
+        public static float GetRectY(this RectTransform rectTransform)
         {
             return (rectTransform.anchoredPosition.y);
         }
-
         public static void SetWidth(this RectTransform rectTransform, float width)
         {
             rectTransform.sizeDelta = new Vector2(width, rectTransform.sizeDelta.y);
@@ -152,6 +149,26 @@ namespace hedCommon.extension.runtime
         public static float GetWidth(this RectTransform rectTransform)
         {
             return (rectTransform.sizeDelta.x);
+        }
+
+        public static void SetOffsetMinX(this RectTransform rectTransform, float minX)
+        {
+            rectTransform.offsetMin = new Vector2(minX, rectTransform.offsetMin.y);
+        }
+
+        public static void SetOffsetMinY(this RectTransform rectTransform, float minY)
+        {
+            rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, minY);
+        }
+
+        public static void SetOffsetMaxX(this RectTransform rectTransform, float maxX)
+        {
+            rectTransform.offsetMax = new Vector2(maxX, rectTransform.offsetMax.y);
+        }
+
+        public static void SetOffsetMaxY(this RectTransform rectTransform, float maxY)
+        {
+            rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, maxY);
         }
 
         public static void SetHeight(this RectTransform rectTransform, float height)

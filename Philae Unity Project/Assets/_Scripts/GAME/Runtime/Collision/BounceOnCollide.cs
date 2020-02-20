@@ -54,7 +54,7 @@ namespace philae.gravity.collision
 
             _bounceOnce.Add(new CollisionGraviton(rigidGraviton));
             Vector3 currentVelocity = rigidGraviton.GetPreviousVelocity();
-            Vector3 normal = -ExtVector3.GetMiddleOfXVector(collision.contacts);
+            Vector3 normal = -ExtVector3.GetMiddleOfXContactNormal(collision.contacts);
             Vector3 newDirection = Vector3.Reflect(currentVelocity, normal) * _bounceMultiplier;
             rigidGraviton.SetVelocity(newDirection);
             Debug.DrawRay(rigidGraviton.Position, newDirection, Color.black, 2f);

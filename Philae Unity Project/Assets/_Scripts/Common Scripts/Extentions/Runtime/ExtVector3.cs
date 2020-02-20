@@ -587,7 +587,9 @@ namespace hedCommon.extension.runtime
         {
             return ((a + b).normalized);
         }
-        public static Vector3 GetMiddleOfXVector(ContactPoint[] arrayVect)
+
+
+        public static Vector3 GetMiddleOfXContactNormal(ContactPoint[] arrayVect)
         {
             Vector3[] arrayTmp = new Vector3[arrayVect.Length];
 
@@ -599,14 +601,22 @@ namespace hedCommon.extension.runtime
             return (GetMiddleOfXVector(arrayTmp));
         }
 
+        public static Vector3 GetMeanOfXContactPoints(ContactPoint[] arrayContact)
+        {
+            Vector3[] arrayTmp = new Vector3[arrayContact.Length];
+
+            for (int i = 0; i < arrayContact.Length; i++)
+            {
+                arrayTmp[i] = arrayContact[i].point;
+            }
+            return (GetMeanOfXPoints(arrayTmp, out Vector3 sizeBOundingBox, true));
+        }
+
         public static Vector3 GetMiddleOfXVector(Vector3[] arrayVect)
         {
             Vector3 sum = Vector3.zero;
             for (int i = 0; i < arrayVect.Length; i++)
             {
-                if (ExtVector3.IsNullVector(arrayVect[i]))
-                    continue;
-
                 sum += arrayVect[i];
             }
             return ((sum).normalized);
