@@ -293,9 +293,7 @@ namespace hedCommon.geometry.shape3d
             tz = tz < 0 ? 0 : tz > 1 ? 1 : tz;
 
             closestPoint = tx * _v41 + ty * _v51 + tz * _v21 + _p1;
-
-            //canApply = CanApplyFaceCube(closestPoint, K, cube);
-            return (canApply);
+            return (true);
         }
 
         private bool CanApplyFaces(Vector3 K, GravityOverrideCube cube)
@@ -324,93 +322,16 @@ namespace hedCommon.geometry.shape3d
             if (!cube.Line10 && isAboveFace3 && isAboveFace2 && !isAboveFace1 && !isAboveFace6) { return (false); }
             if (!cube.Line11 && isAboveFace2 && isAboveFace6 && !isAboveFace3 && !isAboveFace4) { return (false); }
             if (!cube.Line12 && isAboveFace2 && isAboveFace4 && !isAboveFace1 && !isAboveFace6) { return (false); }
-
+            if (!cube.Point1 && isAboveFace1 && isAboveFace5 && isAboveFace4) { return (false); }
+            if (!cube.Point2 && isAboveFace5 && isAboveFace6 && isAboveFace4) { return (false); }
+            if (!cube.Point3 && isAboveFace6 && isAboveFace2 && isAboveFace4) { return (false); }
+            if (!cube.Point4 && isAboveFace1 && isAboveFace2 && isAboveFace4) { return (false); }
+            if (!cube.Point5 && isAboveFace1 && isAboveFace3 && isAboveFace5) { return (false); }
+            if (!cube.Point6 && isAboveFace3 && isAboveFace5 && isAboveFace6) { return (false); }
+            if (!cube.Point7 && isAboveFace3 && isAboveFace2 && isAboveFace5) { return (false); }
+            if (!cube.Point8 && isAboveFace1 && isAboveFace2 && isAboveFace3) { return (false); }
             return (true);
         }
-
-        /*
-        private bool CanApplyFaceCube(Vector3 T, Vector3 K, GravityOverrideCube cube)
-        {
-
-
-            if (!cube.Face1 && CanApplyFace(T, _p1, _p5, _p4, K)) { return (false); } //Face 1        (Z)
-            
-            if (!cube.Face2 && CanApplyFaceX(T, _p4, _p8, _p3)) { return (false); } //Face 2 (X)
-            if (!cube.Face3 && CanApplyFaceY(T, _p5, _p6, _p8)) { return (false); } //Face 3    (Y)
-            if (!cube.Face4 && CanApplyFaceY(T, _p2, _p1, _p3)) { return (false); } //Face 4    (Y)
-            if (!cube.Face5 && CanApplyFaceX(T, _p2, _p6, _p1)) { return (false); } //Face 5 (X)
-            if (!cube.Face6 && CanApplyFaceZ(T, _p3, _p7, _p2)) { return (false); } //Face 6        (Z)
-
-            if (!cube.Point1 && T == _p1) { return (false); } //Point 1
-            if (!cube.Point2 && T == _p2) { return (false); } //Point 2
-            if (!cube.Point3 && T == _p3) { return (false); } //Point 3
-            if (!cube.Point4 && T == _p4) { return (false); } //Point 4
-            if (!cube.Point5 && T == _p5) { return (false); } //Point 5
-            if (!cube.Point6 && T == _p6) { return (false); } //Point 6
-            if (!cube.Point7 && T == _p7) { return (false); } //Point 7
-            if (!cube.Point8 && T == _p8) { return (false); } //Point 8
-
-            if (!cube.Line1 && CanApplyLineZ(T, _p1, _p5)) { return (false); }   //line 1           (Z)
-            if (!cube.Line2 && CanApplyLineY(T, _p5, _p8)) { return (false); }   //line 2       (Y)
-            if (!cube.Line3 && CanApplyLineZ(T, _p8, _p4)) { return (false); }   //line 3           (Z)
-            if (!cube.Line4 && CanApplyLineY(T, _p1, _p4)) { return (false); }   //line 4       (Y)
-            if (!cube.Line5 && CanApplyLineZ(T, _p2, _p6)) { return (false); }   //line 5           (Z)
-            if (!cube.Line6 && CanApplyLineX(T, _p6, _p5)) { return (false); }   //line 6   (X)
-            if (!cube.Line7 && CanApplyLineX(T, _p1, _p2)) { return (false); }   //line 7   (X)
-            if (!cube.Line8 && CanApplyLineY(T, _p7, _p6)) { return (false); }   //line 8       (Y)
-            if (!cube.Line9 && CanApplyLineY(T, _p3, _p2)) { return (false); }   //line 9       (Y)
-            if (!cube.Line10 && CanApplyLineX(T, _p7, _p8)) { return (false); }   //line 10 (X)
-            if (!cube.Line11 && CanApplyLineZ(T, _p3, _p7)) { return (false); }   //line 11         (Z)
-            if (!cube.Line12 && CanApplyLineX(T, _p4, _p3)) { return (false); }   //line 12 (X)
-            
-            return (true);
-        }
-
-        private bool CanApplyFace(Vector3 T, Vector3 CA, Vector3 CB, Vector3 CC, Vector3 K)
-        {
-            ExtPlane plane = new ExtPlane(CA, CB, CC, false);
-            bool isAbove = plane.IsAbove(K);
-            if (!isAbove)
-            {
-                return (false);
-            }
-            return (plane.IsPointOnPlane(T));
-        }
-
-        private bool CanApplyFaceY(Vector3 T, Vector3 CA, Vector3 CB, Vector3 CC)
-        {
-            if (T.x == CA.x || T.x == CC.x) { return (false); }
-            else if (T.z == CA.z || T.z == CB.z) { return (false); }
-            return (true);
-        }
-
-        private bool CanApplyFaceX(Vector3 T, Vector3 CA, Vector3 CB, Vector3 CC)
-        {
-            if (T.y == CA.y || T.y == CB.y) { return (false); }
-            else if (T.z == CA.z || T.z == CC.z) { return (false); }
-            return (true);
-        }
-
-        private bool CanApplyLineX(Vector3 T, Vector3 CA, Vector3 CB)
-        {
-            if (T.z == CB.z || T.z == CA.z) { return (false); }
-            return (true);
-        }
-
-        private bool CanApplyLineY(Vector3 T, Vector3 CA, Vector3 CB)
-        {
-            if (T.x == CB.x || T.x == CA.x) { return (false); }
-            return (true);
-        }
-
-        private bool CanApplyLineZ(Vector3 T, Vector3 CA, Vector3 CB)
-        {
-            if (T.y == CB.y || T.y == CA.y) { return (false); }
-            return (true);
-        }
-        */
-
-        
 
         //Returns true if a line segment (made up of linePoint1 and linePoint2) is fully or partially in a rectangle
         //made up of RectA to RectD. The line segment is assumed to be on the same plane as the rectangle. If the line is 
