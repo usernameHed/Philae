@@ -198,6 +198,11 @@ namespace hedCommon.geometry.shape2d
             }
             canApplyGravity = true;
 
+            return (GetClosestPoint(k));
+        }
+
+        private Vector3 GetClosestPoint(Vector3 k)
+        {
             Vector3 vK1 = k - _p1;
             float tx = ExtVector3.DotProduct(vK1, _v41) / _v41Squared;
             float tz = ExtVector3.DotProduct(vK1, _v21) / _v21Squared;
@@ -212,14 +217,16 @@ namespace hedCommon.geometry.shape2d
             return (closestPoint);
         }
 
-        public Vector3 GetClosestPointIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideQuad gravityQuad)
+        public bool GetClosestPointIfWeCan(Vector3 k, GravityOverrideQuad gravityQuad, out Vector3 closestPoint)
         {
+            closestPoint = Vector3.zero;
             if (!_plane.AllowBottom && !_plane.IsAbove(k))
             {
-                canApplyGravity = false;
-                return (k);
+                return (false);
             }
-            return (GetClosestPoint(k, out canApplyGravity));
+
+            closestPoint = GetClosestPoint(k);
+            return (true);
         }
 
         /*

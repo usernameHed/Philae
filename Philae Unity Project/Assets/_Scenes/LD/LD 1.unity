@@ -580,7 +580,7 @@ PrefabInstance:
     - target: {fileID: 432279040938347760, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 432279040938347761, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -640,17 +640,17 @@ PrefabInstance:
     - target: {fileID: 432279040938347761, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 28.833214
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 432279040938347761, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 28.8332
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 432279040938347761, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 16.036951
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -735,137 +735,137 @@ PrefabInstance:
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p1.x
-      value: -74.536606
+      value: -60.62
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p1.y
-      value: 63.39333
+      value: 63.26831
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p1.z
-      value: -140.17737
+      value: -132.65993
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p2.x
-      value: -74.536606
+      value: -60.62
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p2.y
-      value: 63.126667
+      value: 63.251686
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p2.z
-      value: -124.14264
+      value: -131.66008
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p3.x
-      value: -45.703392
+      value: -59.62
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p3.y
-      value: 63.126667
+      value: 63.251686
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p3.z
-      value: -124.14264
+      value: -131.66008
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p4.x
-      value: -45.703392
+      value: -59.62
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p4.y
-      value: 63.39333
+      value: 63.26831
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p4.z
-      value: -140.17737
+      value: -132.65993
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._uP1
-      value: 2264.6108
+      value: 133.69148
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._uP2
-      value: 2007.4271
+      value: 132.69151
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._vP1
-      value: 2149.13
+      value: 60.62
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._vP4
-      value: 1317.7756
+      value: 59.62
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._localScale.x
-      value: 28.833214
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._localScale.y
-      value: 28.8332
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._localScale.z
-      value: 16.036951
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._plane.Normal.y
-      value: 28.829214
+      value: 0.9998617
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._quadMatrix.e00
-      value: 28.833214
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._quadMatrix.e11
-      value: 28.829214
+      value: 0.9998617
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._quadMatrix.e22
-      value: 16.034733
+      value: 0.9998617
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._v41.x
-      value: 28.833214
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._v21.z
-      value: 16.034729
+      value: 0.9998474
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._v41Squared
-      value: 831.35425
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._v21Squared
-      value: 257.18365
+      value: 0.9999712
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -925,12 +925,12 @@ PrefabInstance:
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._lengthX
-      value: 28.833214
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._lengthY
-      value: 16.036945
+      value: 0.99998564
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -940,7 +940,7 @@ PrefabInstance:
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._plane.Normal.z
-      value: 0.47944272
+      value: 0.016628148
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -960,7 +960,7 @@ PrefabInstance:
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._quadMatrix.e21
-      value: 0.47944272
+      value: 0.016628148
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -975,12 +975,12 @@ PrefabInstance:
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._quadMatrix.e12
-      value: -0.2666648
+      value: -0.016628148
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._v21.y
-      value: -0.2666626
+      value: -0.01662445
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2066e3f832307254092793b08105cd73, type: 3}
@@ -2003,7 +2003,7 @@ PrefabInstance:
     - target: {fileID: 5416466520114392403, guid: 8f563c0df1b453942888feb3ea318204,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5416466520114392406, guid: 8f563c0df1b453942888feb3ea318204,
         type: 3}
@@ -2253,7 +2253,7 @@ PrefabInstance:
     - target: {fileID: 291306345162312313, guid: 8f563c0df1b453942888feb3ea318204,
         type: 3}
       propertyPath: GravityOverride.Point3
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 291306345162312313, guid: 8f563c0df1b453942888feb3ea318204,
         type: 3}
