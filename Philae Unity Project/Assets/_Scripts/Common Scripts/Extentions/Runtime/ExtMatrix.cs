@@ -123,31 +123,35 @@ namespace hedCommon.extension.runtime
 
         public static Vector3 Forward(this Matrix4x4 matrix)
         {
-            Vector3 forward = matrix.GetColumn(2);
-            return (forward);
+            return (matrix.GetColumn(2));
+        }
+        public static Vector3 Backward(this Matrix4x4 matrix)
+        {
+            return (-matrix.GetColumn(2));
         }
 
         public static Vector3 Up(this Matrix4x4 matrix)
         {
-            Vector3 upwards = matrix.GetColumn(1);
-            return (upwards);
+            return (matrix.GetColumn(1));
+        }
+
+        public static Vector3 Down(this Matrix4x4 matrix)
+        {
+            return (-matrix.GetColumn(1));
         }
 
         public static Vector3 Right(this Matrix4x4 matrix)
         {
-            Vector3 right = matrix.GetColumn(0);
-            return (right);
+            return (matrix.GetColumn(0));
+        }
+
+        public static Vector3 Left(this Matrix4x4 matrix)
+        {
+            return (-matrix.GetColumn(0));
         }
 
         public static Vector3 ExtractScale(this Matrix4x4 matrix)
         {
-            /*
-            Vector3 scale = new Vector3(
-                m.GetColumn(0).magnitude,
-                m.GetColumn(1).magnitude,
-                m.GetColumn(2).magnitude
-            */
-
             Vector3 scale;
             scale.x = new Vector4(matrix.m00, matrix.m10, matrix.m20, matrix.m30).magnitude;
             scale.y = new Vector4(matrix.m01, matrix.m11, matrix.m21, matrix.m31).magnitude;

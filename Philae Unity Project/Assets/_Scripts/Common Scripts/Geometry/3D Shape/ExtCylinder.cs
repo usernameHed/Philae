@@ -106,14 +106,14 @@ namespace hedCommon.geometry.shape3d
         {
             _cylinderMatrix = Matrix4x4.TRS(_position, _rotation, _localScale * _radius);
             Vector3 size = new Vector3(0, _lenght / 2, 0);
-            _p1 = _cylinderMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
-            _p2 = _cylinderMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
+            _p1 = _cylinderMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
+            _p2 = _cylinderMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
             _delta = _p2 - _p1;
             _deltaNormalized = _delta.FastNormalized();
             _deltaSquared = ExtVector3.DotProduct(_delta, _delta);
 
-            _circle1.MoveSphape(_p1, -_cylinderMatrix.Up(), _realRadius);
-            _circle2.MoveSphape(_p2, _cylinderMatrix.Up(), _realRadius);
+            _circle1.MoveSphape(_p1, _cylinderMatrix.Up(), _realRadius);
+            _circle2.MoveSphape(_p2, _cylinderMatrix.Down(), _realRadius);
         }
 
         public virtual void Draw(Color color)
