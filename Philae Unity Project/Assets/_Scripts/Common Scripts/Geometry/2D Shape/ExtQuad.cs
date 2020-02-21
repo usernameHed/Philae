@@ -10,10 +10,16 @@ namespace hedCommon.geometry.shape2d
 {
 
     /// <summary>
-    /// a perfect 3D Quad, with 3 points
-    ///     2 ------------- 3 
-    ///   /               /   
-    ///  1 ------------ 4  
+    /// a 3D Quad, with 3 points
+    /// (we save the perpendiculare quad for ClosestPoints calculation
+    /// 
+    ///     2 ------2------ 3 
+    ///   1 |             3 |
+    ///  1 ------4----- 4   |
+    ///  |  |      3    |   |
+    ///  | 4|           | 2 |
+    ///  |       1      |
+    ///  |              |
     /// </summary>
     [Serializable]
     public struct ExtQuad
@@ -70,6 +76,15 @@ namespace hedCommon.geometry.shape2d
         [SerializeField, ReadOnly]
         private float _lengthY; public float LenghtY { get { return (_lengthY); } }
 
+        [SerializeField]
+        private ExtPlane _planeAdjacent1;
+        [SerializeField]
+        private ExtPlane _planeAdjacent2;
+        [SerializeField]
+        private ExtPlane _planeAdjacent3;
+        [SerializeField]
+        private ExtPlane _planeAdjacent4;
+
         public ExtQuad(Vector3 position, Quaternion rotation, Vector3 localScale) : this()
         {
             _position = position;
@@ -79,9 +94,16 @@ namespace hedCommon.geometry.shape2d
             UpdateMatrix();
         }
 
-        ///     2 ------------- 3 
-        ///   /               /   
-        ///  1 ------------ 4  
+        ///     2 ------2------ 3 
+        ///   1 |             3 |
+        ///  1 ------4----- 4   |
+        ///  |  |      3    |   |
+        ///  | 4|           | 2 |
+        ///  |       1      |
+        ///  |              |
+        ///
+
+
         public ExtQuad(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4) : this()
         {
             _position = ExtVector3.GetMeanOfXPoints(p1, p2, p3, p4);
@@ -121,6 +143,10 @@ namespace hedCommon.geometry.shape2d
             _vP4 = ExtVector3.DotProduct(-_v41, _p4);
 
             _plane.MoveShape(_position, _quadMatrix.Up());
+            _planeAdjacent1.MoveShape(_p1, -_quadMatrix.Forward());
+            _planeAdjacent2.MoveShape(_p4, _quadMatrix.Right());
+            _planeAdjacent3.MoveShape(_p3, _quadMatrix.Forward());
+            _planeAdjacent4.MoveShape(_p1, -_quadMatrix.Right());
         }
 
         public void Draw(Color color, bool drawFace, bool drawPoints)
@@ -162,12 +188,6 @@ namespace hedCommon.geometry.shape2d
         /// </summary>
         public bool IsInsideShape(Vector3 k)
         {
-#if UNITY_EDITOR
-            if (_p1 == _p2 && _p1 == _p4)
-            {
-                return (false);
-            }
-#endif
             if (!_plane.AllowBottom && !_plane.IsAbove(k))
             {
                 return (false);
@@ -210,22 +230,42 @@ namespace hedCommon.geometry.shape2d
             tx = ExtMathf.SetBetween(tx, 0, 1);
             tz = ExtMathf.SetBetween(tz, 0, 1);
 
-            Vector3 closestPoint = tx * _v41
-                                    + tz * _v21
-                                    + _p1;
+            Vector3 closestPoint = tx * _v41 + tz * _v21 + _p1;
 
             return (closestPoint);
         }
 
-        public bool GetClosestPointIfWeCan(Vector3 k, GravityOverrideQuad gravityQuad, out Vector3 closestPoint)
+        public bool GetClosestPointIfWeCan(Vector3 K, GravityOverrideQuad quad, out Vector3 closestPoint)
         {
             closestPoint = Vector3.zero;
-            if (!_plane.AllowBottom && !_plane.IsAbove(k))
+            if (!_plane.AllowBottom && !_plane.IsAbove(K))
             {
                 return (false);
             }
+            if (!CanApplyFaces(K, quad))
+            {
+                return (false);
+            }            
 
-            closestPoint = GetClosestPoint(k);
+            closestPoint = GetClosestPoint(K);
+            return (true);
+        }
+
+        private bool CanApplyFaces(Vector3 K, GravityOverrideQuad quad)
+        {
+            bool isAboveFaceAdjecent1 = _planeAdjacent1.IsAbove(K);
+            bool isAboveFaceAdjecent2 = _planeAdjacent2.IsAbove(K);
+            bool isAboveFaceAdjecent3 = _planeAdjacent3.IsAbove(K);
+            bool isAboveFaceAdjecent4 = _planeAdjacent4.IsAbove(K);
+            if (!quad.Face1 && !isAboveFaceAdjecent1 && !isAboveFaceAdjecent2 && !isAboveFaceAdjecent3 && !isAboveFaceAdjecent4) { return (false); }
+            if (!quad.Line1 && isAboveFaceAdjecent4 && !isAboveFaceAdjecent3 && !isAboveFaceAdjecent1) { return (false); }
+            if (!quad.Line2 && isAboveFaceAdjecent3 && !isAboveFaceAdjecent4 && !isAboveFaceAdjecent2) { return (false); }
+            if (!quad.Line3 && isAboveFaceAdjecent2 && !isAboveFaceAdjecent3 && !isAboveFaceAdjecent1) { return (false); }
+            if (!quad.Line4 && isAboveFaceAdjecent1 && !isAboveFaceAdjecent4 && !isAboveFaceAdjecent2) { return (false); }
+            if (!quad.Point1 && isAboveFaceAdjecent1 && isAboveFaceAdjecent4) { return (false); }
+            if (!quad.Point2 && isAboveFaceAdjecent3 && isAboveFaceAdjecent4) { return (false); }
+            if (!quad.Point3 && isAboveFaceAdjecent3 && isAboveFaceAdjecent2) { return (false); }
+            if (!quad.Point4 && isAboveFaceAdjecent1 && isAboveFaceAdjecent2) { return (false); }
             return (true);
         }
 

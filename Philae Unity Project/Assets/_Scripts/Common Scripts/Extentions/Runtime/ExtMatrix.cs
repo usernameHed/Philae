@@ -8,6 +8,16 @@ namespace hedCommon.extension.runtime
     {
         /// <summary>
         /// apply a lerp between the 2 matrix by time
+        /// // memory layout:
+        //
+        //                row no (=vertical)
+        //               |  0   1   2   3
+        //            ---+----------------
+        //            0  | m00 m10 m20 m30      //GetColumn(0)
+        // column no  1  | m01 m11 m21 m31      //GetColumn(1)
+        // (=horiz)   2  | m02 m12 m22 m32      //GetColumn(2)
+        //            3  | m03 m13 m23 m33      //GetColumn(3)
+
         /// </summary>
         /// <returns>Lerped matrix</returns>
         public static Matrix4x4 MatrixLerp(Matrix4x4 from, Matrix4x4 to, float time)
@@ -113,20 +123,20 @@ namespace hedCommon.extension.runtime
 
         public static Vector3 Forward(this Matrix4x4 matrix)
         {
-            Vector3 forward;//= matrix.GetColumn(2);
-            forward.x = matrix.m02;
-            forward.y = matrix.m12;
-            forward.z = matrix.m22;
+            Vector3 forward = matrix.GetColumn(2);
             return (forward);
         }
 
         public static Vector3 Up(this Matrix4x4 matrix)
         {
-            Vector3 upwards;//= matrix.GetColumn(1);
-            upwards.x = matrix.m01;
-            upwards.y = matrix.m11;
-            upwards.z = matrix.m21;
+            Vector3 upwards = matrix.GetColumn(1);
             return (upwards);
+        }
+
+        public static Vector3 Right(this Matrix4x4 matrix)
+        {
+            Vector3 right = matrix.GetColumn(0);
+            return (right);
         }
 
         public static Vector3 ExtractScale(this Matrix4x4 matrix)

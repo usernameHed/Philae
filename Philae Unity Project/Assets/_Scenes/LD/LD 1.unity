@@ -590,7 +590,7 @@ PrefabInstance:
     - target: {fileID: 432279040938347761, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 63.26
+      value: 63.182
       objectReference: {fileID: 0}
     - target: {fileID: 432279040938347761, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -675,7 +675,7 @@ PrefabInstance:
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._position.y
-      value: 63.26
+      value: 63.182
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -705,7 +705,7 @@ PrefabInstance:
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._plane.Point.y
-      value: 63.26
+      value: 63.182
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -725,7 +725,7 @@ PrefabInstance:
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._quadMatrix.e13
-      value: 63.26
+      value: 63.182
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -740,7 +740,7 @@ PrefabInstance:
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p1.y
-      value: 63.26831
+      value: 63.19031
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -755,7 +755,7 @@ PrefabInstance:
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p2.y
-      value: 63.251686
+      value: 63.173687
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -770,7 +770,7 @@ PrefabInstance:
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p3.y
-      value: 63.251686
+      value: 63.173687
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -785,7 +785,7 @@ PrefabInstance:
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._p4.y
-      value: 63.26831
+      value: 63.19031
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -795,12 +795,12 @@ PrefabInstance:
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._uP1
-      value: 133.69148
+      value: 133.69019
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: _quad._uP2
-      value: 132.69151
+      value: 132.69022
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -875,52 +875,52 @@ PrefabInstance:
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: GravityOverride.Face1
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: GravityOverride.Point4
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: GravityOverride.Point1
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: GravityOverride.Point3
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: GravityOverride.Point2
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: GravityOverride.Line4
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: GravityOverride.Line3
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: GravityOverride.Line2
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: GravityOverride.Line1
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
       propertyPath: GravityOverride._canApplyGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
         type: 3}
@@ -981,6 +981,111 @@ PrefabInstance:
         type: 3}
       propertyPath: _quad._v21.y
       value: -0.01662445
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent1.Point.x
+      value: -60.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent1.Point.y
+      value: 63.19031
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent1.Point.z
+      value: -132.65993
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent1.Normal.y
+      value: 0.016628148
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent1.Normal.z
+      value: -0.9998617
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent2.Point.x
+      value: -59.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent2.Point.y
+      value: 63.19031
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent2.Point.z
+      value: -132.65993
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent2.Normal.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent2.Normal.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent3.Point.x
+      value: -59.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent3.Point.y
+      value: 63.173687
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent3.Point.z
+      value: -131.66008
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent3.Normal.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent3.Normal.y
+      value: -0.016628148
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent3.Normal.z
+      value: 0.9998617
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent4.Point.x
+      value: -60.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent4.Point.y
+      value: 63.19031
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent4.Point.z
+      value: -132.65993
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent4.Normal.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1400493369551946973, guid: 2066e3f832307254092793b08105cd73,
+        type: 3}
+      propertyPath: _quad._planeAdjacent4.Normal.z
+      value: -0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2066e3f832307254092793b08105cd73, type: 3}
