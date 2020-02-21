@@ -98,12 +98,6 @@ namespace hedCommon.geometry.shape3d
         /// </summary>
         public override bool IsInsideShape(Vector3 pointToTest)
         {
-#if UNITY_EDITOR
-            if (_p1 == _p2 || _radius == 0)
-            {
-                return (false);
-            }
-#endif
             bool isInsideTopSphere = SphereBottom && _topSphere.IsInsideShape(pointToTest);
             if (isInsideTopSphere)
             {

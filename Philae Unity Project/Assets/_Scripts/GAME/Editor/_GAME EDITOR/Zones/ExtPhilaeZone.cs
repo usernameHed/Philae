@@ -39,18 +39,7 @@ namespace philae.editor.extension.zone
             GameObject instance = ExtPrefabsEditor.InstantiatePrefabsWithLinkFromAssetPrefabPath("Zone/" + zoneName);
 
             GravityAttractorZone zone = instance.GetComponent<GravityAttractorZone>();
-            zone.GetScalerZoneReference.gameObject.hideFlags = HideFlags.NotEditable;
 
-            TransformHiddedTools zoneTool = zone.GetOrAddComponent<TransformHiddedTools>();
-            zoneTool.HideHandle = true;
-
-            TransformHiddedTools hiddedTools = zone.GetScalerZoneReference.GetOrAddComponent<TransformHiddedTools>();
-            hiddedTools.ShowName = true;
-            hiddedTools.ColorText = Color.yellow;
-            hiddedTools.HideHandle = true;
-
-            //zone.Init(ZonesLister.Instance);
-            //zone.ShapeZone = shape
 
             ZonesLister.Instance.Init();
         }

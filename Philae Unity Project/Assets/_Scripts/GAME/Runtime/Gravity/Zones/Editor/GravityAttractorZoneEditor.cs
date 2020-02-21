@@ -62,18 +62,6 @@ namespace philae.gravity.zones
                 return;
             }
 
-
-            ExtHandle.DoMultiHandle(_zone.GetScalerZoneReference, out bool hasChanged);
-            if (hasChanged)
-            {
-                ConstrainPosition.ApplyConstraint(_zone.SettingsGlobal.ConstrainPosition, _zone.GetScalerZoneReference);
-            }
-
-
-            if (ExtEventEditor.IsKeyDown(Event.current, KeyCode.F))
-            {
-                ExtSceneView.FocusOnSelection(_zone.GetScalerZoneReference.gameObject, 100);
-            }
             LockZoneTransform();
         }
 

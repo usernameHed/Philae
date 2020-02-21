@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 3156696025954553121}
   - component: {fileID: 3156696025954553122}
   - component: {fileID: 3156696025954553123}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Zone Capsule
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -30,9 +30,8 @@ Transform:
   m_GameObject: {fileID: 3156696025954553132}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 7540866624066562471}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -67,6 +66,102 @@ MonoBehaviour:
     - Name: Capsule
       Entry: 7
       Data: 1|hedCommon.geometry.shape3d.ExtCapsule, Assembly-CSharp
+    - Name: _circle1
+      Entry: 7
+      Data: hedCommon.geometry.shape2d.ExtCircle, Assembly-CSharp
+    - Name: _plane
+      Entry: 7
+      Data: hedCommon.geometry.shape2d.ExtPlane, Assembly-CSharp
+    - Name: Point
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: -10
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Normal
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: -10
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _allowBottom
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _radius
+      Entry: 4
+      Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _circle2
+      Entry: 7
+      Data: hedCommon.geometry.shape2d.ExtCircle, Assembly-CSharp
+    - Name: _plane
+      Entry: 7
+      Data: hedCommon.geometry.shape2d.ExtPlane, Assembly-CSharp
+    - Name: Point
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 10
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Normal
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 10
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _allowBottom
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _radius
+      Entry: 4
+      Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: _radius
       Entry: 4
       Data: 1
@@ -173,7 +268,7 @@ MonoBehaviour:
   SettingsLocal:
     ShapeZone: 40
     IsActiveZone: 1
-  _scalerZoneReference: {fileID: 7540866624066562471}
+  _scalerZoneReference: {fileID: 3156696025954553126}
   _attractorLogic: {fileID: 3156696025954553120}
   _refZoneLister: {fileID: 0}
   _parent: {fileID: 0}
@@ -236,67 +331,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7957031ad32d0fb4e9535cf20b3cb154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowName: 0
-  ColorText: {r: 1, g: 1, b: 1, a: 1}
-  HideHandle: 1
---- !u!1 &7540866624066562470
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7540866624066562471}
-  - component: {fileID: 7540866624066562473}
-  - component: {fileID: 7540866624066562472}
-  m_Layer: 0
-  m_Name: Zone Capsule
-  m_TagString: Untagged
-  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7540866624066562471
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7540866624066562470}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
-  m_Children: []
-  m_Father: {fileID: 3156696025954553126}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7540866624066562473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7540866624066562470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7957031ad32d0fb4e9535cf20b3cb154, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   ShowName: 1
-  ColorText: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  HideHandle: 1
---- !u!114 &7540866624066562472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7540866624066562470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8917cee51d502cd4d9d84beb77865798, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isActive: 1
-  _otherTarget: {fileID: 3156696025954553126}
+  ColorText: {r: 0.10617697, g: 1, b: 0, a: 1}
+  HideHandle: 0
