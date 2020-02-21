@@ -44,7 +44,7 @@ namespace philae.gravity.attractor.gravityOverride
 
             float alphaFace = 0.5f;
             float alphaFaceBack = 0.2f;
-            float sizeLine = 0.5f;
+            float sizeLine = cube.LocalScale.magnitude / 35;
             float alphaLine = 1f;
             float sizePoint = cube.LocalScale.magnitude / 30;
             float alphaPoint = 1f;
@@ -136,7 +136,7 @@ namespace philae.gravity.attractor.gravityOverride
 
             float alphaFace = 0.6f;
             float alphaLine = 1f;
-            float sizeLine = 0.5f;
+            float sizeLine = quad.LocalScale.magnitude / 35;
             float sizePoint = quad.LocalScale.magnitude / 30;
             float alphaPoint = 1f;
 
@@ -335,7 +335,7 @@ namespace philae.gravity.attractor.gravityOverride
             switch (eventType)
             {
                 case (EventType.Layout):
-                    float distance = ExtGravityOverrideEditor.DistanceToCylinder(p1, p2, size / 2);
+                    float distance = ExtGravityOverrideEditor.DistanceToCylinder(p1, p2, size);
                     HandleUtility.AddControl(controlId, distance);
                     break;
                 case (EventType.Repaint):

@@ -24,6 +24,26 @@ namespace hedCommon.geometry.shape2d
             _allowBottom = allowBottom;
         }
 
+        /// <summary>
+        ///  a plane defined by 3 points
+        /// 
+        ///   B
+        ///   |\ 
+        ///   | \
+        ///   |  \
+        ///   |   \
+        ///   |    \
+        ///   |     \
+        ///   A------C
+        /// </summary>
+        /// <param name="allowBottom"></param>
+        public ExtPlane(Vector3 pointA, Vector3 pointB, Vector3 pointC, bool allowBottom)
+        {
+            Point = pointA;
+            Normal = ExtVector3.CrossProduct(pointB - pointA, pointC - pointA);
+            _allowBottom = allowBottom;
+        }
+
         public void Draw(Color color)
         {
             Debug.DrawRay(Point, Normal, color);
@@ -35,10 +55,22 @@ namespace hedCommon.geometry.shape2d
             Normal = normal;
         }
 
+        public void MoveShape(Vector3 pointA, Vector3 pointB, Vector3 pointC)
+        {
+            Point = pointA;
+            Normal = ExtVector3.CrossProduct(pointB - pointA, pointC - pointA);
+        }
+
         public bool IsAbove(Vector3 q)
         {
             bool isAbove = ExtVector3.DotProduct(q - Point, Normal) > 0;
             return (isAbove);
+        }
+
+        public bool IsPointOnPlane(Vector3 q)
+        {
+
+            return (true);
         }
 
         public static Vector3 ProjectPointInPlane(ExtPlane plane, Vector3 pointToProject)
