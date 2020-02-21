@@ -284,15 +284,7 @@ namespace hedCommon.geometry.shape3d
                 return (false);
             }
 
-            float tx = ExtVector3.DotProduct(K - _p1, _v41) / _v41Squared;
-            float ty = ExtVector3.DotProduct(K - _p1, _v51) / _v51Squared;
-            float tz = ExtVector3.DotProduct(K - _p1, _v21) / _v21Squared;
-
-            tx = tx < 0 ? 0 : tx > 1 ? 1 : tx;
-            ty = ty < 0 ? 0 : ty > 1 ? 1 : ty;
-            tz = tz < 0 ? 0 : tz > 1 ? 1 : tz;
-
-            closestPoint = tx * _v41 + ty * _v51 + tz * _v21 + _p1;
+            closestPoint = GetClosestPoint(K);
             return (true);
         }
 
@@ -328,7 +320,7 @@ namespace hedCommon.geometry.shape3d
             if (!cube.Point4 && isAboveFace1 && isAboveFace2 && isAboveFace4) { return (false); }
             if (!cube.Point5 && isAboveFace1 && isAboveFace3 && isAboveFace5) { return (false); }
             if (!cube.Point6 && isAboveFace3 && isAboveFace5 && isAboveFace6) { return (false); }
-            if (!cube.Point7 && isAboveFace3 && isAboveFace2 && isAboveFace5) { return (false); }
+            if (!cube.Point7 && isAboveFace3 && isAboveFace6 && isAboveFace2) { return (false); }
             if (!cube.Point8 && isAboveFace1 && isAboveFace2 && isAboveFace3) { return (false); }
             return (true);
         }
