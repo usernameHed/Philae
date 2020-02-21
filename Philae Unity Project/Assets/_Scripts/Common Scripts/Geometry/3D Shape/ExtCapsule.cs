@@ -53,21 +53,7 @@ namespace hedCommon.geometry.shape3d
         public override void Draw(Color color)
         {
 #if UNITY_EDITOR
-            //base.Draw(color);
             ExtDrawGuizmos.DebugCapsuleFromInsidePoint(_p1, _p2, color, _realRadius, 0, true, true, SphereTop, SphereBottom);
-
-            /*
-            if (SphereBottom)
-            {
-                ExtDrawGuizmos.DebugWireSphere(_p1, color, _realRadius);
-                
-            }
-            if (SphereTop)
-            {
-                ExtDrawGuizmos.DebugWireSphere(_p2, color, _realRadius);
-            }
-            */
-            
 #endif
         }
 

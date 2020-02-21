@@ -90,7 +90,8 @@ namespace hedCommon.geometry.shape3d
 
             _cylinderMatrix = Matrix4x4.TRS(_position, _rotation, _localScale * 1);
 
-
+            //why radius a 0.25, and lenght * 0.8 ?? I don't know,
+            //it's there to match the first constructor(position, rotation, scale)
             _radius = 0.25f;
             _lenght = ExtVector3.Distance(p2, p1) * 0.8f;
 

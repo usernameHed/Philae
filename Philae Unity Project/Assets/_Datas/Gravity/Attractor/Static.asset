@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Static
   m_EditorClassIdentifier: 
   IsMovable: 1
-  ShowRange: 0
-  ShowRangeOnSelect: 1
+  ShowRange: 1
+  ShowRangeOnSelect: 0
   ConstrainPositions:
     ConstrainX: 0
     ConstrainY: 0
