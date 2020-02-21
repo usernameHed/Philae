@@ -7,6 +7,26 @@ using UnityEngine;
 
 namespace hedCommon.geometry.shape3d
 {
+    /// <summary>
+    /// Capsule 
+    ///       _3_
+    ///    /       \
+    ///   /  -----  \
+    ///  |/         \|
+    ///  |\    1    /|
+    ///  | --_____-- |
+    ///  |           |
+    ///  |           |
+    ///  |           |
+    ///  |           |
+    ///  |           |
+    ///  |           |
+    ///  \     2     /
+    ///  | --_____-- |
+    ///   \         /
+    ///     - _4_ -
+    ///    
+    /// </summary>
     public class ExtCapsule : ExtCylinder
     {
         public bool SphereBottom = true;

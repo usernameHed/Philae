@@ -9,6 +9,21 @@ using UnityEngine;
 
 namespace hedCommon.geometry.shape3d
 {
+    /// <summary>
+    ///    __-----__
+    ///   /         \
+    ///  |     1     |
+    ///  |\         /|
+    ///  | --_____-- |
+    ///  |           |
+    ///  |           |
+    ///  |           |
+    ///  |           |
+    ///  |           |
+    ///  |           |
+    ///  \     2     /
+    ///    --_____--
+    /// </summary>
     [Serializable]
     public class ExtCylinder
     {

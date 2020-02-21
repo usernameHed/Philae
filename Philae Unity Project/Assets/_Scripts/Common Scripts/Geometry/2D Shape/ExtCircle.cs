@@ -9,6 +9,13 @@ using UnityEngine;
 
 namespace hedCommon.geometry.shape2d
 {
+    /// <summary>
+    ///    __-----__
+    ///   /         \
+    ///  |     1     |
+    ///   \         /
+    ///    --_____-- 
+    /// </summary>
     [Serializable]
     public struct ExtCircle
     {
