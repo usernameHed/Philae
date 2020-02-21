@@ -1,6 +1,7 @@
 ﻿using hedCommon.extension.runtime;
 using hedCommon.geometry.shape2d;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,7 @@ namespace hedCommon.geometry.shape3d
     ///     - _4_ -
     ///    
     /// </summary>
+    [Serializable]
     public class ExtCapsule : ExtCylinder
     {
         public bool SphereBottom = true;
@@ -44,8 +46,17 @@ namespace hedCommon.geometry.shape3d
             bool bottom = true)
             : base(position, rotation, localScale, radius, lenght)
         {
-            SphereBottom = top;
-            SphereTop = bottom;
+            SphereTop = top;
+            SphereBottom = bottom;
+            _topSphere = new ExtSphere(_p1, _realRadius);
+            _bottomSphere = new ExtSphere(_p2, _realRadius);
+        }
+
+        public ExtCapsule(ExtCylinder cylinder, bool top = true, bool bottom = true)
+            : base(cylinder.Position, cylinder.Rotation, cylinder.LocalScale, cylinder.Radius, cylinder.Lenght)
+        {
+            SphereTop = top;
+            SphereBottom = bottom;
             _topSphere = new ExtSphere(_p1, _realRadius);
             _bottomSphere = new ExtSphere(_p2, _realRadius);
         }

@@ -103,6 +103,8 @@ namespace philae.gravity.attractor
 
             _gravitonsInside.Clear();
 
+            SettingsLocal.MinRange = 0;
+            SettingsLocal.MaxRange = 0;
             MinMaxRangeChanged();
 
             SettingsLocal.MinMaxRangeChanged -= MinMaxRangeChanged;
@@ -112,9 +114,6 @@ namespace philae.gravity.attractor
             SettingsLocal.OnKinematicChanged -= OnKinematicChanged;
             SettingsLocal.OnKinematicChanged += OnKinematicChanged;
 
-#if UNITY_EDITOR
-            //_rigidAttractor.hideFlags = HideFlags.NotEditable;
-#endif
         }
 
         private void OnDisable()
