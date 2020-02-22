@@ -50,7 +50,7 @@ namespace hedCommon.geometry.shape3d
         private void UpdateMatrix()
         {
             _discMatrix = Matrix4x4.TRS(_position, _rotation, _localScale * _radius);
-            _circle.MoveSphape(_position, _discMatrix.Up(), _realRadius);
+            _circle.MoveSphape(_position, _discMatrix.UpFast(), _realRadius);
         }
 
         public void Draw(Color color)
@@ -70,7 +70,7 @@ namespace hedCommon.geometry.shape3d
 
             Matrix4x4 cylinderMatrix = Matrix4x4.TRS(_position, _rotation, (_localScale + extraSize) * _radius);
             float realRadius = _radius * MaxXY(_localScale + extraSize);
-            ExtCircle circle = new ExtCircle(_position, -cylinderMatrix.Up(), realRadius);
+            ExtCircle circle = new ExtCircle(_position, -cylinderMatrix.UpFast(), realRadius);
             circle.Draw(color, true, "");
 #endif
         }

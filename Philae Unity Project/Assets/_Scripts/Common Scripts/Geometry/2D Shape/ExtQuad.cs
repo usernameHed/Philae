@@ -142,11 +142,11 @@ namespace hedCommon.geometry.shape2d
             _vP1 = ExtVector3.DotProduct(-_v41, _p1);
             _vP4 = ExtVector3.DotProduct(-_v41, _p4);
 
-            _plane.MoveShape(_position, _quadMatrix.Up());
-            _planeAdjacent1.MoveShape(_p1, -_quadMatrix.Forward());
-            _planeAdjacent2.MoveShape(_p4, _quadMatrix.Right());
-            _planeAdjacent3.MoveShape(_p3, _quadMatrix.Forward());
-            _planeAdjacent4.MoveShape(_p1, -_quadMatrix.Right());
+            _plane.MoveShape(_position, _quadMatrix.UpFast());
+            _planeAdjacent1.MoveShape(_p1, -_quadMatrix.ForwardFast());
+            _planeAdjacent2.MoveShape(_p4, _quadMatrix.RightFast());
+            _planeAdjacent3.MoveShape(_p3, _quadMatrix.ForwardFast());
+            _planeAdjacent4.MoveShape(_p1, -_quadMatrix.RightFast());
         }
 
         public void Draw(Color color, bool drawFace, bool drawPoints)

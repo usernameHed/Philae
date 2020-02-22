@@ -125,7 +125,7 @@ namespace hedCommon.geometry.shape3d
             _deltaSquared = ExtVector3.DotProduct(_delta, _delta);
 
             _topSphere.MoveSphape(_p1, _realRadius);
-            _bottomCircle.MoveSphape(_p2, _capsuleMatrix.Down(), _realRadius);
+            _bottomCircle.MoveSphape(_p2, _capsuleMatrix.DownFast(), _realRadius);
         }
 
 #if UNITY_EDITOR

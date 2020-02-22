@@ -118,8 +118,8 @@ namespace hedCommon.geometry.shape3d
             _delta = _p2 - _p1;
             _deltaSquared = ExtVector3.DotProduct(_delta, _delta);
 
-            _circle1.MoveSphape(_p1, _cylinderMatrix.Up(), _realRadius);
-            _circle2.MoveSphape(_p2, _cylinderMatrix.Down(), _realRadius);
+            _circle1.MoveSphape(_p1, _cylinderMatrix.UpFast(), _realRadius);
+            _circle2.MoveSphape(_p2, _cylinderMatrix.DownFast(), _realRadius);
         }
 
 

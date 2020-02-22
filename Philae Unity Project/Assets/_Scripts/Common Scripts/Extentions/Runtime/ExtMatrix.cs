@@ -121,34 +121,67 @@ namespace hedCommon.extension.runtime
             return Quaternion.LookRotation(forward, upwards);
         }
 
-        public static Vector3 Forward(this Matrix4x4 matrix)
+        #region forward/Up/Right fast (non normalized)
+        public static Vector3 ForwardFast(this Matrix4x4 matrix)
         {
             return (matrix.GetColumn(2));
         }
-        public static Vector3 Backward(this Matrix4x4 matrix)
+        public static Vector3 BackwardFast(this Matrix4x4 matrix)
         {
             return (-matrix.GetColumn(2));
         }
 
-        public static Vector3 Up(this Matrix4x4 matrix)
+        public static Vector3 UpFast(this Matrix4x4 matrix)
         {
             return (matrix.GetColumn(1));
         }
 
-        public static Vector3 Down(this Matrix4x4 matrix)
+        public static Vector3 DownFast(this Matrix4x4 matrix)
         {
             return (-matrix.GetColumn(1));
         }
 
-        public static Vector3 Right(this Matrix4x4 matrix)
+        public static Vector3 RightFast(this Matrix4x4 matrix)
         {
             return (matrix.GetColumn(0));
         }
 
-        public static Vector3 Left(this Matrix4x4 matrix)
+        public static Vector3 LeftFast(this Matrix4x4 matrix)
         {
             return (-matrix.GetColumn(0));
         }
+        #endregion
+
+        #region forward/Up/Right normalized
+        public static Vector3 Forward(this Matrix4x4 matrix)
+        {
+            return (matrix.ForwardFast().FastNormalized());
+        }
+        public static Vector3 Backward(this Matrix4x4 matrix)
+        {
+            return (matrix.BackwardFast().FastNormalized());
+        }
+
+        public static Vector3 Up(this Matrix4x4 matrix)
+        {
+            return (matrix.UpFast().FastNormalized());
+        }
+
+        public static Vector3 Down(this Matrix4x4 matrix)
+        {
+            return (matrix.DownFast().FastNormalized());
+        }
+
+        public static Vector3 Right(this Matrix4x4 matrix)
+        {
+            return (matrix.RightFast().FastNormalized());
+        }
+
+        public static Vector3 Left(this Matrix4x4 matrix)
+        {
+            return (matrix.LeftFast().FastNormalized());
+        }
+        #endregion
 
         public static Vector3 ExtractScale(this Matrix4x4 matrix)
         {
