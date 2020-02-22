@@ -19,13 +19,15 @@ namespace philae.gravity.zones
                 ZonePhysic.GetScalerZoneReference.rotation,
                 ZonePhysic.GetScalerZoneReference.localScale,
                 1f,
-                2f);
+                2f, true, true);
         }
 
+#if UNITY_EDITOR
         public override void Draw()
         {
             Capsule.Draw(base.GetColor());
         }
+#endif
 
         public override void Move(Vector3 newPosition, Quaternion rotation, Vector3 localScale)
         {

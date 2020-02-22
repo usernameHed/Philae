@@ -22,10 +22,12 @@ namespace philae.gravity.zones
                 2f);
         }
 
+#if UNITY_EDITOR
         public override void Draw()
         {
             Cylindre.Draw(base.GetColor());
         }
+#endif
 
         public override void Move(Vector3 newPosition, Quaternion rotation, Vector3 localScale)
         {

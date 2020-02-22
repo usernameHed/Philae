@@ -58,6 +58,37 @@ namespace philae.gravity.attractor.gravityOverride
         }
     }
 
+    [Serializable]
+    public struct GravityOverrideCapsule
+    {
+        [OnValueChanged("SetupGravity")]
+        public bool Trunk;
+        [OnValueChanged("SetupGravity")]
+        public bool Top;
+        [OnValueChanged("SetupGravity")]
+        public bool Bottom;
+
+        [SerializeField, ReadOnly]
+        private bool _canApplyGravity;
+        public bool CanApplyGravity { get { return (_canApplyGravity); } }
+
+        public GravityOverrideCapsule(bool trunk, bool top, bool bottom)
+        {
+            Trunk = trunk;
+            Top = top;
+            Bottom = bottom;
+
+            _canApplyGravity = false;
+            SetupGravity();
+        }
+
+        public void SetupGravity()
+        {
+            _canApplyGravity = Trunk || Top || Bottom;
+            Debug.Log("setup gravity of capsule ! " + _canApplyGravity);
+        }
+    }
+
     ///
     ///      6 ------------ 7
     ///    / |    3       / |

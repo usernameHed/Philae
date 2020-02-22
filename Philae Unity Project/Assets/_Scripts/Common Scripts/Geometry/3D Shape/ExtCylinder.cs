@@ -25,8 +25,9 @@ namespace hedCommon.geometry.shape3d
     ///    --_____--
     /// </summary>
     [Serializable]
-    public class ExtCylinder
+    public struct ExtCylinder
     {
+        #region Cylinder Serialized Variables cached
         private Vector3 _position;
         public Vector3 Position { get { return (_position); } }
         private Quaternion _rotation;
@@ -40,33 +41,38 @@ namespace hedCommon.geometry.shape3d
         private ExtCircle _circle2;
 
         [SerializeField]
-        protected float _radius;
+        private float _radius;
         public float Radius { get { return (_radius); } }
         private float _radiusSquared;
         [SerializeField]
         private float _lenght;
         public float Lenght { get { return (_lenght); } }
+        [SerializeField]
         private float _lenghtSquared;
-
-        protected float _realRadius;
+        [SerializeField]
+        private float _realRadius;
+        [SerializeField]
         private float _realSquaredRadius;
         public float RealRadius { get { return (_realRadius); } }
-
+        [SerializeField]
         private Matrix4x4 _cylinderMatrix;
-        protected Vector3 _p1;
+        [SerializeField]
+        private Vector3 _p1;
         public Vector3 P1 { get { return (_p1); } }
-
-        protected Vector3 _p2;
+        [SerializeField]
+        private Vector3 _p2;
         public Vector3 P2 { get { return (_p2); } }
+        [SerializeField]
         private Vector3 _delta;
-        private Vector3 _deltaNormalized;
+        [SerializeField]
         private float _deltaSquared;
+        #endregion
 
         public ExtCylinder(Vector3 position,
             Quaternion rotation,
             Vector3 localScale,
             float radius,
-            float lenght)
+            float lenght) : this()
         {
             _position = position;
             _rotation = rotation;
@@ -80,7 +86,7 @@ namespace hedCommon.geometry.shape3d
             UpdateMatrix();
         }
 
-        public ExtCylinder(Vector3 p1, Vector3 p2, float radius)
+        public ExtCylinder(Vector3 p1, Vector3 p2, float radius = 0.25f) : this()
         {
             _position = ExtVector3.GetMeanOfXPoints(p1, p2);
             _rotation = ExtRotation.QuaternionFromLine(p1, p2, Vector3.up);
@@ -92,7 +98,7 @@ namespace hedCommon.geometry.shape3d
 
             //why radius a 0.25, and lenght * 0.8 ?? I don't know,
             //it's there to match the first constructor(position, rotation, scale)
-            _radius = 0.25f;
+            _radius = radius;
             _lenght = ExtVector3.Distance(p2, p1) * 0.8f;
 
             _lenghtSquared = _lenght * _lenght;
@@ -110,25 +116,22 @@ namespace hedCommon.geometry.shape3d
             _p1 = _cylinderMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
             _p2 = _cylinderMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
             _delta = _p2 - _p1;
-            _deltaNormalized = _delta.FastNormalized();
             _deltaSquared = ExtVector3.DotProduct(_delta, _delta);
 
             _circle1.MoveSphape(_p1, _cylinderMatrix.Up(), _realRadius);
             _circle2.MoveSphape(_p2, _cylinderMatrix.Down(), _realRadius);
         }
 
-        public virtual void Draw(Color color)
-        {
 #if UNITY_EDITOR
+        public void Draw(Color color)
+        {
             Debug.DrawLine(_p1, _p2, color);
             _circle1.Draw(color, false, "1");
             _circle2.Draw(color, false, "2");
-#endif
         }
 
         public void DrawWithExtraSize(Color color, Vector3 extraSize)
         {
-#if UNITY_EDITOR
             if (extraSize.Maximum() <= 1f)
             {
                 return;
@@ -140,22 +143,15 @@ namespace hedCommon.geometry.shape3d
             Vector3 p2 = cylinderMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
             float realRadius = _radius * MaxXY(_localScale + extraSize);
             ExtDrawGuizmos.DrawCylinder(p1, p2, color, realRadius);
-
-            /*
-            ExtCircle circle1 = new ExtCircle(p1, -cylinderMatrix.Up(), realRadius);
-            ExtCircle circle2 = new ExtCircle(p2, cylinderMatrix.Up(), realRadius);
-            circle1.Draw(color, false, "1");
-            circle2.Draw(color, false, "2");
-            */
-#endif
         }
+#endif
 
         private float MaxXY(Vector3 size)
         {
             return (Mathf.Max(size.x, size.z));
         }
 
-        public virtual void MoveSphape(Vector3 position, Quaternion rotation, Vector3 localScale)
+        public void MoveSphape(Vector3 position, Quaternion rotation, Vector3 localScale)
         {
             _position = position;
             _rotation = rotation;
@@ -165,7 +161,7 @@ namespace hedCommon.geometry.shape3d
             UpdateMatrix();
         }
 
-        public virtual void MoveSphape(Vector3 position, Quaternion rotation, Vector3 localScale, float radius, float lenght)
+        public void MoveSphape(Vector3 position, Quaternion rotation, Vector3 localScale, float radius, float lenght)
         {
             _radius = radius;
             _lenght = lenght;
@@ -173,7 +169,7 @@ namespace hedCommon.geometry.shape3d
             MoveSphape(position, rotation, localScale);
         }
 
-        public virtual void ChangeRadius(float radius)
+        public void ChangeRadius(float radius)
         {
             _radius = radius;
             _radiusSquared = _radius * _radius;
@@ -182,7 +178,7 @@ namespace hedCommon.geometry.shape3d
             UpdateMatrix();
         }
 
-        public virtual void ChangeLenght(float lenght)
+        public void ChangeLenght(float lenght)
         {
             _lenght = lenght;
             _lenghtSquared = _lenght * _lenght;
@@ -193,7 +189,7 @@ namespace hedCommon.geometry.shape3d
         /// <summary>
         /// return true if the position is inside the sphape
         /// </summary>
-        public virtual bool IsInsideShape(Vector3 k)
+        public bool IsInsideShape(Vector3 k)
         {
             Vector3 pDir = k - _p1;
             float dot = Vector3.Dot(_delta, pDir);

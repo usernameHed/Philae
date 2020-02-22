@@ -15,7 +15,9 @@ namespace philae.gravity.zones
             ZonePhysic = zone;
         }
 
+#if UNITY_EDITOR
         public abstract void Draw();
+#endif
         public abstract bool IsInsideShape(Vector3 position);
 
         public virtual void Move(Vector3 newPosition, Quaternion rotation, Vector3 localScale) { }

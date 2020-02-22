@@ -61,16 +61,16 @@ namespace hedCommon.geometry.shape2d
             Normal = ExtVector3.CrossProduct(pointB - pointA, pointC - pointA);
         }
 
-        public bool IsAbove(Vector3 q)
+        public bool IsAbove(Vector3 K)
         {
-            bool isAbove = ExtVector3.DotProduct(q - Point, Normal) > 0;
+            bool isAbove = ExtVector3.DotProduct(K - Point, Normal) > 0;
             return (isAbove);
         }
 
-        public bool IsPointOnPlane(Vector3 q)
+        public static bool IsAbove(Vector3 K, Vector3 PointPlane, Vector3 NormalPlane)
         {
-
-            return (true);
+            bool isAbove = ExtVector3.DotProduct(K - PointPlane, NormalPlane) > 0;
+            return (isAbove);
         }
 
         public static Vector3 ProjectPointInPlane(ExtPlane plane, Vector3 pointToProject)

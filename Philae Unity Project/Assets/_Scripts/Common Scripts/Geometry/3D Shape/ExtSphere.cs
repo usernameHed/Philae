@@ -39,5 +39,10 @@ namespace hedCommon.geometry.shape3d
         {
             return (ExtVector3.Distance(otherPosition, Position) <= Radius);
         }
+
+        public Vector3 GetClosestPoint(Vector3 k)
+        {
+            return (Position + ((k - Position).FastNormalized() * Radius));
+        }
     }
 }

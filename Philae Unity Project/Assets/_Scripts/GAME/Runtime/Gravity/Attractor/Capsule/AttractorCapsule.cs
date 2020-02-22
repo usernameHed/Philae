@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace philae.gravity.attractor
 {
-    public class AttractorCapsule : AttractorCylinder
+    public class AttractorCapsule : Attractor
     {
         [SerializeField, OnValueChanged("ChangeCapsuleSettings", true)]
         private ExtCapsule _capsule = default;
@@ -17,14 +17,16 @@ namespace philae.gravity.attractor
         public override void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {
             base.InitOnCreation(attractorListerLogic);
-            Debug.Log("create capsule !!");
-            _capsule = new ExtCapsule(_cylinder, true, true);
+            _capsule = new ExtCapsule(Position, Rotation, LocalScale, 0.5f, 4f, true, true);
         }
 
         public override Vector3 GetClosestPoint(Graviton graviton, out bool canApplyGravity)
         {
-            canApplyGravity = false;
-            return (Vector3.zero);
+            Vector3 closestPoint = _capsule.GetClosestPoint(graviton.Position);
+            Vector3 position = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
+            canApplyGravity = !outOfRange;
+            AddOrRemoveGravitonFromList(graviton, canApplyGravity);
+            return (position);
         }
 
         public void ChangeCapsuleSettings()
@@ -40,7 +42,7 @@ namespace philae.gravity.attractor
 #if UNITY_EDITOR
         protected override void DrawRange(Color color)
         {
-            ExtDrawGuizmos.DebugCapsuleFromInsidePoint(_capsule.P1, _capsule.P2, color, _capsule.RealRadius, 0, true, true, _capsule.SphereTop, _capsule.SphereBottom);
+            ExtDrawGuizmos.DebugCapsuleFromInsidePoint(_capsule.P1, _capsule.P2, color, _capsule.RealRadius, 0, true, true, _capsule.IsSphereTop, _capsule.IsSphereBottom);
         }
 #endif
     }
