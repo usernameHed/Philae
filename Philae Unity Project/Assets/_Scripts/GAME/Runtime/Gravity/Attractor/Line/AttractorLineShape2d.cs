@@ -8,9 +8,10 @@ using UnityEngine;
 
 namespace philae.gravity.attractor.line
 {
-    public class AttractorLine : Attractor
+    public class AttractorLineShape2d : Attractor
     {
-        public ExtLine Line;
+        [SerializeField]
+        public List<ExtLine> Lines;
 
         public override void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {
@@ -31,7 +32,10 @@ namespace philae.gravity.attractor.line
 #if UNITY_EDITOR
         protected override void DrawRange(Color color)
         {
-
+            for (int i = Lines.Count - 1; i >= 0; i--)
+            {
+                Lines[i].Dra
+            }
         }
 #endif
     }

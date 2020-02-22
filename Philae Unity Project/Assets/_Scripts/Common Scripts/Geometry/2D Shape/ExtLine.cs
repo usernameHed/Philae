@@ -1,4 +1,6 @@
 ﻿using hedCommon.extension.runtime;
+using philae.gravity.attractor.gravityOverride;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,96 +8,115 @@ using UnityEngine;
 namespace hedCommon.geometry.shape2d
 {
     /// <summary>
+    /// 
+    ///     1
+    ///     |
+    ///     |
+    ///     |
+    ///     |
+    ///     2
+    /// 
     /// a 3D line, with 2 points
     /// </summary>
+    [Serializable]
     public struct ExtLine
     {
-        public readonly Vector3 A;
-        public readonly Vector3 B;
-        public readonly Vector3 Delta;
-        private float _dist;
-        private float _denom;
+        [SerializeField]
+        private Vector3 _p1;
+        public Vector3 P1 { get { return (_p1); } }
+        [SerializeField]
+        private Vector3 _p2;
+        public Vector3 P2 { get { return (_p2); } }
+
+        [SerializeField]
+        private Vector3 _delta;
+        [SerializeField]
+        private float _deltaSquared;
 
         public ExtLine(Vector3 a, Vector3 b)
         {
-            A = a;
-            B = b;
-            Delta = b - a;
-
-            _dist = 0;
-            _denom = Vector3.Dot(Delta, Delta);
+            _p1 = a;
+            _p2 = b;
+            _delta = b - a;
+            _deltaSquared = Vector3.Dot(_delta, _delta);
         }
 
-        public bool IsInit()
-        {
-            return (!(A == B && A == Vector3.zero));
-        }
-
-        public Vector3 PointAt(double t) => A + (float)t * Delta;
-        public double LengthSquared => Delta.sqrMagnitude;
-        public double LengthLine => Delta.magnitude;
+        public Vector3 PointAt(double t) => _p1 + (float)t * _delta;
+        public double LengthLine => _delta.magnitude;
 
         public double GetLenght()
         {
             return (LengthLine);
         }
 
-        public double Project(Vector3 p) => ExtVector3.DotProduct(Delta, p - A) / LengthSquared;
+        public float Project(Vector3 p)
+        {
+            return (ExtVector3.DotProduct(_delta, p - _p1) / _deltaSquared);
+        }
 
         /// <summary>
         /// https://diego.assencio.com/?index=ec3d5dfdfc0b6a0d147a656f0af332bd
         /// </summary>
-        /// <param name="c"></param>
+        /// <param name="k"></param>
         /// <param name="nullIfOutside"></param>
         /// <returns></returns>
-        public Vector3 ClosestPointTo(Vector3 c, bool nullIfOutside)
+        public Vector3 ClosestPointTo(Vector3 k)
         {
-            // Project c onto ab, but deferring divide by Dot(ab, ab)
-            _dist = Vector3.Dot(c - A, Delta);
-            if (_dist <= 0.0f)
+            float dist = Vector3.Dot(k - _p1, _delta);
+
+            //k projection is outside the [_p1, _p2] interval, closest to _p1
+            if (dist <= 0.0f)
             {
-                // c projects outside the [a,b] interval, on the a side; clamp to a
-                _dist = 0.0f;
-                if (nullIfOutside)
-                {
-                    return (ExtVector3.GetNullVector());
-                }
-                return (A);
+                return (_p1);
             }
+            //k projection is outside the [_p1, p2] interval, closest to _p2
+            else if (dist >= _deltaSquared)
+            {
+                return (_p2);
+            }
+            //k projection is inside the [_p1, p2] interval
             else
             {
-                //denom = Vector3.Dot(Delta, Delta); // Always nonnegative since denom = ||ab||∧2
-                if (_dist >= _denom)
-                {
-                    // c projects outside the [a,b] interval, on the b side; clamp to b
-                    _dist = 1.0f;
-                    if (nullIfOutside)
-                    {
-                        return (ExtVector3.GetNullVector());
-                    }
-                    return (B);
-                }
-                else
-                {
-                    // c projects inside the [a,b] interval; must do deferred divide now
-                    _dist = _dist / _denom;
-                    return (A + _dist * Delta);
-                }
+                dist = dist / _deltaSquared;
+                Vector3 pointOnLine = _p1 + dist * _delta;
+                return (pointOnLine);
             }
         }
 
-        // Returns the squared distance between point c and segment ab
-        private float SqDistPointSegment(Vector3 c)
+        public Vector3 GetClosestPointIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideLineTopDown gravityOverride)
         {
-            //Vector3 ab = b – a;
-            Vector3 ac = c - A;
-            Vector3 bc = c - B;
-            float e = Vector3.Dot(ac, Delta);
-            // Handle cases where c projects outside ab
-            if (e <= 0.0f) return Vector3.Dot(ac, ac);
-            if (e >= _denom) return Vector3.Dot(bc, bc);
-            // Handle cases where c projects onto ab
-            return Vector3.Dot(ac, ac) - e * e / _denom;
+            if (!gravityOverride.CanApplyGravity)
+            {
+                canApplyGravity = false;
+                return (k);
+            }
+            canApplyGravity = true;
+            float dist = Vector3.Dot(k - _p1, _delta);
+
+            //k projection is outside the [_p1, _p2] interval, closest to _p1
+            if (dist <= 0.0f)
+            {
+                canApplyGravity = (gravityOverride.Top);
+                return ((canApplyGravity) ? _p1 : Vector3.zero);
+            }
+            //k projection is outside the [_p1, p2] interval, closest to _p2
+            else if (dist >= _deltaSquared)
+            {
+                canApplyGravity = (gravityOverride.Bottom);
+                return ((canApplyGravity) ? _p2 : Vector3.zero);
+            }
+            //k projection is inside the [_p1, p2] interval
+            else
+            {
+                if (!gravityOverride.Trunk)
+                {
+                    canApplyGravity = false;
+                    return (k);
+                }
+                dist = dist / _deltaSquared;
+                Vector3 pointOnLine = _p1 + dist * _delta;
+                return (pointOnLine);
+            }
         }
 
         /// <summary>
@@ -105,7 +126,7 @@ namespace hedCommon.geometry.shape2d
         /// <returns></returns>
         public static Vector3 GetPositionInLineFromPercentage(ExtLine line, float percentage)
         {
-            return (GetPositionInLineFromPercentage(line.A, line.B, percentage));
+            return (GetPositionInLineFromPercentage(line._p1, line._p2, percentage));
         }
 
         private static Vector3 GetPositionInLineFromPercentage(Vector3 a, Vector3 b, float percentage)
@@ -118,7 +139,7 @@ namespace hedCommon.geometry.shape2d
         /// </summary>
         public static float GetPercentageInLineFromPosition(ExtLine line, Vector3 c)
         {
-            return (GetPercentageInLineFromPosition(line.A, line.B, c));
+            return (GetPercentageInLineFromPosition(line._p1, line._p2, c));
         }
 
         private static float GetPercentageInLineFromPosition(Vector3 a, Vector3 b, Vector3 c)
@@ -156,7 +177,7 @@ namespace hedCommon.geometry.shape2d
         /// <returns></returns>
         public static bool CalculateLineLineIntersection3d(ExtLine line1, ExtLine line2, out Vector3 resulmtSegmentPoint1, out Vector3 resultSegmentPoint2)
         {
-            return (CalculateLineLineIntersection3d(line1.A, line1.B, line2.A, line2.B, out resulmtSegmentPoint1, out resultSegmentPoint2));
+            return (CalculateLineLineIntersection3d(line1._p1, line1._p2, line2._p1, line2._p2, out resulmtSegmentPoint1, out resultSegmentPoint2));
         }
 
         private static bool CalculateLineLineIntersection3d(Vector3 line1Point1, Vector3 line1Point2,

@@ -8,10 +8,10 @@ using UnityEngine;
 
 namespace philae.gravity.attractor
 {
-    [CustomEditor(typeof(AttractorLine), true)]
+    [CustomEditor(typeof(AttractorLineShape2d), true)]
     public class AttractorLineEditor : AttractorEditor
     {
-        protected new AttractorLine _attractor;
+        protected new AttractorLineShape2d _attractor;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -31,15 +31,7 @@ namespace philae.gravity.attractor
         /// </summary>
         public override void OnCustomEnable()
         {
-            _attractor = (AttractorLine)GetTarget<Attractor>();
-
-            //initialiee basic stuff
-            if (!_attractor.Line.IsInit())
-            {
-                _attractor.Line = new ExtLine(new Vector3(1, 0, 0),
-                                                    new Vector3(1, 0, 0));
-            }
-            
+            _attractor = (AttractorLineShape2d)GetTarget<Attractor>();
         }
 
         /*

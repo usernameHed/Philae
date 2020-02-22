@@ -195,7 +195,7 @@ PrefabInstance:
     - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
         type: 3}
       propertyPath: _gravitonsInside.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
         type: 3}
@@ -275,22 +275,67 @@ PrefabInstance:
     - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
         type: 3}
       propertyPath: _cone._circleBase._plane.Point.y
-      value: 67.3
+      value: 57.34
       objectReference: {fileID: 0}
     - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
         type: 3}
       propertyPath: _cone._coneMatrix.e13
-      value: 69.3
+      value: 59.34
       objectReference: {fileID: 0}
     - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
         type: 3}
       propertyPath: _cone._p1.y
-      value: 71.3
+      value: 61.34
       objectReference: {fileID: 0}
     - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
         type: 3}
       propertyPath: _cone._p2.y
-      value: 67.3
+      value: 57.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: _cone._circleBase._plane.Normal.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: _cone._circleBase._plane.Normal.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: _cone._coneMatrix.e00
+      value: 2.840211
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: _cone._coneMatrix.e01
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: _cone._coneMatrix.e10
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: _cone._coneMatrix.e11
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: _cone._delta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: _cone._delta.y
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: _cone._deltaSquared
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f90dcdf58fdcf840b1665fe3fc73afa, type: 3}
@@ -320,7 +365,7 @@ PrefabInstance:
     - target: {fileID: 8405064908452197666, guid: 2b9f966bca7156942b5d5c48d1afc279,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 59.37
+      value: 58.8
       objectReference: {fileID: 0}
     - target: {fileID: 8405064908452197666, guid: 2b9f966bca7156942b5d5c48d1afc279,
         type: 3}
@@ -370,13 +415,83 @@ PrefabInstance:
     - target: {fileID: 8405064908452197666, guid: 2b9f966bca7156942b5d5c48d1afc279,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 3.5683842
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083460139819491956, guid: 2b9f966bca7156942b5d5c48d1afc279,
+        type: 3}
+      propertyPath: _gravitonsInside.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4083460139819491956, guid: 2b9f966bca7156942b5d5c48d1afc279,
         type: 3}
       propertyPath: _attractorListerLogic.Array.data[0]
       value: 
       objectReference: {fileID: 656489596}
+    - target: {fileID: 4083460139819491956, guid: 2b9f966bca7156942b5d5c48d1afc279,
+        type: 3}
+      propertyPath: SettingsLocal.AddMinRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083460139819491956, guid: 2b9f966bca7156942b5d5c48d1afc279,
+        type: 3}
+      propertyPath: _gravitonsInside.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083460139819491956, guid: 2b9f966bca7156942b5d5c48d1afc279,
+        type: 3}
+      propertyPath: SettingsLocal.MinRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083460139819491956, guid: 2b9f966bca7156942b5d5c48d1afc279,
+        type: 3}
+      propertyPath: SettingsLocal.MaxRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083460139819491956, guid: 2b9f966bca7156942b5d5c48d1afc279,
+        type: 3}
+      propertyPath: _minRangeWithScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083460139819491956, guid: 2b9f966bca7156942b5d5c48d1afc279,
+        type: 3}
+      propertyPath: _maxRangeWithScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083460139819491956, guid: 2b9f966bca7156942b5d5c48d1afc279,
+        type: 3}
+      propertyPath: _cone._circleBase._plane.Point.y
+      value: 66.80162
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083460139819491956, guid: 2b9f966bca7156942b5d5c48d1afc279,
+        type: 3}
+      propertyPath: _cone._coneMatrix.e13
+      value: 70.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083460139819491956, guid: 2b9f966bca7156942b5d5c48d1afc279,
+        type: 3}
+      propertyPath: _cone._p1.y
+      value: 73.938385
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083460139819491956, guid: 2b9f966bca7156942b5d5c48d1afc279,
+        type: 3}
+      propertyPath: _cone._p2.y
+      value: 66.80162
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083460139819491956, guid: 2b9f966bca7156942b5d5c48d1afc279,
+        type: 3}
+      propertyPath: _cone._delta.y
+      value: -7.1367645
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083460139819491956, guid: 2b9f966bca7156942b5d5c48d1afc279,
+        type: 3}
+      propertyPath: _cone._deltaSquared
+      value: 50.933407
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083460139819491956, guid: 2b9f966bca7156942b5d5c48d1afc279,
+        type: 3}
+      propertyPath: SettingsLocal.AddMaxRange
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b9f966bca7156942b5d5c48d1afc279, type: 3}
 --- !u!4 &311727394 stripped
