@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace philae.gravity.attractor
 {
-    public class AttractorCone : Attractor
+    public class AttractorConeSphereBase : Attractor
     {
         [SerializeField, OnValueChanged("ChangeConeSettings", true)]
         protected ExtConeSphereBase _cone = default;

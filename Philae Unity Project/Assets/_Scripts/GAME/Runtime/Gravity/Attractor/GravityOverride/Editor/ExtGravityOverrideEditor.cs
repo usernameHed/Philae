@@ -216,11 +216,11 @@ namespace philae.gravity.attractor.gravityOverride
             hasChanged = false;
             bool changed = hasChanged;
 
-            cylinderGravity.Trunk = ExtGravityOverrideEditor.DrawLine(cylinderGravity.Trunk, cylinder.P1, cylinder.P2, sizeLine, alphaLine, out changed);
-            hasChanged = (changed) ? true : hasChanged;
             cylinderGravity.Disc1 = ExtGravityOverrideEditor.DrawDisc(circle1, cylinderGravity.Disc1, false, alphaPoint, out changed);
             hasChanged = (changed) ? true : hasChanged;
             cylinderGravity.Disc2 = ExtGravityOverrideEditor.DrawDisc(circle2, cylinderGravity.Disc2, false, alphaPoint, out changed);
+            hasChanged = (changed) ? true : hasChanged;
+            cylinderGravity.Trunk = ExtGravityOverrideEditor.DrawLine(cylinderGravity.Trunk, cylinder.P1, cylinder.P2, sizeLine, alphaLine, out changed);
             hasChanged = (changed) ? true : hasChanged;
             return (cylinderGravity);
         }
@@ -402,6 +402,29 @@ namespace philae.gravity.attractor.gravityOverride
             hasChanged = (changed) ? true : hasChanged;
             return (capsuleGravity);
         }
+
+        public static GravityOverrideConeSphereBase DrawConeSphereBase(ExtConeSphereBase cone, GravityOverrideConeSphereBase coneGravity, float alpha, out bool hasChanged)
+        {
+            float sizeLine = cone.LocalScale.magnitude / 25;
+            float alphaLine = 0.8f;
+            float sizePoint = cone.LocalScale.magnitude / 20;
+            float alphaPoint = 1f;
+
+            hasChanged = false;
+            bool changed = hasChanged;
+
+            coneGravity.Base = ExtGravityOverrideEditor.DrawDisc(cone.Base, coneGravity.Base, false, alphaPoint, out changed);
+            hasChanged = (changed) ? true : hasChanged;
+            coneGravity.Trunk = ExtGravityOverrideEditor.DrawLine(coneGravity.Trunk, cone.P1, cone.P2, sizeLine, alphaLine, out changed);
+            hasChanged = (changed) ? true : hasChanged;
+            coneGravity.Top = ExtGravityOverrideEditor.DrawPoint(coneGravity.Top, cone.P1, sizePoint, alphaPoint, out changed);
+            hasChanged = (changed) ? true : hasChanged;
+
+
+            return (coneGravity);
+        }
+
+
         public static GravityOverrideLineTopDown DrawCapsuleHalf(ExtHalfCapsule capsuleHalf, GravityOverrideLineTopDown capsuleGravity, float alpha, out bool hasChanged)
         {
             float sizeLine = capsuleHalf.LocalScale.magnitude / 25;
@@ -442,6 +465,14 @@ namespace philae.gravity.attractor.gravityOverride
             capsule.GetPropertie("_canApplyGravity").boolValue = datas.CanApplyGravity;
             capsule.GetPropertie(nameof(datas.Top)).boolValue = datas.Top;
             capsule.GetPropertie(nameof(datas.Bottom)).boolValue = datas.Bottom;
+        }
+
+        public static void ApplyModificationToConeSphereBase(SerializedProperty cone, GravityOverrideConeSphereBase datas)
+        {
+            cone.GetPropertie(nameof(datas.Trunk)).boolValue = datas.Trunk;
+            cone.GetPropertie(nameof(datas.Top)).boolValue = datas.Top;
+            cone.GetPropertie("_canApplyGravity").boolValue = datas.CanApplyGravity;
+            ApplyModificationToDisc(cone.GetPropertie(nameof(datas.Base)), datas.Base);
         }
 
         public static void ApplyModificationToQuad(SerializedProperty quad, GravityOverrideQuad datas)

@@ -35,6 +35,7 @@ namespace hedCommon.geometry.shape3d
 
         [SerializeField]
         private ExtCircle _circleBase;
+        public ExtCircle Base { get { return (_circleBase); } }
 
         [SerializeField]
         private float _radius;
@@ -197,7 +198,7 @@ namespace hedCommon.geometry.shape3d
             return (GetClosestPoint(k).magnitude);
         }
 
-        public Vector3 GetClosestPointIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideCone gravityOverride)
+        public Vector3 GetClosestPointIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideConeSphereBase gravityOverride)
         {
             if (!gravityOverride.CanApplyGravity)
             {

@@ -89,7 +89,8 @@ namespace philae.gravity.attractor.gravityOverride
         }
     }
 
-    public struct GravityOverrideCone
+    [Serializable]
+    public struct GravityOverrideConeSphereBase
     {
         [OnValueChanged("SetupGravity")]
         public bool Top;
@@ -102,7 +103,7 @@ namespace philae.gravity.attractor.gravityOverride
         private bool _canApplyGravity;
         public bool CanApplyGravity { get { return (_canApplyGravity); } }
 
-        public GravityOverrideCone(bool top, GravityOverrideDisc baseDisc, bool trunk)
+        public GravityOverrideConeSphereBase(bool top, GravityOverrideDisc baseDisc, bool trunk)
         {
             Top = top;
             Base = baseDisc;
