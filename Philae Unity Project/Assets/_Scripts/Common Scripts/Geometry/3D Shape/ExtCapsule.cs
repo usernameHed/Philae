@@ -130,29 +130,6 @@ namespace hedCommon.geometry.shape3d
             _bottomSphere.MoveSphape(_p2, _realRadius);
         }
 
-#if UNITY_EDITOR
-        public void Draw(Color color)
-        {
-            ExtDrawGuizmos.DebugCapsuleFromInsidePoint(_p1, _p2, color, _realRadius, 0, true, true);
-        }
-
-        public void DrawWithExtraSize(Color color, Vector3 extraSize)
-        {
-            if (extraSize.Maximum() <= 1f)
-            {
-                return;
-            }
-
-            Matrix4x4 cylinderMatrix = Matrix4x4.TRS(_position, _rotation, (_localScale + extraSize) * _radius);
-            Vector3 size = new Vector3(0, _lenght / 2, 0);
-            Vector3 p1 = cylinderMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
-            Vector3 p2 = cylinderMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
-            float realRadius = _radius * MaxXY(_localScale + extraSize);
-
-            ExtDrawGuizmos.DebugCapsuleFromInsidePoint(p1, p2, color, _realRadius, 0, true, true);
-        }
-#endif
-
         private float MaxXY(Vector3 size)
         {
             return (Mathf.Max(size.x, size.z));
@@ -308,8 +285,28 @@ namespace hedCommon.geometry.shape3d
                 return (pointOnSurfaceLine);
             }
         }
-        
 
+#if UNITY_EDITOR
+        public void Draw(Color color)
+        {
+            ExtDrawGuizmos.DebugCapsuleFromInsidePoint(_p1, _p2, color, _realRadius);
+        }
+
+        public void DrawWithExtraSize(Color color, Vector3 extraSize)
+        {
+            if (extraSize.Maximum() <= 1f)
+            {
+                return;
+            }
+
+            Matrix4x4 cylinderMatrix = Matrix4x4.TRS(_position, _rotation, (_localScale + extraSize) * _radius);
+            Vector3 size = new Vector3(0, _lenght / 2, 0);
+            Vector3 p1 = cylinderMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
+            Vector3 p2 = cylinderMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
+            float realRadius = _radius * MaxXY(_localScale + extraSize);
+            ExtDrawGuizmos.DebugCapsuleFromInsidePoint(p1, p2, color, realRadius);
+        }
+#endif
         //end class
     }
     //end nameSpace

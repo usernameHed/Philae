@@ -42,7 +42,9 @@ namespace philae.gravity.attractor
 #if UNITY_EDITOR
         protected override void DrawRange(Color color)
         {
-            ExtDrawGuizmos.DebugCapsuleFromInsidePoint(_capsule.P1, _capsule.P2, color, _capsule.RealRadius, 0, true, true);
+            _capsule.Draw(color);
+            _capsule.DrawWithExtraSize(color, new Vector3(_minRangeWithScale, _minRangeWithScale / 2, _minRangeWithScale));
+            _capsule.DrawWithExtraSize(color, new Vector3(_minRangeWithScale, _maxRangeWithScale / 2, _maxRangeWithScale));
         }
 #endif
     }
