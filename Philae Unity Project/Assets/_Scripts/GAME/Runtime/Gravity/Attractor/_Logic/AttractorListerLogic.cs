@@ -58,7 +58,7 @@ namespace philae.gravity.attractor.logic
                 {
                     continue;
                 }
-                Vector3 closestPointToAttractor = attractor.GetClosestPoint(graviton, out bool canApplyGravity);
+                bool canApplyGravity = attractor.GetClosestPoint(graviton, out Vector3 closestPointToAttractor);
                 if (!canApplyGravity)
                 {
                     continue;

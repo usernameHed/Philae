@@ -183,7 +183,12 @@ namespace hedCommon.geometry.shape3d
             //k projection is outside the [_p1, p2] interval, closest to _p2
             else if (dist >= _deltaSquared)
             {
-                return (_circleBase.GetClosestPointOnDisc(k, out bool canApplyGravity));
+                bool canApplyGravity = _circleBase.GetClosestPointOnDisc(k, out Vector3 closestPoint);
+                if (!canApplyGravity)
+                {
+                    throw new Exception("can't be possible, see AllowBottom for more information");
+                }
+                return (closestPoint);
             }
             //k projection is inside the [_p1, p2] interval
             else
@@ -198,38 +203,42 @@ namespace hedCommon.geometry.shape3d
             return (GetClosestPoint(k).magnitude);
         }
 
-        public Vector3 GetClosestPointIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideConeSphereBase gravityOverride)
+        public bool GetClosestPointIfWeCan(Vector3 k, GravityOverrideConeSphereBase gravityOverride, out Vector3 closestPoint)
         {
+            closestPoint = Vector3.zero;
+
             if (!gravityOverride.CanApplyGravity)
             {
-                canApplyGravity = false;
-                return (k);
+                return (false);
             }
 
-            canApplyGravity = true;
             float dist = ExtVector3.DotProduct(k - _p1, _delta);
             //k projection is outside the [_p1, _p2] interval, closest to _p1
             if (dist <= 0.0f)
             {
-                canApplyGravity = gravityOverride.Top;
-                return (canApplyGravity ? _p1 : Vector3.zero);
+                if (!gravityOverride.Top)
+                {
+                    return (false);
+                }
+                closestPoint = _p1;
+                return (true);
             }
             //k projection is outside the [_p1, p2] interval, closest to _p2
             else if (dist >= _deltaSquared)
             {
-                return (_circleBase.GetClosestPointOnDiscIfWeCan(k, out canApplyGravity, gravityOverride.Base));
+                return (_circleBase.GetClosestPointOnDiscIfWeCan(k, gravityOverride.Base, out closestPoint));
             }
             //k projection is inside the [_p1, p2] interval
             else
             {
                 if (!gravityOverride.Trunk)
                 {
-                    canApplyGravity = false;
-                    return (k);
+                    return (false);
                 }
 
                 //here do calculation
-                return (_p1 - _p2);
+                closestPoint = _p1 - _p2;
+                return (true);
             }
         }
 

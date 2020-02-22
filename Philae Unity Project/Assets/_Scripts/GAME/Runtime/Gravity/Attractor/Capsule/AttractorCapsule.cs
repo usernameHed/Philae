@@ -20,13 +20,13 @@ namespace philae.gravity.attractor
             _capsule = new ExtCapsule(Position, Rotation, LocalScale, 0.5f, 4f);
         }
 
-        public override Vector3 GetClosestPoint(Graviton graviton, out bool canApplyGravity)
+        public override bool GetClosestPoint(Graviton graviton, out Vector3 closestPoint)
         {
-            Vector3 closestPoint = _capsule.GetClosestPoint(graviton.Position);
-            Vector3 position = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
-            canApplyGravity = !outOfRange;
+            closestPoint = _capsule.GetClosestPoint(graviton.Position);
+            closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
+            bool canApplyGravity = !outOfRange;
             AddOrRemoveGravitonFromList(graviton, canApplyGravity);
-            return (position);
+            return (canApplyGravity);
         }
 
         public void ChangeCapsuleSettings()

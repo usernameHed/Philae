@@ -119,6 +119,13 @@ namespace hedCommon.geometry.shape2d
             }
         }
 
+#if UNITY_EDITOR
+        public void Draw(Color color)
+        {
+            Debug.DrawLine(_p1, _p2, color);
+        }
+#endif
+
         /// <summary>
         /// return the point at a given percentage of a line
         /// </summary>

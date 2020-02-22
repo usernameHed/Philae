@@ -179,7 +179,7 @@ namespace philae.gravity.attractor
 
         
 
-        public abstract Vector3 GetClosestPoint(Graviton graviton, out bool canApplyGravity);
+        public abstract bool GetClosestPoint(Graviton graviton, out Vector3 closestPoint);
         public virtual void CustomUpdateIfCanMove()
         {
             bool canMove = !Application.isPlaying

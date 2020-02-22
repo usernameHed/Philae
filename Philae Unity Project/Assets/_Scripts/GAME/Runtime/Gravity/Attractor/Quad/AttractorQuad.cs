@@ -20,18 +20,16 @@ namespace philae.gravity.attractor
             _quad = new ExtQuad(Position, Rotation, LocalScale);
         }
 
-        public override Vector3 GetClosestPoint(Graviton graviton, out bool canApplyGravity)
+        public override bool GetClosestPoint(Graviton graviton, out Vector3 closestPoint)
         {
-            Vector3 closestPoint = _quad.GetClosestPoint(graviton.Position, out canApplyGravity);
-            Vector3 position = closestPoint;
+            bool canApplyGravity = _quad.GetClosestPoint(graviton.Position, out closestPoint);
             if (canApplyGravity)
             {
-                position = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
-
+                closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
                 canApplyGravity = !(canApplyGravity && outOfRange);
             }
             AddOrRemoveGravitonFromList(graviton, canApplyGravity);
-            return (position);
+            return (canApplyGravity);
         }
 
         public void ChangeQuadSettings()

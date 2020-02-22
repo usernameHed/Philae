@@ -14,17 +14,17 @@ namespace philae.gravity.attractor
     {
         public GravityOverrideDisc GravityOverride;
 
-        public override Vector3 GetClosestPoint(Graviton graviton, out bool canApplyGravity)
+        public override bool GetClosestPoint(Graviton graviton, out Vector3 closestPoint)
         {
-            Vector3 closestPoint = _disc.GetClosestPointIfWeCan(graviton.Position, out canApplyGravity, GravityOverride);
-            Vector3 position = closestPoint;
+            bool canApplyGravity = _disc.GetClosestPointIfWeCan(graviton.Position, GravityOverride, out closestPoint);
+
             if (canApplyGravity)
             {
-                position = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
+                closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
                 canApplyGravity = !(canApplyGravity && outOfRange);
             }
             AddOrRemoveGravitonFromList(graviton, canApplyGravity);
-            return (position);
+            return (canApplyGravity);
         }
     }
 }

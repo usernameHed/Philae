@@ -18,10 +18,10 @@ namespace philae.gravity.attractor.line
             base.InitOnCreation(attractorListerLogic);
         }
 
-        public override Vector3 GetClosestPoint(Graviton graviton, out bool canApplyGravity)
+        public override bool GetClosestPoint(Graviton graviton, out Vector3 closestPoint)
         {
-            canApplyGravity = false;
-            return (Vector3.zero);
+            closestPoint = Vector3.zero;
+            return (false);
         }
 
         public override void Move()
@@ -34,7 +34,7 @@ namespace philae.gravity.attractor.line
         {
             for (int i = Lines.Count - 1; i >= 0; i--)
             {
-                Lines[i].Dra
+                Lines[i].Draw(color);
             }
         }
 #endif

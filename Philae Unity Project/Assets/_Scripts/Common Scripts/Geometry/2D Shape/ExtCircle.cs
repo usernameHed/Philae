@@ -106,12 +106,12 @@ namespace hedCommon.geometry.shape2d
         /// <summary>
         /// Return the closest point on the disc from k
         /// </summary>
-        public Vector3 GetClosestPointOnDisc(Vector3 k, out bool canApplyGravity)
+        public bool GetClosestPointOnDisc(Vector3 k, out Vector3 closestPoint)
         {
-            canApplyGravity = true;
+            closestPoint = Vector3.zero;
             if (!AllowBottom && !_plane.IsAbove(k))
             {
-                canApplyGravity = false;
+                return (false);
             }
 
             //project point to a plane
@@ -122,11 +122,13 @@ namespace hedCommon.geometry.shape2d
             bool isInsideShape = distSquared < _radiusSquared;
             if (isInsideShape)
             {
-                return (kProjected);
+                closestPoint = kProjected;
             }
-            //return the closest point on the circle
-            Vector3 pointExtremity = _plane.Point + (kProjected - _plane.Point).FastNormalized() * _radius;
-            return (pointExtremity);
+            else
+            {
+                closestPoint = _plane.Point + (kProjected - _plane.Point).FastNormalized() * _radius;
+            }
+            return (true);
         }
 
         /// <summary>
@@ -136,15 +138,14 @@ namespace hedCommon.geometry.shape2d
         /// <param name="canApplyGravity"></param>
         /// <param name="gravityDisc"></param>
         /// <returns></returns>
-        public Vector3 GetClosestPointOnDiscIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideDisc gravityDisc)
+        public bool GetClosestPointOnDiscIfWeCan(Vector3 k, GravityOverrideDisc gravityDisc, out Vector3 closestPoint)
         {
+            closestPoint = Vector3.zero;
+
             if (!gravityDisc.CanApplyGravity || (!AllowBottom && !_plane.IsAbove(k)))
             {
-                canApplyGravity = false;
-                return (k);
+                return (false);
             }
-
-            canApplyGravity = true;
 
             //project point to a plane
             Vector3 kProjected = ExtPlane.ProjectPointInPlane(_plane, k);
@@ -156,21 +157,20 @@ namespace hedCommon.geometry.shape2d
             {
                 if (!gravityDisc.Face)
                 {
-                    canApplyGravity = false;
-                    return (k);
+                    return (false);
                 }
-                return (kProjected);
+                closestPoint = kProjected;
+                return (true);
             }
 
             if (!gravityDisc.Borders)
             {
-                canApplyGravity = false;
-                return (k);
+                return (false);
             }
 
-            //return the closest point on the circle
-            Vector3 pointExtremity = _plane.Point + (kProjected - _plane.Point).FastNormalized() * _radius;
-            return (pointExtremity);
+            //return the closest point on the circle (extremity of the disc)
+            closestPoint = _plane.Point + (kProjected - _plane.Point).FastNormalized() * _radius;
+            return (true);
         }
 
         /// <summary>

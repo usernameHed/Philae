@@ -209,16 +209,15 @@ namespace hedCommon.geometry.shape2d
         /// <param name="k"></param>
         /// <param name="canApplyGravity"></param>
         /// <returns></returns>
-        public Vector3 GetClosestPoint(Vector3 k, out bool canApplyGravity)
+        public bool GetClosestPoint(Vector3 k, out Vector3 closestPoint)
         {
+            closestPoint = Vector3.zero;
             if (!_plane.AllowBottom && !_plane.IsAbove(k))
             {
-                canApplyGravity = false;
-                return (k);
+                return (false);
             }
-            canApplyGravity = true;
-
-            return (GetClosestPoint(k));
+            closestPoint = GetClosestPoint(k);
+            return (true);
         }
 
         private Vector3 GetClosestPoint(Vector3 k)

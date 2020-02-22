@@ -15,10 +15,10 @@ namespace philae.gravity.attractor
             base.InitOnCreation(attractorListerLogic);
         }
 
-        public override Vector3 GetClosestPoint(Graviton graviton, out bool canApplyGravity)
+        public override bool GetClosestPoint(Graviton graviton, out Vector3 closestPoint)
         {
-            canApplyGravity = false;
-            return (Vector3.zero);
+            closestPoint = Vector3.zero;
+            return (false);
         }
 
         public override void Move()
