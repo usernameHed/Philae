@@ -142,6 +142,10 @@ namespace philae.gravity.zones
                     CurrentZone = new ZoneCapsule();
                     CurrentZone.Init(this);
                     break;
+                case ZoneSettingsLocal.Shape.CAPSULE_HALF:
+                    CurrentZone = new ZoneCapsuleHalf();
+                    CurrentZone.Init(this);
+                    break;
             }
         }
 

@@ -24,13 +24,11 @@ namespace hedCommon.geometry.shape3d
     ///  |           |
     ///  |           |
     ///  \     2     /
-    ///  | --_____-- |
-    ///   \         /
-    ///     - _4_ -
+    ///    --_____-- 
     ///    
     /// </summary>
     [Serializable]
-    public struct ExtCapsule
+    public struct ExtHalfCapsule
     {
         #region Capsule Serialized Variables cached
         private Vector3 _position;
@@ -43,7 +41,7 @@ namespace hedCommon.geometry.shape3d
         [SerializeField]
         private ExtSphere _topSphere;
         [SerializeField]
-        private ExtSphere _bottomSphere;
+        private ExtCircle _bottomCircle;
 
         [SerializeField]
         private float _radius;
@@ -75,7 +73,7 @@ namespace hedCommon.geometry.shape3d
 
 
 
-        public ExtCapsule(Vector3 position,
+        public ExtHalfCapsule(Vector3 position,
             Quaternion rotation,
             Vector3 localScale,
             float radius,
@@ -94,7 +92,7 @@ namespace hedCommon.geometry.shape3d
             UpdateMatrix();            
         }
 
-        public ExtCapsule(Vector3 p1, Vector3 p2, float radius = 0.25f) : this()
+        public ExtHalfCapsule(Vector3 p1, Vector3 p2, float radius = 0.25f) : this()
         {
             _position = ExtVector3.GetMeanOfXPoints(p1, p2);
             _rotation = ExtRotation.QuaternionFromLine(p1, p2, Vector3.up);
@@ -127,13 +125,13 @@ namespace hedCommon.geometry.shape3d
             _deltaSquared = ExtVector3.DotProduct(_delta, _delta);
 
             _topSphere.MoveSphape(_p1, _realRadius);
-            _bottomSphere.MoveSphape(_p2, _realRadius);
+            _bottomCircle.MoveSphape(_p2, _capsuleMatrix.Down(), _realRadius);
         }
 
 #if UNITY_EDITOR
         public void Draw(Color color)
         {
-            ExtDrawGuizmos.DebugCapsuleFromInsidePoint(_p1, _p2, color, _realRadius, 0, true, true);
+            ExtDrawGuizmos.DebugHalfCapsuleFromInsidePoint(_p1, _p2, color, _realRadius);
         }
 
         public void DrawWithExtraSize(Color color, Vector3 extraSize)
@@ -149,7 +147,7 @@ namespace hedCommon.geometry.shape3d
             Vector3 p2 = cylinderMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
             float realRadius = _radius * MaxXY(_localScale + extraSize);
 
-            ExtDrawGuizmos.DebugCapsuleFromInsidePoint(p1, p2, color, _realRadius, 0, true, true);
+            ExtDrawGuizmos.DebugHalfCapsuleFromInsidePoint(p1, p2, color, _realRadius);
         }
 #endif
 
@@ -203,11 +201,6 @@ namespace hedCommon.geometry.shape3d
             {
                 return (true);
             }
-            bool isInsideBottomSphere = _bottomSphere.IsInsideShape(pointToTest);
-            if (isInsideBottomSphere)
-            {
-                return (true);
-            }
             return (IsInsideTrunk(pointToTest));
         }
 
@@ -251,7 +244,7 @@ namespace hedCommon.geometry.shape3d
             //k projection is outside the [_p1, p2] interval, closest to _p2
             else if (dist >= _deltaSquared)
             {
-                return (_bottomSphere.GetClosestPoint(k));
+                return (_bottomCircle.GetClosestPointOnDisc(k, out bool canApplyGravity));
             }
             //k projection is inside the [_p1, p2] interval
             else
@@ -262,8 +255,6 @@ namespace hedCommon.geometry.shape3d
                 return (pointOnSurfaceLine);
             }
         }
-
-        
 
         public float GetDistanceFromPoint(Vector3 k)
         {
@@ -291,7 +282,7 @@ namespace hedCommon.geometry.shape3d
             else if (dist >= _deltaSquared)
             {
                 canApplyGravity = gravityOverride.Bottom;
-                return (canApplyGravity ? _bottomSphere.GetClosestPoint(k) : Vector3.zero);
+                return (canApplyGravity ? _bottomCircle.GetClosestPointOnDisc(k, out bool gravity) : Vector3.zero);
             }
             //k projection is inside the [_p1, p2] interval
             else

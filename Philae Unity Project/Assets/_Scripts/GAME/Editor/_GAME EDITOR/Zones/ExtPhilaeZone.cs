@@ -33,6 +33,11 @@ namespace philae.editor.extension.zone
         {
             CreateZone("Zone Capsule");
         }
+        [MenuItem("GameObject/Philae/Zone/Capsule Half", false, -1)]
+        private static void ZoneCapsuleHalf()
+        {
+            CreateZone("Zone Capsule Half");
+        }
 
         private static void CreateZone(string zoneName)
         {
@@ -50,6 +55,7 @@ namespace philae.editor.extension.zone
         [MenuItem("GameObject/Philae/Zone/Cube", true)]
         [MenuItem("GameObject/Philae/Zone/Cylinder", true)]
         [MenuItem("GameObject/Philae/Zone/Capsule", true)]
+        [MenuItem("GameObject/Philae/Zone/Capsule Half", true)]
         private static bool ValidateCreateZone()
         {
             if (Selection.activeTransform == null)

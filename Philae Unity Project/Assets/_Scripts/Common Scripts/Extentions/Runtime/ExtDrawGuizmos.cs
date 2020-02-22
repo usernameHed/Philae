@@ -831,7 +831,7 @@ namespace hedCommon.extension.runtime
         /// <param name='depthTest'>
         /// 	- Whether or not the capsule should be faded when behind other objects.
         /// </param>
-        public static void DebugCapsule(Vector3 start, Vector3 end, Color color, float radius = 1, float duration = 0, bool depthTest = true, bool drawPoint = true, bool drawTop = true, bool drawBottom = true)
+        public static void DebugCapsule(Vector3 start, Vector3 end, Color color, float radius = 1, float duration = 0, bool depthTest = true, bool drawPoint = true)
         {
             Vector3 up = (end - start).normalized * radius;
             Vector3 forward = Vector3.Slerp(up, -up, 0.5f);
@@ -863,31 +863,69 @@ namespace hedCommon.extension.runtime
 
             for (int i = 1; i < 26; i++)
             {
-                if (drawTop)
-                {
-                    //Start endcap
-                    Debug.DrawLine(Vector3.Slerp(right, -up, i / 25.0f) + start, Vector3.Slerp(right, -up, (i - 1) / 25.0f) + start, color, duration, depthTest);
-                    Debug.DrawLine(Vector3.Slerp(-right, -up, i / 25.0f) + start, Vector3.Slerp(-right, -up, (i - 1) / 25.0f) + start, color, duration, depthTest);
-                    Debug.DrawLine(Vector3.Slerp(forward, -up, i / 25.0f) + start, Vector3.Slerp(forward, -up, (i - 1) / 25.0f) + start, color, duration, depthTest);
-                    Debug.DrawLine(Vector3.Slerp(-forward, -up, i / 25.0f) + start, Vector3.Slerp(-forward, -up, (i - 1) / 25.0f) + start, color, duration, depthTest);
-                }
-
-                if (drawBottom)
-                {
-                    //End endcap
-                    Debug.DrawLine(Vector3.Slerp(right, up, i / 25.0f) + end, Vector3.Slerp(right, up, (i - 1) / 25.0f) + end, color, duration, depthTest);
-                    Debug.DrawLine(Vector3.Slerp(-right, up, i / 25.0f) + end, Vector3.Slerp(-right, up, (i - 1) / 25.0f) + end, color, duration, depthTest);
-                    Debug.DrawLine(Vector3.Slerp(forward, up, i / 25.0f) + end, Vector3.Slerp(forward, up, (i - 1) / 25.0f) + end, color, duration, depthTest);
-                    Debug.DrawLine(Vector3.Slerp(-forward, up, i / 25.0f) + end, Vector3.Slerp(-forward, up, (i - 1) / 25.0f) + end, color, duration, depthTest);
-                }
+                Debug.DrawLine(Vector3.Slerp(right, -up, i / 25.0f) + start, Vector3.Slerp(right, -up, (i - 1) / 25.0f) + start, color, duration, depthTest);
+                Debug.DrawLine(Vector3.Slerp(-right, -up, i / 25.0f) + start, Vector3.Slerp(-right, -up, (i - 1) / 25.0f) + start, color, duration, depthTest);
+                Debug.DrawLine(Vector3.Slerp(forward, -up, i / 25.0f) + start, Vector3.Slerp(forward, -up, (i - 1) / 25.0f) + start, color, duration, depthTest);
+                Debug.DrawLine(Vector3.Slerp(-forward, -up, i / 25.0f) + start, Vector3.Slerp(-forward, -up, (i - 1) / 25.0f) + start, color, duration, depthTest);
+                //End endcap
+                Debug.DrawLine(Vector3.Slerp(right, up, i / 25.0f) + end, Vector3.Slerp(right, up, (i - 1) / 25.0f) + end, color, duration, depthTest);
+                Debug.DrawLine(Vector3.Slerp(-right, up, i / 25.0f) + end, Vector3.Slerp(-right, up, (i - 1) / 25.0f) + end, color, duration, depthTest);
+                Debug.DrawLine(Vector3.Slerp(forward, up, i / 25.0f) + end, Vector3.Slerp(forward, up, (i - 1) / 25.0f) + end, color, duration, depthTest);
+                Debug.DrawLine(Vector3.Slerp(-forward, up, i / 25.0f) + end, Vector3.Slerp(-forward, up, (i - 1) / 25.0f) + end, color, duration, depthTest);
             }
         }
 
-        public static void DebugCapsuleFromInsidePoint(Vector3 p1, Vector3 p2, Color color, float radius = 1, float duration = 0, bool depthTest = true, bool drawPoint = true, bool drawTop = true, bool drawBottom = true)
+        public static void DebugCapsuleFromInsidePoint(Vector3 p1, Vector3 p2, Color color, float radius = 1, float duration = 0, bool depthTest = true, bool drawPoint = true)
         {
             Vector3 extremityP1 = p1 + (p1 - p2).normalized * radius;
             Vector3 extremityP2 = p2 - (p1 - p2).normalized * radius;
-            DebugCapsule(extremityP1, extremityP2, color, radius, duration, depthTest, drawPoint, drawTop, drawBottom);
+            DebugCapsule(extremityP1, extremityP2, color, radius, duration, depthTest, drawPoint);
+        }
+
+        public static void DebugHalfCapsule(Vector3 start, Vector3 end, Color color, float radius = 1, float duration = 0, bool depthTest = true, bool drawPoint = true)
+        {
+            Vector3 up = (end - start).normalized * radius;
+            Vector3 forward = Vector3.Slerp(up, -up, 0.5f);
+            Vector3 right = Vector3.Cross(up, forward).normalized * radius;
+
+            float height = (start - end).magnitude;
+            float sideLength = Mathf.Max(0, (height * 0.5f) - radius);
+            Vector3 middle = (end + start) * 0.5f;
+
+            start = middle + ((start - middle).normalized * sideLength);
+            end = middle + ((end - middle).normalized * sideLength);
+
+            //Radial circles
+            ExtDrawGuizmos.DebugCircle(start, up, color, radius, duration, depthTest);
+            ExtDrawGuizmos.DebugCircle(end, -up, color, radius, duration, depthTest);
+
+            //Side lines
+            Debug.DrawLine(start + right, end + right, color, duration, depthTest);
+            Debug.DrawLine(start - right, end - right, color, duration, depthTest);
+
+            Debug.DrawLine(start + forward, end + forward, color, duration, depthTest);
+            Debug.DrawLine(start - forward, end - forward, color, duration, depthTest);
+
+            if (drawPoint)
+            {
+                Handles.Label(start + Vector3.down * 0.03f + Vector3.right * 0.03f, "1");
+                Handles.Label(end + Vector3.down * 0.03f + Vector3.right * 0.03f, "2");
+            }
+
+            for (int i = 1; i < 26; i++)
+            {
+                Debug.DrawLine(Vector3.Slerp(right, -up, i / 25.0f) + start, Vector3.Slerp(right, -up, (i - 1) / 25.0f) + start, color, duration, depthTest);
+                Debug.DrawLine(Vector3.Slerp(-right, -up, i / 25.0f) + start, Vector3.Slerp(-right, -up, (i - 1) / 25.0f) + start, color, duration, depthTest);
+                Debug.DrawLine(Vector3.Slerp(forward, -up, i / 25.0f) + start, Vector3.Slerp(forward, -up, (i - 1) / 25.0f) + start, color, duration, depthTest);
+                Debug.DrawLine(Vector3.Slerp(-forward, -up, i / 25.0f) + start, Vector3.Slerp(-forward, -up, (i - 1) / 25.0f) + start, color, duration, depthTest);
+            }
+        }
+
+        public static void DebugHalfCapsuleFromInsidePoint(Vector3 p1, Vector3 p2, Color color, float radius = 1, float duration = 0, bool depthTest = true, bool drawPoint = true)
+        {
+            Vector3 extremityP1 = p1 + (p1 - p2).normalized * radius;
+            Vector3 extremityP2 = p2 - (p1 - p2).normalized * radius;
+            DebugHalfCapsule(extremityP1, extremityP2, color, radius, duration, depthTest, drawPoint);
         }
 
         /// <summary>

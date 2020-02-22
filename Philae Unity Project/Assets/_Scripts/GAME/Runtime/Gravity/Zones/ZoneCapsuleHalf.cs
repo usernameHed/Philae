@@ -8,14 +8,14 @@ using UnityEngine;
 namespace philae.gravity.zones
 {
     [Serializable]
-    public class ZoneCapsule : Zone
+    public class ZoneCapsuleHalf : Zone
     {
-        public ExtCapsule Capsule;
+        public ExtHalfCapsule CapsuleHalf;
 
         public override void Init(GravityAttractorZone zone)
         {
             base.Init(zone);
-            Capsule = new ExtCapsule(ZonePhysic.GetScalerZoneReference.position,
+            CapsuleHalf = new ExtHalfCapsule(ZonePhysic.GetScalerZoneReference.position,
                 ZonePhysic.GetScalerZoneReference.rotation,
                 ZonePhysic.GetScalerZoneReference.localScale,
                 1f,
@@ -25,18 +25,18 @@ namespace philae.gravity.zones
 #if UNITY_EDITOR
         public override void Draw()
         {
-            Capsule.Draw(base.GetColor());
+            CapsuleHalf.Draw(base.GetColor());
         }
 #endif
 
         public override void Move(Vector3 newPosition, Quaternion rotation, Vector3 localScale)
         {
-            Capsule.MoveSphape(newPosition, rotation, localScale);
+            CapsuleHalf.MoveSphape(newPosition, rotation, localScale);
         }
 
         public override bool IsInsideShape(Vector3 position)
         {
-            return (Capsule.IsInsideShape(position));
+            return (CapsuleHalf.IsInsideShape(position));
         }
     }
 }
