@@ -19,7 +19,7 @@ namespace philae.gravity.attractor
             base.InitOnCreation(attractorListerLogic);
         }
 
-        public override bool GetClosestPoint(Graviton graviton, out Vector3 closestPoint)
+        public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {
             closestPoint = this.GetRightPosWithRange(graviton.Position, _sphere.Position, _sphere.Radius, _maxRangeWithScale, out bool outOfRange);
             bool canApplyGravity = !outOfRange;

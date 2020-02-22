@@ -21,7 +21,7 @@ namespace philae.gravity.attractor
             _cube = new ExtCube(Position, Rotation, LocalScale);
         }
 
-        public override bool GetClosestPoint(Graviton graviton, out Vector3 closestPoint)
+        public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {
             closestPoint = _cube.GetClosestPoint(graviton.Position);
             closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);

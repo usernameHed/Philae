@@ -18,7 +18,7 @@ namespace philae.gravity.attractor.line
             base.InitOnCreation(attractorListerLogic);
         }
 
-        public override bool GetClosestPoint(Graviton graviton, out Vector3 closestPoint)
+        public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {
             closestPoint = Vector3.zero;
             return (false);

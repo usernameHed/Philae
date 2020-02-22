@@ -21,7 +21,7 @@ namespace philae.gravity.attractor
             _disc = new ExtDisc(Position, Rotation, LocalScale, 0.5f);
         }
 
-        public override bool GetClosestPoint(Graviton graviton, out Vector3 closestPoint)
+        public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {
             bool canApplyGravity = _disc.GetClosestPoint(graviton.Position, out closestPoint);
             if (canApplyGravity)

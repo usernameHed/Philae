@@ -14,7 +14,7 @@ namespace philae.gravity.attractor
     {
         public GravityOverrideLineTopDown GravityOverride;
 
-        public override bool GetClosestPoint(Graviton graviton, out Vector3 closestPoint)
+        public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {
             bool canApplyGravity = _capsule.GetClosestPointIfWeCan(graviton.Position, GravityOverride, out closestPoint);
             closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);

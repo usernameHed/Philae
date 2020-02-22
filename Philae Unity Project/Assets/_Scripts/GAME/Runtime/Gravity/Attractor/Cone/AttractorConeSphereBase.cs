@@ -19,7 +19,7 @@ namespace philae.gravity.attractor
             _cone = new ExtConeSphereBase(Position, Rotation, LocalScale, 0.5f, 4f);
         }
 
-        public override bool GetClosestPoint(Graviton graviton, out Vector3 closestPoint)
+        public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {            
             closestPoint = _cone.GetClosestPoint(graviton.Position);
             closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
