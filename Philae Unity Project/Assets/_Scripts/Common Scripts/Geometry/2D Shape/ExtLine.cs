@@ -33,20 +33,27 @@ namespace hedCommon.geometry.shape2d
         [SerializeField]
         private float _deltaSquared;
 
-        public ExtLine(Vector3 a, Vector3 b)
+        public ExtLine(Vector3 p1, Vector3 p2) : this()
         {
-            _p1 = a;
-            _p2 = b;
-            _delta = b - a;
+            MoveShape(p1, p2);
+        }
+
+        public void MoveShape(Vector3 p1, Vector3 p2)
+        {
+            _p1 = p1;
+            _p2 = p2;
+            _delta = _p2 - _p1;
             _deltaSquared = Vector3.Dot(_delta, _delta);
         }
 
-        public Vector3 PointAt(double t) => _p1 + (float)t * _delta;
-        public double LengthLine => _delta.magnitude;
+        public Vector3 PointAt(float t)
+        {
+            return (_p1 + t * _delta);
+        }
 
         public double GetLenght()
         {
-            return (LengthLine);
+            return (_delta.magnitude);
         }
 
         public float Project(Vector3 p)
@@ -55,7 +62,7 @@ namespace hedCommon.geometry.shape2d
         }
 
         /// <summary>
-        /// https://diego.assencio.com/?index=ec3d5dfdfc0b6a0d147a656f0af332bd
+        /// 
         /// </summary>
         /// <param name="k"></param>
         /// <param name="nullIfOutside"></param>
@@ -123,6 +130,11 @@ namespace hedCommon.geometry.shape2d
         public void Draw(Color color)
         {
             Debug.DrawLine(_p1, _p2, color);
+        }
+
+        public void DrawWithOffset(Color color, Vector3 offset)
+        {
+            Debug.DrawLine(_p1 + offset, _p2 + offset, color);
         }
 #endif
 

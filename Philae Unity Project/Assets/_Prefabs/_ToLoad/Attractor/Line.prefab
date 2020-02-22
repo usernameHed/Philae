@@ -9,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3784656264804646245}
+  - component: {fileID: 1435789632903324486}
   - component: {fileID: 3784656264804646246}
-  - component: {fileID: 3784656264804646247}
   - component: {fileID: 2215473923261414492}
   - component: {fileID: 4726036847518728112}
+  - component: {fileID: 1635534981}
   m_Layer: 11
   m_Name: Line
   m_TagString: Untagged
@@ -27,13 +28,48 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3784656264804646244}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 136.156, y: 0, z: -16.749}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1435789632903324486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3784656264804646244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89f9b38166b97d9418d98d4dd07442a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SettingsGlobal: {fileID: 11400000, guid: 8a8d77476a1cbc842b42150b078f9f26, type: 2}
+  SettingsLocal:
+    Gravity: 9.81
+    AddMinRange: 0
+    AddMaxRange: 0
+    MinRange: 0
+    MaxRange: 0
+    IsKinematic: 1
+  _rigidAttractor: {fileID: 2215473923261414492}
+  _attractorListerLogic:
+  - {fileID: 0}
+  _minRangeWithScale: 0
+  _maxRangeWithScale: 0
+  _gravitonsInside: []
+  Lines:
+  - _p1: {x: 0, y: 0, z: 0}
+    _p2: {x: 1, y: 0, z: 1}
+    _delta: {x: 0, y: 0, z: 0}
+    _deltaSquared: 0
+  - _p1: {x: 1, y: 0, z: 1}
+    _p2: {x: 2, y: 0, z: 0}
+    _delta: {x: 0, y: 0, z: 0}
+    _deltaSquared: 0
 --- !u!114 &3784656264804646246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,32 +85,6 @@ MonoBehaviour:
   ShowName: 1
   ColorText: {r: 1, g: 0, b: 0, a: 1}
   HideHandle: 0
---- !u!114 &3784656264804646247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3784656264804646244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c06af49c6df9349b8ac57cac9cfe59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SettingsGlobal: {fileID: 11400000, guid: 8a8d77476a1cbc842b42150b078f9f26, type: 2}
-  SettingsLocal:
-    Gravity: 9.81
-    AddMinRange: 0
-    AddMaxRange: 0
-    MinRange: 0
-    MaxRange: 100
-    IsKinematic: 1
-  _rigidAttractor: {fileID: 2215473923261414492}
-  _parent: {fileID: 0}
-  _attractorListerLogic: {fileID: 0}
-  _minRangeWithScale: 0
-  _maxRangeWithScale: 0
-  _gravitonsInside: []
 --- !u!114 &2215473923261414492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +104,7 @@ MonoBehaviour:
     ConstrainY: 0
     ConstrainZ: 0
   _velocityVector: {x: 0, y: 0, z: 0}
+  _lastVelocityVector: {x: 0, y: 0, z: 0}
   _rigidbody: {fileID: 4726036847518728112}
   _initialPush: {fileID: 0}
 --- !u!54 &4726036847518728112
@@ -112,3 +123,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 0
+--- !u!114 &1635534981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3784656264804646244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d4ee8f6c1b59749bdd2da154dc81fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sleepThreshold: 0.005
+  _solverIteration: 6
+  _maxDepenetrationVelocity: 9999
+  _centerOfMassChanged: 0
+  _defaultCenterOfMass: {x: 0, y: 0, z: 0}

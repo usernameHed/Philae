@@ -177,8 +177,6 @@ namespace philae.gravity.attractor
             _gravitonsInside.Clear();
         }
 
-        
-
         public abstract bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint);
         public virtual void CustomUpdateIfCanMove()
         {

@@ -1,21 +1,24 @@
 ﻿using hedCommon.extension.runtime;
 using hedCommon.geometry.shape2d;
+using hedCommon.geometry.shape3d;
 using philae.gravity.attractor.logic;
 using philae.gravity.graviton;
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace philae.gravity.attractor.line
 {
-    public class AttractorLineShape2d : Attractor
+    public class AttractorPolyLines : Attractor
     {
-        [SerializeField]
-        public List<ExtLine> Lines;
+        [SerializeField, OnValueChanged("ChangePolyLinesSettings", true)]
+        public ExtPolyLines _polyLines = default;
 
         public override void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {
             base.InitOnCreation(attractorListerLogic);
+            _polyLines = new ExtPolyLines(Position, Rotation, LocalScale);
         }
 
         public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
@@ -24,18 +27,20 @@ namespace philae.gravity.attractor.line
             return (false);
         }
 
+        public void ChangePolyLinesSettings()
+        {
+            _polyLines.MoveSphape(Position, Rotation, LocalScale);
+        }
+
         public override void Move()
         {
-
+            _polyLines.MoveSphape(Position, Rotation, LocalScale);
         }
 
 #if UNITY_EDITOR
         protected override void DrawRange(Color color)
         {
-            for (int i = Lines.Count - 1; i >= 0; i--)
-            {
-                Lines[i].Draw(color);
-            }
+            _polyLines.Draw(color);
         }
 #endif
     }
