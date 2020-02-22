@@ -12,7 +12,7 @@ namespace philae.gravity.attractor
 {
     public class AttractorCapsuleHalfOverride : AttractorCapsuleHalf
     {
-        public GravityOverrideCapsule GravityOverride;
+        public GravityOverrideLineTopDown GravityOverride;
 
         public override Vector3 GetClosestPoint(Graviton graviton, out bool canApplyGravity)
         {

@@ -59,7 +59,7 @@ namespace philae.gravity.attractor.gravityOverride
     }
 
     [Serializable]
-    public struct GravityOverrideCapsule
+    public struct GravityOverrideLineTopDown
     {
         [OnValueChanged("SetupGravity")]
         public bool Trunk;
@@ -72,7 +72,7 @@ namespace philae.gravity.attractor.gravityOverride
         private bool _canApplyGravity;
         public bool CanApplyGravity { get { return (_canApplyGravity); } }
 
-        public GravityOverrideCapsule(bool trunk, bool top, bool bottom)
+        public GravityOverrideLineTopDown(bool trunk, bool top, bool bottom)
         {
             Trunk = trunk;
             Top = top;
@@ -86,6 +86,37 @@ namespace philae.gravity.attractor.gravityOverride
         {
             _canApplyGravity = Trunk || Top || Bottom;
             Debug.Log("setup gravity of capsule ! " + _canApplyGravity);
+        }
+    }
+
+    public struct GravityOverrideCone
+    {
+        [OnValueChanged("SetupGravity")]
+        public bool Top;
+        [OnValueChanged("SetupGravity", true)]
+        public GravityOverrideDisc Base;
+        [OnValueChanged("SetupGravity")]
+        public bool Trunk;
+
+        [SerializeField, ReadOnly]
+        private bool _canApplyGravity;
+        public bool CanApplyGravity { get { return (_canApplyGravity); } }
+
+        public GravityOverrideCone(bool top, GravityOverrideDisc baseDisc, bool trunk)
+        {
+            Top = top;
+            Base = baseDisc;
+            Trunk = trunk;
+
+            _canApplyGravity = false;
+            SetupGravity();
+        }
+
+        public void SetupGravity()
+        {
+            Base.SetupGravity();
+            _canApplyGravity = Base.CanApplyGravity || Top || Trunk;
+            Debug.Log("setup gravity of cylinder ! " + _canApplyGravity);
         }
     }
 

@@ -247,7 +247,7 @@ namespace hedCommon.geometry.shape3d
             return (GetClosestPoint(k).magnitude);
         }
 
-        public Vector3 GetClosestPointIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideCapsule gravityOverride)
+        public Vector3 GetClosestPointIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideLineTopDown gravityOverride)
         {
             if (!gravityOverride.CanApplyGravity)
             {

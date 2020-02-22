@@ -10,27 +10,22 @@ using UnityEngine;
 namespace hedCommon.geometry.shape3d
 {
     /// <summary>
-    /// Capsule 
-    ///       _3_
+    /// 
+    ///        1
+    ///       / \
+    ///      /   \
+    ///     /     \
     ///    /       \
-    ///   /  -----  \
-    ///  |/         \|
-    ///  |\    1    /|
-    ///  | --_____-- |
-    ///  |           |
-    ///  |           |
-    ///  |           |
-    ///  |           |
-    ///  |           |
-    ///  |           |
+    ///   /  _____  \
+    ///  / -       - \
     ///  \     2     /
-    ///    --_____-- 
+    ///    --_____--
     ///    
     /// </summary>
     [Serializable]
-    public struct ExtHalfCapsule
+    public struct ExtConeSphereBase
     {
-        #region Capsule Serialized Variables cached
+        #region Cylinder Serialized Variables cached
         private Vector3 _position;
         public Vector3 Position { get { return (_position); } }
         private Quaternion _rotation;
@@ -39,9 +34,7 @@ namespace hedCommon.geometry.shape3d
         public Vector3 LocalScale { get { return (_localScale); } }
 
         [SerializeField]
-        private ExtSphere _topSphere;
-        [SerializeField]
-        private ExtCircle _bottomCircle;
+        private ExtCircle _circleBase;
 
         [SerializeField]
         private float _radius;
@@ -58,7 +51,7 @@ namespace hedCommon.geometry.shape3d
         private float _realSquaredRadius;
         public float RealRadius { get { return (_realRadius); } }
         [SerializeField]
-        private Matrix4x4 _capsuleMatrix;
+        private Matrix4x4 _coneMatrix;
         [SerializeField]
         private Vector3 _p1;
         public Vector3 P1 { get { return (_p1); } }
@@ -71,9 +64,7 @@ namespace hedCommon.geometry.shape3d
         private float _deltaSquared;
         #endregion
 
-
-
-        public ExtHalfCapsule(Vector3 position,
+        public ExtConeSphereBase(Vector3 position,
             Quaternion rotation,
             Vector3 localScale,
             float radius,
@@ -88,11 +79,10 @@ namespace hedCommon.geometry.shape3d
             _radiusSquared = _radius * _radius;
             _realRadius = _radius * MaxXY(_localScale);
             _realSquaredRadius = _realRadius * _realRadius;
-
-            UpdateMatrix();            
+            UpdateMatrix();
         }
 
-        public ExtHalfCapsule(Vector3 p1, Vector3 p2, float radius = 0.25f) : this()
+        public ExtConeSphereBase(Vector3 p1, Vector3 p2, float radius = 0.25f) : this()
         {
             _position = ExtVector3.GetMeanOfXPoints(p1, p2);
             _rotation = ExtRotation.QuaternionFromLine(p1, p2, Vector3.up);
@@ -100,7 +90,7 @@ namespace hedCommon.geometry.shape3d
 
             _localScale = new Vector3(1, 1, 1);
 
-            _capsuleMatrix = Matrix4x4.TRS(_position, _rotation, _localScale * 1);
+            _coneMatrix = Matrix4x4.TRS(_position, _rotation, _localScale * 1);
 
             //why radius a 0.25, and lenght * 0.8 ?? I don't know,
             //it's there to match the first constructor(position, rotation, scale)
@@ -117,45 +107,21 @@ namespace hedCommon.geometry.shape3d
 
         private void UpdateMatrix()
         {
-            _capsuleMatrix = Matrix4x4.TRS(_position, _rotation, _localScale * _radius);
+            _coneMatrix = Matrix4x4.TRS(_position, _rotation, _localScale * _radius);
             Vector3 size = new Vector3(0, _lenght / 2, 0);
-            _p1 = _capsuleMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
-            _p2 = _capsuleMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
+            _p1 = _coneMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
+            _p2 = _coneMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
             _delta = _p2 - _p1;
             _deltaSquared = ExtVector3.DotProduct(_delta, _delta);
 
-            _topSphere.MoveSphape(_p1, _realRadius);
-            _bottomCircle.MoveSphape(_p2, _capsuleMatrix.Down(), _realRadius);
+            _circleBase.MoveSphape(_p2, _coneMatrix.Down(), _realRadius);
         }
 
-#if UNITY_EDITOR
-        public void Draw(Color color)
-        {
-            ExtDrawGuizmos.DebugHalfCapsuleFromInsidePoint(_p1, _p2, color, _realRadius);
-        }
-
-        public void DrawWithExtraSize(Color color, Vector3 extraSize)
-        {
-            if (extraSize.Maximum() <= 1f)
-            {
-                return;
-            }
-
-            Matrix4x4 cylinderMatrix = Matrix4x4.TRS(_position, _rotation, (_localScale + extraSize) * _radius);
-            Vector3 size = new Vector3(0, _lenght / 2, 0);
-            Vector3 p1 = cylinderMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
-            Vector3 p2 = cylinderMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
-            float realRadius = _radius * MaxXY(_localScale + extraSize);
-
-            ExtDrawGuizmos.DebugHalfCapsuleFromInsidePoint(p1, p2, color, _realRadius);
-        }
-#endif
 
         private float MaxXY(Vector3 size)
         {
             return (Mathf.Max(size.x, size.z));
         }
-
 
         public void MoveSphape(Vector3 position, Quaternion rotation, Vector3 localScale)
         {
@@ -191,45 +157,17 @@ namespace hedCommon.geometry.shape3d
             UpdateMatrix();
         }
 
+
         /// <summary>
         /// return true if the position is inside the sphape
         /// </summary>
-        public bool IsInsideShape(Vector3 pointToTest)
+        public bool IsInsideShape(Vector3 k)
         {
-            bool isInsideTopSphere = _topSphere.IsInsideShape(pointToTest);
-            if (isInsideTopSphere)
-            {
-                return (true);
-            }
-            return (IsInsideTrunk(pointToTest));
+            return (false);
         }
 
-        private bool IsInsideTrunk(Vector3 k)
-        {
-            Vector3 pDir = k - _p1;
-            float dot = Vector3.Dot(_delta, pDir);
-
-            if (dot < 0f || dot > _deltaSquared)
-            {
-                return (false);
-            }
-
-            float dsq = pDir.x * pDir.x + pDir.y * pDir.y + pDir.z * pDir.z - dot * dot / _deltaSquared;
-
-            if (dsq > _realSquaredRadius)
-            {
-                return (false);
-            }
-            else
-            {
-                return (true);
-            }
-        }
-
-
-        
         /// <summary>
-        /// Return the closest point on the surface of the capsule
+        /// Return the closest point on the surface of the cone
         ///   
         /// </summary>
         public Vector3 GetClosestPoint(Vector3 k)
@@ -239,20 +177,18 @@ namespace hedCommon.geometry.shape3d
             //k projection is outside the [_p1, _p2] interval, closest to _p1
             if (dist <= 0.0f)
             {
-                return (_topSphere.GetClosestPoint(k));
+                return (_p1);
             }
             //k projection is outside the [_p1, p2] interval, closest to _p2
             else if (dist >= _deltaSquared)
             {
-                return (_bottomCircle.GetClosestPointOnDisc(k, out bool canApplyGravity));
+                return (_circleBase.GetClosestPointOnDisc(k, out bool canApplyGravity));
             }
             //k projection is inside the [_p1, p2] interval
             else
             {
-                dist = dist / _deltaSquared;
-                Vector3 pointOnLine = _p1 + dist * _delta;
-                Vector3 pointOnSurfaceLine = pointOnLine + ((k - pointOnLine).FastNormalized() * _realRadius);
-                return (pointOnSurfaceLine);
+                //here do calculation
+                return (_p1 - _p2);
             }
         }
 
@@ -261,7 +197,7 @@ namespace hedCommon.geometry.shape3d
             return (GetClosestPoint(k).magnitude);
         }
 
-        public Vector3 GetClosestPointIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideLineTopDown gravityOverride)
+        public Vector3 GetClosestPointIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideCone gravityOverride)
         {
             if (!gravityOverride.CanApplyGravity)
             {
@@ -271,18 +207,16 @@ namespace hedCommon.geometry.shape3d
 
             canApplyGravity = true;
             float dist = ExtVector3.DotProduct(k - _p1, _delta);
-
             //k projection is outside the [_p1, _p2] interval, closest to _p1
             if (dist <= 0.0f)
             {
                 canApplyGravity = gravityOverride.Top;
-                return (canApplyGravity ? _topSphere.GetClosestPoint(k) : Vector3.zero);
+                return (canApplyGravity ? _p1 : Vector3.zero);
             }
             //k projection is outside the [_p1, p2] interval, closest to _p2
             else if (dist >= _deltaSquared)
             {
-                canApplyGravity = gravityOverride.Bottom;
-                return (canApplyGravity ? _bottomCircle.GetClosestPointOnDisc(k, out bool gravity) : Vector3.zero);
+                return (_circleBase.GetClosestPointOnDiscIfWeCan(k, out canApplyGravity, gravityOverride.Base));
             }
             //k projection is inside the [_p1, p2] interval
             else
@@ -293,13 +227,37 @@ namespace hedCommon.geometry.shape3d
                     return (k);
                 }
 
-                dist = dist / _deltaSquared;
-                Vector3 pointOnLine = _p1 + dist * _delta;
-                Vector3 pointOnSurfaceLine = pointOnLine + ((k - pointOnLine).FastNormalized() * _realRadius);
-                return (pointOnSurfaceLine);
+                //here do calculation
+                return (_p1 - _p2);
             }
         }
-        
+
+#if UNITY_EDITOR
+        public void Draw(Color color)
+        {
+            Debug.DrawLine(_p1, _p2, color);
+            ExtDrawGuizmos.DrawLabel(_p1, "1", color);
+            _circleBase.Draw(color, false, "2");
+        }
+
+        public void DrawWithExtraSize(Color color, Vector3 extraSize)
+        {
+            if (extraSize.Maximum() <= 1f)
+            {
+                return;
+            }
+
+            Matrix4x4 coneMatrix = Matrix4x4.TRS(_position, _rotation, (_localScale + extraSize) * _radius);
+            Vector3 size = new Vector3(0, _lenght / 2, 0);
+            Vector3 p1 = coneMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
+            Vector3 p2 = coneMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
+            float realRadius = _radius * MaxXY(_localScale + extraSize);
+
+            Debug.DrawLine(p1, p2, color);
+            ExtDrawGuizmos.DrawLabel(p1, "1", color);
+            _circleBase.DrawWithExtraSize(color, realRadius, false, "2");
+        }
+#endif
 
         //end class
     }

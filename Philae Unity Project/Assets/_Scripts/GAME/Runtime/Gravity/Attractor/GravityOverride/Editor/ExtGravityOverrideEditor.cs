@@ -384,7 +384,7 @@ namespace philae.gravity.attractor.gravityOverride
         }
 
 
-        public static GravityOverrideCapsule DrawCapsule(ExtCapsule capsule, GravityOverrideCapsule capsuleGravity, float alpha, out bool hasChanged)
+        public static GravityOverrideLineTopDown DrawCapsule(ExtCapsule capsule, GravityOverrideLineTopDown capsuleGravity, float alpha, out bool hasChanged)
         {
             float sizeLine = capsule.LocalScale.magnitude / 25;
             float alphaLine = 0.8f;
@@ -402,7 +402,7 @@ namespace philae.gravity.attractor.gravityOverride
             hasChanged = (changed) ? true : hasChanged;
             return (capsuleGravity);
         }
-        public static GravityOverrideCapsule DrawCapsuleHalf(ExtHalfCapsule capsuleHalf, GravityOverrideCapsule capsuleGravity, float alpha, out bool hasChanged)
+        public static GravityOverrideLineTopDown DrawCapsuleHalf(ExtHalfCapsule capsuleHalf, GravityOverrideLineTopDown capsuleGravity, float alpha, out bool hasChanged)
         {
             float sizeLine = capsuleHalf.LocalScale.magnitude / 25;
             float alphaLine = 0.8f;
@@ -436,7 +436,7 @@ namespace philae.gravity.attractor.gravityOverride
             ApplyModificationToDisc(cylinder.GetPropertie(nameof(datas.Disc2)), datas.Disc2);
         }
 
-        public static void ApplyModificationToCapsule(SerializedProperty capsule, GravityOverrideCapsule datas)
+        public static void ApplyModificationToCapsule(SerializedProperty capsule, GravityOverrideLineTopDown datas)
         {
             capsule.GetPropertie(nameof(datas.Trunk)).boolValue = datas.Trunk;
             capsule.GetPropertie("_canApplyGravity").boolValue = datas.CanApplyGravity;

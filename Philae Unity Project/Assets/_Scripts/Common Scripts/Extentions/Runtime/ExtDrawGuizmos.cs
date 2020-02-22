@@ -17,6 +17,14 @@ namespace hedCommon.extension.runtime
     {
         #region DebugDrawFunctions
 
+#if UNITY_EDITOR
+        public static void DrawLabel(Vector3 position, string label, Color color)
+        {
+            Handles.color = color;
+            Handles.Label(position + Vector3.down * 0.03f + Vector3.right * 0.03f, label);
+        }
+#endif
+
         /// <summary>
         /// has to be called in OnGUI
         /// </summary>
