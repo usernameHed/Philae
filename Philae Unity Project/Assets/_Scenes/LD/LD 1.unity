@@ -862,7 +862,7 @@ PrefabInstance:
     - target: {fileID: 4161897246364978426, guid: cf5eb6d61f17aff4ba67601d196b5647,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -39.6
+      value: -43.87
       objectReference: {fileID: 0}
     - target: {fileID: 4161897246364978426, guid: cf5eb6d61f17aff4ba67601d196b5647,
         type: 3}
@@ -872,7 +872,7 @@ PrefabInstance:
     - target: {fileID: 4161897246364978426, guid: cf5eb6d61f17aff4ba67601d196b5647,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -134.1
+      value: -137.69
       objectReference: {fileID: 0}
     - target: {fileID: 4161897246364978426, guid: cf5eb6d61f17aff4ba67601d196b5647,
         type: 3}
@@ -917,7 +917,7 @@ PrefabInstance:
     - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
         type: 3}
       propertyPath: _gravitonsInside.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
         type: 3}
@@ -928,6 +928,76 @@ PrefabInstance:
         type: 3}
       propertyPath: _gravitonsInside.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: _capsuleHalf._topSphere.Position.x
+      value: -43.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: _capsuleHalf._topSphere.Position.z
+      value: -137.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: _capsuleHalf._bottomCircle._plane.Point.x
+      value: -43.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: _capsuleHalf._bottomCircle._plane.Point.z
+      value: -137.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: _capsuleHalf._capsuleMatrix.e03
+      value: -43.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: _capsuleHalf._capsuleMatrix.e23
+      value: -137.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: _capsuleHalf._p1.x
+      value: -43.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: _capsuleHalf._p1.z
+      value: -137.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: _capsuleHalf._p2.x
+      value: -43.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: _capsuleHalf._p2.z
+      value: -137.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: GravityOverride.Trunk
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: GravityOverride.Top
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: GravityOverride.Bottom
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: GravityOverride._canApplyGravity
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf5eb6d61f17aff4ba67601d196b5647, type: 3}
