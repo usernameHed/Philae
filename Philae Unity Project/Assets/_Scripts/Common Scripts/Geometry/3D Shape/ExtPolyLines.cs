@@ -19,7 +19,10 @@ namespace hedCommon.geometry.shape3d
         private Vector3 _localScale;
 
         [SerializeField]
-        private List<ExtLine> _listLines;
+        private ExtLine[] _listLinesLocal;
+
+        [SerializeField]
+        private ExtLine[] _listLines;
 
         private Matrix4x4 _polyLinesMatrix;
 
@@ -36,12 +39,12 @@ namespace hedCommon.geometry.shape3d
         private void UpdateMatrix()
         {
             _polyLinesMatrix = Matrix4x4.TRS(_position, _rotation, _localScale);
-            Debug.Log("move ??");
-            for (int i = 0; i < _listLines.Count; i++)
+            
+            for (int i = 0; i < _listLinesLocal.Length; i++)
             {
                 _listLines[i].MoveShape(
-                    _polyLinesMatrix.MultiplyPoint3x4(_listLines[i].P1),
-                    _polyLinesMatrix.MultiplyPoint3x4(_listLines[i].P2));
+                    _polyLinesMatrix.MultiplyPoint3x4(_listLinesLocal[i].P1),
+                    _polyLinesMatrix.MultiplyPoint3x4(_listLinesLocal[i].P2));
             }
             
         }
@@ -49,10 +52,10 @@ namespace hedCommon.geometry.shape3d
 #if UNITY_EDITOR
         public void Draw(Color color)
         {
-            for (int i = 0; i < _listLines.Count; i++)
+            for (int i = 0; i < _listLines.Length; i++)
             {
-                //Vector3 realP1 = _polyLinesMatrix.MultiplyPoint3x4(_listLines[i].P1);
-                //Vector3 realP2 = _polyLinesMatrix.MultiplyPoint3x4(_listLines[i].P2);
+                //Vector3 realP1 = _polyLinesMatrix.MultiplyPoint3x4(_listLinesLocal[i].P1);
+                //Vector3 realP2 = _polyLinesMatrix.MultiplyPoint3x4(_listLinesLocal[i].P2);
                 //Debug.DrawLine(realP1, realP2);
                 _listLines[i].Draw(color);
             }
