@@ -12,7 +12,7 @@ namespace philae.gravity.attractor
     public class AttractorCapsule : Attractor
     {
         [SerializeField, OnValueChanged("ChangeCapsuleSettings", true)]
-        private ExtCapsule _capsule = default;
+        protected ExtCapsule _capsule = default;
 
         public override void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {

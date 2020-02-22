@@ -176,8 +176,7 @@ MonoBehaviour:
     MaxRange: 0.5
     IsKinematic: 0
   _rigidAttractor: {fileID: 2306671404111087987}
-  _attractorListerLogic:
-  - {fileID: 0}
+  _attractorListerLogic: []
   _minRangeWithScale: 0.5
   _maxRangeWithScale: 0.5
   _gravitonsInside: []

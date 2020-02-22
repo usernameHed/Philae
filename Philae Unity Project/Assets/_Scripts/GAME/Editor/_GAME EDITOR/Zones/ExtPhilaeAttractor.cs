@@ -13,85 +13,116 @@ namespace philae.editor.extension.attractor
 {
     public static class ExtPhilaeAttractor
     {
-        [MenuItem("GameObject/Philae/Attractor/Sphere", false, -1)]
+        private const string SPHERE = "GameObject/Philae/Attractor/Sphere";
+        private const string CUBE = "GameObject/Philae/Attractor/Cube/Cube";
+        private const string CUBE_OVERRIDE = "GameObject/Philae/Attractor/Cube/Cube With gravity override";
+        private const string DISC = "GameObject/Philae/Attractor/Disc/Disc";
+        private const string DISC_OVERRIDE = "GameObject/Philae/Attractor/Disc/Disc with gravity override";
+        private const string CYLINDER = "GameObject/Philae/Attractor/Cylinder/Cylinder";
+        private const string CYLINDER_OVERRIDE = "GameObject/Philae/Attractor/Cylinder/Cylinder with gravity override";
+        private const string CAPSULE = "GameObject/Philae/Attractor/Capsule/Capsule";
+        private const string CAPSULE_OVERRIDE = "GameObject/Philae/Attractor/Capsule/Capsule with gravity override";
+        private const string CAPSULE_HALF = "GameObject/Philae/Attractor/Capsule/Capsule Half";
+        private const string CAPSULE_HALF_OVERRIDE = "GameObject/Philae/Attractor/Capsule/Capsule Half with gravity override";
+        private const string MESH_CONCAVE = "GameObject/Philae/Attractor/Mesh/Concave Mesh";
+        private const string MESH_CONVEXE = "GameObject/Philae/Attractor/Mesh/Convexe Mesh";
+        private const string LINE = "GameObject/Philae/Attractor/Line";
+        private const string QUAD = "GameObject/Philae/Attractor/Quad/Quad";
+        private const string QUAD_OVERRIDE = "GameObject/Philae/Attractor/Quad/Quad with gravity override";
+        private const string SPLINE = "GameObject/Philae/Attractor/Spline";
+        private const string TRIANGLE = "GameObject/Philae/Attractor/Triangle";
+
+        [MenuItem(SPHERE, false, -1)]
         private static void AttractorSphere()
         {
             CreateAttractor("Sphere");
         }
 
-        [MenuItem("GameObject/Philae/Attractor/Cube", false, -1)]
+        [MenuItem(CUBE, false, -1)]
         private static void AttractorCube()
         {
             CreateAttractor("Cube");
         }
-        [MenuItem("GameObject/Philae/Attractor/Cube Override", false, -1)]
+        [MenuItem(CUBE_OVERRIDE, false, -1)]
         private static void AttractorCubeOverride()
         {
             CreateAttractor("Cube Override");
         }
-        [MenuItem("GameObject/Philae/Attractor/Disc", false, -1)]
+        [MenuItem(DISC, false, -1)]
         private static void AttractorDisc()
         {
             CreateAttractor("Disc");
         }
-        [MenuItem("GameObject/Philae/Attractor/Disc Override", false, -1)]
+        [MenuItem(DISC_OVERRIDE, false, -1)]
         private static void AttractorDiscOverride()
         {
             CreateAttractor("Disc Override");
         }
-        [MenuItem("GameObject/Philae/Attractor/Cylinder", false, -1)]
+        [MenuItem(CYLINDER, false, -1)]
         private static void AttractorCylinder()
         {
             CreateAttractor("Cylinder");
         }
-        [MenuItem("GameObject/Philae/Attractor/Cylinder Override", false, -1)]
+        [MenuItem(CYLINDER_OVERRIDE, false, -1)]
         private static void AttractorCylinderOverride()
         {
             CreateAttractor("Cylinder Override");
         }
 
-        [MenuItem("GameObject/Philae/Attractor/Capsule", false, -1)]
+        [MenuItem(CAPSULE, false, -1)]
         private static void AttractorCapsule()
         {
             CreateAttractor("Capsule");
         }
-        [MenuItem("GameObject/Philae/Attractor/Capsule Half", false, -1)]
+        [MenuItem(CAPSULE_OVERRIDE, false, -1)]
+        private static void AttractorCapsuleOverride()
+        {
+            CreateAttractor("Capsule Override");
+        }
+
+        [MenuItem(CAPSULE_HALF, false, -1)]
         private static void AttractorCapsuleHalf()
         {
             CreateAttractor("Capsule Half");
         }
+        [MenuItem(CAPSULE_HALF_OVERRIDE, false, -1)]
+        private static void AttractorCapsuleHalfOverride()
+        {
+            CreateAttractor("Capsule Half Override");
+        }
 
-        [MenuItem("GameObject/Philae/Attractor/Concave Mesh", false, -1)]
+
+        [MenuItem(MESH_CONCAVE, false, -1)]
         private static void AttractorConcaveMesh()
         {
             CreateAttractor("Concave Mesh");
         }
-        [MenuItem("GameObject/Philae/Attractor/Convexe Mesh", false, -1)]
+        [MenuItem(MESH_CONVEXE, false, -1)]
         private static void AttractorConvexeMesh()
         {
             CreateAttractor("Convexe Mesh");
         }
-        [MenuItem("GameObject/Philae/Attractor/Line", false, -1)]
+        [MenuItem(LINE, false, -1)]
         private static void AttractorLine()
         {
             CreateAttractor("Line");
         }
-        [MenuItem("GameObject/Philae/Attractor/Quad", false, -1)]
+        [MenuItem(QUAD, false, -1)]
         private static void AttractorQuad()
         {
             CreateAttractor("Quad");
         }
-        [MenuItem("GameObject/Philae/Attractor/Quad Override", false, -1)]
+        [MenuItem(QUAD_OVERRIDE, false, -1)]
         private static void AttractorQuadOverride()
         {
             CreateAttractor("Quad Override");
         }
-        [MenuItem("GameObject/Philae/Attractor/Spline", false, -1)]
+        [MenuItem(SPLINE, false, -1)]
         private static void AttractorSpline()
         {
             CreateAttractor("Spline");
         }
-        [MenuItem("GameObject/Philae/Attractor/Triangle", false, -1)]
+        [MenuItem(TRIANGLE, false, -1)]
         private static void AttractorTriangle()
         {
             CreateAttractor("Triangle");
@@ -108,22 +139,24 @@ namespace philae.editor.extension.attractor
 
         // Validate the menu item defined by the function above.
         // The menu item will be disabled if this function returns false.
-        [MenuItem("GameObject/Philae/Attractor/Sphere", true)]
-        [MenuItem("GameObject/Philae/Attractor/Cube", true)]
-        [MenuItem("GameObject/Philae/Attractor/Cube Override", true)]
-        [MenuItem("GameObject/Philae/Attractor/Disc", true)]
-        [MenuItem("GameObject/Philae/Attractor/Disc Override", true)]
-        [MenuItem("GameObject/Philae/Attractor/Cylinder", true)]
-        [MenuItem("GameObject/Philae/Attractor/Cylinder Override", true)]
-        [MenuItem("GameObject/Philae/Attractor/Capsule", true)]
-        [MenuItem("GameObject/Philae/Attractor/Capsule Half", true)]
-        [MenuItem("GameObject/Philae/Attractor/Concave Mesh", true)]
-        [MenuItem("GameObject/Philae/Attractor/Concave Mesh", true)]
-        [MenuItem("GameObject/Philae/Attractor/Line", true)]
-        [MenuItem("GameObject/Philae/Attractor/Quad", true)]
-        [MenuItem("GameObject/Philae/Attractor/Quad Override", true)]
-        [MenuItem("GameObject/Philae/Attractor/Spline", true)]
-        [MenuItem("GameObject/Philae/Attractor/Triangle", true)]
+        [MenuItem(SPHERE, true)]
+        [MenuItem(CUBE, true)]
+        [MenuItem(CUBE_OVERRIDE, true)]
+        [MenuItem(DISC, true)]
+        [MenuItem(DISC_OVERRIDE, true)]
+        [MenuItem(CYLINDER, true)]
+        [MenuItem(CYLINDER_OVERRIDE, true)]
+        [MenuItem(CAPSULE, true)]
+        [MenuItem(CAPSULE_OVERRIDE, true)]
+        [MenuItem(CAPSULE_HALF, true)]
+        [MenuItem(CAPSULE_HALF_OVERRIDE, true)]
+        [MenuItem(MESH_CONCAVE, true)]
+        [MenuItem(MESH_CONVEXE, true)]
+        [MenuItem(LINE, true)]
+        [MenuItem(QUAD, true)]
+        [MenuItem(QUAD_OVERRIDE, true)]
+        [MenuItem(SPLINE, true)]
+        [MenuItem(TRIANGLE, true)]
         private static bool ValidateCreateZone()
         {            
             if (Selection.activeTransform == null)

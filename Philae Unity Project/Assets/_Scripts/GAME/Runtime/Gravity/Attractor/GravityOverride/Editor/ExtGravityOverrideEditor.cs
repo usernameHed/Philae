@@ -3,8 +3,6 @@ using hedCommon.extension.runtime;
 using hedCommon.extension.runtime.range;
 using hedCommon.geometry.shape2d;
 using hedCommon.geometry.shape3d;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -207,23 +205,22 @@ namespace philae.gravity.attractor.gravityOverride
                     Event.current.Use();
                 }
             }
-
-
-
-            
             return (face);
         }
 
-        public static GravityOverrideCylinder DrawCylinder(ExtCylinder cylinder, ExtCircle circle1, ExtCircle circle2, GravityOverrideCylinder cylinderGravity, float alpha, out bool hasChanged)
+        public static GravityOverrideCylinder DrawCylinder(ExtCylinder cylinder, ExtCircle circle1, ExtCircle circle2, GravityOverrideCylinder cylinderGravity, float alphaPoint, out bool hasChanged)
         {
+            float sizeLine = cylinder.LocalScale.magnitude / 20;
+            float alphaLine = 0.8f;
+            
             hasChanged = false;
             bool changed = hasChanged;
 
-            cylinderGravity.Disc1 = ExtGravityOverrideEditor.DrawDisc(circle1, cylinderGravity.Disc1, false, alpha, out changed);
+            cylinderGravity.Trunk = ExtGravityOverrideEditor.DrawLine(cylinderGravity.Trunk, cylinder.P1, cylinder.P2, sizeLine, alphaLine, out changed);
             hasChanged = (changed) ? true : hasChanged;
-            cylinderGravity.Disc2 = ExtGravityOverrideEditor.DrawDisc(circle2, cylinderGravity.Disc2, false, alpha, out changed);
+            cylinderGravity.Disc1 = ExtGravityOverrideEditor.DrawDisc(circle1, cylinderGravity.Disc1, false, alphaPoint, out changed);
             hasChanged = (changed) ? true : hasChanged;
-            cylinderGravity.Trunk = ExtGravityOverrideEditor.DrawLine(cylinderGravity.Trunk, cylinder.P1, cylinder.P2, size: cylinder.LocalScale.magnitude / 20, alpha: 0.8f, out changed);
+            cylinderGravity.Disc2 = ExtGravityOverrideEditor.DrawDisc(circle2, cylinderGravity.Disc2, false, alphaPoint, out changed);
             hasChanged = (changed) ? true : hasChanged;
             return (cylinderGravity);
         }
@@ -387,6 +384,43 @@ namespace philae.gravity.attractor.gravityOverride
         }
 
 
+        public static GravityOverrideCapsule DrawCapsule(ExtCapsule capsule, GravityOverrideCapsule capsuleGravity, float alpha, out bool hasChanged)
+        {
+            float sizeLine = capsule.LocalScale.magnitude / 25;
+            float alphaLine = 0.8f;
+            float sizePoint = capsule.LocalScale.magnitude / 20;
+            float alphaPoint = 1f;
+
+            hasChanged = false;
+            bool changed = hasChanged;
+
+            capsuleGravity.Trunk = ExtGravityOverrideEditor.DrawLine(capsuleGravity.Trunk, capsule.P1, capsule.P2, sizeLine, alphaLine, out changed);
+            hasChanged = (changed) ? true : hasChanged;
+            capsuleGravity.Top = ExtGravityOverrideEditor.DrawPoint(capsuleGravity.Top, capsule.P1, sizePoint, alphaPoint, out changed);
+            hasChanged = (changed) ? true : hasChanged;
+            capsuleGravity.Bottom = ExtGravityOverrideEditor.DrawPoint(capsuleGravity.Bottom, capsule.P2, sizePoint, alphaPoint, out changed);
+            hasChanged = (changed) ? true : hasChanged;
+            return (capsuleGravity);
+        }
+        public static GravityOverrideCapsule DrawCapsuleHalf(ExtHalfCapsule capsuleHalf, GravityOverrideCapsule capsuleGravity, float alpha, out bool hasChanged)
+        {
+            float sizeLine = capsuleHalf.LocalScale.magnitude / 25;
+            float alphaLine = 0.8f;
+            float sizePoint = capsuleHalf.LocalScale.magnitude / 20;
+            float alphaPoint = 1f;
+
+            hasChanged = false;
+            bool changed = hasChanged;
+
+            capsuleGravity.Trunk = ExtGravityOverrideEditor.DrawLine(capsuleGravity.Trunk, capsuleHalf.P1, capsuleHalf.P2, sizeLine, alphaLine, out changed);
+            hasChanged = (changed) ? true : hasChanged;
+            capsuleGravity.Top = ExtGravityOverrideEditor.DrawPoint(capsuleGravity.Top, capsuleHalf.P1, sizePoint, alphaPoint, out changed);
+            hasChanged = (changed) ? true : hasChanged;
+            capsuleGravity.Bottom = ExtGravityOverrideEditor.DrawPoint(capsuleGravity.Bottom, capsuleHalf.P2, sizePoint, alphaPoint, out changed);
+            hasChanged = (changed) ? true : hasChanged;
+            return (capsuleGravity);
+        }
+
         public static void ApplyModificationToDisc(SerializedProperty disc1, GravityOverrideDisc datas)
         {
             disc1.GetPropertie(nameof(datas.Face)).boolValue = datas.Face;
@@ -400,6 +434,14 @@ namespace philae.gravity.attractor.gravityOverride
             cylinder.GetPropertie("_canApplyGravity").boolValue = datas.CanApplyGravity;
             ApplyModificationToDisc(cylinder.GetPropertie(nameof(datas.Disc1)), datas.Disc1);
             ApplyModificationToDisc(cylinder.GetPropertie(nameof(datas.Disc2)), datas.Disc2);
+        }
+
+        public static void ApplyModificationToCapsule(SerializedProperty capsule, GravityOverrideCapsule datas)
+        {
+            capsule.GetPropertie(nameof(datas.Trunk)).boolValue = datas.Trunk;
+            capsule.GetPropertie("_canApplyGravity").boolValue = datas.CanApplyGravity;
+            capsule.GetPropertie(nameof(datas.Top)).boolValue = datas.Top;
+            capsule.GetPropertie(nameof(datas.Bottom)).boolValue = datas.Bottom;
         }
 
         public static void ApplyModificationToQuad(SerializedProperty quad, GravityOverrideQuad datas)

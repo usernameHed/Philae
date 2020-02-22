@@ -99,6 +99,11 @@ namespace philae.gravity.attractor
 
         private void SetupOnLoad()
         {
+            if (_rigidAttractor == null)
+            {
+                _rigidAttractor.GetComponent<RigidAttractor>();
+            }
+
             SetupLinkToAttractorListers();
 
             _gravitonsInside.Clear();
