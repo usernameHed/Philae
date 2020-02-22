@@ -63,6 +63,8 @@ namespace hedCommon.geometry.shape3d
         private Vector3 _delta;
         [SerializeField]
         private float _deltaSquared;
+        [SerializeField]
+        private Vector3 _pointOnDisc;
         #endregion
 
         public ExtConeSphereBase(Vector3 position,
@@ -115,7 +117,8 @@ namespace hedCommon.geometry.shape3d
             _delta = _p2 - _p1;
             _deltaSquared = ExtVector3.DotProduct(_delta, _delta);
 
-            _circleBase.MoveSphape(_p2, _coneMatrix.Down(), _realRadius);
+            _circleBase.MoveSphape(_p2, _coneMatrix.DownFast(), _realRadius);
+            _pointOnDisc = GetPointOnCircle();
         }
 
 
@@ -193,9 +196,34 @@ namespace hedCommon.geometry.shape3d
             //k projection is inside the [_p1, p2] interval
             else
             {
-                //here do calculation
-                return (_p1 - _p2);
+                dist = dist / _deltaSquared;
+
+
+                ///         A
+                ///        /|\
+                ///       / | \
+                ///      /  |  \
+                ///     /   |   \
+                ///    /    |    \
+                ///   /     C--?--?--------- K
+                ///  /      |      \
+                /// /_______B_______D
+                ///    
+
+                Vector3 A = _p1;
+                Vector3 B = _p2;
+                Vector3 C = _p1 + dist * _delta;
+                Vector3 D = _pointOnDisc;
+
+                Vector3 E = Vector3.zero;
+
+                return (C + (C - k).FastNormalized() * (C - E).magnitude);
             }
+        }
+
+        public Vector3 GetPointOnCircle()
+        {
+            return (_circleBase.Point + _coneMatrix.ForwardFast());
         }
 
         public float GetDistanceFromPoint(Vector3 k)
