@@ -172,7 +172,7 @@ namespace hedCommon.extension.runtime
         /// <summary>
         /// get closest point from an array of points
         /// </summary>
-        public static Vector3 GetClosestPoint(Vector3 posEntity, Vector3[] arrayPos, ref int indexFound)
+        public static Vector3 GetClosestPoint(Vector3 posEntity, Vector3[] arrayPos, out int indexFound)
         {
             float sqrDist = 0;
             indexFound = -1;
@@ -285,8 +285,7 @@ namespace hedCommon.extension.runtime
                 lenghtAllLine[i] = (float)line.GetLenght();
             }
 
-            int indexFound = -1;
-            Vector3 closestPoint = ExtMathf.GetClosestPoint(pos, closestPointInLines, ref indexFound);
+            Vector3 closestPoint = ExtMathf.GetClosestPoint(pos, closestPointInLines, out int indexFound);
 
             if (indexFound >= lenghtAllLine.Length)
             {

@@ -10,12 +10,12 @@ namespace hedCommon.extension.runtime
         /// apply a lerp between the 2 matrix by time
         /// // memory layout:
         //
-        //                row no (=vertical)
+        //                  row (horizontal)
         //               |  0   1   2   3
         //            ---+----------------
         //            0  | m00 m10 m20 m30      //GetColumn(0)
-        // column no  1  | m01 m11 m21 m31      //GetColumn(1)
-        // (=horiz)   2  | m02 m12 m22 m32      //GetColumn(2)
+        // column     1  | m01 m11 m21 m31      //GetColumn(1)
+        // (vertical) 2  | m02 m12 m22 m32      //GetColumn(2)
         //            3  | m03 m13 m23 m33      //GetColumn(3)
 
         /// </summary>

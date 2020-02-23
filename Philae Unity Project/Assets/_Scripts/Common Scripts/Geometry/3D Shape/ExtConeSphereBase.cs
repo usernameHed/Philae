@@ -208,7 +208,6 @@ namespace hedCommon.geometry.shape3d
                 ///   /     C--?--?--------- K
                 ///  /      |      \
                 /// /_______B_______D
-                ///    
 
                 Vector3 A = _p1;
                 Vector3 B = _p2;
@@ -264,8 +263,27 @@ namespace hedCommon.geometry.shape3d
                     return (false);
                 }
 
-                //here do calculation
-                closestPoint = _p1 - _p2;
+                dist = dist / _deltaSquared;
+
+
+                ///         A
+                ///        /|\
+                ///       / | \
+                ///      /  |  \
+                ///     /   |   \
+                ///    /    |    \
+                ///   /     C--?--?--------- K
+                ///  /      |      \
+                /// /_______B_______D
+
+                Vector3 A = _p1;
+                Vector3 B = _p2;
+                Vector3 C = _p1 + dist * _delta;
+                Vector3 D = _pointOnDisc;
+
+                Vector3 E = Vector3.zero;
+
+                closestPoint = C + (C - k).FastNormalized() * (C - E).magnitude;
                 return (true);
             }
         }

@@ -593,8 +593,7 @@ namespace ExtUnityComponents
             Vector3 centerObject = Vector3.zero;
             Vector3[] verts = GetRotatedVertex(_mesh, oldPosition, centerObject);
 
-            int indexFound = -1;
-            Vector3 closest = ExtMathf.GetClosestPoint(newPosition, verts, ref indexFound);
+            Vector3 closest = ExtMathf.GetClosestPoint(newPosition, verts, out int indexFound);
 
             float minHit = 0.3f;
             float minWithoutHit = 0.6f;

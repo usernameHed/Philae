@@ -54,18 +54,10 @@ namespace hedCommon.geometry.shape3d
         {
             for (int i = 0; i < _listLines.Length; i++)
             {
-                //Vector3 realP1 = _polyLinesMatrix.MultiplyPoint3x4(_listLinesLocal[i].P1);
-                //Vector3 realP2 = _polyLinesMatrix.MultiplyPoint3x4(_listLinesLocal[i].P2);
-                //Debug.DrawLine(realP1, realP2);
                 _listLines[i].Draw(color);
             }
         }
 #endif
-
-        private float MaxXY(Vector3 size)
-        {
-            return (Mathf.Max(size.x, size.z));
-        }
 
         public void MoveSphape(Vector3 position, Quaternion rotation, Vector3 localScale)
         {
@@ -76,14 +68,13 @@ namespace hedCommon.geometry.shape3d
         }
 
         /// <summary>
-        /// Return the closest point on the surface of the cylinder
-        /// https://diego.assencio.com/?index=ec3d5dfdfc0b6a0d147a656f0af332bd
+        /// Return the closest point from all lines
         ///   
         /// </summary>
         public bool GetClosestPoint(Vector3 k, out Vector3 closestPoint)
         {
-            closestPoint = Vector3.zero;
-            return (false);
+            closestPoint = ExtLine.GetClosestPointFromLines(k, _listLines);
+            return (true);
         }
         //end class
     }

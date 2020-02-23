@@ -138,6 +138,18 @@ namespace hedCommon.geometry.shape2d
         }
 #endif
 
+        public static Vector3 GetClosestPointFromLines(Vector3 k, ExtLine[] lines)
+        {
+            Vector3[] closestPoints = new Vector3[lines.Length];
+            for (int i = 0; i < lines.Length; i++)
+            {
+                closestPoints[i] = lines[i].ClosestPointTo(k);
+            }
+            return (ExtMathf.GetClosestPoint(k, closestPoints, out int indexFound));
+        }
+
+
+
         /// <summary>
         /// return the point at a given percentage of a line
         /// </summary>
