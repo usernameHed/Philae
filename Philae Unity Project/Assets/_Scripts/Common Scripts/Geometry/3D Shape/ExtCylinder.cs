@@ -278,8 +278,12 @@ namespace hedCommon.geometry.shape3d
             _circle2.Draw(color, false, "2");
 
             Vector3 rightDirection = SceneView.lastActiveSceneView.camera.gameObject.transform.right;
-            Debug.DrawLine(_p2 + rightDirection * _realRadius, _p1 + rightDirection * _realRadius, color);
-            Debug.DrawLine(_p2 - rightDirection * _realRadius, _p1 - rightDirection * _realRadius, color);
+            Quaternion realdirection = ExtRotation.TurretLookRotation(rightDirection, _cylinderMatrix.Up());
+            Vector3 realDirectionVector = realdirection * Vector3.forward;
+
+
+            Debug.DrawLine(_p2 + realDirectionVector * _realRadius, _p1 + realDirectionVector * _realRadius, color);
+            Debug.DrawLine(_p2 - realDirectionVector * _realRadius, _p1 - realDirectionVector * _realRadius, color);
         }
 
         public void DrawWithExtraSize(Color color, Vector3 extraSize)

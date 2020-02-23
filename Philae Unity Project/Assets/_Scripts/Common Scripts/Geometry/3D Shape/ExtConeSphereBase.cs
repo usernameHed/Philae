@@ -171,7 +171,39 @@ namespace hedCommon.geometry.shape3d
         /// </summary>
         public bool IsInsideShape(Vector3 k)
         {
-            return (false);
+            //to cahce, height of the cone
+            float h = Mathf.Sqrt((_p1.x - _p2.x) * (_p1.x - _p2.x) + (_p1.y - _p2.y) * (_p1.y - _p2.y) + (_p1.z - _p2.z) * (_p1.z - _p2.z));
+            //to cache, axis unit normal
+            Vector3 N = new Vector3((_p2.x - _p1.x) / h,
+                                    (_p2.y - _p1.y) / h,
+                                    (_p2.z - _p1.z) / h);
+
+            float C = _radiusSquared / h;
+
+            float Y0 = N.x * _p1.x + N.y * _p1.y + N.z * _p1.z;
+
+            float coneY = k.x * N.x + k.y * N.y + k.z * N.z - Y0;
+
+            //point is above apex
+            if (coneY < 0)
+            {
+                return (false);
+            }
+            //cone is below apex
+            else if (coneY > h)
+            {
+                return (false);
+            }
+            float tempX = k.x - _p1.x - coneY * N.x;
+            float tempY = k.y - _p1.y - coneY * N.y;
+            float tempZ = k.z - _p1.z - coneY * N.z;
+
+            float coneR2 = tempX * tempX + tempY * tempY + tempZ * tempZ;
+            if (coneR2 > C * coneY)
+            {
+                return (false);
+            }
+            return (true);
         }
 
         /// <summary>
@@ -282,13 +314,15 @@ namespace hedCommon.geometry.shape3d
 #if UNITY_EDITOR
         public void Draw(Color color)
         {
-            //Debug.DrawLine(_p1, _p2, color);
             ExtDrawGuizmos.DrawLabel(_p1, "1", color);
             _circleBase.Draw(color, false, "2");
 
             Vector3 rightDirection = SceneView.lastActiveSceneView.camera.gameObject.transform.right;
-            Debug.DrawLine(_p2 + rightDirection * _realRadius, _p1, color);
-            Debug.DrawLine(_p2 - rightDirection * _realRadius, _p1, color);
+            Quaternion realdirection = ExtRotation.TurretLookRotation(rightDirection, _coneMatrix.Up());
+            Vector3 realDirectionVector = realdirection * Vector3.forward;
+
+            Debug.DrawLine(_p2 + realDirectionVector * _realRadius, _p1, color);
+            Debug.DrawLine(_p2 - realDirectionVector * _realRadius, _p1, color);
         }
 #endif
 

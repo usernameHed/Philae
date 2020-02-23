@@ -50,7 +50,7 @@ namespace ExtUnityComponents.transform
 
         public void RotateUp()
         {
-            ToLock.rotation = ExtQuaternion.TurretLookRotation(_saveRotation * Vector3.forward, Vector3.up);
+            ToLock.rotation = ExtRotation.TurretLookRotation(_saveRotation * Vector3.forward, Vector3.up);
         }
 
         private void Update()
@@ -64,11 +64,11 @@ namespace ExtUnityComponents.transform
             {
                 if (!RotateWithTheParent)
                 {
-                    ToLock.rotation = ExtQuaternion.TurretLookRotation(_saveRotation * Vector3.forward, Vector3.up);
+                    ToLock.rotation = ExtRotation.TurretLookRotation(_saveRotation * Vector3.forward, Vector3.up);
                 }
                 else
                 {
-                    ToLock.rotation = ExtQuaternion.TurretLookRotation(ToLock.forward, Vector3.up);
+                    ToLock.rotation = ExtRotation.TurretLookRotation(ToLock.forward, Vector3.up);
                 }
                 _saveRotation = ToLock.rotation;
             }

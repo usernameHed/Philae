@@ -17,45 +17,6 @@ namespace hedCommon.extension.runtime
 
         #region Transform
         /// <summary>
-        /// Turret lock rotation
-        /// https://gamedev.stackexchange.com/questions/167389/unity-smooth-local-rotation-around-one-axis-oriented-toward-a-target/167395#167395
-        /// 
-        /// Vector3 relativeDirection = mainReferenceObjectDirection.right * dirInput.x + mainReferenceObjectDirection.forward * dirInput.y;
-        /// Vector3 up = objectToRotate.up;
-        /// Quaternion desiredOrientation = TurretLookRotation(relativeDirection, up);
-        ///objectToRotate.rotation = Quaternion.RotateTowards(
-        ///                         objectToRotate.rotation,
-        ///                         desiredOrientation,
-        ///                         turnRate* Time.deltaTime
-        ///                        );
-        /// </summary>
-        public static Quaternion TurretLookRotation(Vector3 approximateForward, Vector3 exactUp)
-        {
-            Quaternion rotateZToUp = Quaternion.LookRotation(exactUp, -approximateForward);
-            Quaternion rotateYToZ = Quaternion.Euler(90f, 0f, 0f);
-
-            return rotateZToUp * rotateYToZ;
-        }
-        public static Quaternion TurretLookRotation2D(Vector3 approximateForward, Vector3 exactUp)
-        {
-            Quaternion rotateZToUp = Quaternion.LookRotation(exactUp, approximateForward);
-            Quaternion rotateYToZ = Quaternion.Euler(0, 0f, 0f);
-
-            return rotateZToUp * rotateYToZ;
-        }
-        public static Quaternion SmoothTurretLookRotation(Vector3 approximateForward, Vector3 exactUp,
-            Quaternion objCurrentRotation, float maxDegreesPerSecond)
-        {
-            Quaternion desiredOrientation = TurretLookRotation(approximateForward, exactUp);
-            Quaternion smoothOrientation = Quaternion.RotateTowards(
-                                        objCurrentRotation,
-                                        desiredOrientation,
-                                        maxDegreesPerSecond * Time.deltaTime
-                                     );
-            return (smoothOrientation);
-        }
-
-        /// <summary>
         /// Two quaternions can represent different rotations that lead to the same final orientation (one rotating around Axis with Angle, the other around -Axis with 2Pi-Angle). In this case, the quaternion == operator will return false. This method will return true.
         /// </summary>
         /// <param name="q1"></param>
