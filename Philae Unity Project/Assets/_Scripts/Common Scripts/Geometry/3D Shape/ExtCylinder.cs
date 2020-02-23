@@ -277,10 +277,34 @@ namespace hedCommon.geometry.shape3d
             _circle1.Draw(color, false, "1");
             _circle2.Draw(color, false, "2");
 
-            Vector3 rightDirection = SceneView.lastActiveSceneView.camera.gameObject.transform.right;
-            Quaternion realdirection = ExtRotation.TurretLookRotation(rightDirection, _cylinderMatrix.Up());
-            Vector3 realDirectionVector = realdirection * Vector3.forward;
+            Vector3 rightDirection = SceneView.lastActiveSceneView.camera.gameObject.transform.right;   //right of the camera scene view
+            Vector3 forwardDirection = SceneView.lastActiveSceneView.camera.gameObject.transform.forward;
+            Vector3 upDirection = SceneView.lastActiveSceneView.camera.gameObject.transform.up;
+            Vector3 upCylinder = _cylinderMatrix.Up();
 
+            float limit = 0.5f;
+            float dotRight = ExtVector3.DotProduct(rightDirection, upCylinder);
+            if (dotRight > limit || dotRight < -limit)
+            {
+                DrawDirectionnalCylinder(color, upCylinder, upDirection);
+            }
+            float dotUp = ExtVector3.DotProduct(upDirection, upCylinder);
+            if (dotUp > limit || dotUp < -limit)
+            {
+                DrawDirectionnalCylinder(color, upCylinder, rightDirection);
+            }
+            float dotForward = ExtVector3.DotProduct(forwardDirection, upCylinder);
+            if (dotForward > limit || dotForward < -limit)
+            {
+                DrawDirectionnalCylinder(color, upCylinder, rightDirection);
+                DrawDirectionnalCylinder(color, upCylinder, upDirection);
+            }
+        }
+
+        private void DrawDirectionnalCylinder(Color color, Vector3 upCone, Vector3 choosenDirection)
+        {
+            Quaternion realdirection = ExtRotation.TurretLookRotation(choosenDirection, upCone);
+            Vector3 realDirectionVector = realdirection * Vector3.forward;
 
             Debug.DrawLine(_p2 + realDirectionVector * _realRadius, _p1 + realDirectionVector * _realRadius, color);
             Debug.DrawLine(_p2 - realDirectionVector * _realRadius, _p1 - realDirectionVector * _realRadius, color);

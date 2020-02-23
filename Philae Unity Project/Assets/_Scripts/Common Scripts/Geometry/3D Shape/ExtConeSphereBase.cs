@@ -66,9 +66,18 @@ namespace hedCommon.geometry.shape3d
         [SerializeField]
         private Vector3 _delta;
         [SerializeField]
+        private Vector3 _deltaUnit;
+        [SerializeField]
         private float _deltaDistSquared;
         [SerializeField]
         private float _deltaDist;
+
+        //related to cone apex angle
+        //https://math.stackexchange.com/questions/1915120/point-inside-right-circular-cone
+        [SerializeField]
+        private float _constantIsInsideShape;
+        [SerializeField]
+        private float _heightAtApex;
         #endregion
 
         public ExtConeSphereBase(Vector3 position,
@@ -119,8 +128,11 @@ namespace hedCommon.geometry.shape3d
             _p1 = _coneMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
             _p2 = _coneMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
             _delta = _p2 - _p1;
+            _deltaUnit = _delta.FastNormalized();
             _deltaDist = _delta.magnitude;
             _deltaDistSquared = ExtVector3.DotProduct(_delta, _delta);
+            _constantIsInsideShape = (_realSquaredRadius) / _deltaDist;
+            _heightAtApex = ExtVector3.DotProduct(_deltaUnit, _p1);// _deltaUnit.x * _p1.x + _deltaUnit.y * _p1.y + _deltaUnit.z * _p1.z;
 
             _circleBase.MoveSphape(_p2, _coneMatrix.DownFast(), _realRadius);
         }
@@ -168,41 +180,35 @@ namespace hedCommon.geometry.shape3d
 
         /// <summary>
         /// return true if the position is inside the sphape
+        /// https://math.stackexchange.com/questions/1915120/point-inside-right-circular-cone
         /// </summary>
         public bool IsInsideShape(Vector3 k)
         {
-            //to cahce, height of the cone
-            float h = Mathf.Sqrt((_p1.x - _p2.x) * (_p1.x - _p2.x) + (_p1.y - _p2.y) * (_p1.y - _p2.y) + (_p1.z - _p2.z) * (_p1.z - _p2.z));
-            //to cache, axis unit normal
-            Vector3 N = new Vector3((_p2.x - _p1.x) / h,
-                                    (_p2.y - _p1.y) / h,
-                                    (_p2.z - _p1.z) / h);
-
-            float C = _radiusSquared / h;
-
-            float Y0 = N.x * _p1.x + N.y * _p1.y + N.z * _p1.z;
-
-            float coneY = k.x * N.x + k.y * N.y + k.z * N.z - Y0;
+            float dist = k.x * _deltaUnit.x + k.y * _deltaUnit.y + k.z * _deltaUnit.z - _heightAtApex;
 
             //point is above apex
-            if (coneY < 0)
+            if (dist < 0)
             {
                 return (false);
             }
             //cone is below apex
-            else if (coneY > h)
+            else if (dist > _deltaDist)
             {
                 return (false);
             }
-            float tempX = k.x - _p1.x - coneY * N.x;
-            float tempY = k.y - _p1.y - coneY * N.y;
-            float tempZ = k.z - _p1.z - coneY * N.z;
 
-            float coneR2 = tempX * tempX + tempY * tempY + tempZ * tempZ;
-            if (coneR2 > C * coneY)
+            Vector3 temp = new Vector3(
+                k.x - _p1.x - dist * _deltaUnit.x,
+                k.y - _p1.y - dist * _deltaUnit.y,
+                k.z - _p1.z - dist * _deltaUnit.z);
+
+            float coneR2 = ExtVector3.DotProduct(temp, temp);// tempX * tempX + tempY * tempY + tempZ * tempZ;
+            if (coneR2 > _constantIsInsideShape * dist)
             {
+                //point is outside the cone
                 return (false);
             }
+            //point is inside the cone, or on the surface of the cone
             return (true);
         }
 
@@ -317,8 +323,34 @@ namespace hedCommon.geometry.shape3d
             ExtDrawGuizmos.DrawLabel(_p1, "1", color);
             _circleBase.Draw(color, false, "2");
 
-            Vector3 rightDirection = SceneView.lastActiveSceneView.camera.gameObject.transform.right;
-            Quaternion realdirection = ExtRotation.TurretLookRotation(rightDirection, _coneMatrix.Up());
+
+            Vector3 rightDirection = SceneView.lastActiveSceneView.camera.gameObject.transform.right;   //right of the camera scene view
+            Vector3 forwardDirection = SceneView.lastActiveSceneView.camera.gameObject.transform.forward;
+            Vector3 upDirection = SceneView.lastActiveSceneView.camera.gameObject.transform.up;
+            Vector3 upCone = _coneMatrix.Up();
+
+            float limit = 0.5f;
+            float dotRight = ExtVector3.DotProduct(rightDirection, upCone);
+            if (dotRight > limit || dotRight < -limit)
+            {
+                DrawDirectionnalCone(color, upCone, upDirection);
+            }
+            float dotUp = ExtVector3.DotProduct(upDirection, upCone);
+            if (dotUp > limit || dotUp < -limit)
+            {
+                DrawDirectionnalCone(color, upCone, rightDirection);
+            }
+            float dotForward = ExtVector3.DotProduct(forwardDirection, upCone);
+            if (dotForward > limit || dotForward < -limit)
+            {
+                DrawDirectionnalCone(color, upCone, rightDirection);
+                DrawDirectionnalCone(color, upCone, upDirection);
+            }
+        }
+
+        private void DrawDirectionnalCone(Color color, Vector3 upCone, Vector3 choosenDirection)
+        {
+            Quaternion realdirection = ExtRotation.TurretLookRotation(choosenDirection, upCone);
             Vector3 realDirectionVector = realdirection * Vector3.forward;
 
             Debug.DrawLine(_p2 + realDirectionVector * _realRadius, _p1, color);
