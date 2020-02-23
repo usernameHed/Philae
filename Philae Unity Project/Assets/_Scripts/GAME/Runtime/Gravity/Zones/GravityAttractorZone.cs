@@ -146,6 +146,10 @@ namespace philae.gravity.zones
                     CurrentZone = new ZoneCapsuleHalf();
                     CurrentZone.Init(this);
                     break;
+                case ZoneSettingsLocal.Shape.CONE_SPHERE_BASE:
+                    CurrentZone = new ZoneConeSphereBase();
+                    CurrentZone.Init(this);
+                    break;
             }
         }
 
@@ -236,7 +240,7 @@ namespace philae.gravity.zones
             return (CurrentZone.IsInsideShape(point));
         }
 
-
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (!EditorOptions.Instance.ShowZones)
@@ -245,6 +249,7 @@ namespace philae.gravity.zones
             }
             CurrentZone.Draw();
         }
+#endif
 
         private void OnDestroy()
         {

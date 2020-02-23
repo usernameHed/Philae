@@ -13,30 +13,42 @@ namespace philae.editor.extension.zone
 {
     public static class ExtPhilaeZone
     {
-        [MenuItem("GameObject/Philae/Zone/Sphere", false, -1)]
+        private const string SPHERE = "GameObject/Philae/Zone/Sphere";
+        private const string CUBE = "GameObject/Philae/Zone/Cube";
+        private const string CYLINDER = "GameObject/Philae/Zone/Cylinder";
+        private const string CAPSULE = "GameObject/Philae/Zone/Capsule";
+        private const string CAPSULE_HALF = "GameObject/Philae/Zone/Capsule Half";
+        private const string CONE_SPHERE_BASE = "GameObject/Philae/Zone/Cone Sphere Base";
+
+        [MenuItem(SPHERE, false, -1)]
         private static void ZoneSphere()
         {
             CreateZone("Zone Sphere");
         }
-        [MenuItem("GameObject/Philae/Zone/Cube", false, -1)]
+        [MenuItem(CUBE, false, -1)]
         private static void ZoneCube()
         {
             CreateZone("Zone Cube");
         }
-        [MenuItem("GameObject/Philae/Zone/Cylinder", false, -1)]
+        [MenuItem(CYLINDER, false, -1)]
         private static void ZoneCylinder()
         {
             CreateZone("Zone Cylinder");
         }
-        [MenuItem("GameObject/Philae/Zone/Capsule", false, -1)]
+        [MenuItem(CAPSULE, false, -1)]
         private static void ZoneCapsule()
         {
             CreateZone("Zone Capsule");
         }
-        [MenuItem("GameObject/Philae/Zone/Capsule Half", false, -1)]
+        [MenuItem(CAPSULE_HALF, false, -1)]
         private static void ZoneCapsuleHalf()
         {
             CreateZone("Zone Capsule Half");
+        }
+        [MenuItem(CONE_SPHERE_BASE, false, -1)]
+        private static void ZoneConeSphereBase()
+        {
+            CreateZone("Zone Cone Sphere Base");
         }
 
         private static void CreateZone(string zoneName)
@@ -51,11 +63,12 @@ namespace philae.editor.extension.zone
         
         // Validate the menu item defined by the function above.
         // The menu item will be disabled if this function returns false.
-        [MenuItem("GameObject/Philae/Zone/Sphere", true)]
-        [MenuItem("GameObject/Philae/Zone/Cube", true)]
-        [MenuItem("GameObject/Philae/Zone/Cylinder", true)]
-        [MenuItem("GameObject/Philae/Zone/Capsule", true)]
-        [MenuItem("GameObject/Philae/Zone/Capsule Half", true)]
+        [MenuItem(SPHERE, true)]
+        [MenuItem(CUBE, true)]
+        [MenuItem(CYLINDER, true)]
+        [MenuItem(CAPSULE, true)]
+        [MenuItem(CAPSULE_HALF, true)]
+        [MenuItem(CONE_SPHERE_BASE, true)]
         private static bool ValidateCreateZone()
         {
             if (Selection.activeTransform == null)

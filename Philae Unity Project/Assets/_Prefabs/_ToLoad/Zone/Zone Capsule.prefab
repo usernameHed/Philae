@@ -28,9 +28,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3156696025954553132}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 50, y: 50, z: 50}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -66,12 +66,6 @@ MonoBehaviour:
     - Name: Capsule
       Entry: 7
       Data: hedCommon.geometry.shape3d.ExtCapsule, Assembly-CSharp
-    - Name: _sphereTop
-      Entry: 5
-      Data: true
-    - Name: _sphereBottom
-      Entry: 5
-      Data: true
     - Name: _topSphere
       Entry: 7
       Data: hedCommon.geometry.shape3d.ExtSphere, Assembly-CSharp
@@ -83,13 +77,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 109.193039
     - Name: 
       Entry: 4
-      Data: 10
+      Data: 0.9674454
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 197.089142
     - Name: 
       Entry: 8
       Data: 
@@ -107,13 +101,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 109.193039
     - Name: 
       Entry: 4
-      Data: -10
+      Data: -19.0325546
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 197.089142
     - Name: 
       Entry: 8
       Data: 
@@ -122,7 +116,7 @@ MonoBehaviour:
       Data: 
     - Name: _radius
       Entry: 4
-      Data: 1
+      Data: 0.5
     - Name: _lenght
       Entry: 4
       Data: 2
@@ -135,18 +129,72 @@ MonoBehaviour:
     - Name: _realSquaredRadius
       Entry: 4
       Data: 100
+    - Name: _capsuleMatrix
+      Entry: 7
+      Data: UnityEngine.Matrix4x4, UnityEngine.CoreModule
+    - Name: m00
+      Entry: 4
+      Data: 25
+    - Name: m10
+      Entry: 4
+      Data: 0
+    - Name: m20
+      Entry: 4
+      Data: 0
+    - Name: m30
+      Entry: 4
+      Data: 0
+    - Name: m01
+      Entry: 4
+      Data: 0
+    - Name: m11
+      Entry: 4
+      Data: 25
+    - Name: m21
+      Entry: 4
+      Data: 0
+    - Name: m31
+      Entry: 4
+      Data: 0
+    - Name: m02
+      Entry: 4
+      Data: 0
+    - Name: m12
+      Entry: 4
+      Data: 0
+    - Name: m22
+      Entry: 4
+      Data: 25
+    - Name: m32
+      Entry: 4
+      Data: 0
+    - Name: m03
+      Entry: 4
+      Data: 100
+    - Name: m13
+      Entry: 4
+      Data: 0
+    - Name: m23
+      Entry: 4
+      Data: 280
+    - Name: m33
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: _p1
       Entry: 7
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 100
     - Name: 
       Entry: 4
-      Data: 10
+      Data: 25
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 280
     - Name: 
       Entry: 8
       Data: 
@@ -155,13 +203,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 100
     - Name: 
       Entry: 4
-      Data: -10
+      Data: -25
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 280
     - Name: 
       Entry: 8
       Data: 

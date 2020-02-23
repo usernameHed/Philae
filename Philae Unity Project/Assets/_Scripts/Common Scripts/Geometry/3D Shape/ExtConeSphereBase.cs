@@ -281,6 +281,10 @@ namespace hedCommon.geometry.shape3d
             Debug.DrawLine(_p1, _p2, color);
             ExtDrawGuizmos.DrawLabel(_p1, "1", color);
             _circleBase.Draw(color, false, "2");
+            Debug.DrawLine(_p1, _p2 + _coneMatrix.RightFast(), color);
+            Debug.DrawLine(_p1, _p2 - _coneMatrix.RightFast(), color);
+            Debug.DrawLine(_p1, _p2 + _coneMatrix.ForwardFast(), color);
+            Debug.DrawLine(_p1, _p2 - _coneMatrix.ForwardFast(), color);
         }
 #endif
 

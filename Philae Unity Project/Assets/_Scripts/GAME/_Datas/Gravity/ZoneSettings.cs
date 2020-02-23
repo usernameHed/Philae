@@ -35,6 +35,7 @@ namespace philae.data.gravity
             CYLINDER = 30,
             CAPSULE = 40,
             CAPSULE_HALF = 41,
+            CONE_SPHERE_BASE = 50,
         }
         [OnValueChanged("IsSphapeZoneChanged")]
         public Shape ShapeZone = Shape.SPHERE;

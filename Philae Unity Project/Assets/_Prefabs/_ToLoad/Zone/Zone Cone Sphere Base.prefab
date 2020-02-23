@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3156696025954553122}
   - component: {fileID: 3156696025954553123}
   m_Layer: 0
-  m_Name: Zone Capsule Half
+  m_Name: Zone Cone
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -59,38 +59,14 @@ MonoBehaviour:
     SerializationNodes:
     - Name: CurrentZone
       Entry: 7
-      Data: 0|philae.gravity.zones.ZoneCapsuleHalf, Assembly-CSharp
+      Data: 0|philae.gravity.zones.ZoneConeSphereBase, Assembly-CSharp
     - Name: ZonePhysic
       Entry: 10
       Data: 0
-    - Name: CapsuleHalf
+    - Name: ConeSphereBase
       Entry: 7
-      Data: hedCommon.geometry.shape3d.ExtHalfCapsule, Assembly-CSharp
-    - Name: _topSphere
-      Entry: 7
-      Data: hedCommon.geometry.shape3d.ExtSphere, Assembly-CSharp
-    - Name: Radius
-      Entry: 4
-      Data: 10
-    - Name: Position
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 108.840118
-    - Name: 
-      Entry: 4
-      Data: -11.5825043
-    - Name: 
-      Entry: 4
-      Data: 247.3003
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: _bottomCircle
+      Data: hedCommon.geometry.shape3d.ExtConeSphereBase, Assembly-CSharp
+    - Name: _circleBase
       Entry: 7
       Data: hedCommon.geometry.shape2d.ExtCircle, Assembly-CSharp
     - Name: _plane
@@ -101,13 +77,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 108.840118
+      Data: 0
     - Name: 
       Entry: 4
-      Data: -31.5825043
+      Data: -25
     - Name: 
       Entry: 4
-      Data: 247.3003
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -119,7 +95,7 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 4
-      Data: -10
+      Data: -25
     - Name: 
       Entry: 4
       Data: 0
@@ -134,7 +110,7 @@ MonoBehaviour:
       Data: 
     - Name: _radius
       Entry: 4
-      Data: 10
+      Data: 25
     - Name: 
       Entry: 8
       Data: 
@@ -149,16 +125,16 @@ MonoBehaviour:
       Data: 4
     - Name: _realRadius
       Entry: 4
-      Data: 10
+      Data: 25
     - Name: _realSquaredRadius
       Entry: 4
-      Data: 100
-    - Name: _capsuleMatrix
+      Data: 625
+    - Name: _coneMatrix
       Entry: 7
       Data: UnityEngine.Matrix4x4, UnityEngine.CoreModule
     - Name: m00
       Entry: 4
-      Data: 10
+      Data: 25
     - Name: m10
       Entry: 4
       Data: 0
@@ -173,7 +149,7 @@ MonoBehaviour:
       Data: 0
     - Name: m11
       Entry: 4
-      Data: 10
+      Data: 25
     - Name: m21
       Entry: 4
       Data: 0
@@ -188,19 +164,19 @@ MonoBehaviour:
       Data: 0
     - Name: m22
       Entry: 4
-      Data: 10
+      Data: 25
     - Name: m32
       Entry: 4
       Data: 0
     - Name: m03
       Entry: 4
-      Data: 108.840118
+      Data: 0
     - Name: m13
       Entry: 4
-      Data: -21.5825043
+      Data: 0
     - Name: m23
       Entry: 4
-      Data: 247.3003
+      Data: 0
     - Name: m33
       Entry: 4
       Data: 1
@@ -212,13 +188,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 108.840118
+      Data: 0
     - Name: 
       Entry: 4
-      Data: -11.5825043
+      Data: 25
     - Name: 
       Entry: 4
-      Data: 247.3003
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -227,13 +203,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 108.840118
+      Data: 0
     - Name: 
       Entry: 4
-      Data: -31.5825043
+      Data: -25
     - Name: 
       Entry: 4
-      Data: 247.3003
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -245,16 +221,19 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 4
-      Data: -20
+      Data: -50
     - Name: 
       Entry: 4
       Data: 0
     - Name: 
       Entry: 8
       Data: 
-    - Name: _deltaSquared
+    - Name: _deltaDistSquared
       Entry: 4
-      Data: 400
+      Data: 2500
+    - Name: _deltaDist
+      Entry: 4
+      Data: 50
     - Name: 
       Entry: 8
       Data: 
@@ -347,7 +326,7 @@ MonoBehaviour:
       Data: 
   SettingsGlobal: {fileID: 11400000, guid: c6218961c683fc04bb7dbccc26915ffa, type: 2}
   SettingsLocal:
-    ShapeZone: 41
+    ShapeZone: 50
     IsActiveZone: 1
   _scalerZoneReference: {fileID: 3156696025954553126}
   _attractorLogic: {fileID: 3156696025954553120}

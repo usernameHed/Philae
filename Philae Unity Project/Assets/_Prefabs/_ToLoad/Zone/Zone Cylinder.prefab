@@ -28,9 +28,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3156696025954553132}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 50, y: 50, z: 50}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
       Data: 0
     - Name: Cylindre
       Entry: 7
-      Data: 1|hedCommon.geometry.shape3d.ExtCylinder, Assembly-CSharp
+      Data: hedCommon.geometry.shape3d.ExtCylinder, Assembly-CSharp
     - Name: _circle1
       Entry: 7
       Data: hedCommon.geometry.shape2d.ExtCircle, Assembly-CSharp
@@ -77,13 +77,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 100
     - Name: 
       Entry: 4
-      Data: -10
+      Data: 47.9523239
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 230
     - Name: 
       Entry: 8
       Data: 
@@ -95,7 +95,7 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 4
-      Data: -10
+      Data: 50
     - Name: 
       Entry: 4
       Data: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
       Data: 
     - Name: _radius
       Entry: 4
-      Data: 10
+      Data: 50
     - Name: 
       Entry: 8
       Data: 
@@ -125,13 +125,13 @@ MonoBehaviour:
       Data: UnityEngine.Vector3, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 100
     - Name: 
       Entry: 4
-      Data: 10
+      Data: -52.0476761
     - Name: 
       Entry: 4
-      Data: 0
+      Data: 230
     - Name: 
       Entry: 8
       Data: 
@@ -143,7 +143,7 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 4
-      Data: 10
+      Data: -50
     - Name: 
       Entry: 4
       Data: 0
@@ -158,16 +158,127 @@ MonoBehaviour:
       Data: 
     - Name: _radius
       Entry: 4
-      Data: 10
+      Data: 50
     - Name: 
       Entry: 8
       Data: 
     - Name: _radius
       Entry: 4
-      Data: 1
+      Data: 0.5
     - Name: _lenght
       Entry: 4
       Data: 2
+    - Name: _lenghtSquared
+      Entry: 4
+      Data: 0
+    - Name: _realRadius
+      Entry: 4
+      Data: 50
+    - Name: _realSquaredRadius
+      Entry: 4
+      Data: 2500
+    - Name: _cylinderMatrix
+      Entry: 7
+      Data: UnityEngine.Matrix4x4, UnityEngine.CoreModule
+    - Name: m00
+      Entry: 4
+      Data: 50
+    - Name: m10
+      Entry: 4
+      Data: 0
+    - Name: m20
+      Entry: 4
+      Data: 0
+    - Name: m30
+      Entry: 4
+      Data: 0
+    - Name: m01
+      Entry: 4
+      Data: 0
+    - Name: m11
+      Entry: 4
+      Data: 50
+    - Name: m21
+      Entry: 4
+      Data: 0
+    - Name: m31
+      Entry: 4
+      Data: 0
+    - Name: m02
+      Entry: 4
+      Data: 0
+    - Name: m12
+      Entry: 4
+      Data: 0
+    - Name: m22
+      Entry: 4
+      Data: 50
+    - Name: m32
+      Entry: 4
+      Data: 0
+    - Name: m03
+      Entry: 4
+      Data: 100
+    - Name: m13
+      Entry: 4
+      Data: -2.047676
+    - Name: m23
+      Entry: 4
+      Data: 230
+    - Name: m33
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _p1
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 100
+    - Name: 
+      Entry: 4
+      Data: 47.9523239
+    - Name: 
+      Entry: 4
+      Data: 230
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _p2
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 100
+    - Name: 
+      Entry: 4
+      Data: -52.0476761
+    - Name: 
+      Entry: 4
+      Data: 230
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _delta
+      Entry: 7
+      Data: UnityEngine.Vector3, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: -100
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _deltaSquared
+      Entry: 4
+      Data: 10000
     - Name: 
       Entry: 8
       Data: 
@@ -176,13 +287,13 @@ MonoBehaviour:
       Data: 
     - Name: OnGravitonEnterZone
       Entry: 7
-      Data: 2|philae.gravity.zones.GravityAttractorZone+OnGravitonEnter, Assembly-CSharp
+      Data: 1|philae.gravity.zones.GravityAttractorZone+OnGravitonEnter, Assembly-CSharp
     - Name: target
       Entry: 10
       Data: 0
     - Name: declaringType
       Entry: 7
-      Data: 3|System.RuntimeType, mscorlib
+      Data: 2|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: philae.gravity.zones.GravityAttractorZone, Assembly-CSharp
@@ -194,7 +305,7 @@ MonoBehaviour:
       Data: OnEnterInZone
     - Name: delegateType
       Entry: 7
-      Data: 4|System.RuntimeType, mscorlib
+      Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: philae.gravity.zones.GravityAttractorZone+OnGravitonEnter, Assembly-CSharp
@@ -203,13 +314,13 @@ MonoBehaviour:
       Data: 
     - Name: signature
       Entry: 7
-      Data: 5|System.Type[], mscorlib
+      Data: 4|System.Type[], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 6|System.RuntimeType, mscorlib
+      Data: 5|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: philae.gravity.graviton.Graviton, Assembly-CSharp
@@ -227,28 +338,28 @@ MonoBehaviour:
       Data: 
     - Name: OnGravitonLeaveZone
       Entry: 7
-      Data: 7|philae.gravity.zones.GravityAttractorZone+OnGravitonEnter, Assembly-CSharp
+      Data: 6|philae.gravity.zones.GravityAttractorZone+OnGravitonEnter, Assembly-CSharp
     - Name: target
       Entry: 10
       Data: 0
     - Name: declaringType
       Entry: 9
-      Data: 3
+      Data: 2
     - Name: methodName
       Entry: 1
       Data: OnLeaveZone
     - Name: delegateType
       Entry: 9
-      Data: 4
+      Data: 3
     - Name: signature
       Entry: 7
-      Data: 8|System.Type[], mscorlib
+      Data: 7|System.Type[], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 9
-      Data: 6
+      Data: 5
     - Name: 
       Entry: 13
       Data: 

@@ -8,31 +8,35 @@ using UnityEngine;
 namespace philae.gravity.zones
 {
     [Serializable]
-    public class ZoneSphere : Zone
+    public class ZoneConeSphereBase : Zone
     {
-        public ExtSphere Sphere;
+        public ExtConeSphereBase ConeSphereBase;
 
         public override void Init(GravityAttractorZone zone)
         {
             base.Init(zone);
-            Sphere = new ExtSphere(ZonePhysic.GetScalerZoneReference.position, 1f);
+            ConeSphereBase = new ExtConeSphereBase(ZonePhysic.GetScalerZoneReference.position,
+                ZonePhysic.GetScalerZoneReference.rotation,
+                ZonePhysic.GetScalerZoneReference.localScale,
+                0.5f,
+                2f);
         }
 
 #if UNITY_EDITOR
         public override void Draw()
         {
-            Sphere.Draw(base.GetColor());
+            ConeSphereBase.Draw(base.GetColor());
         }
 #endif
 
         public override void Move(Vector3 newPosition, Quaternion rotation, Vector3 localScale)
         {
-            Sphere.MoveSphape(newPosition, ExtVector3.Maximum(localScale) / 2f);
+            ConeSphereBase.MoveSphape(newPosition, rotation, localScale);
         }
 
         public override bool IsInsideShape(Vector3 position)
         {
-            return (Sphere.IsInsideShape(position));
+            return (ConeSphereBase.IsInsideShape(position));
         }
     }
 }

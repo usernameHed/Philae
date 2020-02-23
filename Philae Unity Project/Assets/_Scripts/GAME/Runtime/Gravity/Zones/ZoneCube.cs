@@ -18,10 +18,12 @@ namespace philae.gravity.zones
             Cube = new ExtCube(ZonePhysic.GetScalerZoneReference.position, ZonePhysic.GetScalerZoneReference.rotation, ZonePhysic.GetScalerZoneReference.localScale);
         }
 
+#if UNITY_EDITOR
         public override void Draw()
         {
             Cube.Draw(base.GetColor(), false, false);
         }
+#endif
 
         public override void Move(Vector3 newPosition, Quaternion rotation, Vector3 localScale)
         {

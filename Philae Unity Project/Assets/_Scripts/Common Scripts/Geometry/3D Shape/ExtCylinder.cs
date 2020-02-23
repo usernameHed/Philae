@@ -273,6 +273,11 @@ namespace hedCommon.geometry.shape3d
             Debug.DrawLine(_p1, _p2, color);
             _circle1.Draw(color, false, "1");
             _circle2.Draw(color, false, "2");
+
+            Debug.DrawLine(_p1 + _cylinderMatrix.RightFast(), _p2 + _cylinderMatrix.RightFast(), color);
+            Debug.DrawLine(_p1 - _cylinderMatrix.RightFast(), _p2 - _cylinderMatrix.RightFast(), color);
+            Debug.DrawLine(_p1 + _cylinderMatrix.ForwardFast(), _p2 + _cylinderMatrix.ForwardFast(), color);
+            Debug.DrawLine(_p1 - _cylinderMatrix.ForwardFast(), _p2 - _cylinderMatrix.ForwardFast(), color);
         }
 
         public void DrawWithExtraSize(Color color, Vector3 extraSize)
