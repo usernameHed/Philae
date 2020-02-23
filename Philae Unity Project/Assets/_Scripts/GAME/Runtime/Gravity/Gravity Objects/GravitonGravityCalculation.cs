@@ -167,6 +167,8 @@ namespace philae.gravity.graviton
             for (int i = 0; i < _lastIndex; i++)
             {
                 Debug.DrawLine(_graviton.Position, AttractorForces[i].PointOfAttraction, Color.blue);
+                ExtDrawGuizmos.DebugWireSphere(AttractorForces[i].PointOfAttraction, Color.green, 0.1f);
+
                 ExtDrawGuizmos.DrawArrow(_graviton.Position, AttractorForces[i].NormalizedDirection * ForceAmount[i], Color.white);
                 ExtDrawGuizmos.DrawArrow(_graviton.Position, AttractorForces[i].NormalizedDirection * ForceJetPackAmount[i], Color.cyan);
             }

@@ -11,7 +11,7 @@ namespace philae.gravity.graviton
     public class GravitonPhysicsApplyer
     {
         [SerializeField]
-        private RigidGraviton _rigidGraviton;
+        private RigidGraviton _rigidGraviton = default;
 
         private Graviton _gravitonElement;
         private GravitonGravityCalculation _calculation;

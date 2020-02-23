@@ -16,8 +16,6 @@ namespace philae.gravity.graviton
         private Vector3 _forceJetPack;
         [SerializeField]
         private RigidGraviton _rigidbody;
-        [SerializeField]
-        private FmodEventEmitter GravityIn;
 
         private bool _isInJetPack = false;
         private Graviton _graviton;
@@ -41,7 +39,7 @@ namespace philae.gravity.graviton
 
         public void SetJetPackState(bool isInJetPack)
         {
-            if (SoundManager.Instance && GravityIn)
+            if (SoundManager.Instance)
             {
                 if (isInJetPack && !_isInJetPack)
                 {

@@ -239,7 +239,7 @@ namespace philae.gravity.zones
 
         private void OnDrawGizmos()
         {
-            if (!EditorOptions.ShowZones)
+            if (!EditorOptions.Instance.ShowZones)
             {
                 return;
             }

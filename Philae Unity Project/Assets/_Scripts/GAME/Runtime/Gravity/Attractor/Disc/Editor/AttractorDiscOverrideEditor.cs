@@ -53,13 +53,12 @@ namespace philae.gravity.attractor
         public override void ShowTinyEditorContent()
         {
             base.ShowTinyEditorContent();
-            EditorOptions.ShowGravityOverride = GUILayout.Toggle(EditorOptions.ShowGravityOverride, "Setup Gravity", EditorStyles.miniButton);
-
+            EditorOptions.Instance.ShowGravityOverride = GUILayout.Toggle(EditorOptions.Instance.ShowGravityOverride, "Setup Gravity", EditorStyles.miniButton);
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
-            if (!EditorOptions.ShowGravityOverride || !_attractor.gameObject.activeInHierarchy)
+            if (!EditorOptions.Instance.ShowGravityOverride || !_attractor.gameObject.activeInHierarchy)
             {
                 return;
             }

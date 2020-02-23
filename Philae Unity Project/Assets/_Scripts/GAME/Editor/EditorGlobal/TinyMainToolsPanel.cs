@@ -72,7 +72,7 @@ namespace philae.editor.editorGlobal
                 }
             }
 
-            EditorOptions.SimulatePhysics = ExtGUIToggles.Toggle(EditorOptions.SimulatePhysics, null, "SIMULATE", out bool valueHasChanged, EditorStyles.miniButton);
+            EditorOptions.Instance.SimulatePhysics = ExtGUIToggles.Toggle(EditorOptions.Instance.SimulatePhysics, null, "SIMULATE", out bool valueHasChanged, EditorStyles.miniButton);
         }
 
         public void TinyUpdate()

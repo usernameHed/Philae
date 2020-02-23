@@ -12,7 +12,7 @@ namespace philae.gravity.attractor.logic
         [SerializeField]
         private AttractorListerLogic _attractorListerLogic = default;
         [SerializeField]
-        private AttractorLister _attractorLister;
+        private AttractorLister _attractorLister = default;
 
         private AttractorListerSettings _settings;
 

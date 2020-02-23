@@ -62,9 +62,9 @@ namespace hedCommon.geometry.shape3d
         [SerializeField]
         private Vector3 _delta;
         [SerializeField]
-        private float _deltaSquared;
+        private float _deltaDistSquared;
         [SerializeField]
-        private Vector3 _pointOnDisc;
+        private float _deltaDist;
         #endregion
 
         public ExtConeSphereBase(Vector3 position,
@@ -115,10 +115,10 @@ namespace hedCommon.geometry.shape3d
             _p1 = _coneMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
             _p2 = _coneMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
             _delta = _p2 - _p1;
-            _deltaSquared = ExtVector3.DotProduct(_delta, _delta);
+            _deltaDist = _delta.magnitude;
+            _deltaDistSquared = ExtVector3.DotProduct(_delta, _delta);
 
             _circleBase.MoveSphape(_p2, _coneMatrix.DownFast(), _realRadius);
-            _pointOnDisc = GetPointOnCircle();
         }
 
 
@@ -184,7 +184,7 @@ namespace hedCommon.geometry.shape3d
                 return (_p1);
             }
             //k projection is outside the [_p1, p2] interval, closest to _p2
-            else if (dist >= _deltaSquared)
+            else if (dist >= _deltaDistSquared)
             {
                 bool canApplyGravity = _circleBase.GetClosestPointOnDisc(k, out Vector3 closestPoint);
                 if (!canApplyGravity)
@@ -196,27 +196,10 @@ namespace hedCommon.geometry.shape3d
             //k projection is inside the [_p1, p2] interval
             else
             {
-                dist = dist / _deltaSquared;
-
-
-                ///         A
-                ///        /|\
-                ///       / | \
-                ///      /  |  \
-                ///     /   |   \
-                ///    /    |    \
-                ///   /     C--?--?--------- K
-                ///  /      |      \
-                /// /_______B_______D
-
-                Vector3 A = _p1;
-                Vector3 B = _p2;
-                Vector3 C = _p1 + dist * _delta;
-                Vector3 D = _pointOnDisc;
-
-                Vector3 E = Vector3.zero;
-
-                return (C + (C - k).FastNormalized() * (C - E).magnitude);
+                dist = dist / _deltaDistSquared;
+                Vector3 pointOnLine = _p1 + dist * _delta;
+                Vector3 closestPoint = ThalesCalculation(k, pointOnLine);
+                return (closestPoint);
             }
         }
 
@@ -251,7 +234,7 @@ namespace hedCommon.geometry.shape3d
                 return (true);
             }
             //k projection is outside the [_p1, p2] interval, closest to _p2
-            else if (dist >= _deltaSquared)
+            else if (dist >= _deltaDistSquared)
             {
                 return (_circleBase.GetClosestPointOnDiscIfWeCan(k, gravityOverride.Base, out closestPoint));
             }
@@ -263,29 +246,33 @@ namespace hedCommon.geometry.shape3d
                     return (false);
                 }
 
-                dist = dist / _deltaSquared;
-
-
-                ///         A
-                ///        /|\
-                ///       / | \
-                ///      /  |  \
-                ///     /   |   \
-                ///    /    |    \
-                ///   /     C--?--?--------- K
-                ///  /      |      \
-                /// /_______B_______D
-
-                Vector3 A = _p1;
-                Vector3 B = _p2;
-                Vector3 C = _p1 + dist * _delta;
-                Vector3 D = _pointOnDisc;
-
-                Vector3 E = Vector3.zero;
-
-                closestPoint = C + (C - k).FastNormalized() * (C - E).magnitude;
+                dist = dist / _deltaDistSquared;
+                Vector3 pointOnLine = _p1 + dist * _delta;
+                closestPoint = ThalesCalculation(k, pointOnLine);
+                
                 return (true);
             }
+        }
+
+        private Vector3 ThalesCalculation(Vector3 k, Vector3 C)
+        {
+            ///         A (_p1)
+            ///        /|\
+            ///       / | \
+            ///      /  |  \
+            ///     /   |   \
+            ///    /    |    \
+            ///   /     C--?--E--------- K
+            ///  /      |      \
+            /// /_______B_______D
+
+            float AC = (C - _p1).magnitude;
+            float AB = _deltaDist;
+            float BD = _realRadius;
+
+            float CE = (AC / AB) * BD;
+
+            return (C + (k - C).FastNormalized() * CE);
         }
 
 #if UNITY_EDITOR
@@ -294,24 +281,6 @@ namespace hedCommon.geometry.shape3d
             Debug.DrawLine(_p1, _p2, color);
             ExtDrawGuizmos.DrawLabel(_p1, "1", color);
             _circleBase.Draw(color, false, "2");
-        }
-
-        public void DrawWithExtraSize(Color color, Vector3 extraSize)
-        {
-            if (extraSize.Maximum() <= 1f)
-            {
-                return;
-            }
-
-            Matrix4x4 coneMatrix = Matrix4x4.TRS(_position, _rotation, (_localScale + extraSize) * _radius);
-            Vector3 size = new Vector3(0, _lenght / 2, 0);
-            Vector3 p1 = coneMatrix.MultiplyPoint3x4(Vector3.zero + ((-size)));
-            Vector3 p2 = coneMatrix.MultiplyPoint3x4(Vector3.zero - ((-size)));
-            float realRadius = _radius * MaxXY(_localScale + extraSize);
-
-            Debug.DrawLine(p1, p2, color);
-            ExtDrawGuizmos.DrawLabel(p1, "1", color);
-            _circleBase.DrawWithExtraSize(color, realRadius, false, "2");
         }
 #endif
 

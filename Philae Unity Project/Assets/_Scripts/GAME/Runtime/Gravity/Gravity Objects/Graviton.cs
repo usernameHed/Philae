@@ -28,7 +28,7 @@ namespace philae.gravity.graviton
         private GravitonPhysicsApplyer _gravitonPhysicsApplyer = new GravitonPhysicsApplyer();
 
         [FoldoutGroup("Object"), SerializeField]
-        private RigidGraviton _rigidGraviton;
+        private RigidGraviton _rigidGraviton = default;
         public RigidGraviton RigidGraviton { get { return (_rigidGraviton); } }
         public Vector3 Position
         { 
@@ -59,11 +59,11 @@ namespace philae.gravity.graviton
         [FoldoutGroup("Object"), SerializeField]
         private ZonesLister _zoneLister;
         [SerializeField]
-        private InitialPush _initialPush;
+        private InitialPush _initialPush = default;
         public InitialPush InitialPush { get { return (_initialPush); } }
 
         [SerializeField]
-        private GravitonJetPack _gravitonJetPack;
+        private GravitonJetPack _gravitonJetPack = default;
         public GravitonJetPack GravitonJetPack { get { return (_gravitonJetPack); } }
 
         private void OnEnable()

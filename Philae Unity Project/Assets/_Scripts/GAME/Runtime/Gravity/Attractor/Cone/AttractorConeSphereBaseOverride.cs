@@ -15,12 +15,17 @@ namespace philae.gravity.attractor
 
         public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {
-            bool canApplyGravity = _cone.GetClosestPointIfWeCan(graviton.Position, GravityOverride, out closestPoint);
-            closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
+            closestPoint = this.GetRightPosWithRange(graviton.Position, Position, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
+            bool canApplyGravity = true;
             if (outOfRange)
             {
                 canApplyGravity = false;
             }
+            else
+            {
+                canApplyGravity = _cone.GetClosestPointIfWeCan(graviton.Position, GravityOverride, out closestPoint);
+            }
+
             AddOrRemoveGravitonFromList(graviton, canApplyGravity);
             return (canApplyGravity);
         }

@@ -10,7 +10,7 @@ namespace philae.gravity.graviton
         [SerializeField]
         private Vector3 _initialVelocity = new Vector3(0, 0, 0);
         [SerializeField]
-        private RigidGraviton _rigidbody;
+        private RigidGraviton _rigidbody = default;
 
         public void Push()
         {

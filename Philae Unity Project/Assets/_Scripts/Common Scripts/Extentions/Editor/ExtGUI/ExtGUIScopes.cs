@@ -11,7 +11,7 @@ namespace hedCommon.extension.editor
     {
         public static HorizontalScope Horiz(Color color, params GUILayoutOption[] options)
         {
-            if (color == ExtColor.none)
+            if (color == Color.clear)
             {
                 return (Horiz(null, options));
             }
@@ -39,7 +39,7 @@ namespace hedCommon.extension.editor
 
         public static VerticalScope Verti(Color color, params GUILayoutOption[] options)
         {
-            if (color == ExtColor.none)
+            if (color == Color.clear)
             {
                 return (Verti(null, options));
             }

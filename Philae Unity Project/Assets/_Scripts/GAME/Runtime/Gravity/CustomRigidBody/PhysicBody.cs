@@ -254,7 +254,7 @@ namespace philae.gravity.physicsBody
         public void AddForceMassDependent(Vector3 force)
         {
 #if UNITY_EDITOR
-            if (!Application.isPlaying && !EditorOptions.SimulatePhysics)
+            if (!Application.isPlaying && !EditorOptions.Instance.SimulatePhysics)
             {
                 return;
             }
@@ -283,7 +283,7 @@ namespace philae.gravity.physicsBody
         public void AddForceMassInDependent(Vector3 force)
         {
 #if UNITY_EDITOR
-            if (!Application.isPlaying && !EditorOptions.SimulatePhysics)
+            if (!Application.isPlaying && !EditorOptions.Instance.SimulatePhysics)
             {
                 return;
             }
@@ -305,7 +305,7 @@ namespace philae.gravity.physicsBody
         public void AddImpulsionMassDependant(Vector3 force)
         {
 #if UNITY_EDITOR
-            if (!Application.isPlaying && !EditorOptions.SimulatePhysics)
+            if (!Application.isPlaying && !EditorOptions.Instance.SimulatePhysics)
             {
                 return;
             }
@@ -331,7 +331,7 @@ namespace philae.gravity.physicsBody
         public void AddImpulsionMassInDependant(Vector3 force)
         {
 #if UNITY_EDITOR
-            if (!Application.isPlaying && !EditorOptions.SimulatePhysics)
+            if (!Application.isPlaying && !EditorOptions.Instance.SimulatePhysics)
             {
                 return;
             }
@@ -351,7 +351,7 @@ namespace philae.gravity.physicsBody
         public void UpdatePosition()
         {
 #if UNITY_EDITOR
-            if (!Application.isPlaying && !EditorOptions.SimulatePhysics)
+            if (!Application.isPlaying && !EditorOptions.Instance.SimulatePhysics)
             {
                 return;
             }

@@ -24,7 +24,7 @@ namespace hedCommon.extension.editor
         /// <param name="capSize"></param>
         /// <param name="snap"></param>
         /// <returns></returns>
-        public static Rect ResizeRect(Rect rect, Handles.DrawCapFunction capFunc, Color capCol, Color fillCol, float capSize, float snap)
+        public static Rect ResizeRect(Rect rect, Handles.CapFunction capFunc, Color capCol, Color fillCol, float capSize, float snap)
         {
             Vector2 halfRectSize = new Vector2(rect.size.x * 0.5f, rect.size.y * 0.5f);
 

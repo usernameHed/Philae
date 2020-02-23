@@ -17,16 +17,13 @@ namespace hedCommon.extension.runtime
         public static Color whiteHalfTransparent { get { return (Color255(255, 255, 255, 0.7f)); } }
         public static Color grayInspectorDark { get { return (Color255(108, 108, 108, 1)); } }
         public static Color grayInspector { get { return (Color255(194, 194, 194, 1)); } }
-        public static Color greenBlack { get { return (Color255(8, 140, 0, 1)); } }
+        public static Color greenDark { get { return (Color255(8, 140, 0, 1)); } }
         public static Color purple { get { return (Color255(156, 141, 221, 1)); } }
         public static Color cyanBlue { get { return (Color255(66, 133, 244, 0.5f)); } }
 
         public static Color greenLight { get { return (Color255(0, 255, 0, 0.5f)); } }
         public static Color redLight { get { return (Color255(255, 0, 0, 0.5f)); } }
         public static Color redSoft { get { return (Color255(255, 0, 0, 0.1f)); } }
-
-        public static Color none { get { return (Color255(0, 0, 0, 0)); } }
-
 
         /// <summary>
         /// return a color from a string

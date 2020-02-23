@@ -14,15 +14,15 @@ namespace philae.gravity.attractor.logic
     public class AttractorListerLogic : MonoBehaviour
     {
         [FoldoutGroup("Settings"), SerializeField, InlineEditor]
-        private AttractorListerSettings _settingsGlobal;
+        private AttractorListerSettings _settingsGlobal = default;
         [FoldoutGroup("Settings"), SerializeField]
         private AttractorListerSettingsLocal _settingsLocal = new AttractorListerSettingsLocal();
 
         [SerializeField]
-        private AttractorLister _attractorLister;
+        private AttractorLister _attractorLister = default;
         public AttractorLister Lister { get { return (_attractorLister); } }
         [SerializeField]
-        private AttractorsUpdater _attractorsUpdater;
+        private AttractorsUpdater _attractorsUpdater = default;
 
         [SerializeField, ReadOnly]
         private GravityAttractorZone _zone = default;

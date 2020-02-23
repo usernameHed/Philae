@@ -6,16 +6,10 @@ using UnityEngine;
 
 public class EditorOptions : SingletonMono<EditorOptions>
 {
-    [ShowInInspector]
-    public static bool ShowZones = true;
-    [ShowInInspector]
-    public static bool ShowGravityOverride = true;
-    [ShowInInspector]
-    public static Color ColorZonesInactive = Color.gray;
-    [ShowInInspector]
-    public static Color ColorWhenNothinngInside = Color.red;
-    [ShowInInspector]
-    public static Color ColorWhenSomethingInside = Color.green;
-    [ShowInInspector]
-    public static bool SimulatePhysics = false;
+    public bool ShowZones = true;
+    public bool ShowGravityOverride = true;
+    public Color ColorZonesInactive = Color.gray;
+    public Color ColorWhenNothinngInside = Color.red;
+    public Color ColorWhenSomethingInside = Color.green;
+    public bool SimulatePhysics = false;
 }

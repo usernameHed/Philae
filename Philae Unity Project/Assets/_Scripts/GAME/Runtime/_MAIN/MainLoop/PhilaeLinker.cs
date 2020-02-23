@@ -21,15 +21,6 @@ public class PhilaeLinker : AbstractLinker
     [FoldoutGroup("Object")]
     public SoundManager SoundManager;
 
-    [ReadOnly]
-    public PlayerController Player1;
-    [ReadOnly]
-    public PlayerController Player2;
-    public GameObject Menu;
-    [SerializeField]
-    private FmodEventEmitter _mainMusic;
-
-
     public RefGamesAsset RefGameAsset;
     private bool _hasInitialize = false;
 
@@ -82,9 +73,7 @@ public class PhilaeLinker : AbstractLinker
 
         if (Application.isPlaying)
         {
-            PlayerController[] players = ExtFind.GetScripts<PlayerController>();
-            Player1 = players[0];
-            Player2 = players[1];
+            //initialize on play
             _hasInitialize = true;
         }
 
@@ -102,39 +91,6 @@ public class PhilaeLinker : AbstractLinker
         {
             allGraviton[i].AddToLister();
         }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            RestartGame();
-            return;
-        }
-        if (_hasInitialize && (Player1 == null || Player2 == null))
-        {
-            _hasInitialize = false;
-            SoundManager.Instance.PlaySound(_mainMusic, "WIN", 1f);
-            Debug.Log("end game coroutine");
-            StartCoroutine(EndGame());
-        }
-    }
-
-    private IEnumerator EndGame()
-    {
-        yield return new WaitForSeconds(3);
-        Menu.SetActive(true);
-        yield return new WaitUntil(() => IsPressingAnyKey());
-        RestartGame();
-    }
-
-    /// <summary>
-    /// to fill
-    /// </summary>
-    /// <returns></returns>
-    public bool IsPressingAnyKey()
-    {
-        return (true);
     }
 
     public void RestartGame()

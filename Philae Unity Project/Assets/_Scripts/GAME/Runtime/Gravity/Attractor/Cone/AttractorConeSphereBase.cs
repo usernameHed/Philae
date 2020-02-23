@@ -1,4 +1,5 @@
-﻿using hedCommon.geometry.shape3d;
+﻿using hedCommon.extension.runtime;
+using hedCommon.geometry.shape3d;
 using philae.gravity.attractor.logic;
 using philae.gravity.graviton;
 using Sirenix.OdinInspector;
@@ -28,7 +29,6 @@ namespace philae.gravity.attractor
             return (canApplyGravity);
         }
 
-        
         public void ChangeConeSettings()
         {
             _cone.MoveSphape(Position, Rotation, LocalScale, _cone.Radius, _cone.Lenght);
@@ -44,8 +44,8 @@ namespace philae.gravity.attractor
         protected override void DrawRange(Color color)
         {
             _cone.Draw(color);
-            _cone.DrawWithExtraSize(Color.gray, new Vector3(_minRangeWithScale, _minRangeWithScale / 2, _minRangeWithScale));
-            _cone.DrawWithExtraSize(color, new Vector3(_maxRangeWithScale, _maxRangeWithScale / 2, _maxRangeWithScale));
+            ExtDrawGuizmos.DebugWireSphere(Position, Color.gray, _minRangeWithScale);
+            ExtDrawGuizmos.DebugWireSphere(Position, color, _maxRangeWithScale);
         }
 #endif
     }

@@ -26,13 +26,13 @@ namespace philae.gravity.zones
         {
             if (!ZonePhysic.SettingsLocal.IsActiveZone)
             {
-                return (EditorOptions.ColorZonesInactive);
+                return (EditorOptions.Instance.ColorZonesInactive);
             }
             if (!ZonePhysic.IsZoneEmpty())
             {
-                return (EditorOptions.ColorWhenSomethingInside);
+                return (EditorOptions.Instance.ColorWhenSomethingInside);
             }
-            return (EditorOptions.ColorWhenNothinngInside);
+            return (EditorOptions.Instance.ColorWhenNothinngInside);
         }
     }
 
