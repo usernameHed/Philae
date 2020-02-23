@@ -15,7 +15,7 @@ namespace philae.gravity.graviton
     [Serializable]
     public class GravitonGravityCalculation
     {
-        private const int MAX_ATTRACTOR_ON_GRAVITON_PER_FRAME = 10;
+        private const int MAX_ATTRACTOR_ON_GRAVITON_PER_FRAME = 50;
         private Graviton _graviton;
         private GravitonZoneLocalizer _gravitonZones;
 
@@ -168,6 +168,7 @@ namespace philae.gravity.graviton
             {
                 Debug.DrawLine(_graviton.Position, AttractorForces[i].PointOfAttraction, Color.blue);
                 ExtDrawGuizmos.DebugWireSphere(AttractorForces[i].PointOfAttraction, Color.green, 0.1f);
+                //ExtDrawGuizmos.DrawArrow(AttractorForces[i].PointOfAttraction, -AttractorForces[i].NormalizedDirection * 1f, Color.green);
 
                 ExtDrawGuizmos.DrawArrow(_graviton.Position, AttractorForces[i].NormalizedDirection * ForceAmount[i], Color.white);
                 ExtDrawGuizmos.DrawArrow(_graviton.Position, AttractorForces[i].NormalizedDirection * ForceJetPackAmount[i], Color.cyan);

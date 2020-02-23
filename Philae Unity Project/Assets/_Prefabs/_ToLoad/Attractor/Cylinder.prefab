@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 8405064908452197665}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 138.54, y: 0, z: -15.440001}
-  m_LocalScale: {x: 5.680422, y: 5.680422, z: 5.680422}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -71,28 +71,54 @@ MonoBehaviour:
     AddMinRange: 0
     AddMaxRange: 0
     MinRange: 0
-    MaxRange: 100
+    MaxRange: 0
     IsKinematic: 1
   _rigidAttractor: {fileID: 5504001546216768255}
-  _attractorListerLogic: []
+  _attractorListerLogic:
+  - {fileID: 0}
   _minRangeWithScale: 0
-  _maxRangeWithScale: 568.0422
-  _gravitonsInside: []
+  _maxRangeWithScale: 0
+  _gravitonsInside:
+  - {fileID: 0}
   _cylinder:
     _circle1:
       _plane:
-        Point: {x: 138.54, y: -5.680422, z: -15.440001}
-        Normal: {x: -0, y: -5.680422, z: -0}
-      _radius: 5.680422
-      _allowBottom: 1
+        Point: {x: -40, y: 10, z: 0}
+        Normal: {x: 0, y: 5, z: 0}
+        _allowBottom: 0
+      _radius: 5
     _circle2:
       _plane:
-        Point: {x: 138.54, y: 5.680422, z: -15.440001}
-        Normal: {x: 0, y: 5.680422, z: 0}
-      _radius: 5.680422
-      _allowBottom: 1
-    _radius: 1
-    _lenght: 2
+        Point: {x: -40, y: -10, z: 0}
+        Normal: {x: -0, y: -5, z: -0}
+        _allowBottom: 0
+      _radius: 5
+    _radius: 0.5
+    _lenght: 4
+    _lenghtSquared: 0
+    _realRadius: 5
+    _realSquaredRadius: 25
+    _cylinderMatrix:
+      e00: 5
+      e01: 0
+      e02: 0
+      e03: -40
+      e10: 0
+      e11: 5
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 5
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    _p1: {x: -40, y: 10, z: 0}
+    _p2: {x: -40, y: -10, z: 0}
+    _delta: {x: 0, y: -20, z: 0}
+    _deltaSquared: 400
 --- !u!114 &5504001546216768255
 MonoBehaviour:
   m_ObjectHideFlags: 0

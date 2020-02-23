@@ -260,7 +260,7 @@ namespace hedCommon.geometry.shape3d
             //k projection is outside the [_p1, _p2] interval, closest to _p1
             if (dist <= 0.0f)
             {
-                if (gravityOverride.Top)
+                if (!gravityOverride.Top)
                 {
                     return (false);
                 }
@@ -270,7 +270,7 @@ namespace hedCommon.geometry.shape3d
             //k projection is outside the [_p1, p2] interval, closest to _p2
             else if (dist >= _deltaSquared)
             {
-                if (gravityOverride.Bottom)
+                if (!gravityOverride.Bottom)
                 {
                     return (false);
                 }

@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3784656264804646244}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 136.156, y: 0, z: -16.749}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -61,15 +61,25 @@ MonoBehaviour:
   _minRangeWithScale: 0
   _maxRangeWithScale: 0
   _gravitonsInside: []
-  Lines:
-  - _p1: {x: 0, y: 0, z: 0}
-    _p2: {x: 1, y: 0, z: 1}
-    _delta: {x: 0, y: 0, z: 0}
-    _deltaSquared: 0
-  - _p1: {x: 1, y: 0, z: 1}
-    _p2: {x: 2, y: 0, z: 0}
-    _delta: {x: 0, y: 0, z: 0}
-    _deltaSquared: 0
+  _polyLines:
+    _listLinesLocal:
+    - _p1: {x: 0, y: 0, z: 0}
+      _p2: {x: 0, y: 0, z: 1}
+      _delta: {x: 1, y: 0, z: 1}
+      _deltaSquared: 50
+    - _p1: {x: 0, y: 0, z: 1}
+      _p2: {x: 0, y: 1, z: 1}
+      _delta: {x: 1, y: 0, z: -1}
+      _deltaSquared: 50
+    _listLines:
+    - _p1: {x: -160, y: 0, z: 0}
+      _p2: {x: -160, y: 0, z: 10}
+      _delta: {x: 0, y: 0, z: 10}
+      _deltaSquared: 100
+    - _p1: {x: -160, y: 0, z: 10}
+      _p2: {x: -160, y: 10, z: 10}
+      _delta: {x: 0, y: 10, z: 0}
+      _deltaSquared: 100
 --- !u!114 &3784656264804646246
 MonoBehaviour:
   m_ObjectHideFlags: 0

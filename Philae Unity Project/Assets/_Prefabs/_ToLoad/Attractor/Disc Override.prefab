@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 8405064908452197665}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 138.54, y: 0, z: -15.440001}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -58,7 +58,8 @@ MonoBehaviour:
     MaxRange: 0
     IsKinematic: 1
   _rigidAttractor: {fileID: 5504001546216768255}
-  _attractorListerLogic: []
+  _attractorListerLogic:
+  - {fileID: 0}
   _minRangeWithScale: 0
   _maxRangeWithScale: 0
   _gravitonsInside:
@@ -66,13 +67,13 @@ MonoBehaviour:
   _disc:
     _circle:
       _plane:
-        Point: {x: -44.36015, y: 55.18979, z: -137.17}
+        Point: {x: -60, y: 40, z: 0}
         Normal: {x: 0, y: 5, z: 0}
-        _allowBottom: 0
+        _allowBottom: 1
       _radius: 5
-    _radius: 5
+    _radius: 0.5
   GravityOverride:
-    Face: 1
+    Face: 0
     Borders: 1
     _canApplyGravity: 1
 --- !u!114 &8405064908452197667
@@ -152,7 +153,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8405064908452197665}
-  m_Mesh: {fileID: 4300000, guid: 75ea2bacaf5d8e74aaf1bf2d15f80f02, type: 2}
+  m_Mesh: {fileID: 4300000, guid: 727889ab4b39c92429fddf160733ba3a, type: 2}
 --- !u!23 &5157967371886098904
 MeshRenderer:
   m_ObjectHideFlags: 0

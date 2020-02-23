@@ -405,9 +405,9 @@ namespace philae.gravity.attractor.gravityOverride
 
         public static GravityOverrideConeSphereBase DrawConeSphereBase(ExtConeSphereBase cone, GravityOverrideConeSphereBase coneGravity, float alpha, out bool hasChanged)
         {
-            float sizeLine = cone.LocalScale.magnitude / 25;
+            float sizeLine = cone.LocalScale.magnitude / 15;
             float alphaLine = 0.8f;
-            float sizePoint = cone.LocalScale.magnitude / 20;
+            float sizePoint = cone.LocalScale.magnitude / 10;
             float alphaPoint = 1f;
 
             hasChanged = false;

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3104781908843127002}
   - component: {fileID: 906527198629207012}
   - component: {fileID: 9180662549460511540}
+  - component: {fileID: 519661715}
   m_Layer: 11
   m_Name: Quad
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 432279040938347760}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 136.914, y: 0, z: -14.982}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -72,49 +73,67 @@ MonoBehaviour:
     MaxRange: 0
     IsKinematic: 1
   _rigidAttractor: {fileID: 6214925749471155251}
-  _attractorListerLogic: []
+  _attractorListerLogic:
+  - {fileID: 0}
   _minRangeWithScale: 0
   _maxRangeWithScale: 0
-  _gravitonsInside: []
+  _gravitonsInside:
+  - {fileID: 0}
   _quad:
-    _position: {x: 136.914, y: 0, z: -14.982}
-    _rotation: {x: 0, y: 0, z: 0, w: 1}
-    _localScale: {x: 1, y: 1, z: 1}
+    _position: {x: -80, y: 0, z: 0}
+    _rotation: {x: -0, y: -0, z: -0, w: 1}
+    _localScale: {x: 10, y: 10, z: 10}
     _plane:
-      Point: {x: 136.914, y: 0, z: -14.982}
-      Normal: {x: 0, y: 1, z: 0}
+      Point: {x: -80, y: 0, z: 0}
+      Normal: {x: 0, y: 10, z: 0}
       _allowBottom: 1
     _quadMatrix:
-      e00: 1
+      e00: 10
       e01: 0
       e02: 0
-      e03: 136.914
+      e03: -80
       e10: 0
-      e11: 1
+      e11: 10
       e12: 0
       e13: 0
       e20: 0
       e21: 0
-      e22: 1
-      e23: -14.982
+      e22: 10
+      e23: 0
       e30: 0
       e31: 0
       e32: 0
       e33: 1
-    _p1: {x: 136.414, y: 0, z: -15.482}
-    _p2: {x: 136.414, y: 0, z: -14.482}
-    _p3: {x: 137.414, y: 0, z: -14.482}
-    _p4: {x: 137.414, y: 0, z: -15.482}
-    _v41: {x: 1, y: 0, z: 0}
-    _v21: {x: 0, y: 0, z: 1}
-    _v41Squared: 1
-    _v21Squared: 1
-    _uP1: 15.482
-    _uP2: 14.482
-    _vP1: -136.414
-    _vP4: -137.414
-    _lengthX: 0
-    _lengthY: 0
+    _p1: {x: -85, y: 0, z: -5}
+    _p2: {x: -85, y: 0, z: 5}
+    _p3: {x: -75, y: 0, z: 5}
+    _p4: {x: -75, y: 0, z: -5}
+    _v41: {x: 10, y: 0, z: 0}
+    _v21: {x: 0, y: 0, z: 10}
+    _v41Squared: 100
+    _v21Squared: 100
+    _uP1: 50
+    _uP2: -50
+    _vP1: 850
+    _vP4: 750
+    _lengthX: 10
+    _lengthY: 10
+    _planeAdjacent1:
+      Point: {x: -85, y: 0, z: -5}
+      Normal: {x: -0, y: -0, z: -10}
+      _allowBottom: 0
+    _planeAdjacent2:
+      Point: {x: -75, y: 0, z: -5}
+      Normal: {x: 10, y: 0, z: 0}
+      _allowBottom: 0
+    _planeAdjacent3:
+      Point: {x: -75, y: 0, z: 5}
+      Normal: {x: 0, y: 0, z: 10}
+      _allowBottom: 0
+    _planeAdjacent4:
+      Point: {x: -85, y: 0, z: -5}
+      Normal: {x: -10, y: -0, z: -0}
+      _allowBottom: 0
 --- !u!114 &6214925749471155251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,3 +218,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &519661715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432279040938347760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d4ee8f6c1b59749bdd2da154dc81fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sleepThreshold: 0.005
+  _solverIteration: 6
+  _maxDepenetrationVelocity: 9999
+  _centerOfMassChanged: 0
+  _defaultCenterOfMass: {x: 0, y: 0, z: 0}

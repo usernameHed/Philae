@@ -54,6 +54,7 @@ namespace hedCommon.extension.editor
 
             Quaternion rotation = (Tools.pivotRotation == PivotRotation.Global) ? Quaternion.identity : toMove.rotation;
             Vector3 newPosition = Handles.PositionHandle(toMove.position, rotation);
+
             if (newPosition != toMove.position)
             {
                 hasChanged = true;

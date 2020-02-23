@@ -34,7 +34,7 @@ Transform:
   m_GameObject: {fileID: 5416466520114392403}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 135.73999, y: 0, z: -14.130001}
-  m_LocalScale: {x: 20.25, y: 20.25, z: 20.25}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -60,10 +60,111 @@ MonoBehaviour:
     MaxRange: 0
     IsKinematic: 1
   _rigidAttractor: {fileID: 4565394342054342756}
-  _attractorListerLogic: []
+  _attractorListerLogic:
+  - {fileID: 0}
   _minRangeWithScale: 0
   _maxRangeWithScale: 0
-  _gravitonsInside: []
+  _gravitonsInside:
+  - {fileID: 0}
+  _cube:
+    _position: {x: -20, y: 40, z: 0}
+    _rotation: {x: -0, y: -0, z: -0, w: 1}
+    _localScale: {x: 10, y: 10, z: 10}
+    _cubeMatrix:
+      e00: 10
+      e01: 0
+      e02: 0
+      e03: -20
+      e10: 0
+      e11: 10
+      e12: 0
+      e13: 40
+      e20: 0
+      e21: 0
+      e22: 10
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    _p1: {x: -25, y: 35, z: -5}
+    _p2: {x: -25, y: 35, z: 5}
+    _p3: {x: -15, y: 35, z: 5}
+    _p4: {x: -15, y: 35, z: -5}
+    _p5: {x: -25, y: 45, z: -5}
+    _p6: {x: -25, y: 45, z: 5}
+    _p7: {x: -15, y: 45, z: 5}
+    _p8: {x: -15, y: 45, z: -5}
+    _v41: {x: 10, y: 0, z: 0}
+    _v51: {x: 0, y: 10, z: 0}
+    _v21: {x: 0, y: 0, z: 10}
+    _v41Squared: 100
+    _v51Squared: 100
+    _v21Squared: 100
+    _uP1: 50
+    _uP2: -50
+    _vP1: 250
+    _vP4: 150
+    _wP1: -350
+    _wP5: -450
+    _face1:
+      Point: {x: -25, y: 35, z: -5}
+      Normal: {x: 0, y: 0, z: -100}
+      _allowBottom: 0
+    _face2:
+      Point: {x: -15, y: 35, z: -5}
+      Normal: {x: 100, y: 0, z: 0}
+      _allowBottom: 0
+    _face3:
+      Point: {x: -25, y: 45, z: -5}
+      Normal: {x: 0, y: 100, z: 0}
+      _allowBottom: 0
+    _face4:
+      Point: {x: -25, y: 35, z: 5}
+      Normal: {x: 0, y: -100, z: 0}
+      _allowBottom: 0
+    _face5:
+      Point: {x: -25, y: 35, z: 5}
+      Normal: {x: -100, y: 0, z: 0}
+      _allowBottom: 0
+    _face6:
+      Point: {x: -15, y: 35, z: 5}
+      Normal: {x: 0, y: -0, z: 100}
+      _allowBottom: 0
+  GravityOverride:
+    Face1: 1
+    Face2: 1
+    Face3: 1
+    Face4: 1
+    Face5: 1
+    Face6: 1
+    Line1: 1
+    Line2: 1
+    Line3: 1
+    Line4: 1
+    Line5: 1
+    Line6: 1
+    Line7: 1
+    Line8: 1
+    Line9: 1
+    Line10: 1
+    Line11: 1
+    Line12: 1
+    Point1: 1
+    Point2: 1
+    Point3: 1
+    Point4: 1
+    Point5: 1
+    Point6: 1
+    Point7: 1
+    Point8: 1
+    _canApplyGravity: 1
+    _canApplyGravityBordersAndFace1: 1
+    _canApplyGravityBordersAndFace2: 1
+    _canApplyGravityBordersAndFace3: 1
+    _canApplyGravityBordersAndFace4: 1
+    _canApplyGravityBordersAndFace5: 1
+    _canApplyGravityBordersAndFace6: 1
 --- !u!114 &5416466520114392405
 MonoBehaviour:
   m_ObjectHideFlags: 0
