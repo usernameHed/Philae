@@ -23,7 +23,7 @@ namespace hedCommon.geometry.shape3d
 
         [SerializeField]
         private ExtLine[] _listLines;
-
+        [SerializeField]
         private Matrix4x4 _polyLinesMatrix;
 
         public ExtPolyLines(Vector3 position,

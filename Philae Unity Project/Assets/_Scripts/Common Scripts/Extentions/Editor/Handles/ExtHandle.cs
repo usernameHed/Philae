@@ -75,6 +75,13 @@ namespace hedCommon.extension.editor
             if (newPosition != toMove)
             {
                 hasChanged = true;
+                if (EditorOptions.Instance.Snap != 0 && Event.current.shift)
+                {
+                    newPosition = new Vector3(
+                        Mathf.RoundToInt(newPosition.x / EditorOptions.Instance.Snap) * EditorOptions.Instance.Snap,
+                        Mathf.RoundToInt(newPosition.y / EditorOptions.Instance.Snap) * EditorOptions.Instance.Snap,
+                        Mathf.RoundToInt(newPosition.z / EditorOptions.Instance.Snap) * EditorOptions.Instance.Snap);
+                }
                 toMove = newPosition;
             }
             return (toMove);

@@ -755,10 +755,6 @@ MonoBehaviour:
   TimeEditor: {fileID: 22172546}
   LoopUpdater: {fileID: 1520380553}
   SoundManager: {fileID: 104451080}
-  Player1: {fileID: 0}
-  Player2: {fileID: 0}
-  Menu: {fileID: 284260424}
-  _mainMusic: {fileID: 104451078}
   RefGameAsset: {fileID: 11400000, guid: da64dbb84aa5be64580f647b3ce55a7c, type: 2}
 --- !u!1 &839692586
 GameObject:
@@ -1166,6 +1162,12 @@ MonoBehaviour:
   IUpdatersFixedUpdate:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   IUpdatersUpdate: []
 --- !u!114 &1520380554
 MonoBehaviour:
@@ -1209,6 +1211,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ToUpdate:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
 --- !u!1 &1600575185
@@ -1425,6 +1433,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc13483bc0a127b4f8d3e699797de09e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowZones: 1
+  ShowGravityOverride: 0
+  ColorZonesInactive: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  ColorWhenNothinngInside: {r: 1, g: 0, b: 0, a: 1}
+  ColorWhenSomethingInside: {r: 0, g: 1, b: 0, a: 1}
+  SimulatePhysics: 0
+  SetupLinesOfSphape: 1
+  Snap: 2
 --- !u!114 &2131635988
 MonoBehaviour:
   m_ObjectHideFlags: 2

@@ -13,7 +13,7 @@ namespace philae.gravity.attractor.line
     public class AttractorPolyLines : Attractor
     {
         [SerializeField, OnValueChanged("ChangePolyLinesSettings", true)]
-        public ExtPolyLines _polyLines = default;
+        private ExtPolyLines _polyLines = default;
 
         public override void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {

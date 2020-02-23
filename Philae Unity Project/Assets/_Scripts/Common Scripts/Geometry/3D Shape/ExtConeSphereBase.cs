@@ -202,7 +202,7 @@ namespace hedCommon.geometry.shape3d
                 k.y - _p1.y - dist * _deltaUnit.y,
                 k.z - _p1.z - dist * _deltaUnit.z);
 
-            float coneR2 = ExtVector3.DotProduct(temp, temp);// tempX * tempX + tempY * tempY + tempZ * tempZ;
+            float coneR2 = ExtVector3.DotProduct(temp, temp);
             if (coneR2 > _constantIsInsideShape * dist)
             {
                 //point is outside the cone

@@ -43,7 +43,7 @@ namespace hedCommon.geometry.shape2d
             _p1 = p1;
             _p2 = p2;
             _delta = _p2 - _p1;
-            _deltaSquared = Vector3.Dot(_delta, _delta);
+            _deltaSquared = ExtVector3.DotProduct(_delta, _delta);
         }
 
         public Vector3 PointAt(float t)
