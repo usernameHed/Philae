@@ -7,6 +7,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace hedCommon.geometry.shape3d
 {
     /// <summary>
@@ -270,14 +274,12 @@ namespace hedCommon.geometry.shape3d
 #if UNITY_EDITOR
         public void Draw(Color color)
         {
-            Debug.DrawLine(_p1, _p2, color);
             _circle1.Draw(color, false, "1");
             _circle2.Draw(color, false, "2");
 
-            Debug.DrawLine(_p1 + _cylinderMatrix.RightFast(), _p2 + _cylinderMatrix.RightFast(), color);
-            Debug.DrawLine(_p1 - _cylinderMatrix.RightFast(), _p2 - _cylinderMatrix.RightFast(), color);
-            Debug.DrawLine(_p1 + _cylinderMatrix.ForwardFast(), _p2 + _cylinderMatrix.ForwardFast(), color);
-            Debug.DrawLine(_p1 - _cylinderMatrix.ForwardFast(), _p2 - _cylinderMatrix.ForwardFast(), color);
+            Vector3 rightDirection = SceneView.lastActiveSceneView.camera.gameObject.transform.right;
+            Debug.DrawLine(_p2 + rightDirection * _realRadius, _p1 + rightDirection * _realRadius, color);
+            Debug.DrawLine(_p2 - rightDirection * _realRadius, _p1 - rightDirection * _realRadius, color);
         }
 
         public void DrawWithExtraSize(Color color, Vector3 extraSize)

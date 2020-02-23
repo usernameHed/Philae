@@ -7,6 +7,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace hedCommon.geometry.shape3d
 {
     /// <summary>
@@ -278,13 +282,13 @@ namespace hedCommon.geometry.shape3d
 #if UNITY_EDITOR
         public void Draw(Color color)
         {
-            Debug.DrawLine(_p1, _p2, color);
+            //Debug.DrawLine(_p1, _p2, color);
             ExtDrawGuizmos.DrawLabel(_p1, "1", color);
             _circleBase.Draw(color, false, "2");
-            Debug.DrawLine(_p1, _p2 + _coneMatrix.RightFast(), color);
-            Debug.DrawLine(_p1, _p2 - _coneMatrix.RightFast(), color);
-            Debug.DrawLine(_p1, _p2 + _coneMatrix.ForwardFast(), color);
-            Debug.DrawLine(_p1, _p2 - _coneMatrix.ForwardFast(), color);
+
+            Vector3 rightDirection = SceneView.lastActiveSceneView.camera.gameObject.transform.right;
+            Debug.DrawLine(_p2 + rightDirection * _realRadius, _p1, color);
+            Debug.DrawLine(_p2 - rightDirection * _realRadius, _p1, color);
         }
 #endif
 
