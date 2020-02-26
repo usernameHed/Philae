@@ -38,6 +38,11 @@ namespace hedCommon.extension.editor
             }
         }
 
+        public static void Frame(Vector3 position)
+        {
+            SceneView.lastActiveSceneView.Frame(new Bounds(position, new Vector3(2, 2, 2)));
+        }
+
         public static void Repaint()
         {
             if (SceneView.lastActiveSceneView == null)
@@ -99,6 +104,34 @@ namespace hedCommon.extension.editor
         public static void PlaceGameObjectInFrontOfSceneView(GameObject go)
         {
             SceneView.lastActiveSceneView.MoveToView(go.transform);
+        }
+
+        public static void LockFromUnselect()
+        {
+            HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
+        }
+
+        private static Texture2D _staticRectTexture;
+        private static GUIStyle _staticRectStyle;
+
+        // Note that this function is only meant to be called from OnGUI() functions.
+        public static void GUIDrawRect(Rect position, Color color)
+        {
+            if (_staticRectTexture == null)
+            {
+                _staticRectTexture = new Texture2D(1, 1);
+            }
+
+            if (_staticRectStyle == null)
+            {
+                _staticRectStyle = new GUIStyle();
+            }
+
+            _staticRectTexture.SetPixel(0, 0, color);
+            _staticRectTexture.Apply();
+
+            _staticRectStyle.normal.background = _staticRectTexture;
+            GUI.Box(position, GUIContent.none, _staticRectStyle);
         }
     }
 }

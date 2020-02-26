@@ -78,13 +78,18 @@ namespace hedCommon.extension.editor
                 if (EditorOptions.Instance.Snap != 0 && Event.current.shift)
                 {
                     newPosition = new Vector3(
-                        Mathf.RoundToInt(newPosition.x / EditorOptions.Instance.Snap) * EditorOptions.Instance.Snap,
-                        Mathf.RoundToInt(newPosition.y / EditorOptions.Instance.Snap) * EditorOptions.Instance.Snap,
-                        Mathf.RoundToInt(newPosition.z / EditorOptions.Instance.Snap) * EditorOptions.Instance.Snap);
+                        RoundToGrid(newPosition.x),
+                        RoundToGrid(newPosition.y),
+                        RoundToGrid(newPosition.z));
                 }
                 toMove = newPosition;
             }
             return (toMove);
+        }
+
+        private static float RoundToGrid(float input)
+        {
+            return EditorOptions.Instance.Snap * Mathf.Round((input / EditorOptions.Instance.Snap));
         }
 
         public static Quaternion DoHandleRotation(Transform toMove, bool record, out bool hasChanged)

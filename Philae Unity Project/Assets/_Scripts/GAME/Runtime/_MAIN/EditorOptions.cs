@@ -21,5 +21,5 @@ public class EditorOptions : SingletonMono<EditorOptions>
     [Tooltip("When true, we can edit lines position of sphape")]
     public bool SetupLinesOfSphape = false;
     [Tooltip("Snap value for handles")]
-    public int Snap = 0;
+    public float Snap = 0;
 }

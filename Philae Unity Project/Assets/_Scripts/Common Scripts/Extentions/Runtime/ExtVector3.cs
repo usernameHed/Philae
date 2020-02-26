@@ -149,7 +149,8 @@ namespace hedCommon.extension.runtime
         /// <returns></returns>
         public static bool IsClose(Vector3 val, Vector3 about, float range)
         {
-            return ((val - about).sqrMagnitude < range * range);
+            float close = (val - about).sqrMagnitude;
+            return (close < range * range);
         }
 
         /// <summary>

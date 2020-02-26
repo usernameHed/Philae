@@ -303,5 +303,24 @@ namespace hedCommon.extension.editor
 
             return allTypes;
         }
+
+        public static List<int> GetListInt(SerializedProperty listProp)
+        {
+            List<int> newList = new List<int>(listProp.arraySize);
+            for (int i = 0; i < listProp.arraySize; i++)
+            {
+                newList.Add(listProp.GetArrayElementAtIndex(i).intValue);
+            }
+            return (newList);
+        }
+
+        public static void SetListInt(SerializedProperty listprop, List<int> datas)
+        {
+            listprop.arraySize = datas.Count;
+            for (int i = 0; i < listprop.arraySize; i++)
+            {
+                listprop.GetArrayElementAtIndex(i).intValue = datas[i];
+            }
+        }
     }
 }

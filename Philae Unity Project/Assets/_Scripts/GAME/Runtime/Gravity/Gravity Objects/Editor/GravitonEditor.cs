@@ -50,7 +50,7 @@ namespace philae.gravity.zones
             {
                 ConstrainPosition.ApplyConstraint(rigidGraviton.ConstrainPositions, rigidGraviton.transform);
             }
-            if (ExtEventEditor.IsKeyDown(Event.current, KeyCode.F))
+            if (ExtEventEditor.IsKeyDown(KeyCode.F))
             {
                 ExtSceneView.FocusOnSelection(this.GetValue<RigidGraviton>("_rigidGraviton").transform.gameObject, 100);
             }

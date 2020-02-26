@@ -2666,6 +2666,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
+      propertyPath: _polyLines._pointsInfos.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._pointsInfos.Array.data[0].AttachedIndex.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLinesLocal.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLines.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
       propertyPath: _attractorListerLogic.Array.data[0]
       value: 
       objectReference: {fileID: 656489596}
@@ -2697,22 +2717,22 @@ PrefabInstance:
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLinesLocal.Array.data[1]._p1.x
-      value: -0.00000023841858
+      value: 0.07685828
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLinesLocal.Array.data[1]._p2.x
-      value: 0.5999998
+      value: 0.39999977
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLinesLocal.Array.data[1]._p2.z
-      value: 0.8
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLinesLocal.Array.data[1]._delta.x
-      value: 0.6
+      value: 0.3231415
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
@@ -2722,42 +2742,42 @@ PrefabInstance:
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLinesLocal.Array.data[1]._delta.z
-      value: -0.19999999
+      value: 0.1556012
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLinesLocal.Array.data[1]._deltaSquared
-      value: 0.40000004
+      value: 0.12863216
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLines.Array.data[1]._p2.x
-      value: -154
+      value: -156
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLines.Array.data[1]._p2.z
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLines.Array.data[1]._delta.x
-      value: 6
+      value: 3.2314148
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLines.Array.data[1]._delta.z
-      value: -2
+      value: 1.5560122
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLines.Array.data[1]._deltaSquared
-      value: 40
+      value: 12.863215
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLinesLocal.Array.data[0]._p1.x
-      value: -0.00000023841858
+      value: 0.14937721
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
@@ -2767,17 +2787,17 @@ PrefabInstance:
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLinesLocal.Array.data[0]._p1.z
-      value: 0
+      value: 0.16762023
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLinesLocal.Array.data[0]._p2.x
-      value: -0.20000024
+      value: -0.058774043
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLinesLocal.Array.data[0]._delta.x
-      value: -0.2
+      value: -0.20815125
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
@@ -2787,67 +2807,67 @@ PrefabInstance:
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLinesLocal.Array.data[0]._delta.z
-      value: 0.6
+      value: 0.25031602
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLinesLocal.Array.data[0]._deltaSquared
-      value: 0.40000004
+      value: 0.10598505
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLinesLocal.Array.data[1]._p1.z
-      value: 1
+      value: 0.5443988
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLines.Array.data[0]._p1.x
-      value: -160
+      value: -158.50623
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLines.Array.data[0]._p1.z
-      value: 0
+      value: 1.6762023
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLines.Array.data[0]._delta.x
-      value: -2
+      value: -2.0815125
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLines.Array.data[0]._delta.z
-      value: 6
+      value: 2.50316
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLines.Array.data[0]._deltaSquared
-      value: 40
+      value: 10.598504
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLines.Array.data[1]._p1.x
-      value: -160
+      value: -159.23141
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLines.Array.data[1]._p1.z
-      value: 10
+      value: 5.443988
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLinesLocal.Array.data[0]._p2.z
-      value: 0.6
+      value: 0.41793624
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLines.Array.data[0]._p2.x
-      value: -162
+      value: -160.58774
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLines.Array.data[0]._p2.z
-      value: 6
+      value: 4.1793623
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
@@ -2892,6 +2912,136 @@ PrefabInstance:
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _polyLines._listLines.Array.data[0]._p1.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._pointsInfos.Array.data[0].IsAttached
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._pointsInfos.Array.data[0].AttachedIndex.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._pointsInfos.Array.data[0].IsSelected
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._pointsInfos.Array.data[1].IsSelected
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._pointsInfos.Array.data[2].IsSelected
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._pointsInfos.Array.data[3].IsSelected
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLines.Array.data[2]._p1.x
+      value: -159.36287
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLines.Array.data[2]._p2.x
+      value: -156
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLinesLocal.Array.data[2]._p1.x
+      value: 0.063712835
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLines.Array.data[2]._delta.x
+      value: 3.3628693
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLines.Array.data[2]._deltaSquared
+      value: 21.15204
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLines.Array.data[2]._p1.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLines.Array.data[2]._delta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._pointsInfos.Array.data[4].IsSelected
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._pointsInfos.Array.data[5].IsSelected
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLinesLocal.Array.data[2]._p1.z
+      value: -0.41373798
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLines.Array.data[2]._p1.z
+      value: -4.1373796
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLines.Array.data[2]._delta.z
+      value: 3.1373796
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLinesLocal.Array.data[2]._p2.x
+      value: 0.39999977
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLinesLocal.Array.data[2]._p2.z
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLines.Array.data[2]._p2.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLinesLocal.Array.data[2]._delta.x
+      value: 0.33628693
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLinesLocal.Array.data[2]._delta.z
+      value: 0.313738
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLinesLocal.Array.data[2]._deltaSquared
+      value: 0.21152043
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLinesLocal.Array.data[2]._p1.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: _polyLines._listLinesLocal.Array.data[2]._delta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3784656264804646246, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,

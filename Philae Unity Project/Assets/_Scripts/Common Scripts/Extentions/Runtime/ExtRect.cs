@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace hedCommon.extension.runtime
 {
@@ -180,5 +181,13 @@ namespace hedCommon.extension.runtime
             return (rectTransform.sizeDelta.y);
         }
 
+        private static void SetToFillAmountPositonX(RectTransform parent, RectTransform cursor, Image fill)
+        {
+            float minX = parent.rect.x;
+            float maxX = minX + parent.rect.width;
+            float size = maxX - minX;
+            float currentX = (fill.fillAmount * size / 1f) - (size / 2);
+            cursor.SetX(currentX, false);
+        }
     }
 }

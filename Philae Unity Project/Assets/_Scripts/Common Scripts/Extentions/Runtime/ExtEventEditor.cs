@@ -121,16 +121,16 @@ namespace hedCommon.extension.runtime
             return (pressed);
         }
 
-        public static bool IsKeyDown(Event current, KeyCode keyCode)
+        public static bool IsKeyDown(KeyCode keyCode)
         {
-            if (current == null)
+            if (Event.current == null)
             {
                 return (false);
             }
             int controlId = GUIUtility.GetControlID(FocusType.Passive);
-            EventType eventType = current.GetTypeForControl(controlId);
-            bool pressed = current.keyCode == keyCode && eventType == EventType.KeyDown;
-            return (current.keyCode == keyCode);
+            EventType eventType = Event.current.GetTypeForControl(controlId);
+            bool pressed = Event.current.keyCode == keyCode && eventType == EventType.KeyDown;
+            return (Event.current.keyCode == keyCode);
         }
 
         /// <summary>
