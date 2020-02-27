@@ -189,5 +189,42 @@ namespace hedCommon.extension.runtime
             float currentX = (fill.fillAmount * size / 1f) - (size / 2);
             cursor.SetX(currentX, false);
         }
+
+        /// <summary>
+        /// for a given rect, if width or height are negative, inverse x or y
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <returns></returns>
+        public static Rect ReverseRectIfNeeded(Rect rect)
+        {
+            float width = rect.width;
+            float height = rect.height;
+
+            if (width < 0)
+            {
+                rect.x += width;
+                rect.width = width * -1;
+            }
+            if (height < 0)
+            {
+                rect.y += height;
+                rect.height = height * -1;
+            }
+            return rect;
+        }
+
+        public static bool Is3dPointInside2dRectInScreenSpace(Camera camera, Rect rect, Vector3 point)
+        {
+            Vector2 point2d = camera.WorldToScreenPoint(point);
+            bool xOk = point2d.x >= rect.x && point2d.x <= rect.x + rect.width;
+
+            float yInverse = ExtMathf.MirrorFromInterval(point2d.y, 0, camera.pixelHeight);
+            bool yOk = yInverse >= rect.y && yInverse <= rect.y + rect.height;
+            bool isInside = xOk && yOk;
+
+            Debug.Log("point: " + point2d + ", " + rect + ", " + isInside + ", y reversed: " + yInverse);
+            return (isInside);
+        }
+
     }
 }

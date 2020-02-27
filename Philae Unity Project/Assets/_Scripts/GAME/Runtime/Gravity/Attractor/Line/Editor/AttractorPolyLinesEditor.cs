@@ -62,6 +62,7 @@ namespace philae.gravity.attractor
             _transformHiddedTools.HideHandle = EditorOptions.Instance.SetupLinesOfSphape;
 
             ConstructPoints();
+            UnSelectPoints();
         }
 
         public override void OnCustomDisable()
@@ -113,16 +114,21 @@ namespace philae.gravity.attractor
 
         private void ManageDragRect()
         {
+            if (Event.current.alt || Event.current.control || Event.current.shift)
+            {
+                return;
+            }
+
             if (ExtEventEditor.IsLeftMouseDown(Event.current) && !_isDragging)
             {
                 _isDragging = true;
                 _currentDragPosition = _initialPositionDrag = Event.current.mousePosition;
-                Debug.Log("on Click ! " + _initialPositionDrag);
             }
             if (ExtEventEditor.IsLeftMouseUp(Event.current))
             {
                 _endDragPosition = Event.current.mousePosition;
-                Debug.Log("here end: " + _endDragPosition);
+                GetAllPointInsideSelection();
+
                 _isDragging = false;
             }
 
@@ -135,8 +141,50 @@ namespace philae.gravity.attractor
                 ExtSceneView.GUIDrawRect(new Rect(_initialPositionDrag.x, _initialPositionDrag.y, width, height), new Color(0.1f, 0.1f, 0.1f, 0.4f));
             }
             Handles.EndGUI();
-            Debug.Log(Event.current.mousePosition);
         }
+
+        private void GetAllPointInsideSelection()
+        {
+            float width = Event.current.mousePosition.x - _initialPositionDrag.x;
+            float height = Event.current.mousePosition.y - _initialPositionDrag.y;
+            Rect rect = new Rect(_initialPositionDrag.x, _initialPositionDrag.y, width, height);
+            rect = ExtRect.ReverseRectIfNeeded(rect);
+
+            int countLines = _listLinesGlobal.arraySize;
+
+            bool hasChanged = false;
+
+            for (int i = 0; i < countLines; i++)
+            {
+                SerializedProperty extLineFromGlobal = _listLinesGlobal.GetArrayElementAtIndex(i);
+                SerializedProperty p1Propertie = extLineFromGlobal.GetPropertie("_p1");
+                SerializedProperty p2Propertie = extLineFromGlobal.GetPropertie("_p2");
+                Vector3 p1 = p1Propertie.vector3Value;
+                Vector3 p2 = p2Propertie.vector3Value;
+
+                if (ExtRect.Is3dPointInside2dRectInScreenSpace(ExtSceneView.Camera(), rect, p1))
+                {
+                    PointsInfo pointInfo1 = GetPointInfoOfPointLine(i, 0);
+                    pointInfo1.IsSelected = true;
+                    SetPointsInfoOfLine(pointInfo1, i, 0);
+                    hasChanged = true;
+                }
+                if (ExtRect.Is3dPointInside2dRectInScreenSpace(ExtSceneView.Camera(), rect, p2))
+                {
+                    PointsInfo pointInfo2 = GetPointInfoOfPointLine(i, 1);
+                    pointInfo2.IsSelected = true;
+                    SetPointsInfoOfLine(pointInfo2, i, 1);
+                    hasChanged = true;
+                }
+            }
+
+            if (hasChanged)
+            {
+                this.ApplyModification();
+            }
+        }
+
+        
 
         private void FramePointsWithF()
         {

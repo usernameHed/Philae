@@ -72,6 +72,11 @@ namespace hedCommon.extension.editor
             return (SceneView.lastActiveSceneView.camera.gameObject.transform);
         }
 
+        public static Camera Camera()
+        {
+            return (SceneView.lastActiveSceneView.camera);
+        }
+
         public static void SetGameObjectToPositionOfSceneViewCamera(GameObject gameObject, bool alsoRotate = true, bool dezoomAfter = false)
         {
             gameObject.transform.position = SceneView.lastActiveSceneView.camera.gameObject.transform.position;
