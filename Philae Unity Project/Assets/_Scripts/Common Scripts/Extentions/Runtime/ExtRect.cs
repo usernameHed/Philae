@@ -221,8 +221,6 @@ namespace hedCommon.extension.runtime
             float yInverse = ExtMathf.MirrorFromInterval(point2d.y, 0, camera.pixelHeight);
             bool yOk = yInverse >= rect.y && yInverse <= rect.y + rect.height;
             bool isInside = xOk && yOk;
-
-            Debug.Log("point: " + point2d + ", " + rect + ", " + isInside + ", y reversed: " + yInverse);
             return (isInside);
         }
 

@@ -36,6 +36,8 @@ namespace philae.gravity.attractor
         private Vector2 _currentDragPosition;
         private Vector2 _endDragPosition;
         private bool _isDragging = false;
+        private bool _isMovingMultiplePoints = false;
+
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -104,14 +106,39 @@ namespace philae.gravity.attractor
                 return;
             }
 
-            ShowLines();
+            //try to move multiple lines at once, if we can't, move only one at a time
+            if (CanMoveMultiplePoints(out Vector3 middle))
+            {
+                _isMovingMultiplePoints = true;
+                Debug.Log("middle: " + middle);
+                MoveMultiplePoints(middle);
+            }
+            else
+            {
+                _isMovingMultiplePoints = false;
+            }
+            MovePointsOfLineOneAtATime();
+
             FramePointsWithF();
             ManageDragRect();
-
             AttemptToUselectPoints();
+
             LockEditor();
         }
 
+
+        /// <summary>
+        /// create a rectangle of selection
+        /// (event drag & release)
+        /// 
+        ///     +---------+
+        ///     |         |
+        ///     |         |
+        ///     |         |
+        ///     +--------- mouse
+        ///     
+        ///  if points are inside, select them
+        /// </summary>
         private void ManageDragRect()
         {
             if (Event.current.alt || Event.current.control || Event.current.shift)
@@ -128,7 +155,6 @@ namespace philae.gravity.attractor
             {
                 _endDragPosition = Event.current.mousePosition;
                 GetAllPointInsideSelection();
-
                 _isDragging = false;
             }
 
@@ -143,6 +169,16 @@ namespace philae.gravity.attractor
             Handles.EndGUI();
         }
 
+        /// <summary>
+        /// 
+        ///     +---------+
+        ///     |         |
+        ///     |         |
+        ///     |         |
+        ///     +--------- mouse
+        ///     
+        ///  if points are inside, select them
+        /// </summary>
         private void GetAllPointInsideSelection()
         {
             float width = Event.current.mousePosition.x - _initialPositionDrag.x;
@@ -184,8 +220,9 @@ namespace philae.gravity.attractor
             }
         }
 
-        
-
+        /// <summary>
+        /// focus the current selected point moved
+        /// </summary>
         private void FramePointsWithF()
         {
             if (ExtEventEditor.IsKeyDown(KeyCode.F) && _lastPositionMoved != Vector3.zero)
@@ -195,6 +232,9 @@ namespace philae.gravity.attractor
             }
         }
 
+        /// <summary>
+        /// need to be called at the end of the editor, lock the editor from deselecting the gameObject from the sceneView
+        /// </summary>
         private static void LockEditor()
         {
             //if nothing else, lock editor !
@@ -204,6 +244,9 @@ namespace philae.gravity.attractor
             }
         }
 
+        /// <summary>
+        /// if clickUp, and mouse position is close to the initial drag position, unselect all points !
+        /// </summary>
         private void AttemptToUselectPoints()
         {
             if (ExtEventEditor.IsLeftMouseUp(Event.current) && ExtVector3.IsClose(_initialPositionDrag, _endDragPosition, 0.01f))
@@ -252,7 +295,39 @@ namespace philae.gravity.attractor
             this.ApplyModification();
         }
 
-        private void ShowLines()
+        private bool CanMoveMultiplePoints(out Vector3 middle)
+        {
+            int countLines = _listLinesGlobal.arraySize;
+            middle = Vector3.zero;
+            List<Vector3> positions = new List<Vector3>(countLines * 2);
+            for (int i = 0; i < countLines; i++)
+            {
+                SerializedProperty extLineFromGlobal = _listLinesGlobal.GetArrayElementAtIndex(i);
+
+                PointsInfo pointInfo1 = GetPointInfoOfPointLine(i, 0);
+                if (pointInfo1.IsSelected)
+                {
+                    SerializedProperty p1Propertie = extLineFromGlobal.GetPropertie("_p1");
+                    Vector3 p1 = p1Propertie.vector3Value;
+                    positions.Add(p1);
+                }
+                PointsInfo pointInfo2 = GetPointInfoOfPointLine(i, 1);
+                if (pointInfo2.IsSelected)
+                {
+                    SerializedProperty p2Propertie = extLineFromGlobal.GetPropertie("_p2");
+                    Vector3 p2 = p2Propertie.vector3Value;
+                    positions.Add(p2);
+                }
+            }
+            if (positions.Count > 1)
+            {
+                middle = ExtVector3.GetMeanOfXPoints(positions.ToArray());
+                return (true);
+            }
+            return (false);
+        }
+
+        private void MovePointsOfLineOneAtATime()
         {
             Matrix4x4 polyLineMatrixInverse = _polyLineMatrixPropertie.GetValue<Matrix4x4>().inverse;
 
@@ -275,12 +350,20 @@ namespace philae.gravity.attractor
             }
         }
 
+
+        private Vector3 MoveMultiplePoints(Vector3 middle)
+        {
+            middle = ExtHandle.DoHandleMove(middle, _attractor.Rotation, out bool hasChangedPoint);
+
+            return middle;
+        }
+
         private bool ShowPointHandle(Matrix4x4 polyLineMatrixInverse, bool changed, int i, Vector3 p1, Vector3 p2, int indexPoint)
         {
             PointsInfo pointInfo = GetPointInfoOfPointLine(i, indexPoint);
             if (!pointInfo.IsSelected)
             {
-                ExtGravityOverrideEditor.DrawPoint(false, (indexPoint == 0) ? p1 : p2, 0.5f, 1f, out bool hasChanged);
+                ExtGravityOverrideEditor.DrawPoint(false, (indexPoint == 0) ? p1 : p2, Color.red, 0.5f, out bool hasChanged);
                 if (hasChanged)
                 {
                     pointInfo.IsSelected = true;
@@ -290,8 +373,17 @@ namespace philae.gravity.attractor
             }
             else
             {
-                bool hasChanged = MovePoint(polyLineMatrixInverse, p1, p2, indexPoint, i);
-                changed = (!changed) ? hasChanged : changed;
+                if (_isMovingMultiplePoints)
+                {
+                    //here don't draw, because we have selected multiple points;
+                    Handles.color = Color.green;
+                    Handles.SphereHandleCap(0, (indexPoint == 0) ? p1 : p2, Quaternion.identity, 0.5f, EventType.Repaint);
+                }
+                else
+                {
+                    bool hasChanged = MovePoint(polyLineMatrixInverse, p1, p2, indexPoint, i);
+                    changed = (!changed) ? hasChanged : changed;
+                }
             }
 
             return changed;

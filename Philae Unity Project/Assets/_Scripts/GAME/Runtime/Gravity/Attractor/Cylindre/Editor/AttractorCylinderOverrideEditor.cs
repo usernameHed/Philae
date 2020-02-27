@@ -72,7 +72,7 @@ namespace philae.gravity.attractor
 
             ExtCylinder cylinder = this.GetPropertie("_cylinder").GetValue<ExtCylinder>();
 
-            GravityOverrideCylinder gravityCylinder = ExtGravityOverrideEditor.DrawCylinder(cylinder, circle1, circle2, _attractor.GravityOverride, 0.5f, out bool hasChanged);
+            GravityOverrideCylinder gravityCylinder = ExtGravityOverrideEditor.DrawCylinder(cylinder, circle1, circle2, _attractor.GravityOverride, Color.red, out bool hasChanged);
 
             if (hasChanged)
             {

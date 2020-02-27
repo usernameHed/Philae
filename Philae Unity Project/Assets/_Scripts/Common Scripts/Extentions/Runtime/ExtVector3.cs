@@ -645,6 +645,10 @@ namespace hedCommon.extension.runtime
         {
             return (GetMeanOfXPoints(out sizeBoundingBox, middleBoundingBox, arrayVect));
         }
+        public static Vector3 GetMeanOfXPoints(Vector3[] arrayVect, bool middleBoundingBox = true)
+        {
+            return (GetMeanOfXPoints(arrayVect, out Vector3 sizeBOundingBox, middleBoundingBox));
+        }
 
         public static Vector3 GetMeanOfXPoints(params Vector3[] points)
         {

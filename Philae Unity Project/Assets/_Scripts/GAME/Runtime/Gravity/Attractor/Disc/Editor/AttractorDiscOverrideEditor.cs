@@ -65,7 +65,7 @@ namespace philae.gravity.attractor
             this.UpdateEditor();
             ExtCircle circle = this.GetPropertie("_disc").GetPropertie("_circle").GetValue<ExtCircle>();
 
-            GravityOverrideDisc gravityDisc = ExtGravityOverrideEditor.DrawDisc(circle, _attractor.GravityOverride, allowBottom: circle.AllowBottom, alpha: 0.5f, out bool hasChanged);
+            GravityOverrideDisc gravityDisc = ExtGravityOverrideEditor.DrawDisc(circle, _attractor.GravityOverride, new Color(1, 0, 0, 0.5f), allowBottom: circle.AllowBottom, out bool hasChanged);
             if (hasChanged)
             {
                 gravityDisc.SetupGravity();

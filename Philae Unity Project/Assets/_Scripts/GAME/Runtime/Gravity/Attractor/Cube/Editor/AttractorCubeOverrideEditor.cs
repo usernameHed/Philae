@@ -65,7 +65,7 @@ namespace philae.gravity.attractor
             }
             this.UpdateEditor();
             ExtCube cube = this.GetPropertie("_cube").GetValue<ExtCube>();
-            GravityOverrideCube gravityCube = ExtGravityOverrideEditor.DrawCube(cube, _attractor.GravityOverride, out bool hasChanged);
+            GravityOverrideCube gravityCube = ExtGravityOverrideEditor.DrawCube(cube, _attractor.GravityOverride, Color.red, out bool hasChanged);
             if (hasChanged)
             {
                 gravityCube.SetupGravity();

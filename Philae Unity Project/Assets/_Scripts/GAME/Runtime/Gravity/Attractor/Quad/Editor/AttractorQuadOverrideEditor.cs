@@ -67,7 +67,7 @@ namespace philae.gravity.attractor
 
             ExtQuad quad = this.GetPropertie("_quad").GetValue<ExtQuad>();
 
-            GravityOverrideQuad gravityQuad = ExtGravityOverrideEditor.DrawQuadWithBorders(quad, _attractor.GravityOverride, out bool hasChanged);
+            GravityOverrideQuad gravityQuad = ExtGravityOverrideEditor.DrawQuadWithBorders(quad, _attractor.GravityOverride, Color.red, out bool hasChanged);
             if (hasChanged)
             {
                 gravityQuad.SetupGravity();

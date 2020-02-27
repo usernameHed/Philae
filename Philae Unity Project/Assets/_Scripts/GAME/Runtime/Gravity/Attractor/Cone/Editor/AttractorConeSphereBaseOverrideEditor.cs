@@ -58,7 +58,7 @@ namespace philae.gravity.attractor
             this.UpdateEditor();
 
             ExtConeSphereBase capsule = this.GetPropertie("_cone").GetValue<ExtConeSphereBase>();
-            GravityOverrideConeSphereBase gravitySphereBase = ExtGravityOverrideEditor.DrawConeSphereBase(capsule, _attractor.GravityOverride, 0.5f, out bool hasChanged);
+            GravityOverrideConeSphereBase gravitySphereBase = ExtGravityOverrideEditor.DrawConeSphereBase(capsule, _attractor.GravityOverride, Color.red, out bool hasChanged);
 
             if (hasChanged)
             {

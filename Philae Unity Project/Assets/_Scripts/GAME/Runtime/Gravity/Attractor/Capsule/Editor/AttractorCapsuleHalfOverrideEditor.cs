@@ -58,7 +58,7 @@ namespace philae.gravity.attractor
             this.UpdateEditor();
 
             ExtHalfCapsule capsuleHalf = this.GetPropertie("_capsuleHalf").GetValue<ExtHalfCapsule>();
-            GravityOverrideLineTopDown gravityCapsule = ExtGravityOverrideEditor.DrawCapsuleHalf(capsuleHalf, _attractor.GravityOverride, 0.5f, out bool hasChanged);
+            GravityOverrideLineTopDown gravityCapsule = ExtGravityOverrideEditor.DrawCapsuleHalf(capsuleHalf, _attractor.GravityOverride, Color.red, out bool hasChanged);
 
             if (hasChanged)
             {
