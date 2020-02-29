@@ -294,7 +294,7 @@ namespace hedCommon.time
             {
                 if (Application.isPlaying)
                 {
-                    return ((_useUnscaleTime) ? TimeEditor.unscaledFixedTime : TimeEditor.fixedTime);
+                    return ((_useUnscaleTime) ? TimeEditor.fixedUnscaledTime : TimeEditor.fixedTime);
                 }
                 else
                 {
@@ -309,7 +309,7 @@ namespace hedCommon.time
             }
             else
             {
-                return ((_useUnscaleTime) ? TimeEditor.unscaledFixedTime : TimeEditor.fixedTime);
+                return ((_useUnscaleTime) ? TimeEditor.fixedUnscaledTime : TimeEditor.fixedTime);
             }
         }
 

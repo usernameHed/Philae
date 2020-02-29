@@ -37,7 +37,8 @@ namespace philae.gravity.attractor
         private Vector2 _endDragPosition;
         private bool _isDragging = false;
         private bool _isMovingMultiplePoints = false;
-
+        private Matrix4x4 _polyLineMatrixInverse;
+        //private Matrix4x4 _multiHandleMatrix;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -65,6 +66,44 @@ namespace philae.gravity.attractor
 
             ConstructPoints();
             UnSelectPoints();
+        }
+
+        public void ConstructPoints()
+        {
+            this.UpdateEditor();
+            SetupAllSerializeObject();
+
+            int countLines = _listLinesGlobal.arraySize * 2;
+            if (_pointInfosArray.arraySize != countLines)
+            {
+                _pointInfosArray.arraySize = countLines;
+            }
+            this.ApplyModification();
+            //SetupMultiHandleMatrixFromAttractor();
+        }
+
+        /*
+        private void SetupMultiHandleMatrixFromAttractor()
+        {
+            _multiHandleMatrix = Matrix4x4.TRS(_attractor.Position, _attractor.Rotation, _attractor.LocalScale);
+        }
+        */
+
+        private void UnSelectPoints()
+        {
+            int countLines = _listLinesGlobal.arraySize;
+
+            for (int i = 0; i < countLines; i++)
+            {
+                PointsInfo pointInfo1 = GetPointInfoOfPointLine(i, 0);
+                pointInfo1.IsSelected = false;
+                SetPointsInfoOfLine(pointInfo1, i, 0);
+
+                PointsInfo pointInfo2 = GetPointInfoOfPointLine(i, 1);
+                pointInfo2.IsSelected = false;
+                SetPointsInfoOfLine(pointInfo2, i, 1);
+            }
+            this.ApplyModification();
         }
 
         public override void OnCustomDisable()
@@ -109,13 +148,12 @@ namespace philae.gravity.attractor
             //try to move multiple lines at once, if we can't, move only one at a time
             if (CanMoveMultiplePoints(out Vector3 middle))
             {
-                _isMovingMultiplePoints = true;
-                Debug.Log("middle: " + middle);
                 MoveMultiplePoints(middle);
             }
             else
             {
                 _isMovingMultiplePoints = false;
+                //SetupMultiHandleMatrixFromAttractor();
             }
             MovePointsOfLineOneAtATime();
 
@@ -256,22 +294,7 @@ namespace philae.gravity.attractor
             }
         }
 
-        private void UnSelectPoints()
-        {
-            int countLines = _listLinesGlobal.arraySize;
-
-            for (int i = 0; i < countLines; i++)
-            {
-                PointsInfo pointInfo1 = GetPointInfoOfPointLine(i, 0);
-                pointInfo1.IsSelected = false;
-                SetPointsInfoOfLine(pointInfo1, i, 0);
-
-                PointsInfo pointInfo2 = GetPointInfoOfPointLine(i, 1);
-                pointInfo2.IsSelected = false;
-                SetPointsInfoOfLine(pointInfo2, i, 1);
-            }
-            this.ApplyModification();
-        }
+   
 
         private void SetupAllSerializeObject()
         {
@@ -282,18 +305,6 @@ namespace philae.gravity.attractor
             _pointInfosArray = _extPolyLine.GetPropertie("_pointsInfos");
         }
 
-        public void ConstructPoints()
-        {
-            this.UpdateEditor();
-            SetupAllSerializeObject();
-
-            int countLines = _listLinesGlobal.arraySize * 2;
-            if (_pointInfosArray.arraySize != countLines)
-            {
-                _pointInfosArray.arraySize = countLines;
-            }
-            this.ApplyModification();
-        }
 
         private bool CanMoveMultiplePoints(out Vector3 middle)
         {
@@ -329,11 +340,11 @@ namespace philae.gravity.attractor
 
         private void MovePointsOfLineOneAtATime()
         {
-            Matrix4x4 polyLineMatrixInverse = _polyLineMatrixPropertie.GetValue<Matrix4x4>().inverse;
+            SetupMatrixInverse();
 
             int countLines = _listLinesGlobal.arraySize;
             bool changed = false;
-            
+
             for (int i = 0; i < countLines; i++)
             {
                 SerializedProperty extLineFromGlobal = _listLinesGlobal.GetArrayElementAtIndex(i);
@@ -341,8 +352,8 @@ namespace philae.gravity.attractor
                 SerializedProperty p2Propertie = extLineFromGlobal.GetPropertie("_p2");
                 Vector3 p1 = p1Propertie.vector3Value;
                 Vector3 p2 = p2Propertie.vector3Value;
-                changed = ShowPointHandle(polyLineMatrixInverse, changed, i, p1, p2, 0);
-                changed = ShowPointHandle(polyLineMatrixInverse, changed, i, p1, p2, 1);
+                changed = ShowPointHandle(_polyLineMatrixInverse, changed, i, p1, p2, 0);
+                changed = ShowPointHandle(_polyLineMatrixInverse, changed, i, p1, p2, 1);
             }
             if (changed)
             {
@@ -350,12 +361,71 @@ namespace philae.gravity.attractor
             }
         }
 
-
-        private Vector3 MoveMultiplePoints(Vector3 middle)
+        private void SetupMatrixInverse()
         {
-            middle = ExtHandle.DoHandleMove(middle, _attractor.Rotation, out bool hasChangedPoint);
+            _polyLineMatrixInverse = _polyLineMatrixPropertie.GetValue<Matrix4x4>().inverse;
+        }
 
-            return middle;
+        private void MoveMultiplePoints(Vector3 middle)
+        {
+            /*
+            if (_isMovingMultiplePoints)
+            {
+                _multiHandleMatrix = Matrix4x4.TRS(middle, _attractor.Rotation, _attractor.LocalScale);
+            }
+            */
+            _isMovingMultiplePoints = true;
+
+            Vector3 newMiddle = ExtHandle.DoHandleMove(middle, _attractor.Rotation, out bool hasChangedPoint);
+            if (!hasChangedPoint)
+            {
+                return;
+            }
+            Debug.Log("middle: " + newMiddle);
+            SetupMatrixInverse();
+            Vector3 offsetFromOld = newMiddle - middle;
+
+            int countLines = _listLinesGlobal.arraySize;
+
+            for (int i = 0; i < countLines; i++)
+            {
+                SerializedProperty extLineFromGlobal = _listLinesGlobal.GetArrayElementAtIndex(i);
+                SerializedProperty p1Propertie = extLineFromGlobal.GetPropertie("_p1");
+                SerializedProperty p2Propertie = extLineFromGlobal.GetPropertie("_p2");
+                Vector3 p1 = p1Propertie.vector3Value;
+                Vector3 p2 = p2Propertie.vector3Value;
+
+                PointsInfo pointInfo = GetPointInfoOfPointLine(i, 0);
+                if (pointInfo.IsSelected)
+                {
+                    Debug.Log("p1: " + p1);
+                    p1 = p1 + offsetFromOld;
+
+                    //here change offset of p1
+                }
+                PointsInfo pointInfo2 = GetPointInfoOfPointLine(i, 1);
+                if (pointInfo2.IsSelected)
+                {
+                    Debug.Log("p2: " + p2);
+                    p2 = p2 + offsetFromOld;
+                }
+                MovePointsOfLine(_polyLineMatrixInverse, p1, p2, i);
+
+                //changed = ShowPointHandle(_polyLineMatrixInverse, changed, i, p1, p2, 0);
+                //changed = ShowPointHandle(_polyLineMatrixInverse, changed, i, p1, p2, 1);
+            }
+
+
+            this.ApplyModification();
+
+
+            //_multiHandleMatrix = Matrix4x4.TRS(middle, _attractor.Rotation, _attractor.LocalScale);
+        }
+
+        private bool MovePointBasedOnMatrixOffset()
+        {
+
+            return (false);
         }
 
         private bool ShowPointHandle(Matrix4x4 polyLineMatrixInverse, bool changed, int i, Vector3 p1, Vector3 p2, int indexPoint)
@@ -381,7 +451,7 @@ namespace philae.gravity.attractor
                 }
                 else
                 {
-                    bool hasChanged = MovePoint(polyLineMatrixInverse, p1, p2, indexPoint, i);
+                    bool hasChanged = MovePointHandle(polyLineMatrixInverse, p1, p2, indexPoint, i);
                     changed = (!changed) ? hasChanged : changed;
                 }
             }
@@ -389,7 +459,7 @@ namespace philae.gravity.attractor
             return changed;
         }
 
-        private bool MovePoint(Matrix4x4 inverse, Vector3 p1, Vector3 p2, int indexPoint, int indexLine)
+        private bool MovePointHandle(Matrix4x4 inverse, Vector3 p1, Vector3 p2, int indexPoint, int indexLine)
         {
             bool hasChangedPoint = false;
             if (indexPoint == 0)
@@ -405,17 +475,22 @@ namespace philae.gravity.attractor
 
             if (hasChangedPoint)
             {
-                Debug.Log("here changed for line: " + indexLine);
-                SerializedProperty extLineFromLocal = _listLinesLocal.GetArrayElementAtIndex(indexLine);
-                SerializedProperty extLineFromGlobal = _listLinesGlobal.GetArrayElementAtIndex(indexLine);
-                Vector3 inverseP1 = inverse.MultiplyPoint3x4(p1);
-                Vector3 inverseP2 = inverse.MultiplyPoint3x4(p2);
-
-                ExtShapeSerializeProperty.MoveLineFromSerializeProperties(extLineFromLocal, inverseP1, inverseP2);
-                ExtShapeSerializeProperty.MoveLineFromSerializeProperties(extLineFromGlobal, p1, p2);
+                MovePointsOfLine(inverse, p1, p2, indexLine);
                 return (true);
             }
             return (false);
+        }
+
+        private void MovePointsOfLine(Matrix4x4 inverse, Vector3 p1, Vector3 p2, int indexLine)
+        {
+            Debug.Log("here changed for line: " + indexLine);
+            SerializedProperty extLineFromLocal = _listLinesLocal.GetArrayElementAtIndex(indexLine);
+            SerializedProperty extLineFromGlobal = _listLinesGlobal.GetArrayElementAtIndex(indexLine);
+            Vector3 inverseP1 = inverse.MultiplyPoint3x4(p1);
+            Vector3 inverseP2 = inverse.MultiplyPoint3x4(p2);
+
+            ExtShapeSerializeProperty.MoveLineFromSerializeProperties(extLineFromLocal, inverseP1, inverseP2);
+            ExtShapeSerializeProperty.MoveLineFromSerializeProperties(extLineFromGlobal, p1, p2);
         }
 
         private PointsInfo GetPointInfoOfPointLine(int indexLine, int indexPoint)

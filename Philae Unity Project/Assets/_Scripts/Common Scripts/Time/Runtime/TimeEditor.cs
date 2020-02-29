@@ -87,7 +87,7 @@ namespace hedCommon.time
             }
         }
 
-        public static float unscaledFixedTime
+        public static float fixedUnscaledTime
         {
             get
             {
@@ -184,7 +184,7 @@ namespace hedCommon.time
                 }
                 else
                 {
-                    return (TimeEditor.unscaledFixedTime);
+                    return (TimeEditor.fixedUnscaledTime);
                 }
             }
         }
