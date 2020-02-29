@@ -327,7 +327,7 @@ namespace hedCommon.geometry.shape3d
             Vector3 rightDirection = SceneView.lastActiveSceneView.camera.gameObject.transform.right;   //right of the camera scene view
             Vector3 forwardDirection = SceneView.lastActiveSceneView.camera.gameObject.transform.forward;
             Vector3 upDirection = SceneView.lastActiveSceneView.camera.gameObject.transform.up;
-            Vector3 upCone = _coneMatrix.Up();
+            Vector3 upCone = _coneMatrix.UpNormalized();
 
             float limit = 0.5f;
             float dotRight = ExtVector3.DotProduct(rightDirection, upCone);

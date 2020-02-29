@@ -43,6 +43,25 @@ namespace hedCommon.extension.editor
                     break;
             }
         }
+        public static void DoMultiHandle(ref Matrix4x4 toMove, out bool hasChanged)
+        {
+            hasChanged = false;
+            Tool current = Tools.current;
+            switch (current)
+            {
+                case Tool.Move:
+                    DoHandleMove(ref toMove, out hasChanged);
+                    break;
+                
+                case Tool.Rotate:
+                    DoHandleRotation(ref toMove, out hasChanged);
+                    break;
+
+                case Tool.Scale:
+                    DoHandleScale(ref toMove, out hasChanged);
+                    break;
+            }
+        }
 
         public static void DoHandleMove(Transform toMove, bool record, out bool hasChanged)
         {
@@ -63,6 +82,19 @@ namespace hedCommon.extension.editor
                 {
                     EditorUtility.SetDirty(toMove);
                 }
+            }
+        }
+        public static void DoHandleMove(ref Matrix4x4 toMove, out bool hasChanged)
+        {
+            hasChanged = false;
+
+            Quaternion rotation = (Tools.pivotRotation == PivotRotation.Global) ? Quaternion.identity : toMove.ExtractRotation();
+            Vector3 newPosition = Handles.PositionHandle(toMove.ExtractPosition(), rotation);
+
+            if (newPosition != toMove.ExtractPosition())
+            {
+                hasChanged = true;
+                toMove = toMove.SetPosition(newPosition);
             }
         }
 
@@ -113,6 +145,17 @@ namespace hedCommon.extension.editor
             return (newRotation);
         }
 
+        public static void DoHandleRotation(ref Matrix4x4 toMove, out bool hasChanged)
+        {
+            hasChanged = false;
+            Quaternion newRotation = Handles.RotationHandle(toMove.ExtractRotation(), toMove.ExtractPosition());
+            if (newRotation != toMove.ExtractRotation())
+            {
+                hasChanged = true;
+                toMove = toMove.SetRositionOfTRS(newRotation);
+            }
+        }
+
         public static void DoHandleScale(Transform toMove, bool record, out bool hasChanged)
         {
             hasChanged = false;
@@ -131,6 +174,18 @@ namespace hedCommon.extension.editor
                 {
                     EditorUtility.SetDirty(toMove);
                 }
+            }
+        }
+        public static void DoHandleScale(ref Matrix4x4 toMove, out bool hasChanged)
+        {
+            hasChanged = false;
+
+            Quaternion rotation = (Tools.pivotRotation == PivotRotation.Global) ? Quaternion.identity : toMove.ExtractRotation();
+            Vector3 newScale = Handles.ScaleHandle(toMove.ExtractScale(), toMove.ExtractPosition(), rotation, HandleUtility.GetHandleSize(toMove.ExtractPosition()));
+            if (newScale != toMove.ExtractScale())
+            {
+                hasChanged = true;
+                toMove = toMove.SetScaleOfTRS(newScale);
             }
         }
 

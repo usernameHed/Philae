@@ -38,7 +38,7 @@ namespace philae.gravity.attractor
         private bool _isDragging = false;
         private bool _isMovingMultiplePoints = false;
         private Matrix4x4 _polyLineMatrixInverse;
-        //private Matrix4x4 _multiHandleMatrix;
+        private Matrix4x4 _multiHandleMatrix;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -79,15 +79,15 @@ namespace philae.gravity.attractor
                 _pointInfosArray.arraySize = countLines;
             }
             this.ApplyModification();
-            //SetupMultiHandleMatrixFromAttractor();
+            SetupMultiHandleMatrixFromAttractor();
         }
 
-        /*
+        
         private void SetupMultiHandleMatrixFromAttractor()
         {
             _multiHandleMatrix = Matrix4x4.TRS(_attractor.Position, _attractor.Rotation, _attractor.LocalScale);
         }
-        */
+        
 
         private void UnSelectPoints()
         {
@@ -265,7 +265,10 @@ namespace philae.gravity.attractor
         {
             if (ExtEventEditor.IsKeyDown(KeyCode.F) && _lastPositionMoved != Vector3.zero)
             {
-                Event.current.Use();
+                if (Event.current.type != EventType.Layout)
+                {
+                    Event.current.Use();
+                }
                 ExtSceneView.Frame(_lastPositionMoved);
             }
         }
@@ -280,6 +283,10 @@ namespace philae.gravity.attractor
             {
                 ExtSceneView.LockFromUnselect();
             }
+            if (ExtEventEditor.IsKeyDown(KeyCode.Escape))
+            {
+                Selection.activeObject = null;
+            }
         }
 
         /// <summary>
@@ -293,8 +300,6 @@ namespace philae.gravity.attractor
                 UnSelectPoints();
             }
         }
-
-   
 
         private void SetupAllSerializeObject()
         {
@@ -368,32 +373,60 @@ namespace philae.gravity.attractor
 
         private void MoveMultiplePoints(Vector3 middle)
         {
-            /*
+            
             if (_isMovingMultiplePoints)
             {
                 _multiHandleMatrix = Matrix4x4.TRS(middle, _attractor.Rotation, _attractor.LocalScale);
             }
-            */
+            
             _isMovingMultiplePoints = true;
 
-            Vector3 newMiddle = ExtHandle.DoHandleMove(middle, _attractor.Rotation, out bool hasChangedPoint);
-            if (!hasChangedPoint)
+            ExtHandle.DoMultiHandle(ref _multiHandleMatrix, out bool hasChanged);
+
+            //Vector3 newMiddle = ExtHandle.DoHandleMove(middle, _attractor.Rotation, out bool hasChangedPoint);
+            if (!hasChanged)
             {
                 return;
             }
+            Vector3 newMiddle = _multiHandleMatrix.ExtractPosition();
+
             Debug.Log("middle: " + newMiddle);
             SetupMatrixInverse();
             Vector3 offsetFromOld = newMiddle - middle;
+            Vector3 offsetFromAttractor = newMiddle - _attractor.Position;
 
             int countLines = _listLinesGlobal.arraySize;
 
             for (int i = 0; i < countLines; i++)
             {
+                //_multiHandleMatrix.SetPosition(_attractor.Position);
+
+                SerializedProperty extLineFromLocal = _listLinesLocal.GetArrayElementAtIndex(i);
+                SerializedProperty p1PropertieLocal = extLineFromLocal.GetPropertie("_p1");
+                SerializedProperty p2PropertieLocal = extLineFromLocal.GetPropertie("_p2");
+                Vector3 p1Local = p1PropertieLocal.vector3Value;
+                Vector3 p2Local = p2PropertieLocal.vector3Value;
+
                 SerializedProperty extLineFromGlobal = _listLinesGlobal.GetArrayElementAtIndex(i);
                 SerializedProperty p1Propertie = extLineFromGlobal.GetPropertie("_p1");
                 SerializedProperty p2Propertie = extLineFromGlobal.GetPropertie("_p2");
                 Vector3 p1 = p1Propertie.vector3Value;
                 Vector3 p2 = p2Propertie.vector3Value;
+
+                //_multiHandleMatrix.SetPosition(_attractor.Position);
+
+                Vector3 p1Moved = _multiHandleMatrix.MultiplyPoint3x4(p1Local);
+                Vector3 p2Moved = _multiHandleMatrix.MultiplyPoint3x4(p2Local);
+                ExtDrawGuizmos.DebugWireSphere(p1Moved - offsetFromAttractor, Color.white, 0.1f, 1f);
+                ExtDrawGuizmos.DebugWireSphere(p2Moved - offsetFromAttractor, Color.white, 0.1f, 1f);
+
+                //_multiHandleMatrix.SetPosition(newMiddle);
+                /*
+                p1Local += offsetFromAttractor;
+                p2Local += offsetFromAttractor;
+                */
+
+
 
                 PointsInfo pointInfo = GetPointInfoOfPointLine(i, 0);
                 if (pointInfo.IsSelected)
@@ -409,7 +442,10 @@ namespace philae.gravity.attractor
                     Debug.Log("p2: " + p2);
                     p2 = p2 + offsetFromOld;
                 }
-                MovePointsOfLine(_polyLineMatrixInverse, p1, p2, i);
+                if (pointInfo.IsSelected || pointInfo2.IsSelected)
+                {
+                    MovePointsOfLine(_polyLineMatrixInverse, p1, p2, i);
+                }
 
                 //changed = ShowPointHandle(_polyLineMatrixInverse, changed, i, p1, p2, 0);
                 //changed = ShowPointHandle(_polyLineMatrixInverse, changed, i, p1, p2, 1);
@@ -437,6 +473,10 @@ namespace philae.gravity.attractor
                 if (hasChanged)
                 {
                     pointInfo.IsSelected = true;
+                    if (_lastPositionMoved == Vector3.zero)
+                    {
+                        _lastPositionMoved = (indexPoint == 0) ? p1 : p2;
+                    }
                     SetPointsInfoOfLine(pointInfo, i, indexPoint);
                     changed = true;
                 }
