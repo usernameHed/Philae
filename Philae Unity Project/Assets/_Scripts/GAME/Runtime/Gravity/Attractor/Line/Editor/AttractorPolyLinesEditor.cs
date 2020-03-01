@@ -534,6 +534,11 @@ namespace philae.gravity.attractor
                 ExtGravityOverrideEditor.DrawPoint(false, Points[i].GetGlobalPointPosition(), color, EditorOptions.Instance.SizeLinesPoints, out bool hasChanged);
                 if (hasChanged)
                 {
+                    if (!Event.current.control)
+                    {
+                        UnSelectPoints();
+                    }
+
                     Points[i].SetSelected(!Points[i].IsSelected());
                     if (_lastPositionMoved == Vector3.zero)
                     {
