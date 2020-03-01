@@ -28,7 +28,7 @@ namespace hedCommon.geometry.shape3d
 
 #if UNITY_EDITOR
         [Serializable]
-        public struct PointsInfo
+        public class PointsInfo
         {
             public bool IsAttached;
             public List<int> AttachedIndex;
