@@ -51,14 +51,25 @@ namespace hedCommon.geometry.shape3d
         private void UpdateMatrix()
         {
             _polyLinesMatrix = Matrix4x4.TRS(_position, _rotation, _localScale);
-            
+
+            UpdateGlobalLineFromLocalOnes();
+        }
+
+        private void UpdateGlobalLineFromLocalOnes()
+        {
             for (int i = 0; i < _listLinesLocal.Length; i++)
             {
                 _listLines[i].MoveShape(
                     _polyLinesMatrix.MultiplyPoint3x4(_listLinesLocal[i].P1),
                     _polyLinesMatrix.MultiplyPoint3x4(_listLinesLocal[i].P2));
             }
-            
+        }
+
+        public void AddLineLocal(Vector3 p1, Vector3 p2)
+        {
+            ExtLine line = new ExtLine(p1, p2);
+            _listLinesLocal = ExtArray.Add(_listLinesLocal, line);
+            UpdateGlobalLineFromLocalOnes();
         }
 
 #if UNITY_EDITOR

@@ -23,6 +23,14 @@ namespace hedCommon.extension.runtime
             MIDDLE = 30,
         }
 
+        public static void Use()
+        {
+            if (Event.current.type != EventType.Layout)
+            {
+                Event.current.Use();
+            }
+        }
+
         private static List<Modifier> SetupModifiers(Event current)
         {
             List<Modifier> modifiers = new List<Modifier>();
