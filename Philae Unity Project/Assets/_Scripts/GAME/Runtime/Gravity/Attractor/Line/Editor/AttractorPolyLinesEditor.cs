@@ -39,6 +39,8 @@ namespace philae.gravity.attractor
         private bool _isMovingMultiplePoints = false;
         private Matrix4x4 _polyLineMatrixInverse;
 
+        private Vector3 _currentHandlePosition;
+
         public class PointInLines
         {
             public int IndexLine;
@@ -144,6 +146,9 @@ namespace philae.gravity.attractor
             UnSelectPoints();
         }
 
+        /// <summary>
+        /// from pointsInfo save, construct array of points (useful for edior purpose)
+        /// </summary>
         public void ConstructPoints()
         {
             this.UpdateEditor();
@@ -157,7 +162,9 @@ namespace philae.gravity.attractor
             this.ApplyModification();
         }
 
-
+        /// <summary>
+        /// unselect all current selected points
+        /// </summary>
         private void UnSelectPoints()
         {
             for (int i = 0; i < PointsSelected.Count; i++)
@@ -210,23 +217,15 @@ namespace philae.gravity.attractor
             this.UpdateEditor();
             SetupAllSerializeObject();
 
-            int countLines = _listLinesGlobal.arraySize * 2;
-            if (_pointInfosArray.arraySize != countLines)
-            {
-                _pointInfosArray.arraySize = countLines;
-                return;
-            }
+            _isMovingMultiplePoints = PointsSelected.Count > 1;
+            _currentHandlePosition = GetMiddleOfAllSelectedPoints();
 
             //try to move multiple lines at once, if we can't, move only one at a time
-            if (CanMoveMultiplePoints(out Vector3 middle))
+            if (_isMovingMultiplePoints)
             {
-                MoveMultiplePoints(middle);
+                MoveMultiplePoints(_currentHandlePosition);
             }
-            else
-            {
-                _isMovingMultiplePoints = false;
-                //SetupMultiHandleMatrixFromAttractor();
-            }
+
             MovePointsOfLineOneAtATime();
 
             FramePointsWithF();
@@ -263,7 +262,7 @@ namespace philae.gravity.attractor
             if (ExtEventEditor.IsLeftMouseUp(Event.current))
             {
                 _endDragPosition = Event.current.mousePosition;
-                ChangeAllPointsSelectionStateInsideRectMouseSelection();
+                ChangePointSelectionStateInsideMouseRectangleSelection();
                 _isDragging = false;
             }
 
@@ -288,14 +287,12 @@ namespace philae.gravity.attractor
         ///     
         ///  if points are inside, select them
         /// </summary>
-        private void ChangeAllPointsSelectionStateInsideRectMouseSelection()
+        private void ChangePointSelectionStateInsideMouseRectangleSelection()
         {
             float width = Event.current.mousePosition.x - _initialPositionDrag.x;
             float height = Event.current.mousePosition.y - _initialPositionDrag.y;
             Rect rect = new Rect(_initialPositionDrag.x, _initialPositionDrag.y, width, height);
             rect = ExtRect.ReverseRectIfNeeded(rect);
-
-            int countLines = _listLinesGlobal.arraySize;
 
             bool hasChanged = false;
 
@@ -303,7 +300,7 @@ namespace philae.gravity.attractor
             {
                 if (ExtRect.Is3dPointInside2dRectInScreenSpace(ExtSceneView.Camera(), rect, Points[i].GetGlobalPointPosition()))
                 {
-                    if (PointsSelected.Contains(Points[i]))
+                    if (Points[i].PointInfo.IsSelected)
                     {
                         Points[i].SetSelected(false);
                     }
@@ -324,7 +321,7 @@ namespace philae.gravity.attractor
         }
 
         /// <summary>
-        /// focus the current selected point moved
+        /// focus the current selected point moved, OR the last selected point (if nothing was moved)
         /// </summary>
         private void FramePointsWithF()
         {
@@ -367,6 +364,9 @@ namespace philae.gravity.attractor
             }
         }
 
+        /// <summary>
+        /// setup serialized properties
+        /// </summary>
         private void SetupAllSerializeObject()
         {
             _extPolyLine = this.GetPropertie("_polyLines");
@@ -374,8 +374,19 @@ namespace philae.gravity.attractor
             _listLinesLocal = _extPolyLine.GetPropertie("_listLinesLocal");
             _polyLineMatrixPropertie = _extPolyLine.GetPropertie("_polyLinesMatrix");
             _pointInfosArray = _extPolyLine.GetPropertie("_pointsInfos");
+
+            //if a change occured in lnie array, update this array size
+            int countLines = _listLinesGlobal.arraySize * 2;
+            if (_pointInfosArray.arraySize != countLines)
+            {
+                _pointInfosArray.arraySize = countLines;
+            }
         }
 
+        /// <summary>
+        /// the most important function, it save every state of points inside arrays
+        /// MUST BE UPDATED every time a change occure in datas
+        /// </summary>
         private void SetupPointInLines()
         {
             Points.Clear();
@@ -403,20 +414,21 @@ namespace philae.gravity.attractor
             }
         }
 
-        private bool CanMoveMultiplePoints(out Vector3 middle)
+        /// <summary>
+        /// return the middle of all selected points
+        /// if there is no point selected, return Vector3.zero;
+        /// </summary>
+        /// <returns></returns>
+        private Vector3 GetMiddleOfAllSelectedPoints()
         {
-            middle = Vector3.zero;
-            if (PointsSelected.Count < 2)
-            {
-                return (false);
-            }
+            Vector3 middle = Vector3.zero;
             List<Vector3> positions = new List<Vector3>(PointsSelected.Count);
             for (int i = 0; i < PointsSelected.Count; i++)
             {
                 positions.Add(PointsSelected[i].GetGlobalPointPosition());
             }
             middle = ExtVector3.GetMeanOfXPoints(positions.ToArray());
-            return (true);
+            return (middle);
         }
 
         private void MovePointsOfLineOneAtATime()
