@@ -220,13 +220,9 @@ namespace philae.gravity.attractor
             _isMovingMultiplePoints = PointsSelected.Count > 1;
             _currentHandlePosition = GetMiddleOfAllSelectedPoints();
 
-            //try to move multiple lines at once, if we can't, move only one at a time
-            if (_isMovingMultiplePoints)
-            {
-                MoveMultiplePoints(_currentHandlePosition);
-            }
+            HandlePoints(_currentHandlePosition);
 
-            MovePointsOfLineOneAtATime();
+            HandleSpherePoints();
 
             FramePointsWithF();
             ManageDragRect();
@@ -300,6 +296,8 @@ namespace philae.gravity.attractor
             {
                 if (ExtRect.Is3dPointInside2dRectInScreenSpace(ExtSceneView.Camera(), rect, Points[i].GetGlobalPointPosition()))
                 {
+                    Points[i].SetSelected(true);
+                    /*
                     if (Points[i].PointInfo.IsSelected)
                     {
                         Points[i].SetSelected(false);
@@ -308,6 +306,7 @@ namespace philae.gravity.attractor
                     {
                         Points[i].SetSelected(true);
                     }
+                    */
                     SetPointsInfoOfLine(Points[i], false);
                     hasChanged = true;
                 }
@@ -358,7 +357,6 @@ namespace philae.gravity.attractor
         {
             if (ExtEventEditor.IsLeftMouseUp(Event.current) && ExtVector3.IsClose(_initialPositionDrag, _endDragPosition, 0.01f))
             {
-                Debug.Log("Unselect all !");
                 SetupPointInLines();
                 UnSelectPoints();
             }
@@ -381,6 +379,8 @@ namespace philae.gravity.attractor
             {
                 _pointInfosArray.arraySize = countLines;
             }
+
+            _polyLineMatrixInverse = _polyLineMatrixPropertie.GetValue<Matrix4x4>().inverse;
         }
 
         /// <summary>
@@ -431,16 +431,38 @@ namespace philae.gravity.attractor
             return (middle);
         }
 
-        private void MovePointsOfLineOneAtATime()
+        /// <summary>
+        /// for all unselected points, draw a handle sphere: we can clic on it, and therefore select it
+        /// </summary>
+        private void HandleSpherePoints()
         {
-            SetupMatrixInverse();
-
-            int countLines = _listLinesGlobal.arraySize;
             bool changed = false;
+            Color colorSelected = Color.green;
+            Color colorUnselected = Color.red;
 
             for (int i = 0; i < Points.Count; i++)
             {
-                changed = ShowPointHandle(_polyLineMatrixInverse, changed, Points[i]);
+                //determine the color of the point
+                Color color = Points[i].IsSelected() ? colorSelected : colorUnselected;
+
+                //if there is only one point selected, show only the visual of the point, not the handleSphere
+                if (Points[i].IsSelected() && PointsSelected.Count == 1)
+                {
+                    ExtGravityOverrideEditor.DrawPoint(PointsSelected[0].GetGlobalPointPosition(), EditorOptions.Instance.SizeLinesPoints * 0.5f, colorSelected);
+                    continue;
+                }
+
+                ExtGravityOverrideEditor.DrawPoint(false, Points[i].GetGlobalPointPosition(), color, EditorOptions.Instance.SizeLinesPoints, out bool hasChanged);
+                if (hasChanged)
+                {
+                    Points[i].SetSelected(!Points[i].IsSelected());
+                    if (_lastPositionMoved == Vector3.zero)
+                    {
+                        _lastPositionMoved = Points[i].GetGlobalPointPosition();
+                    }
+                    SetPointsInfoOfLine(Points[i], true);
+                    changed = true;
+                }
             }
             if (changed)
             {
@@ -448,22 +470,14 @@ namespace philae.gravity.attractor
             }
         }
 
-        private void SetupMatrixInverse()
+        private void HandlePoints(Vector3 middle)
         {
-            _polyLineMatrixInverse = _polyLineMatrixPropertie.GetValue<Matrix4x4>().inverse;
-        }
-
-        private void MoveMultiplePoints(Vector3 middle)
-        {
-            _isMovingMultiplePoints = true;
-
             Vector3 newMiddle = ExtHandle.DoHandleMove(middle, _attractor.Rotation, out bool hasChangedPoint);
             if (!hasChangedPoint)
             {
                 return;
             }
 
-            SetupMatrixInverse();
             Vector3 offsetFromOld = newMiddle - middle;
 
             for (int i = 0; i < PointsSelected.Count; i++)
@@ -481,6 +495,7 @@ namespace philae.gravity.attractor
             return (false);
         }
 
+        /*
         private bool ShowPointHandle(Matrix4x4 polyLineMatrixInverse, bool changed, PointInLines point)
         {
             //PointsInfo pointInfo = GetPointInfoOfPointLine(i, indexPoint);
@@ -515,6 +530,7 @@ namespace philae.gravity.attractor
 
             return changed;
         }
+        */
 
         private bool MovePointHandle(Matrix4x4 inverse, PointInLines point)
         {

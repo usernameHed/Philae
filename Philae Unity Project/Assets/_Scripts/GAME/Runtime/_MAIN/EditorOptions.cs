@@ -18,8 +18,12 @@ public class EditorOptions : SingletonMono<EditorOptions>
     public Color ColorWhenSomethingInside = Color.green;
     [Tooltip("When true, simulate the physics in edit mode")]
     public bool SimulatePhysics = false;
+
     [Tooltip("When true, we can edit lines position of sphape")]
     public bool SetupLinesOfSphape = false;
+    [Tooltip("Size of Points displayed by some editors")]
+    public float SizeLinesPoints = 0.5f;
+
     [Tooltip("Snap value for handles")]
     public float Snap = 0;
 }

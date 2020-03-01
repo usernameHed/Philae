@@ -373,12 +373,17 @@ namespace philae.gravity.attractor.gravityOverride
                 size,
                 Handles.SphereHandleCap))
             {
-                Debug.Log("point pressed");
                 point = !point;
                 hasChanged = true;
                 Event.current.Use();
             }
             return (point);
+        }
+
+        public static void DrawPoint(Vector3 position, float size, Color color)
+        {
+            Handles.color = color;
+            Handles.SphereHandleCap(0, position, Quaternion.identity, size, EventType.Repaint);
         }
 
 

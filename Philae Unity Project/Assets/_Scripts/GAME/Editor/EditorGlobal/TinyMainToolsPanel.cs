@@ -1,5 +1,6 @@
 ﻿using hedCommon.editor.editorWindow;
 using hedCommon.extension.editor;
+using hedCommon.extension.runtime;
 using hedCommon.mixed;
 using philae.editor.editorWindow;
 using System.Collections;
@@ -72,6 +73,10 @@ namespace philae.editor.editorGlobal
                 }
             }
 
+            if (GUILayout.Button("Editor Options"))
+            {
+                ExtSelection.PingAndSelect(ExtFind.GetScript<EditorOptions>());
+            }
             EditorOptions.Instance.SimulatePhysics = ExtGUIToggles.Toggle(EditorOptions.Instance.SimulatePhysics, null, "SIMULATE", out bool valueHasChanged, EditorStyles.miniButton);
         }
 

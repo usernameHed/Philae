@@ -1440,6 +1440,7 @@ MonoBehaviour:
   ColorWhenSomethingInside: {r: 0, g: 1, b: 0, a: 1}
   SimulatePhysics: 0
   SetupLinesOfSphape: 1
+  SizeLinesPoints: 0.4
   Snap: 1
 --- !u!114 &2131635988
 MonoBehaviour:
