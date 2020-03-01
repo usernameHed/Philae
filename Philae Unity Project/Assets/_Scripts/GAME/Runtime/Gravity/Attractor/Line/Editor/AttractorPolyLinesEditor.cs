@@ -226,7 +226,7 @@ namespace philae.gravity.attractor
             SetupAllSerializeObject();
 
             Vector3 p1 = new Vector3(0, 0, 0);
-            Vector3 p2 = new Vector3(0, 0, 0.1f);
+            Vector3 p2 = new Vector3(0, 0, 0.3f);
             AddLineLocal(p1, p2);
 
             this.ApplyModification();
@@ -253,6 +253,7 @@ namespace philae.gravity.attractor
             SetupAllSerializeObject();
 
             List<int> deletedLines = new List<int>(_listLinesLocal.arraySize);
+            deletedLines.Clear();
             for (int i = 0; i < PointsSelected.Count; i++)
             {
                 //don't delete a line already deleted
@@ -260,8 +261,8 @@ namespace philae.gravity.attractor
                 {
                     continue;
                 }
+                DeleteLine(PointsSelected[i].IndexLine - deletedLines.Count);
                 deletedLines.Add(PointsSelected[i].IndexLine);
-                DeleteLine(PointsSelected[i].IndexLine);
             }
 
             this.ApplyModification();
