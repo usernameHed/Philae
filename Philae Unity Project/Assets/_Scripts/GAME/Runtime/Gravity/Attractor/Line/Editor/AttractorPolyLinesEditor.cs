@@ -313,6 +313,10 @@ namespace philae.gravity.attractor
 
             _isMovingMultiplePoints = PointsSelected.Count > 1;
             _currentHandlePosition = GetMiddleOfAllSelectedPoints();
+            if (_currentHandlePosition != Vector3.zero)
+            {
+                _lastPositionMoved = _currentHandlePosition;
+            }
 
             HandlePoints(_currentHandlePosition);
 
@@ -540,10 +544,9 @@ namespace philae.gravity.attractor
                     }
 
                     Points[i].SetSelected(!Points[i].IsSelected());
-                    if (_lastPositionMoved == Vector3.zero)
-                    {
-                        _lastPositionMoved = Points[i].GetGlobalPointPosition();
-                    }
+
+                    //_lastPositionMoved = Points[i].GetGlobalPointPosition();
+
                     SetPointsInfoOfLine(Points[i], true);
                     changed = true;
                 }
@@ -561,9 +564,9 @@ namespace philae.gravity.attractor
             {
                 return;
             }
+            _lastPositionMoved = newMiddle;
 
             Vector3 offsetFromOld = newMiddle - middle;
-
             for (int i = 0; i < PointsSelected.Count; i++)
             {
                 PointsSelected[i].SetGlobalPointPosition(PointsSelected[i].GetGlobalPointPosition() + offsetFromOld);
