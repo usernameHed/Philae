@@ -31,7 +31,6 @@ namespace hedCommon.geometry.shape3d
         public class PointsInfo
         {
             public bool IsAttached;
-            public List<int> AttachedIndex;
             public bool IsSelected;
         }
         [SerializeField]

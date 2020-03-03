@@ -22,7 +22,7 @@ namespace philae.sound
             string addParent = (addIdOfObject) ? addIdOfObject.GetInstanceID().ToString() : "";
             if (_emitter && _emitter.Event != "" && SoundManager.Instance != null)
             {
-                Debug.Log("soundManager: " + SoundManager.Instance);
+                //Debug.Log("soundManager: " + SoundManager.Instance);
                 SoundManager.Instance.AddKey(_emitter.Event + additionnalName + addParent, this);
             }
         }

@@ -11,6 +11,7 @@ using philae.gravity.attractor.line;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -166,10 +167,14 @@ namespace philae.gravity.attractor
         /// <summary>
         /// unselect all current selected points
         /// </summary>
-        private void UnSelectPoints()
+        private void UnSelectPoints(params PointInLines[] exception)
         {
             for (int i = 0; i < PointsSelected.Count; i++)
             {
+                if (exception.Contains(PointsSelected[i]))
+                {
+                    continue;
+                }
                 PointsSelected[i].SetSelected(false);
                 SetPointsInfoOfLine(PointsSelected[i], false);
             }
@@ -210,13 +215,56 @@ namespace philae.gravity.attractor
             {
                 AddLine();
             }
-
             if (_isMovingMultiplePoints)
             {
-                if (GUILayout.Button("Lock Points"))
+                if (GUILayout.Button("Merge Points"))
                 {
-
+                    MergeSelectedPoints();
                 }
+                UnMergeSelectedPoint();
+            }
+        }
+
+        public void MergeSelectedPoints()
+        {
+            this.UpdateEditor();
+            for (int i = 0; i < PointsSelected.Count; i++)
+            {
+                PointsSelected[i].SetGlobalPointPosition(_currentHandlePosition);
+                MovePoints(_polyLineMatrixInverse, PointsSelected[i]);
+            }
+            this.ApplyModification();
+        }
+
+        public void UnMergeSelectedPoint()
+        {
+            using (ExtGUIScopes.Horiz())
+            {
+                for (int i = 0; i < PointsSelected.Count; i++)
+                {
+                    if (GUILayout.Button(i.ToString()))
+                    {
+                        this.UpdateEditor();
+                        UnSelectPoints(PointsSelected[i]);
+                        this.ApplyModification();
+                    }
+                }
+            }
+        }
+
+        private void ShowPointsSelectedText()
+        {
+            if (PointsSelected.Count < 2)
+            {
+                return;
+            }
+            for (int i = 0; i < PointsSelected.Count; i++)
+            {
+                if (PointsSelected[i].GetGlobalPointPosition() == _currentHandlePosition)
+                {
+                    continue;
+                }
+                ExtSceneView.DisplayStringIn3D(PointsSelected[i].GetGlobalPointPosition(), i.ToString(), Color.black);
             }
         }
 
@@ -325,7 +373,7 @@ namespace philae.gravity.attractor
             FramePointsWithF();
             ManageDragRect();
             AttemptToUselectPoints();
-
+            ShowPointsSelectedText();
             LockEditor();
         }
 
@@ -529,9 +577,16 @@ namespace philae.gravity.attractor
                 Color color = Points[i].IsSelected() ? colorSelected : colorUnselected;
 
                 //if there is only one point selected, show only the visual of the point, not the handleSphere
-                if (Points[i].IsSelected() && PointsSelected.Count == 1)
+                if (ExtVector3.IsClose(_currentHandlePosition, Points[i].GetGlobalPointPosition(), 0.3f))
                 {
-                    ExtGravityOverrideEditor.DrawPoint(PointsSelected[0].GetGlobalPointPosition(), EditorOptions.Instance.SizeLinesPoints * 0.5f, colorSelected);
+                    if (Points[i].IsSelected())
+                    {
+                        ExtGravityOverrideEditor.DrawPoint(Points[i].GetGlobalPointPosition(), EditorOptions.Instance.SizeLinesPoints * 0.5f, colorSelected);
+                    }
+                    else
+                    {
+                        ExtGravityOverrideEditor.DrawPoint(Points[i].GetGlobalPointPosition(), EditorOptions.Instance.SizeLinesPoints, colorUnselected);
+                    }
                     continue;
                 }
 
@@ -543,17 +598,36 @@ namespace philae.gravity.attractor
                         UnSelectPoints();
                     }
 
-                    Points[i].SetSelected(!Points[i].IsSelected());
+                    bool selectionSetting = !Points[i].IsSelected();
+                    Points[i].SetSelected(selectionSetting);
+                    SetPointsInfoOfLine(Points[i], false);
 
-                    //_lastPositionMoved = Points[i].GetGlobalPointPosition();
+                    SelectOtherIfThereAreAtExactSamePosition(Points[i], selectionSetting);
 
-                    SetPointsInfoOfLine(Points[i], true);
+                    SetupPointInLines();
                     changed = true;
                 }
             }
             if (changed)
             {
                 this.ApplyModification();
+            }
+        }
+
+        private void SelectOtherIfThereAreAtExactSamePosition(PointInLines pointClicked, bool selectionSetting)
+        {
+            Vector3 positionPointClicked = pointClicked.GetGlobalPointPosition();
+            for (int i = 0; i < Points.Count; i++)
+            {
+                if (Points[i] == pointClicked)
+                {
+                    continue;
+                }
+                if (Points[i].GetGlobalPointPosition() == positionPointClicked)
+                {
+                    Points[i].SetSelected(selectionSetting);
+                    SetPointsInfoOfLine(Points[i], false);
+                }
             }
         }
 
@@ -601,7 +675,6 @@ namespace philae.gravity.attractor
 
             pointInfo.IsAttached = pointInfoLines.GetPropertie("IsAttached").boolValue;
             pointInfo.IsSelected = pointInfoLines.GetPropertie("IsSelected").boolValue;
-            pointInfo.AttachedIndex = ExtSerializedProperties.GetListInt(pointInfoLines.GetPropertie("AttachedIndex"));
             return (pointInfo);
         }
 
@@ -610,7 +683,6 @@ namespace philae.gravity.attractor
             SerializedProperty pointInfoLines = _pointInfosArray.GetArrayElementAtIndex(point.IndexLine * 2 + point.IndexPoint);
             pointInfoLines.GetPropertie("IsAttached").boolValue = point.PointInfo.IsAttached;
             pointInfoLines.GetPropertie("IsSelected").boolValue = point.PointInfo.IsSelected;
-            ExtSerializedProperties.SetListInt(pointInfoLines.GetPropertie("AttachedIndex"), point.PointInfo.AttachedIndex);
 
             if (updatePoints)
             {

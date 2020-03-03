@@ -33,7 +33,7 @@ namespace philae.gravity.attractor.logic
             bool added = _attractors.AddIfNotContain(attractor);
             if (added)
             {
-                Debug.Log("add: " + attractor + "(" + added + ")", attractor);
+                //Debug.Log("add: " + attractor + "(" + added + ")", attractor);
             }
         }
 
@@ -42,7 +42,7 @@ namespace philae.gravity.attractor.logic
             bool removed = _attractors.Remove(attractor);
             if (removed)
             {
-                Debug.Log("remove: " + attractor, attractor);
+                //Debug.Log("remove: " + attractor, attractor);
             }
         }
 

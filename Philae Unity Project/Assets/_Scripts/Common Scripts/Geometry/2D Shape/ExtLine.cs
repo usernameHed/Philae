@@ -1,5 +1,6 @@
 ﻿using hedCommon.extension.runtime;
 using philae.gravity.attractor.gravityOverride;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,10 +22,10 @@ namespace hedCommon.geometry.shape2d
     [Serializable]
     public struct ExtLine
     {
-        [SerializeField]
+        [SerializeField, OnValueChanged("ShapeMoved")]
         private Vector3 _p1;
         public Vector3 P1 { get { return (_p1); } }
-        [SerializeField]
+        [SerializeField, OnValueChanged("ShapeMoved")]
         private Vector3 _p2;
         public Vector3 P2 { get { return (_p2); } }
 
@@ -42,6 +43,11 @@ namespace hedCommon.geometry.shape2d
         {
             _p1 = p1;
             _p2 = p2;
+            ShapeMoved();
+        }
+
+        public void ShapeMoved()
+        {
             _delta = _p2 - _p1;
             _deltaSquared = ExtVector3.DotProduct(_delta, _delta);
         }

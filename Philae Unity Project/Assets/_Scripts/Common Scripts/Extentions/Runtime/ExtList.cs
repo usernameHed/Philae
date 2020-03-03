@@ -31,6 +31,20 @@ namespace hedCommon.extension.runtime
             return (collection != null && index >= 0 && index < collection.Count);
         }
 
+        public static bool ContainIndex<T>(this List<T> collection, T item, out int index)
+        {
+            index = -1;
+            for (int i = 0; i < collection.Count; i++)
+            {
+                if (EqualityComparer<T>.Default.Equals(collection[i], item))
+                {
+                    index = i;
+                    return (true);
+                }
+            }
+            return (false);
+        }
+
         /// <summary>
         /// return the index of the element inside a list
         /// return -1 if not found in list

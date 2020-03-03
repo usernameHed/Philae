@@ -819,6 +819,29 @@ namespace hedCommon.extension.runtime
         }
 
         /// <summary>
+        /// get X amount of angle randomly, and evenly shared in the sphere
+        /// </summary>
+        /// <param name="numberOfPoints"></param>
+        /// <returns></returns>
+        public static Vector3[] EvenlyRepartitionOfPointsOnSphere2d(int numberOfPoints)
+        {
+            Vector3[] pointsPosition = new Vector3[numberOfPoints];
+            float pointsAsFloat = numberOfPoints;
+
+            float goldenAngle = Mathf.PI * (3 - Mathf.Sqrt(5));
+            float step = 2f / pointsAsFloat;
+            for (int i = 0; i < numberOfPoints; i++)
+            {
+                float y = i * step - 1 + (step / 2);
+                float r = Mathf.Sqrt(1 - y * y);
+                float phi = i * goldenAngle;
+
+                pointsPosition[i] = new Vector3(Mathf.Cos(phi) * r, 0, Mathf.Sin(phi) * r);
+            }
+            return pointsPosition;
+        }
+
+        /// <summary>
         /// create a vector of direction "vector" with length "size"
         /// </summary>
         /// <param name="vector"></param>
