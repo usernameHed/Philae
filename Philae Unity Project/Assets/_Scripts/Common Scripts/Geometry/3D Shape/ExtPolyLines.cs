@@ -76,7 +76,19 @@ namespace hedCommon.geometry.shape3d
         {
             for (int i = 0; i < _listLines.Length; i++)
             {
-                _listLines[i].Draw(color);
+                _listLines[i].Draw(color);                
+                ExtDrawGuizmos.DebugSphere(_listLines[i].P1, color, EditorOptions.Instance.SizeLinesPoints);
+                ExtDrawGuizmos.DebugSphere(_listLines[i].P2, color, EditorOptions.Instance.SizeLinesPoints);
+            }
+        }
+
+        public void DrawWithExtraSize(Color color, float offset)
+        {
+            for (int i = 0; i < _listLines.Length; i++)
+            {
+                ExtDrawGuizmos.DebugCapsuleFromInsidePoint(_listLines[i].P1, _listLines[i].P2, color, offset);
+                ExtDrawGuizmos.DebugSphere(_listLines[i].P1, color, EditorOptions.Instance.SizeLinesPoints);
+                ExtDrawGuizmos.DebugSphere(_listLines[i].P2, color, EditorOptions.Instance.SizeLinesPoints);
             }
         }
 #endif
@@ -93,10 +105,9 @@ namespace hedCommon.geometry.shape3d
         /// Return the closest point from all lines
         ///   
         /// </summary>
-        public bool GetClosestPoint(Vector3 k, out Vector3 closestPoint)
+        public Vector3 GetClosestPoint(Vector3 k)
         {
-            closestPoint = ExtLine.GetClosestPointFromLines(k, _listLines);
-            return (true);
+            return (ExtLine.GetClosestPointFromLines(k, _listLines));
         }
         //end class
     }

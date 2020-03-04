@@ -550,6 +550,14 @@ namespace hedCommon.extension.runtime
             }
         }
 
+#if UNITY_EDITOR
+        public static void DebugSphere(Vector3 position, Color color, float radius)
+        {
+            Handles.color = color;
+            Handles.SphereHandleCap(0, position, Quaternion.identity, radius, EventType.Repaint);
+        }
+#endif
+
         public static void DrawHalfWireSphere(Vector3 position, Vector3 normal, Color color)
         {
 

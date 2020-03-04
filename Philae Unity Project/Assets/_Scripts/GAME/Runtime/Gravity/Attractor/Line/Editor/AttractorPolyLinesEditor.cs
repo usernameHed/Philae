@@ -82,6 +82,12 @@ namespace philae.gravity.attractor
                 return (IsPoint1()) ? P1PropertieGlobal.vector3Value : P2PropertieGlobal.vector3Value;
             }
 
+            public Vector3 GetMiddleLine()
+            {
+                Vector3 middleLine = ExtVector3.GetMeanOfXPoints(P1PropertieGlobal.vector3Value, P2PropertieGlobal.vector3Value);
+                return (middleLine);
+            }
+
             public void SetGlobalPointPosition(Vector3 pX)
             {
                 if (IsPoint1())
@@ -217,11 +223,31 @@ namespace philae.gravity.attractor
             }
             if (_isMovingMultiplePoints)
             {
-                if (GUILayout.Button("Merge Points"))
-                {
-                    MergeSelectedPoints();
-                }
+                ShowMergeSelectedPointsButton();
                 UnMergeSelectedPoint();
+            }
+        }
+
+        public void ShowMergeSelectedPointsButton()
+        {
+            bool pointAreAtSamePlace = true;
+            Vector3 pointPosition = PointsSelected[0].GetGlobalPointPosition();
+            for (int i = 1; i < PointsSelected.Count; i++)
+            {
+                if (pointPosition != PointsSelected[i].GetGlobalPointPosition())
+                {
+                    pointAreAtSamePlace = false;
+                    break;
+                }
+            }
+            if (pointAreAtSamePlace)
+            {
+                return;
+            }
+
+            if (GUILayout.Button("Merge Points"))
+            {
+                MergeSelectedPoints();
             }
         }
 
@@ -260,11 +286,8 @@ namespace philae.gravity.attractor
             }
             for (int i = 0; i < PointsSelected.Count; i++)
             {
-                if (PointsSelected[i].GetGlobalPointPosition() == _currentHandlePosition)
-                {
-                    continue;
-                }
-                ExtSceneView.DisplayStringIn3D(PointsSelected[i].GetGlobalPointPosition(), i.ToString(), Color.black);
+                Vector3 middleLine = ExtVector3.GetMeanOfXPoints(PointsSelected[i].GetGlobalPointPosition(), PointsSelected[i].GetMiddleLine());
+                ExtSceneView.DisplayStringIn3D(middleLine, i.ToString(), Color.black);
             }
         }
 

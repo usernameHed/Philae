@@ -23,8 +23,16 @@ namespace philae.gravity.attractor.line
 
         public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {
-            bool canApplyGravity = _polyLines.GetClosestPoint(graviton.Position, out closestPoint);
+            closestPoint = _polyLines.GetClosestPoint(graviton.Position);
+            closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, SettingsLocal.MinRange, SettingsLocal.MaxRange    , out bool outOfRange);
+            
+            bool canApplyGravity = true;
+            if (outOfRange)
+            {
+                canApplyGravity = false;
+            }
             AddOrRemoveGravitonFromList(graviton, canApplyGravity);
+
             return (canApplyGravity);
         }
 
@@ -42,6 +50,14 @@ namespace philae.gravity.attractor.line
         protected override void DrawRange(Color color)
         {
             _polyLines.Draw(color);
+            if (SettingsLocal.MinRange > 0)
+            {
+                _polyLines.DrawWithExtraSize(Color.gray, SettingsLocal.MinRange);
+            }
+            if (SettingsLocal.MaxRange > 0)
+            {
+                _polyLines.DrawWithExtraSize(color, SettingsLocal.MaxRange);
+            }
         }
 #endif
     }
