@@ -12,10 +12,13 @@ namespace hedCommon.geometry.shape3d
     [Serializable]
     public struct ExtPolyLines
     {
+        [SerializeField]
         private Vector3 _position;
         public Vector3 Position { get { return (_position); } }
+        [SerializeField]
         private Quaternion _rotation;
         public Quaternion Rotation { get { return (_rotation); } }
+        [SerializeField]
         private Vector3 _localScale;
 
         [SerializeField]
@@ -44,6 +47,13 @@ namespace hedCommon.geometry.shape3d
             _position = position;
             _rotation = rotation;
             _localScale = localScale;
+
+            _listLinesLocal = new ExtLine[3];
+            _listLines = new ExtLine[3];
+            _listLinesLocal[0] = new ExtLine(new Vector3(0, 0, 0), new Vector3(-0.3f, 0, -0.2f));
+            _listLinesLocal[1] = new ExtLine(new Vector3(0, 0, 0), new Vector3(0.3f, 0, -0.2f));
+            _listLinesLocal[2] = new ExtLine(new Vector3(0, 0, 0), new Vector3(0, 0, 0.3f));
+
             UpdateMatrix();
         }
 
@@ -71,28 +81,6 @@ namespace hedCommon.geometry.shape3d
             UpdateGlobalLineFromLocalOnes();
         }
 
-#if UNITY_EDITOR
-        public void Draw(Color color)
-        {
-            for (int i = 0; i < _listLines.Length; i++)
-            {
-                _listLines[i].Draw(color);                
-                ExtDrawGuizmos.DebugSphere(_listLines[i].P1, color, EditorOptions.Instance.SizeLinesPoints);
-                ExtDrawGuizmos.DebugSphere(_listLines[i].P2, color, EditorOptions.Instance.SizeLinesPoints);
-            }
-        }
-
-        public void DrawWithExtraSize(Color color, float offset)
-        {
-            for (int i = 0; i < _listLines.Length; i++)
-            {
-                ExtDrawGuizmos.DebugCapsuleFromInsidePoint(_listLines[i].P1, _listLines[i].P2, color, offset);
-                ExtDrawGuizmos.DebugSphere(_listLines[i].P1, color, EditorOptions.Instance.SizeLinesPoints);
-                ExtDrawGuizmos.DebugSphere(_listLines[i].P2, color, EditorOptions.Instance.SizeLinesPoints);
-            }
-        }
-#endif
-
         public void MoveSphape(Vector3 position, Quaternion rotation, Vector3 localScale)
         {
             _position = position;
@@ -109,6 +97,24 @@ namespace hedCommon.geometry.shape3d
         {
             return (ExtLine.GetClosestPointFromLines(k, _listLines));
         }
+
+#if UNITY_EDITOR
+        public void Draw(Color color)
+        {
+            for (int i = 0; i < _listLines.Length; i++)
+            {
+                _listLines[i].Draw(color);
+            }
+        }
+
+        public void DrawWithExtraSize(Color color, float offset)
+        {
+            for (int i = 0; i < _listLines.Length; i++)
+            {
+                ExtDrawGuizmos.DebugCapsuleFromInsidePoint(_listLines[i].P1, _listLines[i].P2, color, offset, 0, true, false);
+            }
+        }
+#endif
         //end class
     }
     //end nameSpace

@@ -15,10 +15,10 @@ using UnityEngine.Rendering;
 
 namespace philae.gravity.attractor
 {
-    [CustomEditor(typeof(AttractorCapsuleHalfOverride), true)]
-    public class AttractorCapsuleHalfOverrideEditor : AttractorEditor
+    [CustomEditor(typeof(AttractorPolyLinesOverride), true)]
+    public class AttractorPolyLinesOverrideEditor : AttractorPolyLinesEditor
     {
-        protected new AttractorCapsuleHalfOverride _attractor;
+        private AttractorPolyLinesOverride _attractorPolyLineOverride;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -27,8 +27,8 @@ namespace philae.gravity.attractor
         ///   witch doesn't have a Unity Editor, you can call base() without parametter:
         ///   : base()
         /// </summary>
-        public AttractorCapsuleHalfOverrideEditor()
-            : base(false, "Capsule")
+        public AttractorPolyLinesOverrideEditor()
+            : base()
         {
 
         }
@@ -39,7 +39,7 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractor = (AttractorCapsuleHalfOverride)GetTarget<Attractor>();
+            _attractorPolyLineOverride = (AttractorPolyLinesOverride)GetTarget<Attractor>();
         }
 
         public override void ShowTinyEditorContent()
@@ -50,23 +50,26 @@ namespace philae.gravity.attractor
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
-            if (!EditorOptions.Instance.ShowGravityOverride || !_attractor.gameObject.activeInHierarchy)
+            base.CustomOnSceneGUI(sceneview);
+
+            if (!EditorOptions.Instance.ShowGravityOverride || !_attractorPolyLineOverride.gameObject.activeInHierarchy)
             {
                 return;
             }
-
+            Debug.Log("yay !");
             this.UpdateEditor();
 
-            ExtHalfCapsule capsuleHalf = this.GetPropertie("_capsuleHalf").GetValue<ExtHalfCapsule>();
-            GravityOverrideLineTopDown gravityCapsule = ExtGravityOverrideEditor.DrawCapsuleHalf(capsuleHalf, _attractor.GravityOverride, Color.red, out bool hasChanged);
+            ExtPolyLines polyLine = this.GetPropertie("_polyLines").GetValue<ExtPolyLines>();
+            /*
+            GravityOverrideLineTopDown gravityLine = ExtGravityOverrideEditor.DrawLine3d(line, _attractorPolyLineOverride.GravityOverride, Color.red, out bool hasChanged);
 
             if (hasChanged)
             {
-                gravityCapsule.SetupGravity();
-                ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(this.GetPropertie("GravityOverride"), gravityCapsule);
+                gravityLine.SetupGravity();
+                ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(this.GetPropertie("GravityOverride"), gravityLine);
                 this.ApplyModification();
             }
-
+            */
         }
     }
 }

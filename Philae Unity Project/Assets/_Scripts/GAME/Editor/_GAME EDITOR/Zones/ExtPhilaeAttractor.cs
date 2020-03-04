@@ -26,7 +26,10 @@ namespace philae.editor.extension.attractor
         private const string CAPSULE_HALF_OVERRIDE = "GameObject/Philae/Attractor/Capsule/Capsule Half with gravity override";
         private const string MESH_CONCAVE = "GameObject/Philae/Attractor/Mesh/Concave Mesh";
         private const string MESH_CONVEXE = "GameObject/Philae/Attractor/Mesh/Convexe Mesh";
-        private const string LINE = "GameObject/Philae/Attractor/Line";
+        private const string LINE = "GameObject/Philae/Attractor/Lines/Line Unique";
+        private const string LINE_OVERRIDE = "GameObject/Philae/Attractor/Lines/Line Unique with gravity override";
+        private const string POLY_LINES = "GameObject/Philae/Attractor/Lines/Poly Lines";
+        private const string POLY_LINES_OVERRIDE = "GameObject/Philae/Attractor/Lines/Poly Lines with gravity override";
         private const string QUAD = "GameObject/Philae/Attractor/Quad/Quad";
         private const string QUAD_OVERRIDE = "GameObject/Philae/Attractor/Quad/Quad with gravity override";
         private const string SPLINE = "GameObject/Philae/Attractor/Spline";
@@ -109,6 +112,23 @@ namespace philae.editor.extension.attractor
         {
             CreateAttractor("Line");
         }
+        [MenuItem(LINE_OVERRIDE, false, -1)]
+        private static void AttractorLineOverride()
+        {
+            CreateAttractor("Line Override");
+        }
+        [MenuItem(POLY_LINES, false, -1)]
+        private static void AttractorPolyLines()
+        {
+            CreateAttractor("PolyLines");
+        }
+        [MenuItem(POLY_LINES_OVERRIDE, false, -1)]
+        private static void AttractorPolyLinesOverride()
+        {
+            CreateAttractor("PolyLines Override");
+        }
+
+
         [MenuItem(QUAD, false, -1)]
         private static void AttractorQuad()
         {
@@ -165,6 +185,9 @@ namespace philae.editor.extension.attractor
         [MenuItem(MESH_CONCAVE, true)]
         [MenuItem(MESH_CONVEXE, true)]
         [MenuItem(LINE, true)]
+        [MenuItem(LINE_OVERRIDE, true)]
+        [MenuItem(POLY_LINES, true)]
+        [MenuItem(POLY_LINES_OVERRIDE, true)]
         [MenuItem(QUAD, true)]
         [MenuItem(QUAD_OVERRIDE, true)]
         [MenuItem(SPLINE, true)]

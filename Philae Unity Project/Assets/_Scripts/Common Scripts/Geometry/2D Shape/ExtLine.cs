@@ -96,39 +96,37 @@ namespace hedCommon.geometry.shape2d
             }
         }
 
-        public Vector3 GetClosestPointIfWeCan(Vector3 k, out bool canApplyGravity, GravityOverrideLineTopDown gravityOverride)
+        public bool GetClosestPointIfWeCan(Vector3 k, out Vector3 closestPoint, GravityOverrideLineTopDown gravityOverride)
         {
+            closestPoint = Vector3.zero;
             if (!gravityOverride.CanApplyGravity)
             {
-                canApplyGravity = false;
-                return (k);
+                return (false);
             }
-            canApplyGravity = true;
             float dist = Vector3.Dot(k - _p1, _delta);
 
             //k projection is outside the [_p1, _p2] interval, closest to _p1
             if (dist <= 0.0f)
             {
-                canApplyGravity = (gravityOverride.Top);
-                return ((canApplyGravity) ? _p1 : Vector3.zero);
+                closestPoint = _p1;
+                return (gravityOverride.Top);
             }
             //k projection is outside the [_p1, p2] interval, closest to _p2
             else if (dist >= _deltaSquared)
             {
-                canApplyGravity = (gravityOverride.Bottom);
-                return ((canApplyGravity) ? _p2 : Vector3.zero);
+                closestPoint = _p2;
+                return (gravityOverride.Bottom);
             }
             //k projection is inside the [_p1, p2] interval
             else
             {
                 if (!gravityOverride.Trunk)
                 {
-                    canApplyGravity = false;
-                    return (k);
+                    return (false);
                 }
                 dist = dist / _deltaSquared;
-                Vector3 pointOnLine = _p1 + dist * _delta;
-                return (pointOnLine);
+                closestPoint = _p1 + dist * _delta;
+                return (true);
             }
         }
 

@@ -54,10 +54,10 @@ namespace philae.gravity.attractor.gravityOverride
                 {
                     case 1:
                         cubeGravity.Face1 = DrawQuadFace(new ExtQuad(cube.P1, cube.P5, cube.P8, cube.P4), cubeGravity.Face1, false, colorQuad, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line1 = DrawLine(cubeGravity.Line1, cube.P1, cube.P5, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line2 = DrawLine(cubeGravity.Line2, cube.P5, cube.P8, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line3 = DrawLine(cubeGravity.Line3, cube.P8, cube.P4, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line4 = DrawLine(cubeGravity.Line4, cube.P4, cube.P1, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line1 = DrawLineTrunk(cubeGravity.Line1, cube.P1, cube.P5, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line2 = DrawLineTrunk(cubeGravity.Line2, cube.P5, cube.P8, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line3 = DrawLineTrunk(cubeGravity.Line3, cube.P8, cube.P4, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line4 = DrawLineTrunk(cubeGravity.Line4, cube.P4, cube.P1, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point1 = DrawPoint(cubeGravity.Point1, cube.P1, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point5 = DrawPoint(cubeGravity.Point5, cube.P5, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point8 = DrawPoint(cubeGravity.Point8, cube.P8, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
@@ -65,10 +65,10 @@ namespace philae.gravity.attractor.gravityOverride
                         break;
                     case 2:
                         cubeGravity.Face2 = DrawQuadFace(new ExtQuad(cube.P4, cube.P8, cube.P7, cube.P3), cubeGravity.Face2, false, colorQuad, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line3 = DrawLine(cubeGravity.Line3, cube.P4, cube.P8,   colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line10 = DrawLine(cubeGravity.Line10, cube.P8, cube.P7, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line11 = DrawLine(cubeGravity.Line11, cube.P7, cube.P3, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line12 = DrawLine(cubeGravity.Line12, cube.P3, cube.P4, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line3 = DrawLineTrunk(cubeGravity.Line3, cube.P4, cube.P8,   colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line10 = DrawLineTrunk(cubeGravity.Line10, cube.P8, cube.P7, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line11 = DrawLineTrunk(cubeGravity.Line11, cube.P7, cube.P3, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line12 = DrawLineTrunk(cubeGravity.Line12, cube.P3, cube.P4, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point4 = DrawPoint(cubeGravity.Point4, cube.P4, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point8 = DrawPoint(cubeGravity.Point8, cube.P8, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point7 = DrawPoint(cubeGravity.Point7, cube.P7, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
@@ -76,10 +76,10 @@ namespace philae.gravity.attractor.gravityOverride
                         break;
                     case 3:
                         cubeGravity.Face3 = DrawQuadFace(new ExtQuad(cube.P5, cube.P6, cube.P7, cube.P8), cubeGravity.Face3, false, colorQuad, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line6 = DrawLine(cubeGravity.Line6, cube.P5, cube.P6, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line8 = DrawLine(cubeGravity.Line8, cube.P6, cube.P7,  colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line10 = DrawLine(cubeGravity.Line10, cube.P7, cube.P8, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line2 = DrawLine(cubeGravity.Line2, cube.P5, cube.P8,  colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line6 = DrawLineTrunk(cubeGravity.Line6, cube.P5, cube.P6, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line8 = DrawLineTrunk(cubeGravity.Line8, cube.P6, cube.P7,  colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line10 = DrawLineTrunk(cubeGravity.Line10, cube.P7, cube.P8, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line2 = DrawLineTrunk(cubeGravity.Line2, cube.P5, cube.P8,  colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point5 = DrawPoint(cubeGravity.Point5, cube.P5, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point6 = DrawPoint(cubeGravity.Point6, cube.P6, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point7 = DrawPoint(cubeGravity.Point7, cube.P7, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
@@ -87,10 +87,10 @@ namespace philae.gravity.attractor.gravityOverride
                         break;
                     case 4:
                         cubeGravity.Face4 = DrawQuadFace(new ExtQuad(cube.P2, cube.P1, cube.P4, cube.P3), cubeGravity.Face4, false, colorQuad, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line7 = DrawLine(cubeGravity.Line7, cube.P2, cube.P1,   colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line4 = DrawLine(cubeGravity.Line4, cube.P1, cube.P4,   colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line12 = DrawLine(cubeGravity.Line12, cube.P4, cube.P3, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line9 = DrawLine(cubeGravity.Line9, cube.P2, cube.P3,   colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line7 = DrawLineTrunk(cubeGravity.Line7, cube.P2, cube.P1,   colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line4 = DrawLineTrunk(cubeGravity.Line4, cube.P1, cube.P4,   colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line12 = DrawLineTrunk(cubeGravity.Line12, cube.P4, cube.P3, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line9 = DrawLineTrunk(cubeGravity.Line9, cube.P2, cube.P3,   colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point2 = DrawPoint(cubeGravity.Point2, cube.P2, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point1 = DrawPoint(cubeGravity.Point1, cube.P1, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point4 = DrawPoint(cubeGravity.Point4, cube.P4, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
@@ -98,10 +98,10 @@ namespace philae.gravity.attractor.gravityOverride
                         break;
                     case 5:
                         cubeGravity.Face5 = DrawQuadFace(new ExtQuad(cube.P2, cube.P6, cube.P5, cube.P1), cubeGravity.Face5, false, colorQuad, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line5 = DrawLine(cubeGravity.Line5, cube.P2, cube.P6, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line6 = DrawLine(cubeGravity.Line6, cube.P6, cube.P5, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line1 = DrawLine(cubeGravity.Line1, cube.P5, cube.P1, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line7 = DrawLine(cubeGravity.Line7, cube.P1, cube.P2, colorLine,  sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line5 = DrawLineTrunk(cubeGravity.Line5, cube.P2, cube.P6, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line6 = DrawLineTrunk(cubeGravity.Line6, cube.P6, cube.P5, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line1 = DrawLineTrunk(cubeGravity.Line1, cube.P5, cube.P1, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line7 = DrawLineTrunk(cubeGravity.Line7, cube.P1, cube.P2, colorLine,  sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point2 = DrawPoint(cubeGravity.Point2, cube.P2, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point6 = DrawPoint(cubeGravity.Point6, cube.P6, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point5 = DrawPoint(cubeGravity.Point5, cube.P5, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
@@ -109,10 +109,10 @@ namespace philae.gravity.attractor.gravityOverride
                         break;
                     case 6:
                         cubeGravity.Face6 = DrawQuadFace(new ExtQuad(cube.P3, cube.P7, cube.P6, cube.P2), cubeGravity.Face6, false, colorQuad, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line11 = DrawLine(cubeGravity.Line11, cube.P3, cube.P7, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line8 = DrawLine(cubeGravity.Line8, cube.P7, cube.P6,   colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line5 = DrawLine(cubeGravity.Line5, cube.P6, cube.P2,   colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
-                        cubeGravity.Line9 = DrawLine(cubeGravity.Line9, cube.P3, cube.P2, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line11 = DrawLineTrunk(cubeGravity.Line11, cube.P3, cube.P7, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line8 = DrawLineTrunk(cubeGravity.Line8, cube.P7, cube.P6,   colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line5 = DrawLineTrunk(cubeGravity.Line5, cube.P6, cube.P2,   colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
+                        cubeGravity.Line9 = DrawLineTrunk(cubeGravity.Line9, cube.P3, cube.P2, colorLine, sizeLine, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point3 = DrawPoint(cubeGravity.Point3, cube.P3, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point7 = DrawPoint(cubeGravity.Point7, cube.P7, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
                         cubeGravity.Point6 = DrawPoint(cubeGravity.Point6, cube.P6, color, sizePoint, out changed); hasChanged = (changed) ? true : hasChanged;
@@ -139,10 +139,10 @@ namespace philae.gravity.attractor.gravityOverride
 
             quadGravity.Face1 = DrawQuadFace(quad, quadGravity.Face1, quad.AllowBottom, colorFace, out changed);     hasChanged = (changed) ? true : hasChanged;
 
-            quadGravity.Line1 = ExtGravityOverrideEditor.DrawLine(quadGravity.Line1, quad.P1, quad.P2, colorLine, sizeLine, out changed);    hasChanged = (changed) ? true : hasChanged;
-            quadGravity.Line2 = ExtGravityOverrideEditor.DrawLine(quadGravity.Line2, quad.P2, quad.P3, colorLine, sizeLine, out changed);    hasChanged = (changed) ? true : hasChanged;
-            quadGravity.Line3 = ExtGravityOverrideEditor.DrawLine(quadGravity.Line3, quad.P3, quad.P4, colorLine, sizeLine, out changed);    hasChanged = (changed) ? true : hasChanged;
-            quadGravity.Line4 = ExtGravityOverrideEditor.DrawLine(quadGravity.Line4, quad.P4, quad.P1, colorLine, sizeLine, out changed);    hasChanged = (changed) ? true : hasChanged;
+            quadGravity.Line1 = ExtGravityOverrideEditor.DrawLineTrunk(quadGravity.Line1, quad.P1, quad.P2, colorLine, sizeLine, out changed);    hasChanged = (changed) ? true : hasChanged;
+            quadGravity.Line2 = ExtGravityOverrideEditor.DrawLineTrunk(quadGravity.Line2, quad.P2, quad.P3, colorLine, sizeLine, out changed);    hasChanged = (changed) ? true : hasChanged;
+            quadGravity.Line3 = ExtGravityOverrideEditor.DrawLineTrunk(quadGravity.Line3, quad.P3, quad.P4, colorLine, sizeLine, out changed);    hasChanged = (changed) ? true : hasChanged;
+            quadGravity.Line4 = ExtGravityOverrideEditor.DrawLineTrunk(quadGravity.Line4, quad.P4, quad.P1, colorLine, sizeLine, out changed);    hasChanged = (changed) ? true : hasChanged;
 
             quadGravity.Point1 = ExtGravityOverrideEditor.DrawPoint(quadGravity.Point1, quad.P1, color, sizePoint, out changed);  hasChanged = (changed) ? true : hasChanged;
             quadGravity.Point2 = ExtGravityOverrideEditor.DrawPoint(quadGravity.Point2, quad.P2, color, sizePoint, out changed);  hasChanged = (changed) ? true : hasChanged;
@@ -218,7 +218,7 @@ namespace philae.gravity.attractor.gravityOverride
             hasChanged = (changed) ? true : hasChanged;
             cylinderGravity.Disc2 = ExtGravityOverrideEditor.DrawDisc(circle2, cylinderGravity.Disc2, color, false, out changed);
             hasChanged = (changed) ? true : hasChanged;
-            cylinderGravity.Trunk = ExtGravityOverrideEditor.DrawLine(cylinderGravity.Trunk, cylinder.P1, cylinder.P2, new Color(color.r, color.g, color.b, color.a * 0.8f), sizeLine, out changed);
+            cylinderGravity.Trunk = ExtGravityOverrideEditor.DrawLineTrunk(cylinderGravity.Trunk, cylinder.P1, cylinder.P2, new Color(color.r, color.g, color.b, color.a * 0.8f), sizeLine, out changed);
             hasChanged = (changed) ? true : hasChanged;
             return (cylinderGravity);
         }
@@ -283,7 +283,7 @@ namespace philae.gravity.attractor.gravityOverride
         /// <summary>
         /// draw a line
         /// </summary>
-        public static bool DrawLine(bool trunk, Vector3 p1, Vector3 p2, Color color, float size, out bool hasChanged)
+        public static bool DrawLineTrunk(bool trunk, Vector3 p1, Vector3 p2, Color color, float size, out bool hasChanged)
         {
             hasChanged = false;
 
@@ -395,11 +395,28 @@ namespace philae.gravity.attractor.gravityOverride
             hasChanged = false;
             bool changed = hasChanged;
 
-            capsuleGravity.Trunk = ExtGravityOverrideEditor.DrawLine(capsuleGravity.Trunk, capsule.P1, capsule.P2, color, sizeLine, out changed);
+            capsuleGravity.Trunk = ExtGravityOverrideEditor.DrawLineTrunk(capsuleGravity.Trunk, capsule.P1, capsule.P2, color, sizeLine, out changed);
             hasChanged = (changed) ? true : hasChanged;
             capsuleGravity.Top = ExtGravityOverrideEditor.DrawPoint(capsuleGravity.Top, capsule.P1, color, sizePoint, out changed);
             hasChanged = (changed) ? true : hasChanged;
             capsuleGravity.Bottom = ExtGravityOverrideEditor.DrawPoint(capsuleGravity.Bottom, capsule.P2, color, sizePoint, out changed);
+            hasChanged = (changed) ? true : hasChanged;
+            return (capsuleGravity);
+        }
+
+        public static GravityOverrideLineTopDown DrawLine3d(ExtLine3d line, GravityOverrideLineTopDown capsuleGravity, Color color, out bool hasChanged)
+        {
+            float sizeLine = line.LocalScale.magnitude / 25;
+            float sizePoint = line.LocalScale.magnitude / 20;
+
+            hasChanged = false;
+            bool changed = hasChanged;
+
+            capsuleGravity.Trunk = ExtGravityOverrideEditor.DrawLineTrunk(capsuleGravity.Trunk, line.P1, line.P2, color, sizeLine, out changed);
+            hasChanged = (changed) ? true : hasChanged;
+            capsuleGravity.Top = ExtGravityOverrideEditor.DrawPoint(capsuleGravity.Top, line.P1, color, sizePoint, out changed);
+            hasChanged = (changed) ? true : hasChanged;
+            capsuleGravity.Bottom = ExtGravityOverrideEditor.DrawPoint(capsuleGravity.Bottom, line.P2, color, sizePoint, out changed);
             hasChanged = (changed) ? true : hasChanged;
             return (capsuleGravity);
         }
@@ -417,7 +434,7 @@ namespace philae.gravity.attractor.gravityOverride
 
             Color colorLine = new Color(color.r, color.g, color.b, color.a * 0.8f);
 
-            coneGravity.Trunk = ExtGravityOverrideEditor.DrawLine(coneGravity.Trunk, cone.P1, cone.P2, colorLine, sizeLine, out changed);
+            coneGravity.Trunk = ExtGravityOverrideEditor.DrawLineTrunk(coneGravity.Trunk, cone.P1, cone.P2, colorLine, sizeLine, out changed);
             hasChanged = (changed) ? true : hasChanged;
             coneGravity.Top = ExtGravityOverrideEditor.DrawPoint(coneGravity.Top, cone.P1, color, sizePoint, out changed);
             hasChanged = (changed) ? true : hasChanged;
@@ -436,7 +453,7 @@ namespace philae.gravity.attractor.gravityOverride
             bool changed = hasChanged;
 
             Color colorLine = new Color(color.r, color.g, color.b, color.a * 0.8f);
-            capsuleGravity.Trunk = ExtGravityOverrideEditor.DrawLine(capsuleGravity.Trunk, capsuleHalf.P1, capsuleHalf.P2, colorLine, sizeLine, out changed);
+            capsuleGravity.Trunk = ExtGravityOverrideEditor.DrawLineTrunk(capsuleGravity.Trunk, capsuleHalf.P1, capsuleHalf.P2, colorLine, sizeLine, out changed);
             hasChanged = (changed) ? true : hasChanged;
             capsuleGravity.Top = ExtGravityOverrideEditor.DrawPoint(capsuleGravity.Top, capsuleHalf.P1, color, sizePoint, out changed);
             hasChanged = (changed) ? true : hasChanged;
@@ -460,7 +477,7 @@ namespace philae.gravity.attractor.gravityOverride
             ApplyModificationToDisc(cylinder.GetPropertie(nameof(datas.Disc2)), datas.Disc2);
         }
 
-        public static void ApplyModificationToCapsule(SerializedProperty capsule, GravityOverrideLineTopDown datas)
+        public static void ApplyModificationToCapsuleOrLine(SerializedProperty capsule, GravityOverrideLineTopDown datas)
         {
             capsule.GetPropertie(nameof(datas.Trunk)).boolValue = datas.Trunk;
             capsule.GetPropertie("_canApplyGravity").boolValue = datas.CanApplyGravity;

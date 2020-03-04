@@ -63,7 +63,7 @@ namespace philae.gravity.attractor
             if (hasChanged)
             {
                 gravityCapsule.SetupGravity();
-                ExtGravityOverrideEditor.ApplyModificationToCapsule(this.GetPropertie("GravityOverride"), gravityCapsule);
+                ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(this.GetPropertie("GravityOverride"), gravityCapsule);
                 this.ApplyModification();
             }
 

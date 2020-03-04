@@ -10,21 +10,21 @@ using UnityEngine;
 
 namespace philae.gravity.attractor.line
 {
-    public class AttractorPolyLines : Attractor
+    public class AttractorLine : Attractor
     {
-        [SerializeField, OnValueChanged("ChangePolyLinesSettings", true)]
-        protected ExtPolyLines _polyLines = default;
+        [SerializeField, OnValueChanged("ChangeLineSettings", true)]
+        protected ExtLine3d _line = default;
 
         public override void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {
             base.InitOnCreation(attractorListerLogic);
-            _polyLines = new ExtPolyLines(Position, Rotation, LocalScale);
+            _line = new ExtLine3d(Position, Rotation, LocalScale);
         }
 
         public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {
-            closestPoint = _polyLines.GetClosestPoint(graviton.Position);
-            closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, SettingsLocal.MinRange, SettingsLocal.MaxRange    , out bool outOfRange);
+            closestPoint = _line.ClosestPointTo(graviton.Position);
+            closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, SettingsLocal.MinRange, SettingsLocal.MaxRange, out bool outOfRange);
             
             bool canApplyGravity = true;
             if (outOfRange)
@@ -35,27 +35,27 @@ namespace philae.gravity.attractor.line
             return (canApplyGravity);
         }
 
-        public void ChangePolyLinesSettings()
+        public void ChangeLineSettings()
         {
-            _polyLines.MoveSphape(Position, Rotation, LocalScale);
+            _line.MoveSphape(Position, Rotation, LocalScale);
         }
 
         public override void Move()
         {
-            _polyLines.MoveSphape(Position, Rotation, LocalScale);
+            _line.MoveSphape(Position, Rotation, LocalScale);
         }
 
 #if UNITY_EDITOR
         protected override void DrawRange(Color color)
         {
-            _polyLines.Draw(color);
+            _line.Draw(color);
             if (SettingsLocal.MinRange > 0)
             {
-                _polyLines.DrawWithExtraSize(Color.gray, SettingsLocal.MinRange);
+                _line.DrawWithExtraSize(Color.gray, SettingsLocal.MinRange);
             }
             if (SettingsLocal.MaxRange > 0)
             {
-                _polyLines.DrawWithExtraSize(color, SettingsLocal.MaxRange);
+                _line.DrawWithExtraSize(color, SettingsLocal.MaxRange);
             }
         }
 #endif

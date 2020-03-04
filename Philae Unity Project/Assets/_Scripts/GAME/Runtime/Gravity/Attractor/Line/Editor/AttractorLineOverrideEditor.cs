@@ -15,10 +15,10 @@ using UnityEngine.Rendering;
 
 namespace philae.gravity.attractor
 {
-    [CustomEditor(typeof(AttractorCapsuleHalfOverride), true)]
-    public class AttractorCapsuleHalfOverrideEditor : AttractorEditor
+    [CustomEditor(typeof(AttractorLineOverride), true)]
+    public class AttractorLineOverrideEditor : AttractorEditor
     {
-        protected new AttractorCapsuleHalfOverride _attractor;
+        protected new AttractorLineOverride _attractor;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -27,8 +27,8 @@ namespace philae.gravity.attractor
         ///   witch doesn't have a Unity Editor, you can call base() without parametter:
         ///   : base()
         /// </summary>
-        public AttractorCapsuleHalfOverrideEditor()
-            : base(false, "Capsule")
+        public AttractorLineOverrideEditor()
+            : base(false, "Line")
         {
 
         }
@@ -39,7 +39,7 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractor = (AttractorCapsuleHalfOverride)GetTarget<Attractor>();
+            _attractor = (AttractorLineOverride)GetTarget<Attractor>();
         }
 
         public override void ShowTinyEditorContent()
@@ -57,13 +57,13 @@ namespace philae.gravity.attractor
 
             this.UpdateEditor();
 
-            ExtHalfCapsule capsuleHalf = this.GetPropertie("_capsuleHalf").GetValue<ExtHalfCapsule>();
-            GravityOverrideLineTopDown gravityCapsule = ExtGravityOverrideEditor.DrawCapsuleHalf(capsuleHalf, _attractor.GravityOverride, Color.red, out bool hasChanged);
+            ExtLine3d line = this.GetPropertie("_line").GetValue<ExtLine3d>();
+            GravityOverrideLineTopDown gravityLine = ExtGravityOverrideEditor.DrawLine3d(line, _attractor.GravityOverride, Color.red, out bool hasChanged);
 
             if (hasChanged)
             {
-                gravityCapsule.SetupGravity();
-                ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(this.GetPropertie("GravityOverride"), gravityCapsule);
+                gravityLine.SetupGravity();
+                ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(this.GetPropertie("GravityOverride"), gravityLine);
                 this.ApplyModification();
             }
 

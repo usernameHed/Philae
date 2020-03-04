@@ -222,7 +222,7 @@ namespace philae.gravity.attractor
             {
                 AddLine();
             }
-            if (_isMovingMultiplePoints)
+            if (_isMovingMultiplePoints && PointsSelected.Count >= 2)
             {
                 ShowMergeSelectedPointsButton();
                 UnMergeSelectedPoint();
@@ -376,6 +376,7 @@ namespace philae.gravity.attractor
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
+            base.CustomOnSceneGUI(sceneview);
             if (!EditorOptions.Instance.SetupLinesOfSphape || !_attractorPolyLine.gameObject.activeInHierarchy)
             {
                 return;
