@@ -262,6 +262,51 @@ PrefabInstance:
       propertyPath: GravityOverride._canApplyGravity
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: SettingsLocal.MinRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: _cone._circleBase._plane.Point.z
+      value: 0.00000010486
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: _cone._coneMatrix.e23
+      value: 0.00000010486
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: _cone._p1.z
+      value: 0.00000010486
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: _cone._p2.z
+      value: 0.00000010486
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: SettingsLocal.MaxRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: _minRangeWithScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: _maxRangeWithScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125264654325605385, guid: 3f90dcdf58fdcf840b1665fe3fc73afa,
+        type: 3}
+      propertyPath: SettingsLocal.AddMinRange
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f90dcdf58fdcf840b1665fe3fc73afa, type: 3}
 --- !u!4 &156788267 stripped
@@ -993,6 +1038,31 @@ PrefabInstance:
         type: 3}
       propertyPath: GravityOverride._canApplyGravity
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: SettingsLocal.AddMinRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: SettingsLocal.MinRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: SettingsLocal.MaxRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: _minRangeWithScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5489274471781885354, guid: cf5eb6d61f17aff4ba67601d196b5647,
+        type: 3}
+      propertyPath: _maxRangeWithScale
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf5eb6d61f17aff4ba67601d196b5647, type: 3}
@@ -2472,7 +2542,7 @@ PrefabInstance:
     - target: {fileID: 7820571223686434303, guid: 0ea5a0364b4c4af49be60dc768bca75d,
         type: 3}
       propertyPath: _gravitonsInside.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7820571223686434303, guid: 0ea5a0364b4c4af49be60dc768bca75d,
         type: 3}
@@ -2483,6 +2553,41 @@ PrefabInstance:
         type: 3}
       propertyPath: _gravitonsInside.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7820571223686434303, guid: 0ea5a0364b4c4af49be60dc768bca75d,
+        type: 3}
+      propertyPath: SettingsLocal.MinRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7820571223686434303, guid: 0ea5a0364b4c4af49be60dc768bca75d,
+        type: 3}
+      propertyPath: SettingsLocal.MaxRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7820571223686434303, guid: 0ea5a0364b4c4af49be60dc768bca75d,
+        type: 3}
+      propertyPath: _minRangeWithScale
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7820571223686434303, guid: 0ea5a0364b4c4af49be60dc768bca75d,
+        type: 3}
+      propertyPath: _maxRangeWithScale
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7820571223686434303, guid: 0ea5a0364b4c4af49be60dc768bca75d,
+        type: 3}
+      propertyPath: _sphere.Radius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7820571223686434303, guid: 0ea5a0364b4c4af49be60dc768bca75d,
+        type: 3}
+      propertyPath: SettingsLocal.AddMaxRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7820571223686434303, guid: 0ea5a0364b4c4af49be60dc768bca75d,
+        type: 3}
+      propertyPath: SettingsLocal.AddMinRange
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ea5a0364b4c4af49be60dc768bca75d, type: 3}
@@ -2559,45 +2664,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3784656264804646245, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3784656264804646245, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3784656264804646245, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._pointsInfos.Array.size
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._pointsInfos.Array.data[0].AttachedIndex.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.size
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _gravitonsInside.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
@@ -2606,643 +2676,43 @@ PrefabInstance:
       objectReference: {fileID: 656489596}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
-      propertyPath: _polyLines._polyLinesMatrix.e00
-      value: 19.879898
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._polyLinesMatrix.e03
-      value: -160
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._polyLinesMatrix.e11
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._polyLinesMatrix.e22
-      value: 19.879898
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._polyLinesMatrix.e33
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[1]._p1.x
-      value: -0.5224341
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[1]._p2.x
-      value: -0.6575497
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[1]._p2.z
-      value: 0.26711243
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[1]._delta.x
-      value: -0.13511556
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[1]._delta.y
-      value: 0.0044079544
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[1]._delta.z
-      value: -0.011356682
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[1]._deltaSquared
-      value: 0.01840462
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[1]._p2.x
-      value: -172.48744
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[1]._p2.z
-      value: 6.7492285
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[1]._delta.x
-      value: -2.7109375
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[1]._delta.z
-      value: 0.069933414
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[1]._deltaSquared
-      value: 7.361845
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[0]._p1.x
-      value: -0.5099475
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[0]._p1.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[0]._p1.z
-      value: 0.4034163
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[0]._p2.x
-      value: -0.5224341
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[0]._delta.x
-      value: -0.012486637
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[0]._delta.y
-      value: -0.0044079544
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[0]._delta.z
-      value: -0.12494719
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[0]._deltaSquared
-      value: 0.015787147
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[1]._p1.z
-      value: 0.27846912
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[0]._p1.x
-      value: -169.25482
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[0]._p1.z
-      value: 9.135905
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[0]._delta.x
-      value: -0.52168274
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[0]._delta.z
-      value: -2.4566102
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[0]._deltaSquared
-      value: 6.3148584
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[1]._p1.x
-      value: -169.7765
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[1]._p1.z
-      value: 6.679295
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[0]._p2.z
-      value: 0.27846912
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[0]._p2.x
-      value: -169.7765
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[0]._p2.z
-      value: 6.679295
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[1]._p2.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[1]._p2.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[1]._delta.y
-      value: 0.088159084
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[1]._p1.y
-      value: -0.0044079544
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[1]._p1.y
-      value: -0.088159084
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[0]._p2.y
-      value: -0.0044079544
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[0]._p2.y
-      value: -0.088159084
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[0]._delta.y
-      value: -0.088159084
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[0]._p1.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._pointsInfos.Array.data[0].IsAttached
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._pointsInfos.Array.data[0].AttachedIndex.Array.data[1]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._pointsInfos.Array.data[0].IsSelected
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._pointsInfos.Array.data[1].IsSelected
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._pointsInfos.Array.data[2].IsSelected
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._pointsInfos.Array.data[3].IsSelected
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[2]._p1.x
-      value: -169.7765
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[2]._p2.x
-      value: -167.06537
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[2]._p1.x
-      value: -0.5224341
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[2]._delta.x
-      value: 2.7111359
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[2]._deltaSquared
-      value: 8.221137
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[2]._p1.y
-      value: -0.088159084
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[2]._delta.y
-      value: 0.088159084
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._pointsInfos.Array.data[4].IsSelected
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._pointsInfos.Array.data[5].IsSelected
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[2]._p1.z
-      value: 0.27846912
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[2]._p1.z
-      value: 6.679295
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[2]._delta.z
-      value: 0.92903566
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[2]._p2.x
-      value: -0.3927744
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[2]._p2.z
-      value: 0.3394754
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[2]._p2.z
-      value: 7.6083307
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[2]._delta.x
-      value: 0.12965971
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[2]._delta.z
-      value: 0.061006278
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[2]._deltaSquared
-      value: 0.020552836
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[2]._p1.y
-      value: -0.0044079544
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[2]._delta.y
-      value: 0.0044079544
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[3]._p2.x
-      value: -0.017794315
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[3]._delta.x
-      value: 0.24863958
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[3]._deltaSquared
-      value: 0.061827973
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[3]._p1.x
-      value: -164.59358
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[3]._p1.z
-      value: 6.969846
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[3]._p2.x
-      value: -159.65616
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[3]._p2.z
-      value: 6.3756833
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[3]._delta.x
-      value: 4.9374237
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[3]._delta.z
-      value: -0.59416246
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[3]._deltaSquared
-      value: 24.731182
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[3]._p1.x
-      value: -0.2664339
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._pointsInfos.Array.data[7].IsSelected
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[3]._p2.z
-      value: 0.31875113
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[3]._delta.z
-      value: -0.002515614
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._pointsInfos.Array.data[6].IsSelected
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[3]._p2.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[3]._p2.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[3]._delta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[3]._p1.z
-      value: 0.32126674
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[3]._delta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[4]._p2.z
-      value: 0.4428371
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[4]._delta.z
-      value: 0.12157035
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[4]._deltaSquared
-      value: 0.014791814
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[4]._p1.x
-      value: -164.59358
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[4]._p2.x
-      value: -164.25734
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[4]._p2.z
-      value: 9.378925
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[4]._delta.z
-      value: 2.4090796
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[4]._deltaSquared
-      value: 5.9167233
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._pointsInfos.Array.data[8].IsSelected
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._pointsInfos.Array.data[9].IsSelected
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[4]._p1.x
-      value: -0.2664339
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[4]._p1.z
-      value: 0.32126674
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[4]._p2.x
-      value: -0.2629035
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[4]._p1.z
-      value: 6.969846
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[4]._delta.x
-      value: 0.003530383
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[4]._delta.x
-      value: 0.33624268
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[5]._p2.z
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[5]._delta.z
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLinesLocal.Array.data[5]._deltaSquared
-      value: 0.010000001
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[5]._p1.x
-      value: -160
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[5]._p2.x
-      value: -160
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[5]._p2.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[5]._delta.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._listLines.Array.data[5]._deltaSquared
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._pointsInfos.Array.data[10].IsSelected
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._polyLinesMatrix.e02
-      value: 2.18852
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._polyLinesMatrix.e10
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._polyLinesMatrix.e20
-      value: -2.18852
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
-      propertyPath: _polyLines._polyLinesMatrix.e21
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
       propertyPath: _gravitonsInside.Array.data[0]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
-      propertyPath: SettingsLocal.AddMinRange
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
-        type: 3}
       propertyPath: SettingsLocal.MinRange
-      value: 0.9
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: SettingsLocal.MaxRange
-      value: 0.9
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _minRangeWithScale
-      value: 18
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: _maxRangeWithScale
-      value: 18
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+        type: 3}
+      propertyPath: SettingsLocal.IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1435789632903324486, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
       propertyPath: SettingsLocal.AddMaxRange
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3784656264804646246, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
+    - target: {fileID: 4726036847518728112, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7,
         type: 3}
-      propertyPath: HideHandle
-      value: 0
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b638c81e36ed9a54b9ec7d9efa1eb3b7, type: 3}

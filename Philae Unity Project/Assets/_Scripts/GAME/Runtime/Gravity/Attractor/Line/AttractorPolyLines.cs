@@ -32,7 +32,6 @@ namespace philae.gravity.attractor.line
                 canApplyGravity = false;
             }
             AddOrRemoveGravitonFromList(graviton, canApplyGravity);
-
             return (canApplyGravity);
         }
 

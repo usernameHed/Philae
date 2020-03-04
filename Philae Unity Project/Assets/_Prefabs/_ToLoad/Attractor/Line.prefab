@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3784656264804646244}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 136.156, y: 0, z: -16.749}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   SettingsGlobal: {fileID: 11400000, guid: 8a8d77476a1cbc842b42150b078f9f26, type: 2}
   SettingsLocal:
     Gravity: 9.81
-    AddMinRange: 0
+    AddMinRange: 1
     AddMaxRange: 0
     MinRange: 0
     MaxRange: 0
@@ -60,26 +60,89 @@ MonoBehaviour:
   - {fileID: 0}
   _minRangeWithScale: 0
   _maxRangeWithScale: 0
-  _gravitonsInside: []
+  _gravitonsInside:
+  - {fileID: 0}
   _polyLines:
     _listLinesLocal:
-    - _p1: {x: 0, y: 0, z: 0}
-      _p2: {x: 0, y: 0, z: 1}
-      _delta: {x: 1, y: 0, z: 1}
-      _deltaSquared: 50
-    - _p1: {x: 0, y: 0, z: 1}
-      _p2: {x: 0, y: 1, z: 1}
-      _delta: {x: 1, y: 0, z: -1}
-      _deltaSquared: 50
+    - _p1: {x: -0.5099475, y: 0, z: 0.4034163}
+      _p2: {x: -0.5224341, y: -0.0044079544, z: 0.27846912}
+      _delta: {x: -0.012486637, y: -0.0044079544, z: -0.12494719}
+      _deltaSquared: 0.015787147
+    - _p1: {x: -0.5224341, y: -0.0044079544, z: 0.27846912}
+      _p2: {x: -0.6575497, y: 0, z: 0.26711243}
+      _delta: {x: -0.13511556, y: 0.0044079544, z: -0.011356682}
+      _deltaSquared: 0.01840462
+    - _p1: {x: -0.5224341, y: -0.0044079544, z: 0.27846912}
+      _p2: {x: -0.3927744, y: 0, z: 0.3394754}
+      _delta: {x: 0.12965971, y: 0.0044079544, z: 0.061006278}
+      _deltaSquared: 0.020552836
+    - _p1: {x: -0.2664339, y: 0, z: 0.32126674}
+      _p2: {x: -0.017794315, y: 0, z: 0.31875113}
+      _delta: {x: 0.24863958, y: 0, z: -0.002515614}
+      _deltaSquared: 0.061827973
+    - _p1: {x: -0.2664339, y: 0, z: 0.32126674}
+      _p2: {x: -0.2629035, y: 0, z: 0.4428371}
+      _delta: {x: 0.003530383, y: 0, z: 0.12157035}
+      _deltaSquared: 0.014791814
     _listLines:
-    - _p1: {x: -160, y: 0, z: 0}
-      _p2: {x: -160, y: 0, z: 10}
-      _delta: {x: 0, y: 0, z: 10}
-      _deltaSquared: 100
-    - _p1: {x: -160, y: 0, z: 10}
-      _p2: {x: -160, y: 10, z: 10}
-      _delta: {x: 0, y: 10, z: 0}
-      _deltaSquared: 100
+    - _p1: {x: -169.25482, y: 0, z: 9.135905}
+      _p2: {x: -169.7765, y: -0.088159084, z: 6.679295}
+      _delta: {x: -0.52168274, y: -0.088159084, z: -2.4566102}
+      _deltaSquared: 6.3148584
+    - _p1: {x: -169.7765, y: -0.088159084, z: 6.679295}
+      _p2: {x: -172.48744, y: 0, z: 6.7492285}
+      _delta: {x: -2.7109375, y: 0.088159084, z: 0.069933414}
+      _deltaSquared: 7.361845
+    - _p1: {x: -169.7765, y: -0.088159084, z: 6.679295}
+      _p2: {x: -167.06537, y: 0, z: 7.6083307}
+      _delta: {x: 2.7111359, y: 0.088159084, z: 0.92903566}
+      _deltaSquared: 8.221137
+    - _p1: {x: -164.59358, y: 0, z: 6.969846}
+      _p2: {x: -159.65616, y: 0, z: 6.3756833}
+      _delta: {x: 4.9374237, y: 0, z: -0.59416246}
+      _deltaSquared: 24.731182
+    - _p1: {x: -164.59358, y: 0, z: 6.969846}
+      _p2: {x: -164.25734, y: 0, z: 9.378925}
+      _delta: {x: 0.33624268, y: 0, z: 2.4090796}
+      _deltaSquared: 5.9167233
+    _polyLinesMatrix:
+      e00: 19.879898
+      e01: 0
+      e02: 2.18852
+      e03: -160
+      e10: -0
+      e11: 20
+      e12: 0
+      e13: 0
+      e20: -2.18852
+      e21: -0
+      e22: 19.879898
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    _pointsInfos:
+    - IsAttached: 0
+      IsSelected: 0
+    - IsAttached: 0
+      IsSelected: 0
+    - IsAttached: 0
+      IsSelected: 0
+    - IsAttached: 0
+      IsSelected: 0
+    - IsAttached: 0
+      IsSelected: 0
+    - IsAttached: 0
+      IsSelected: 0
+    - IsAttached: 0
+      IsSelected: 0
+    - IsAttached: 0
+      IsSelected: 0
+    - IsAttached: 0
+      IsSelected: 0
+    - IsAttached: 0
+      IsSelected: 0
 --- !u!114 &3784656264804646246
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -19,19 +19,20 @@ using static hedCommon.geometry.shape3d.ExtPolyLines;
 
 namespace philae.gravity.attractor
 {
-    [CustomEditor(typeof(AttractorPolyLines), true)]
+    [CustomEditor(typeof(AttractorPolyLines))]
     public class AttractorPolyLinesEditor : AttractorEditor
     {
-        protected new AttractorPolyLines _attractor;
+        private AttractorPolyLines _attractorPolyLine;
         private TransformHiddedTools _transformHiddedTools;
 
         private Vector3 _lastPositionMoved;
-
         private SerializedProperty _extPolyLine;
         private SerializedProperty _listLinesGlobal;
         private SerializedProperty _pointInfosArray;
         private SerializedProperty _listLinesLocal;
         private SerializedProperty _polyLineMatrixPropertie;
+
+
 
         private Vector2 _initialPositionDrag;
         private Vector2 _currentDragPosition;
@@ -144,8 +145,8 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractor = (AttractorPolyLines)GetTarget<Attractor>();
-            _transformHiddedTools = _attractor.gameObject.GetComponent<TransformHiddedTools>();
+            _attractorPolyLine = (AttractorPolyLines)GetTarget<Attractor>();
+            _transformHiddedTools = _attractorPolyLine.gameObject.GetComponent<TransformHiddedTools>();
             Tools.hidden = EditorOptions.Instance.SetupLinesOfSphape;
             _transformHiddedTools.HideHandle = EditorOptions.Instance.SetupLinesOfSphape;
 
@@ -253,6 +254,7 @@ namespace philae.gravity.attractor
 
         public void MergeSelectedPoints()
         {
+            Debug.Log("a");
             this.UpdateEditor();
             for (int i = 0; i < PointsSelected.Count; i++)
             {
@@ -374,7 +376,7 @@ namespace philae.gravity.attractor
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
-            if (!EditorOptions.Instance.SetupLinesOfSphape || !_attractor.gameObject.activeInHierarchy)
+            if (!EditorOptions.Instance.SetupLinesOfSphape || !_attractorPolyLine.gameObject.activeInHierarchy)
             {
                 return;
             }

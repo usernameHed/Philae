@@ -30,6 +30,7 @@ namespace philae.gravity.attractor
             : base(showExtension, tinyEditorName)
         {
 
+
         }
 
         public AttractorEditor()
@@ -45,16 +46,6 @@ namespace philae.gravity.attractor
         {
             _attractor = GetTarget<Attractor>();
             _parent = _attractor.transform.parent;
-        }
-
-        /// <summary>
-        /// this function is called on the first OnSceneGUI()
-        /// usefull to initialize scene GUI
-        /// </summary>
-        /// <param name='sceneview'>current drawing scene view</param>
-        protected override void InitOnFirstOnSceneGUI(SceneView sceneview)
-        {
-            //initialise scene GUI
         }
 
         public override void ShowTinyEditorContent()
@@ -94,7 +85,6 @@ namespace philae.gravity.attractor
         
         private void LockAttractorTransform()
         {
-            this.UpdateEditor();
             if (_attractor.transform == _parent)
             {
                 return;
