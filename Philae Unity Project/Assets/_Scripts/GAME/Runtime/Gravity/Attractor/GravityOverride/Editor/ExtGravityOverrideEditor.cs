@@ -404,7 +404,7 @@ namespace philae.gravity.attractor.gravityOverride
             return (capsuleGravity);
         }
 
-        public static GravityOverrideLineTopDown DrawLine3d(ExtLine3d line, GravityOverrideLineTopDown capsuleGravity, Color color, out bool hasChanged)
+        public static GravityOverrideLineTopDown DrawLine3d(ExtLine3d line, GravityOverrideLineTopDown lineGravity, Color color, out bool hasChanged)
         {
             float sizeLine = line.LocalScale.magnitude / 25;
             float sizePoint = line.LocalScale.magnitude / 20;
@@ -412,13 +412,33 @@ namespace philae.gravity.attractor.gravityOverride
             hasChanged = false;
             bool changed = hasChanged;
 
-            capsuleGravity.Trunk = ExtGravityOverrideEditor.DrawLineTrunk(capsuleGravity.Trunk, line.P1, line.P2, color, sizeLine, out changed);
+            lineGravity.Trunk = ExtGravityOverrideEditor.DrawLineTrunk(lineGravity.Trunk, line.P1, line.P2, color, sizeLine, out changed);
             hasChanged = (changed) ? true : hasChanged;
-            capsuleGravity.Top = ExtGravityOverrideEditor.DrawPoint(capsuleGravity.Top, line.P1, color, sizePoint, out changed);
+            lineGravity.Top = ExtGravityOverrideEditor.DrawPoint(lineGravity.Top, line.P1, color, sizePoint, out changed);
             hasChanged = (changed) ? true : hasChanged;
-            capsuleGravity.Bottom = ExtGravityOverrideEditor.DrawPoint(capsuleGravity.Bottom, line.P2, color, sizePoint, out changed);
+            lineGravity.Bottom = ExtGravityOverrideEditor.DrawPoint(lineGravity.Bottom, line.P2, color, sizePoint, out changed);
             hasChanged = (changed) ? true : hasChanged;
-            return (capsuleGravity);
+            return (lineGravity);
+        }
+
+        public static GravityOverrideLineTopDown[] DrawPolyLines(ExtPolyLines polyLine, GravityOverrideLineTopDown[] polyLineGravity, Color color, out bool hasChanged)
+        {
+            float sizeLine = polyLine.LocalScale.magnitude / 25;
+            float sizePoint = polyLine.LocalScale.magnitude / 20;
+
+            hasChanged = false;
+            bool changed = hasChanged;
+
+            for (int i = 0; i < polyLineGravity.Length; i++)
+            {
+                polyLineGravity[i].Trunk = ExtGravityOverrideEditor.DrawLineTrunk(polyLineGravity[i].Trunk, polyLine.LineAt(i).P1, polyLine.LineAt(i).P2, color, sizeLine, out changed);
+                hasChanged = (changed) ? true : hasChanged;
+                polyLineGravity[i].Top = ExtGravityOverrideEditor.DrawPoint(polyLineGravity[i].Top, polyLine.LineAt(i).P1, color, sizePoint, out changed);
+                hasChanged = (changed) ? true : hasChanged;
+                polyLineGravity[i].Bottom = ExtGravityOverrideEditor.DrawPoint(polyLineGravity[i].Bottom, polyLine.LineAt(i).P2, color, sizePoint, out changed);
+                hasChanged = (changed) ? true : hasChanged;
+            }
+            return (polyLineGravity);
         }
 
         public static GravityOverrideConeSphereBase DrawConeSphereBase(ExtConeSphereBase cone, GravityOverrideConeSphereBase coneGravity, Color color, out bool hasChanged)
@@ -483,6 +503,20 @@ namespace philae.gravity.attractor.gravityOverride
             capsule.GetPropertie("_canApplyGravity").boolValue = datas.CanApplyGravity;
             capsule.GetPropertie(nameof(datas.Top)).boolValue = datas.Top;
             capsule.GetPropertie(nameof(datas.Bottom)).boolValue = datas.Bottom;
+        }
+
+        public static void ApplyModificationOfExtPolyLine(SerializedProperty polyLineGravityArray, GravityOverrideLineTopDown[] datas)
+        {
+            for (int i = 0; i < polyLineGravityArray.arraySize; i++)
+            {
+                SerializedProperty polyLineGravity = polyLineGravityArray.GetArrayElementAtIndex(i);
+                GravityOverrideLineTopDown gravityData = datas[i];
+
+                polyLineGravity.GetPropertie(nameof(gravityData.Trunk)).boolValue = gravityData.Trunk;
+                polyLineGravity.GetPropertie("_canApplyGravity").boolValue = gravityData.CanApplyGravity;
+                polyLineGravity.GetPropertie(nameof(gravityData.Top)).boolValue = gravityData.Top;
+                polyLineGravity.GetPropertie(nameof(gravityData.Bottom)).boolValue = gravityData.Bottom;
+            }
         }
 
         public static void ApplyModificationToConeSphereBase(SerializedProperty cone, GravityOverrideConeSphereBase datas)

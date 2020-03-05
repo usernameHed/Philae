@@ -13,7 +13,7 @@ namespace philae.gravity.attractor.line
 {
     public class AttractorPolyLinesOverride : AttractorPolyLines
     {
-        public List<GravityOverrideLineTopDown> GravityOverride = new List<GravityOverrideLineTopDown>(3);
+        public GravityOverrideLineTopDown[] GravityOverride;
 
         public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {

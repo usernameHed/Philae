@@ -20,6 +20,7 @@ namespace hedCommon.geometry.shape3d
         public Quaternion Rotation { get { return (_rotation); } }
         [SerializeField]
         private Vector3 _localScale;
+        public Vector3 LocalScale { get { return (_localScale); } }
 
         [SerializeField]
         private ExtLine[] _listLinesLocal;
@@ -49,6 +50,11 @@ namespace hedCommon.geometry.shape3d
             _listLinesLocal[2] = new ExtLine(new Vector3(0, 0, 0), new Vector3(0, 0, 0.3f));
 
             UpdateMatrix();
+        }
+
+        public ExtLine LineAt(int index)
+        {
+            return (_listLines[index]);
         }
 
         private void UpdateMatrix()

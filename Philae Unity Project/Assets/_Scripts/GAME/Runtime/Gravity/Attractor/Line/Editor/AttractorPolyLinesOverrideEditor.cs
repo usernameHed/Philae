@@ -40,6 +40,7 @@ namespace philae.gravity.attractor
         {
             base.OnCustomEnable();
             _attractorPolyLineOverride = (AttractorPolyLinesOverride)GetTarget<Attractor>();
+            DeleteLineByIndex = DeleteGravityOverrideLineAtIndex;
         }
 
         public override void ShowTinyEditorContent()
@@ -56,20 +57,32 @@ namespace philae.gravity.attractor
             {
                 return;
             }
-            Debug.Log("yay !");
             this.UpdateEditor();
 
             ExtPolyLines polyLine = this.GetPropertie("_polyLines").GetValue<ExtPolyLines>();
-            /*
-            GravityOverrideLineTopDown gravityLine = ExtGravityOverrideEditor.DrawLine3d(line, _attractorPolyLineOverride.GravityOverride, Color.red, out bool hasChanged);
+            int countLines = this.GetPropertie("_polyLines").GetPropertie("_listLines").arraySize;
+            if (countLines != this.GetPropertie("GravityOverride").arraySize)
+            {
+                this.GetPropertie("GravityOverride").arraySize = countLines;
+                this.ApplyModification();
+            }
+
+            GravityOverrideLineTopDown[] gravityLine = ExtGravityOverrideEditor.DrawPolyLines(polyLine, _attractorPolyLineOverride.GravityOverride, Color.red, out bool hasChanged);
 
             if (hasChanged)
             {
-                gravityLine.SetupGravity();
-                ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(this.GetPropertie("GravityOverride"), gravityLine);
+                for (int i = 0; i < gravityLine.Length; i++)
+                {
+                    gravityLine[i].SetupGravity();
+                }
+                ExtGravityOverrideEditor.ApplyModificationOfExtPolyLine(this.GetPropertie("GravityOverride"), gravityLine);
                 this.ApplyModification();
             }
-            */
+        }
+
+        private void DeleteGravityOverrideLineAtIndex(int index)
+        {
+            this.GetPropertie("GravityOverride").DeleteArrayElementAtIndex(index);
         }
     }
 }

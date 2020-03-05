@@ -47,6 +47,9 @@ namespace philae.gravity.attractor
         public List<PointInLines> Points = new List<PointInLines>(50);
         public List<PointInLines> PointsSelected = new List<PointInLines>(50);
 
+        public delegate void DeleteLineAtIndex(int index);
+        public DeleteLineAtIndex DeleteLineByIndex;
+
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
         /// by telling it who we are (a Transform Inspector)
@@ -256,7 +259,12 @@ namespace philae.gravity.attractor
                 {
                     continue;
                 }
-                DeleteLine(PointsSelected[i].IndexLine - deletedLines.Count);
+                int indexInArray = PointsSelected[i].IndexLine - deletedLines.Count;
+                DeleteLine(indexInArray);
+                if (DeleteLineByIndex != null)
+                {
+                    DeleteLineByIndex.Invoke(indexInArray);
+                }
                 deletedLines.Add(PointsSelected[i].IndexLine);
             }
 
