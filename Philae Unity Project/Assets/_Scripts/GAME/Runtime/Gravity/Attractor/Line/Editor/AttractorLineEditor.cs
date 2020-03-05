@@ -19,18 +19,18 @@ using static hedCommon.geometry.shape3d.ExtPolyLines;
 
 namespace philae.gravity.attractor
 {
-    [CustomEditor(typeof(AttractorPolyLines))]
-    public class AttractorPolyLinesEditor : AttractorEditor
+    [CustomEditor(typeof(AttractorLine))]
+    public class AttractorLineEditor : AttractorEditor
     {
-        private AttractorPolyLines _attractorPolyLine;
+        private AttractorLine _attractorLine;
         private TransformHiddedTools _transformHiddedTools;
 
         private Vector3 _lastPositionMoved;
-        private SerializedProperty _extPolyLine;
-        private SerializedProperty _listLinesGlobal;
+        private SerializedProperty _extLine3d;
+        private SerializedProperty _lineGlobal;
+        private SerializedProperty _lineLocale;
         private SerializedProperty _pointInfosArray;
-        private SerializedProperty _listLinesLocal;
-        private SerializedProperty _polyLineMatrixPropertie;
+        private SerializedProperty _lineMatrixPropertie;
 
 
 
@@ -47,6 +47,8 @@ namespace philae.gravity.attractor
         public List<PointInLines> Points = new List<PointInLines>(50);
         public List<PointInLines> PointsSelected = new List<PointInLines>(50);
 
+
+
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
         /// by telling it who we are (a Transform Inspector)
@@ -54,7 +56,7 @@ namespace philae.gravity.attractor
         ///   witch doesn't have a Unity Editor, you can call base() without parametter:
         ///   : base()
         /// </summary>
-        public AttractorPolyLinesEditor()
+        public AttractorLineEditor()
             : base(false, "Line")
         {
 
@@ -66,8 +68,8 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractorPolyLine = (AttractorPolyLines)GetTarget<Attractor>();
-            _transformHiddedTools = _attractorPolyLine.gameObject.GetComponent<TransformHiddedTools>();
+            _attractorLine = (AttractorLine)GetTarget<Attractor>();
+            _transformHiddedTools = _attractorLine.gameObject.GetComponent<TransformHiddedTools>();
             Tools.hidden = EditorOptions.Instance.SetupLinesOfSphape;
             _transformHiddedTools.HideHandle = EditorOptions.Instance.SetupLinesOfSphape;
 
@@ -84,7 +86,8 @@ namespace philae.gravity.attractor
             this.UpdateEditor();
             SetupAllSerializeObject();
 
-            int countLines = _listLinesGlobal.arraySize * 2;
+            //only one line here, with 2 points
+            int countLines = 1 * 2;
             if (_pointInfosArray.arraySize != countLines)
             {
                 _pointInfosArray.arraySize = countLines;
@@ -132,7 +135,7 @@ namespace philae.gravity.attractor
                 if (EditorGUI.EndChangeCheck())
                 {
                     Tools.hidden = EditorOptions.Instance.SetupLinesOfSphape;
-                    _lastPositionMoved = _attractorPolyLine.Position;
+                    _lastPositionMoved = _attractorLine.Position;
                     _transformHiddedTools.HideHandle = EditorOptions.Instance.SetupLinesOfSphape;
                 }
             }
@@ -140,10 +143,6 @@ namespace philae.gravity.attractor
 
         private void ButtonsSetupsLinesTools()
         {
-            if (GUILayout.Button("Add Line"))
-            {
-                AddLine();
-            }
             if (_isMovingMultiplePoints && PointsSelected.Count >= 2)
             {
                 ShowMergeSelectedPointsButton();
@@ -215,91 +214,32 @@ namespace philae.gravity.attractor
             }
         }
 
-        public void AddLine()
-        {
-            this.UpdateEditor();
-            SetupAllSerializeObject();
-
-            Vector3 p1 = new Vector3(0, 0, 0);
-            Vector3 p2 = new Vector3(0, 0, 0.3f);
-            AddLineLocal(p1, p2);
-
-            this.ApplyModification();
-
-            ConstructPoints();
-            SetupPointInLines();
-            UnSelectPoints();
-        }
-
-        public void AddLineLocal(Vector3 p1, Vector3 p2)
-        {
-            _listLinesLocal.arraySize = _listLinesLocal.arraySize + 1;
-            _listLinesGlobal.arraySize = _listLinesGlobal.arraySize + 1;
-            SerializedProperty lastLineLocal = _listLinesLocal.GetArrayElementAtIndex(_listLinesLocal.arraySize - 1);
-            ExtShapeSerializeProperty.MoveLineFromSerializeProperties(lastLineLocal, p1, p2);
-
-            SerializedProperty lastLineGlobal = _listLinesGlobal.GetArrayElementAtIndex(_listLinesGlobal.arraySize - 1);
-            ExtShapeSerializeProperty.MoveLineFromSerializeProperties(lastLineGlobal, _polyLineMatrix.MultiplyPoint3x4(p1), _polyLineMatrix.MultiplyPoint3x4(p2));
-        }
-
-        private void DeleteSelectedPoints()
-        {
-            this.UpdateEditor();
-            SetupAllSerializeObject();
-
-            List<int> deletedLines = new List<int>(_listLinesLocal.arraySize);
-            deletedLines.Clear();
-            for (int i = 0; i < PointsSelected.Count; i++)
-            {
-                //don't delete a line already deleted
-                if (deletedLines.Contains(PointsSelected[i].IndexLine))
-                {
-                    continue;
-                }
-                DeleteLine(PointsSelected[i].IndexLine - deletedLines.Count);
-                deletedLines.Add(PointsSelected[i].IndexLine);
-            }
-
-            this.ApplyModification();
-
-            ConstructPoints();
-            SetupPointInLines();
-            UnSelectPoints();
-        }
-
-        private void DeleteLine(int indexLine)
-        {
-            _listLinesLocal.DeleteArrayElementAtIndex(indexLine);
-            _listLinesGlobal.DeleteArrayElementAtIndex(indexLine);
-        }
-
-
         /// <summary>
         /// setup serialized properties
         /// </summary>
         private void SetupAllSerializeObject()
         {
-            _extPolyLine = this.GetPropertie("_polyLines");
-            _listLinesGlobal = _extPolyLine.GetPropertie("_listLines");
-            _listLinesLocal = _extPolyLine.GetPropertie("_listLinesLocal");
-            _polyLineMatrixPropertie = _extPolyLine.GetPropertie("_polyLinesMatrix");
-            _pointInfosArray = _extPolyLine.GetPropertie("_pointsInfos");
+            _extLine3d = this.GetPropertie("_line");
+            _lineGlobal = _extLine3d.GetPropertie("_line");
+            _lineLocale = _extLine3d.GetPropertie("_lineLocalPosition");
+            _lineMatrixPropertie = _extLine3d.GetPropertie("_linesMatrix");
+            _pointInfosArray = _extLine3d.GetPropertie("_pointsInfos");
 
             //if a change occured in lnie array, update this array size
-            int countLines = _listLinesGlobal.arraySize * 2;
+            int countLines = 1 * 2;
             if (_pointInfosArray.arraySize != countLines)
             {
                 _pointInfosArray.arraySize = countLines;
             }
 
-            _polyLineMatrix = _polyLineMatrixPropertie.GetValue<Matrix4x4>();
+            _polyLineMatrix = _lineMatrixPropertie.GetValue<Matrix4x4>();
             _polyLineMatrixInverse = _polyLineMatrix.inverse;
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
             base.CustomOnSceneGUI(sceneview);
-            if (!EditorOptions.Instance.SetupLinesOfSphape || !_attractorPolyLine.gameObject.activeInHierarchy)
+            if (!EditorOptions.Instance.SetupLinesOfSphape || !_attractorLine.gameObject.activeInHierarchy)
             {
                 return;
             }
@@ -309,10 +249,6 @@ namespace philae.gravity.attractor
 
             _isMovingMultiplePoints = PointsSelected.Count > 1;
             _currentHandlePosition = GetMiddleOfAllSelectedPoints();
-            /*if (_currentHandlePosition != Vector3.zero)
-            {
-                _lastPositionMoved = _currentHandlePosition;
-            }*/
 
             HandlePoints(_currentHandlePosition);
 
@@ -391,16 +327,6 @@ namespace philae.gravity.attractor
                 if (ExtRect.Is3dPointInside2dRectInScreenSpace(ExtSceneView.Camera(), rect, Points[i].GetGlobalPointPosition()))
                 {
                     Points[i].SetSelected(true);
-                    /*
-                    if (Points[i].PointInfo.IsSelected)
-                    {
-                        Points[i].SetSelected(false);
-                    }
-                    else
-                    {
-                        Points[i].SetSelected(true);
-                    }
-                    */
                     SetPointsInfoOfLine(Points[i], false);
                     hasChanged = true;
                 }
@@ -445,7 +371,6 @@ namespace philae.gravity.attractor
 
             if (EditorOptions.Instance.SetupLinesOfSphape && ExtEventEditor.IsKeyDown(KeyCode.Delete))
             {
-                DeleteSelectedPoints();
                 ExtEventEditor.Use();
             }
         }
@@ -470,26 +395,22 @@ namespace philae.gravity.attractor
         {
             Points.Clear();
             PointsSelected.Clear();
-            int countLines = _listLinesGlobal.arraySize;
 
-            for (int i = 0; i < countLines; i++)
+            //SerializedProperty extLineFromGlobal = _line.GetArrayElementAtIndex(i);
+            //SerializedProperty extLineFromLocal = _lineLocal.GetArrayElementAtIndex(i);
+            PointsInfo pointInfo1 = GetPointInfoOfPointLine(0, 0);
+            PointsInfo pointInfo2 = GetPointInfoOfPointLine(0, 1);
+
+            Points.Add(new PointInLines(0, 0, pointInfo1, _lineGlobal, _lineLocale));
+            Points.Add(new PointInLines(0, 1, pointInfo2, _lineGlobal, _lineLocale));
+
+            if (pointInfo1.IsSelected)
             {
-                SerializedProperty extLineFromGlobal = _listLinesGlobal.GetArrayElementAtIndex(i);
-                SerializedProperty extLineFromLocal = _listLinesLocal.GetArrayElementAtIndex(i);
-                PointsInfo pointInfo1 = GetPointInfoOfPointLine(i, 0);
-                PointsInfo pointInfo2 = GetPointInfoOfPointLine(i, 1);
-
-                Points.Add(new PointInLines(i, 0, pointInfo1, extLineFromGlobal, extLineFromLocal));
-                Points.Add(new PointInLines(i, 1, pointInfo2, extLineFromGlobal, extLineFromLocal));
-
-                if (pointInfo1.IsSelected)
-                {
-                    PointsSelected.Add(new PointInLines(i, 0, pointInfo1, extLineFromGlobal, extLineFromLocal));
-                }
-                if (pointInfo2.IsSelected)
-                {
-                    PointsSelected.Add(new PointInLines(i, 1, pointInfo2, extLineFromGlobal, extLineFromLocal));
-                }
+                PointsSelected.Add(new PointInLines(0, 0, pointInfo1, _lineGlobal, _lineLocale));
+            }
+            if (pointInfo2.IsSelected)
+            {
+                PointsSelected.Add(new PointInLines(0, 1, pointInfo2, _lineGlobal, _lineLocale));
             }
         }
 
@@ -596,12 +517,6 @@ namespace philae.gravity.attractor
             }
 
             this.ApplyModification();
-        }
-
-        private bool MovePointBasedOnMatrixOffset()
-        {
-
-            return (false);
         }
 
         private void MovePoints(Matrix4x4 inverse, PointInLines point)

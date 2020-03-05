@@ -41,7 +41,13 @@ namespace hedCommon.geometry.shape2d
         [SerializeField]
         private ExtLine _line;
         [SerializeField]
-        private Matrix4x4 _polyLinesMatrix;
+        private Matrix4x4 _linesMatrix;
+
+#if UNITY_EDITOR
+        
+        [SerializeField]
+        private List<PointsInfo> _pointsInfos;
+#endif
 
         public ExtLine3d(Vector3 position, Quaternion rotation, Vector3 localScale) : this()
         {
@@ -55,15 +61,15 @@ namespace hedCommon.geometry.shape2d
 
         private void UpdateMatrix()
         {
-            _polyLinesMatrix = Matrix4x4.TRS(_position, _rotation, _localScale);
+            _linesMatrix = Matrix4x4.TRS(_position, _rotation, _localScale);
             UpdateGlobalLineFromLocalOnes();
         }
 
         private void UpdateGlobalLineFromLocalOnes()
         {
             _line.MoveShape(
-                _polyLinesMatrix.MultiplyPoint3x4(_lineLocalPosition.P1),
-                _polyLinesMatrix.MultiplyPoint3x4(_lineLocalPosition.P2));
+                _linesMatrix.MultiplyPoint3x4(_lineLocalPosition.P1),
+                _linesMatrix.MultiplyPoint3x4(_lineLocalPosition.P2));
         }
 
         public void MoveSphape(Vector3 position, Quaternion rotation, Vector3 localScale)

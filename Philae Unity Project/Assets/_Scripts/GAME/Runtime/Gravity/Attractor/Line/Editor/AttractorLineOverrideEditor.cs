@@ -16,9 +16,9 @@ using UnityEngine.Rendering;
 namespace philae.gravity.attractor
 {
     [CustomEditor(typeof(AttractorLineOverride), true)]
-    public class AttractorLineOverrideEditor : AttractorEditor
+    public class AttractorLineOverrideEditor : AttractorLineEditor
     {
-        protected new AttractorLineOverride _attractor;
+        protected AttractorLineOverride _attractorLineOverride;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -28,7 +28,7 @@ namespace philae.gravity.attractor
         ///   : base()
         /// </summary>
         public AttractorLineOverrideEditor()
-            : base(false, "Line")
+            : base()
         {
 
         }
@@ -39,7 +39,7 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractor = (AttractorLineOverride)GetTarget<Attractor>();
+            _attractorLineOverride = (AttractorLineOverride)GetTarget<Attractor>();
         }
 
         public override void ShowTinyEditorContent()
@@ -50,7 +50,9 @@ namespace philae.gravity.attractor
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
-            if (!EditorOptions.Instance.ShowGravityOverride || !_attractor.gameObject.activeInHierarchy)
+            base.CustomOnSceneGUI(sceneview);
+
+            if (!EditorOptions.Instance.ShowGravityOverride || !_attractorLineOverride.gameObject.activeInHierarchy)
             {
                 return;
             }
@@ -58,7 +60,7 @@ namespace philae.gravity.attractor
             this.UpdateEditor();
 
             ExtLine3d line = this.GetPropertie("_line").GetValue<ExtLine3d>();
-            GravityOverrideLineTopDown gravityLine = ExtGravityOverrideEditor.DrawLine3d(line, _attractor.GravityOverride, Color.red, out bool hasChanged);
+            GravityOverrideLineTopDown gravityLine = ExtGravityOverrideEditor.DrawLine3d(line, _attractorLineOverride.GravityOverride, Color.red, out bool hasChanged);
 
             if (hasChanged)
             {
@@ -66,7 +68,6 @@ namespace philae.gravity.attractor
                 ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(this.GetPropertie("GravityOverride"), gravityLine);
                 this.ApplyModification();
             }
-
         }
     }
 }

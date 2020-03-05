@@ -30,12 +30,6 @@ namespace hedCommon.geometry.shape3d
         private Matrix4x4 _polyLinesMatrix;
 
 #if UNITY_EDITOR
-        [Serializable]
-        public class PointsInfo
-        {
-            public bool IsAttached;
-            public bool IsSelected;
-        }
         [SerializeField]
         private List<PointsInfo> _pointsInfos;
 #endif
