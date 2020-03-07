@@ -58,6 +58,9 @@ I have created a line editor to have custom gravity setup for some level. This e
 <img src="Philae Unity Project/Misc/Pics/Line Editor.gif" width="500">
 <img src="Philae Unity Project/Misc/Pics/Line Editor With Gravity.gif" width="500">
 <br>
+And now the same for muliple lines:
+<br>
+<img src="Philae Unity Project/Misc/Pics/Poly Line Editor.gif" width="500">
 <br>
 <br>
 
