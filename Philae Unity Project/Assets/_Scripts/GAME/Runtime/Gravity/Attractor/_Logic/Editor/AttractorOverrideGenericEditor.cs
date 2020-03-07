@@ -15,6 +15,11 @@ public class AttractorOverrideGenericEditor
         EditorOptions.Instance.ShowGravityOverride = GUILayout.Toggle(EditorOptions.Instance.ShowGravityOverride, "Setup Gravity", EditorStyles.miniButton);
     }
 
+    public bool CanSetupGravity()
+    {
+        return (EditorOptions.Instance.ShowGravityOverride);
+    }
+
     /// <summary>
     /// need to be called at the end of the editor, lock the editor from deselecting the gameObject from the sceneView
     /// </summary>

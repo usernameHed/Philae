@@ -18,7 +18,10 @@ namespace philae.gravity.attractor
     [CustomEditor(typeof(AttractorCapsuleOverride), true)]
     public class AttractorCapsuleOverrideEditor : AttractorEditor
     {
-        protected new AttractorCapsuleOverride _attractor;
+        private const string PROPERTY_CAPSULE = "_capsule";
+        protected AttractorCapsuleOverride _attractorCapsuleOverride;
+        private AttractorOverrideGenericEditor _attractorOverrideGeneric = new AttractorOverrideGenericEditor();
+
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -39,34 +42,36 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractor = (AttractorCapsuleOverride)GetTarget<Attractor>();
+            _attractorCapsuleOverride = (AttractorCapsuleOverride)GetTarget<Attractor>();
         }
 
         public override void ShowTinyEditorContent()
         {
             base.ShowTinyEditorContent();
-            EditorOptions.Instance.ShowGravityOverride = GUILayout.Toggle(EditorOptions.Instance.ShowGravityOverride, "Setup Gravity", EditorStyles.miniButton);
+            _attractorOverrideGeneric.ShowTinyEditorContent();
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
-            if (!EditorOptions.Instance.ShowGravityOverride || !_attractor.gameObject.activeInHierarchy)
+            base.CustomOnSceneGUI(sceneview);
+
+            if (!_attractorOverrideGeneric.CanSetupGravity() || !_attractorCapsuleOverride.gameObject.activeInHierarchy)
             {
                 return;
             }
 
             this.UpdateEditor();
 
-            ExtCapsule capsule = this.GetPropertie("_capsule").GetValue<ExtCapsule>();
-            GravityOverrideLineTopDown gravityCapsule = ExtGravityOverrideEditor.DrawCapsule(capsule, _attractor.GravityOverride, Color.red, out bool hasChanged);
+            ExtCapsule capsule = this.GetPropertie(PROPERTY_CAPSULE).GetValue<ExtCapsule>();
+            GravityOverrideLineTopDown gravityCapsule = ExtGravityOverrideEditor.DrawCapsule(capsule, _attractorCapsuleOverride.GravityOverride, Color.red, out bool hasChanged);
 
             if (hasChanged)
             {
                 gravityCapsule.SetupGravity();
-                ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(this.GetPropertie("GravityOverride"), gravityCapsule);
+                ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(this.GetPropertie(AttractorOverrideGenericEditor.PROPERTY_GRAVITY_OVERRIDE), gravityCapsule);
                 this.ApplyModification();
             }
-
+            _attractorOverrideGeneric.LockEditor();
         }
     }
 }

@@ -16,7 +16,10 @@ namespace philae.gravity.attractor
     [CustomEditor(typeof(AttractorCubeOverride), true)]
     public class AttractorCubeOverrideEditor : AttractorEditor
     {
-        protected new AttractorCubeOverride _attractor;
+        private const string PROPERTY_CUBE = "_cube";
+        private AttractorCubeOverride _attractorCube;
+        private AttractorOverrideGenericEditor _attractorOverrideGeneric = new AttractorOverrideGenericEditor();
+
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -37,42 +40,35 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractor = (AttractorCubeOverride)GetTarget<Attractor>(); 
-        }
-
-        /// <summary>
-        /// this function is called on the first OnSceneGUI()
-        /// usefull to initialize scene GUI
-        /// </summary>
-        /// <param name='sceneview'>current drawing scene view</param>
-        protected override void InitOnFirstOnSceneGUI(SceneView sceneview)
-        {
-            //initialise scene GUI
+            _attractorCube = (AttractorCubeOverride)GetTarget<Attractor>(); 
         }
 
         public override void ShowTinyEditorContent()
         {
             base.ShowTinyEditorContent();
-            EditorOptions.Instance.ShowGravityOverride = GUILayout.Toggle(EditorOptions.Instance.ShowGravityOverride, "Setup Gravity", EditorStyles.miniButton);
-
+            _attractorOverrideGeneric.ShowTinyEditorContent();
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
-            if (!EditorOptions.Instance.ShowGravityOverride || !_attractor.gameObject.activeInHierarchy)
+            base.CustomOnSceneGUI(sceneview);
+
+            if (!_attractorOverrideGeneric.CanSetupGravity() || !_attractorCube.gameObject.activeInHierarchy)
             {
                 return;
             }
             this.UpdateEditor();
-            ExtCube cube = this.GetPropertie("_cube").GetValue<ExtCube>();
-            GravityOverrideCube gravityCube = ExtGravityOverrideEditor.DrawCube(cube, _attractor.GravityOverride, Color.red, out bool hasChanged);
+            ExtCube cube = this.GetPropertie(PROPERTY_CUBE).GetValue<ExtCube>();
+            GravityOverrideCube gravityCube = ExtGravityOverrideEditor.DrawCube(cube, _attractorCube.GravityOverride, Color.red, out bool hasChanged);
             if (hasChanged)
             {
                 gravityCube.SetupGravity();
-                ExtGravityOverrideEditor.ApplyModificationToCube(this.GetPropertie("GravityOverride"), gravityCube);
+                ExtGravityOverrideEditor.ApplyModificationToCube(this.GetPropertie(AttractorOverrideGenericEditor.PROPERTY_GRAVITY_OVERRIDE), gravityCube);
                 this.ApplyModification();
 
             }
+
+            _attractorOverrideGeneric.LockEditor();
         }
     }
 }

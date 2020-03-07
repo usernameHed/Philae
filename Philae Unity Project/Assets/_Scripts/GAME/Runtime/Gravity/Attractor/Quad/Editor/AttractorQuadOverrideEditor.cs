@@ -16,7 +16,9 @@ namespace philae.gravity.attractor
     [CustomEditor(typeof(AttractorQuadOverride), true)]
     public class AttractorQuadOverrideEditor : AttractorQuadEditor
     {
-        protected new AttractorQuadOverride _attractor;
+        private const string PROPERTY_QUAD = "_quad";
+        private AttractorQuadOverride _attractorQuadOverride;
+        private AttractorOverrideGenericEditor _attractorOverrideGeneric = new AttractorOverrideGenericEditor();
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -37,43 +39,35 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractor = (AttractorQuadOverride)GetTarget<Attractor>(); 
-        }
-
-        /// <summary>
-        /// this function is called on the first OnSceneGUI()
-        /// usefull to initialize scene GUI
-        /// </summary>
-        /// <param name='sceneview'>current drawing scene view</param>
-        protected override void InitOnFirstOnSceneGUI(SceneView sceneview)
-        {
-            //initialise scene GUI
+            _attractorQuadOverride = (AttractorQuadOverride)GetTarget<Attractor>(); 
         }
 
         public override void ShowTinyEditorContent()
         {
             base.ShowTinyEditorContent();
-            EditorOptions.Instance.ShowGravityOverride = GUILayout.Toggle(EditorOptions.Instance.ShowGravityOverride, "Setup Gravity", EditorStyles.miniButton);
-
+            _attractorOverrideGeneric.ShowTinyEditorContent();
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
-            if (!EditorOptions.Instance.ShowGravityOverride || !_attractor.gameObject.activeInHierarchy)
+            base.CustomOnSceneGUI(sceneview);
+
+            if (!_attractorOverrideGeneric.CanSetupGravity() || !_attractorQuadOverride.gameObject.activeInHierarchy)
             {
                 return;
             }
             this.UpdateEditor();
 
-            ExtQuad quad = this.GetPropertie("_quad").GetValue<ExtQuad>();
+            ExtQuad quad = this.GetPropertie(PROPERTY_QUAD).GetValue<ExtQuad>();
 
-            GravityOverrideQuad gravityQuad = ExtGravityOverrideEditor.DrawQuadWithBorders(quad, _attractor.GravityOverride, Color.red, out bool hasChanged);
+            GravityOverrideQuad gravityQuad = ExtGravityOverrideEditor.DrawQuadWithBorders(quad, _attractorQuadOverride.GravityOverride, Color.red, out bool hasChanged);
             if (hasChanged)
             {
                 gravityQuad.SetupGravity();
-                ExtGravityOverrideEditor.ApplyModificationToQuad(this.GetPropertie("GravityOverride"), gravityQuad);
+                ExtGravityOverrideEditor.ApplyModificationToQuad(this.GetPropertie(AttractorOverrideGenericEditor.PROPERTY_GRAVITY_OVERRIDE), gravityQuad);
                 this.ApplyModification();
             }
+            _attractorOverrideGeneric.LockEditor();
         }
     }
 }

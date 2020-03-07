@@ -18,7 +18,9 @@ namespace philae.gravity.attractor
     [CustomEditor(typeof(AttractorCapsuleHalfOverride), true)]
     public class AttractorCapsuleHalfOverrideEditor : AttractorEditor
     {
-        protected new AttractorCapsuleHalfOverride _attractor;
+        private const string PROPERTY_CAPSULE_HALF = "_capsuleHalf";
+        protected AttractorCapsuleHalfOverride _attractorCapsuleHalfOverride;
+        private AttractorOverrideGenericEditor _attractorOverrideGeneric = new AttractorOverrideGenericEditor();
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -39,34 +41,36 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractor = (AttractorCapsuleHalfOverride)GetTarget<Attractor>();
+            _attractorCapsuleHalfOverride = (AttractorCapsuleHalfOverride)GetTarget<Attractor>();
         }
 
         public override void ShowTinyEditorContent()
         {
             base.ShowTinyEditorContent();
-            EditorOptions.Instance.ShowGravityOverride = GUILayout.Toggle(EditorOptions.Instance.ShowGravityOverride, "Setup Gravity", EditorStyles.miniButton);
+            _attractorOverrideGeneric.ShowTinyEditorContent();
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
-            if (!EditorOptions.Instance.ShowGravityOverride || !_attractor.gameObject.activeInHierarchy)
+            base.CustomOnSceneGUI(sceneview);
+
+            if (!_attractorOverrideGeneric.CanSetupGravity() || !_attractorCapsuleHalfOverride.gameObject.activeInHierarchy)
             {
                 return;
             }
 
             this.UpdateEditor();
 
-            ExtHalfCapsule capsuleHalf = this.GetPropertie("_capsuleHalf").GetValue<ExtHalfCapsule>();
-            GravityOverrideLineTopDown gravityCapsule = ExtGravityOverrideEditor.DrawCapsuleHalf(capsuleHalf, _attractor.GravityOverride, Color.red, out bool hasChanged);
+            ExtHalfCapsule capsuleHalf = this.GetPropertie(PROPERTY_CAPSULE_HALF).GetValue<ExtHalfCapsule>();
+            GravityOverrideLineTopDown gravityCapsule = ExtGravityOverrideEditor.DrawCapsuleHalf(capsuleHalf, _attractorCapsuleHalfOverride.GravityOverride, Color.red, out bool hasChanged);
 
             if (hasChanged)
             {
                 gravityCapsule.SetupGravity();
-                ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(this.GetPropertie("GravityOverride"), gravityCapsule);
+                ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(this.GetPropertie(AttractorOverrideGenericEditor.PROPERTY_GRAVITY_OVERRIDE), gravityCapsule);
                 this.ApplyModification();
             }
-
+            _attractorOverrideGeneric.LockEditor();
         }
     }
 }

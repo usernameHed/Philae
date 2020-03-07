@@ -16,7 +16,11 @@ namespace philae.gravity.attractor
     [CustomEditor(typeof(AttractorDiscOverride), true)]
     public class AttractorDiscOverrideEditor : AttractorDiscEditor
     {
-        protected new AttractorDiscOverride _attractor;
+        private const string PROPERTY_DISC = "_disc";
+        private const string PROPERTY_CIRCLE = "_circle";
+        private  AttractorDiscOverride _attractorDiscOverride;
+        private AttractorOverrideGenericEditor _attractorOverrideGeneric = new AttractorOverrideGenericEditor();
+
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -37,41 +41,34 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractor = (AttractorDiscOverride)GetTarget<Attractor>(); 
-        }
-
-        /// <summary>
-        /// this function is called on the first OnSceneGUI()
-        /// usefull to initialize scene GUI
-        /// </summary>
-        /// <param name='sceneview'>current drawing scene view</param>
-        protected override void InitOnFirstOnSceneGUI(SceneView sceneview)
-        {
-            //initialise scene GUI
+            _attractorDiscOverride = (AttractorDiscOverride)GetTarget<Attractor>(); 
         }
 
         public override void ShowTinyEditorContent()
         {
             base.ShowTinyEditorContent();
-            EditorOptions.Instance.ShowGravityOverride = GUILayout.Toggle(EditorOptions.Instance.ShowGravityOverride, "Setup Gravity", EditorStyles.miniButton);
+            _attractorOverrideGeneric.ShowTinyEditorContent();
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
-            if (!EditorOptions.Instance.ShowGravityOverride || !_attractor.gameObject.activeInHierarchy)
+            base.CustomOnSceneGUI(sceneview);
+
+            if (!_attractorOverrideGeneric.CanSetupGravity() || !_attractorDiscOverride.gameObject.activeInHierarchy)
             {
                 return;
             }
             this.UpdateEditor();
-            ExtCircle circle = this.GetPropertie("_disc").GetPropertie("_circle").GetValue<ExtCircle>();
+            ExtCircle circle = this.GetPropertie(PROPERTY_DISC).GetPropertie(PROPERTY_CIRCLE).GetValue<ExtCircle>();
 
-            GravityOverrideDisc gravityDisc = ExtGravityOverrideEditor.DrawDisc(circle, _attractor.GravityOverride, new Color(1, 0, 0, 0.5f), allowBottom: circle.AllowBottom, out bool hasChanged);
+            GravityOverrideDisc gravityDisc = ExtGravityOverrideEditor.DrawDisc(circle, _attractorDiscOverride.GravityOverride, new Color(1, 0, 0, 0.5f), allowBottom: circle.AllowBottom, out bool hasChanged);
             if (hasChanged)
             {
                 gravityDisc.SetupGravity();
-                ExtGravityOverrideEditor.ApplyModificationToDisc(this.GetPropertie("GravityOverride"), gravityDisc);
+                ExtGravityOverrideEditor.ApplyModificationToDisc(this.GetPropertie(AttractorOverrideGenericEditor.PROPERTY_GRAVITY_OVERRIDE), gravityDisc);
                 this.ApplyModification();
             }
+            _attractorOverrideGeneric.LockEditor();
         }
     }
 }

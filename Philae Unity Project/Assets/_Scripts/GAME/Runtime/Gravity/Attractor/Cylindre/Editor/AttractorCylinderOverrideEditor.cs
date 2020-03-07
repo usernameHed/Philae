@@ -18,7 +18,11 @@ namespace philae.gravity.attractor
     [CustomEditor(typeof(AttractorCylinderOverride), true)]
     public class AttractorCylinderOverrideEditor : AttractorEditor
     {
-        protected new AttractorCylinderOverride _attractor;
+        private const string PROPERTY_CYLINDER = "_cylinder";
+        private const string PROPERTY_CIRCLE_1 = "_circle1";
+        private const string PROPERTY_CIRCLE_2 = "_circle2";
+        private AttractorCylinderOverride _attractorCylinder;
+        private AttractorOverrideGenericEditor _attractorOverrideGeneric = new AttractorOverrideGenericEditor();
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -39,48 +43,40 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractor = (AttractorCylinderOverride)GetTarget<Attractor>(); 
-        }
-
-        /// <summary>
-        /// this function is called on the first OnSceneGUI()
-        /// usefull to initialize scene GUI
-        /// </summary>
-        /// <param name='sceneview'>current drawing scene view</param>
-        protected override void InitOnFirstOnSceneGUI(SceneView sceneview)
-        {
-            //initialise scene GUI
+            _attractorCylinder = (AttractorCylinderOverride)GetTarget<Attractor>(); 
         }
 
         public override void ShowTinyEditorContent()
         {
             base.ShowTinyEditorContent();
-            EditorOptions.Instance.ShowGravityOverride = GUILayout.Toggle(EditorOptions.Instance.ShowGravityOverride, "Setup Gravity", EditorStyles.miniButton);
-
+            _attractorOverrideGeneric.ShowTinyEditorContent();
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
-            if (!EditorOptions.Instance.ShowGravityOverride || !_attractor.gameObject.activeInHierarchy)
+            base.CustomOnSceneGUI(sceneview);
+
+            if (!_attractorOverrideGeneric.CanSetupGravity() || !_attractorCylinder.gameObject.activeInHierarchy)
             {
                 return;
             }
 
             this.UpdateEditor();
-            ExtCircle circle1 = this.GetPropertie("_cylinder").GetPropertie("_circle1").GetValue<ExtCircle>();
-            ExtCircle circle2 = this.GetPropertie("_cylinder").GetPropertie("_circle2").GetValue<ExtCircle>();
+            SerializedProperty propertyCylinder = this.GetPropertie(PROPERTY_CYLINDER);
+            ExtCircle circle1 = propertyCylinder.GetPropertie(PROPERTY_CIRCLE_1).GetValue<ExtCircle>();
+            ExtCircle circle2 = propertyCylinder.GetPropertie(PROPERTY_CIRCLE_2).GetValue<ExtCircle>();
 
-            ExtCylinder cylinder = this.GetPropertie("_cylinder").GetValue<ExtCylinder>();
+            ExtCylinder cylinder = propertyCylinder.GetValue<ExtCylinder>();
 
-            GravityOverrideCylinder gravityCylinder = ExtGravityOverrideEditor.DrawCylinder(cylinder, circle1, circle2, _attractor.GravityOverride, Color.red, out bool hasChanged);
+            GravityOverrideCylinder gravityCylinder = ExtGravityOverrideEditor.DrawCylinder(cylinder, circle1, circle2, _attractorCylinder.GravityOverride, Color.red, out bool hasChanged);
 
             if (hasChanged)
             {
                 gravityCylinder.SetupGravity();
-                ExtGravityOverrideEditor.ApplyModificationToCylinder(this.GetPropertie("GravityOverride"), gravityCylinder);
+                ExtGravityOverrideEditor.ApplyModificationToCylinder(this.GetPropertie(AttractorOverrideGenericEditor.PROPERTY_GRAVITY_OVERRIDE), gravityCylinder);
                 this.ApplyModification();
             }
-
+            _attractorOverrideGeneric.LockEditor();
         }
     }
 }

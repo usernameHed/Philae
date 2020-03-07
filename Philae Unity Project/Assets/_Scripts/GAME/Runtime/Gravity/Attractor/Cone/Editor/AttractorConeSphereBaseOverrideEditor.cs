@@ -18,7 +18,9 @@ namespace philae.gravity.attractor
     [CustomEditor(typeof(AttractorConeSphereBaseOverride), true)]
     public class AttractorConeSphereBaseOverrideEditor : AttractorEditor
     {
-        protected new AttractorConeSphereBaseOverride _attractor;
+        private const string PROPERTY_CONE = "_cone";
+        protected AttractorConeSphereBaseOverride _attractorCone;
+        private AttractorOverrideGenericEditor _attractorOverrideGeneric = new AttractorOverrideGenericEditor();
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -39,34 +41,36 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractor = (AttractorConeSphereBaseOverride)GetTarget<Attractor>();
+            _attractorCone = (AttractorConeSphereBaseOverride)GetTarget<Attractor>();
         }
 
         public override void ShowTinyEditorContent()
         {
             base.ShowTinyEditorContent();
-            EditorOptions.Instance.ShowGravityOverride = GUILayout.Toggle(EditorOptions.Instance.ShowGravityOverride, "Setup Gravity", EditorStyles.miniButton);
+            _attractorOverrideGeneric.ShowTinyEditorContent();
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
-            if (!EditorOptions.Instance.ShowGravityOverride || !_attractor.gameObject.activeInHierarchy)
+            base.CustomOnSceneGUI(sceneview);
+
+            if (!_attractorOverrideGeneric.CanSetupGravity() || !_attractorCone.gameObject.activeInHierarchy)
             {
                 return;
             }
 
             this.UpdateEditor();
 
-            ExtConeSphereBase capsule = this.GetPropertie("_cone").GetValue<ExtConeSphereBase>();
-            GravityOverrideConeSphereBase gravitySphereBase = ExtGravityOverrideEditor.DrawConeSphereBase(capsule, _attractor.GravityOverride, Color.red, out bool hasChanged);
+            ExtConeSphereBase capsule = this.GetPropertie(PROPERTY_CONE).GetValue<ExtConeSphereBase>();
+            GravityOverrideConeSphereBase gravitySphereBase = ExtGravityOverrideEditor.DrawConeSphereBase(capsule, _attractorCone.GravityOverride, Color.red, out bool hasChanged);
 
             if (hasChanged)
             {
                 gravitySphereBase.SetupGravity();
-                ExtGravityOverrideEditor.ApplyModificationToConeSphereBase(this.GetPropertie("GravityOverride"), gravitySphereBase);
+                ExtGravityOverrideEditor.ApplyModificationToConeSphereBase(this.GetPropertie(AttractorOverrideGenericEditor.PROPERTY_GRAVITY_OVERRIDE), gravitySphereBase);
                 this.ApplyModification();
             }
-
+            _attractorOverrideGeneric.LockEditor();
         }
     }
 }

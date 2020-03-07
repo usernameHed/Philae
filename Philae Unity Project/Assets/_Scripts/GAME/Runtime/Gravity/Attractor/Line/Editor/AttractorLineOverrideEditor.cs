@@ -53,7 +53,7 @@ namespace philae.gravity.attractor
         {
             base.CustomOnSceneGUI(sceneview);
 
-            if (!EditorOptions.Instance.ShowGravityOverride || !_attractorLineOverride.gameObject.activeInHierarchy)
+            if (!_attractorOverrideGeneric.CanSetupGravity() || !_attractorLineOverride.gameObject.activeInHierarchy)
             {
                 return;
             }
