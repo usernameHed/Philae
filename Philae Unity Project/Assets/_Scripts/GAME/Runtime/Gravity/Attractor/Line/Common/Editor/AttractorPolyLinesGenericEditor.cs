@@ -96,6 +96,11 @@ namespace philae.gravity.attractor.line
 
         private Vector3 GetAddPointLocalPosition()
         {
+            if (Points.Count == 0)
+            {
+                return (Vector3.zero);
+            }
+
             Vector3 globalPosition = GetAddPointPosition();
             return (_polyLineMatrixInverse.MultiplyPoint3x4(globalPosition));
         }

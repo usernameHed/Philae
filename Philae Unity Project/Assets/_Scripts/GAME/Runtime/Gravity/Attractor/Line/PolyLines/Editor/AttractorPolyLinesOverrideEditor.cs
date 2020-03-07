@@ -94,6 +94,10 @@ namespace philae.gravity.attractor
         {
             int countLines = this.GetPropertie(PROPEPRTY_POLY_EXT_LINE_3D).GetPropertie(PROPERTY_LIST_LINE_GLOBAL).arraySize;
             _gravityOverride.arraySize = countLines;
+            SerializedProperty lastGravityoverrideCreated = _gravityOverride.GetArrayElementAtIndex(countLines - 1);
+
+            GravityOverrideLineTopDown full = new GravityOverrideLineTopDown(true, true, true);
+            ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(lastGravityoverrideCreated, full);
             this.ApplyModification();
         }
 

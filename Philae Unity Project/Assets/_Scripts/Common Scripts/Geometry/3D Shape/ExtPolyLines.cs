@@ -93,6 +93,11 @@ namespace hedCommon.geometry.shape3d
 
         public bool GetClosestPointIfWeCan(Vector3 k, out Vector3 closestPoint, GravityOverrideLineTopDown[] gravityOverride)
         {
+            if (_listLines.Length == 0)
+            {
+                closestPoint = Vector3.zero;
+                return (false);
+            }
             closestPoint = ExtLine.GetClosestPointFromLines(k, _listLines, out int indexLine);
             bool canApplyGravity = _listLines[indexLine].GetClosestPointIfWeCan(k, out closestPoint, gravityOverride[indexLine]);
             return (canApplyGravity);
