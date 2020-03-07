@@ -13,9 +13,9 @@ Here you see the direction of gravity can be facing:
 - the extremity of the disk top or bottom
 - inside the disk top or bottom
 
-Then I need to apply gravity force from multiple target.
-For design purpose, the closest primitive apply always the same force X.
-Then the other primitive farest from the player will apply there own force, divided by a ratio from the distance.
+Then I need to apply gravity force from multiple target. I call them **Attractors**
+For design purpose, the closest **Attractors** apply always the same force X.
+Then the other **Attractors** farest from the player will apply there own force, divided by a ratio from the distance.
 <br>
 Farest the primitive is from the other, less the force will be applied
 <br>
@@ -23,23 +23,23 @@ Farest the primitive is from the other, less the force will be applied
 <br>
 
 
-For going further, I need to be able to use only certain part of the primitive to apply the gravity. Therefore I have done a custom editor to be able to manipulate these option directly from editor. I call these option **GravityOverride**
+For going further, I need to be able to use only certain part of the **Attractors** to apply the gravity. Therefore I have done a custom editor to be able to manipulate these option directly from editor. I call these option **GravityOverride**
 You see bellow that I can choose to not apply gravity when the player is over a certain part of the cylinder:
 <br>
 <img src="Philae Unity Project/Misc/Pics/Gravity Toward Primitive With Override.gif" width="500">
 <br>
 
 
-I have worked hard to have as many primitive as possible, and for each of them, as many **GravityOverride** as I can.
+I have worked hard to have as many **Attractors** as possible, and for each of them, as many **GravityOverride** as I can.
 <br>
 <img src="Philae Unity Project/Misc/Pics/Gravity Override Cube.gif" width="500">
 <br>
-These primitive can be Moved, Rotated and Scaled like a normal gameObject in editor !
+These **Attractors** can be Moved, Rotated and Scaled like a normal gameObject in editor !
 <br>
 <img src="Philae Unity Project/Misc/Pics/Move Rotate Scale.gif" width="500">
 <br>
 
-Here the final list of all primitives:
+Here the final list of all current **Attractors**:
 <br>
 <img src="Philae Unity Project/Misc/Pics/ClosestPoints.jpg" width="500">
 <br>
