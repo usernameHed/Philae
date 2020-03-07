@@ -2,11 +2,7 @@
 
 This project is a big sand box for me, my final goal is to create a mario galaxy like physics engine, and may be some game based on that later.
 
-The direction of the gravity is relative to the environement. I Need to quickly setup in wich direction the gravity is facing for each environement.
-
-To Have a generic aproche, my idea is to have the direction of gravity facing the closest object in the level Design.
-
-Bellow some iteration of that idea:
+The direction of the gravity is relative to the environement. I Need to quickly setup in wich direction the gravity is facing for each environement. To Have a generic aproche, my idea is to have the direction of gravity facing the closest object in the level Design.
 
 First, I am calculating closest points to cylinder primitive:
 <br>
