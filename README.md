@@ -45,10 +45,10 @@ Here the final list of all primitives:
 <br>
 
 
-I have even created a line editor to have custom gravity setup for some level:
+I have created a line editor to have custom gravity setup for some level:
 <br>
 <img src="Philae Unity Project/Misc/Pics/Line Editor.gif" width="500">
 
-This editor is of course, compatible with both gravityOverride, and LineMovement:
+This editor is of course, compatible with both **GravityOverride**, and **Line Edition**:
 <img src="Philae Unity Project/Misc/Pics/Line Editor With Gravity.gif" width="500">
 
