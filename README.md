@@ -21,7 +21,8 @@ Farest the primitive is from the other, less the force will be applied
 <br>
 <img src="Philae Unity Project/Misc/Pics/Gravity direction with multiples targets.gif" width="500">
 <br>
-
+<br>
+<br>
 
 For going further, I need to be able to use only certain part of the **Attractors** to apply the gravity. Therefore I have done a custom editor to be able to manipulate these option directly from editor. I call these option **GravityOverride**
 You see bellow that I can choose to not apply gravity when the player is over a certain part of the cylinder:
@@ -31,6 +32,7 @@ You see bellow that I can choose to not apply gravity when the player is over a 
 
 
 I have worked hard to have as many **Attractors** as possible, and for each of them, as many **GravityOverride** as I can.
+**GravityOverrides** are separate from there **non-GravityOverride** friends, to save performance if we don't want them.
 <br>
 <img src="Philae Unity Project/Misc/Pics/Gravity Override Cube.gif" width="500">
 <br>
