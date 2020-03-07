@@ -6,26 +6,24 @@ This project is a big sand box of tools & test, my initial goal was to create a 
 
 
 <br>
-This readyme will show you the iteration I have done to complete this task.
+This readme will show you the iteration I have done to complete this task.
 
 <br><br><br><br>
 
-The direction of the gravity is relative to the environement. I Need to quickly setup in wich direction the gravity is facing for each environement. To Have a generic aproche, my idea is to have the direction of gravity facing the closest object in the level Design.
+The direction of the gravity is relative to the environement. I Need to quickly setup in wich direction the gravity is facing for each environement. To Have a generic approach, my idea is to have the direction of gravity facing the closest object in the level Design.
 
-First, I am calculating closest points to cylinder primitive:
+First, I am calculating closest points to a cylinder primitive:
 <br><br>
 <img src="Philae Unity Project/Misc/Pics/Gravity Toward Primitive.gif" width="500">
 <br>
-Here you see the direction of gravity can be facing:
+Here you see gravity direction can be facing:
 - the trunk of the cylinder,
 - the extremity of the disk top or bottom
 - inside the disk top or bottom
 
 Then I need to apply gravity force from multiple target. I call them **Attractors**
-For design purpose, the closest **Attractors** apply always the same force X.
-Then the other **Attractors** farest from the player will apply there own force, divided by a ratio from the distance.
-<br>
-Farest the primitive is from the other, less the force will be applied
+For design purpose, the closest **Attractors** always apply the same force X.
+Then the farest other **Attractors** will apply there own force, divided by a distance ratio.
 <br><br>
 <img src="Philae Unity Project/Misc/Pics/Gravity direction with multiples targets.gif" width="500">
 <br>
