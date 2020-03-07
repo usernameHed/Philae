@@ -174,34 +174,37 @@ namespace hedCommon.extension.runtime
         /// </summary>
         public static Vector3 GetClosestPoint(Vector3 posEntity, Vector3[] arrayPos, out int indexFound)
         {
-            float sqrDist = 0;
-            indexFound = -1;
+            float sqrDist = (posEntity - arrayPos[0]).sqrMagnitude;
+            indexFound = 0;
 
-            int firstIndex = 0;
-
-            for (int i = 0; i < arrayPos.Length; i++)
+            for (int i = 1; i < arrayPos.Length; i++)
             {
-                if (ExtVector3.IsNullVector(arrayPos[i]))
-                    continue;
-
                 float dist = (posEntity - arrayPos[i]).sqrMagnitude;
-                if (firstIndex == 0)
-                {
-                    indexFound = i;
-                    sqrDist = dist;
-                }
-                else if (dist < sqrDist)
+                if (dist < sqrDist)
                 {
                     sqrDist = dist;
                     indexFound = i;
                 }
-                firstIndex++;
             }
+            return (arrayPos[indexFound]);
+        }
 
-            if (indexFound == -1)
+        /// <summary>
+        /// get closest point from an array of points
+        /// </summary>
+        public static Vector3 GetClosestPoint(Vector3 posEntity, List<Vector3> arrayPos, out int indexFound)
+        {
+            float sqrDist = (posEntity - arrayPos[0]).sqrMagnitude;
+            indexFound = 0;
+
+            for (int i = 1; i < arrayPos.Count; i++)
             {
-                //Debug.LogWarning("nothing found");
-                return (ExtVector3.GetNullVector());
+                float dist = (posEntity - arrayPos[i]).sqrMagnitude;
+                if (dist < sqrDist)
+                {
+                    sqrDist = dist;
+                    indexFound = i;
+                }
             }
             return (arrayPos[indexFound]);
         }

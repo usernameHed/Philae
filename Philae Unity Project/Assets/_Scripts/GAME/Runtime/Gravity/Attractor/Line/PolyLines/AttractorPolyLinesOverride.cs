@@ -17,13 +17,15 @@ namespace philae.gravity.attractor.line
 
         public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {
-            closestPoint = _polyLines.GetClosestPoint(graviton.Position);
-            closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, SettingsLocal.MinRange, SettingsLocal.MaxRange, out bool outOfRange);
+            bool canApplyGravity = _polyLines.GetClosestPointIfWeCan(graviton.Position, out closestPoint, GravityOverride);
             
-            bool canApplyGravity = true;
-            if (outOfRange)
+            if (canApplyGravity)
             {
-                canApplyGravity = false;
+                closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, SettingsLocal.MinRange, SettingsLocal.MaxRange, out bool outOfRange);
+                if (outOfRange)
+                {
+                    canApplyGravity = false;
+                }
             }
             AddOrRemoveGravitonFromList(graviton, canApplyGravity);
             return (canApplyGravity);
