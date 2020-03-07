@@ -23,11 +23,12 @@ Farest the primitive is from the other, less the force will be applied
 <br>
 
 
-For going further, I need to be able to use only certain part of the primitive to apply the gravity. Therefore I have done a custom editor to be able to manipulate these option directly from editor:
+For going further, I need to be able to use only certain part of the primitive to apply the gravity. Therefore I have done a custom editor to be able to manipulate these option directly from editor.
+You see bellow that I can choose to not apply gravity when the player is over a certain part of the cylinder:
 <br>
 <img src="Philae Unity Project/Misc/Pics/Gravity Toward Primitive With Override.gif" width="500">
 <br>
-You see here that I can choose to not apply gravity when the player is over a certain part of the primitive.
+
 
 I have worked hard to have as many primitive as possible, and for each of them, as many Gravity override as I can.
 <br>
