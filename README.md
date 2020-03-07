@@ -13,6 +13,16 @@ Here you see the direction of gravity can be facing:
 - the extremity of the disk top or bottom
 - inside the disk top or bottom
 
+Then I need to apply gravity force from multiple target.
+For design purpose, the closest primitive apply always the same force X.
+Then the other primitive farest from the player will apply there own force, divided by a ratio from the distance.
+<br>
+Farest the primitive is from the other, less the force will be applied
+<br>
+<img src="Philae Unity Project/Misc/Pics/Gravity direction with multiples targets.gif" width="500">
+<br>
+
+
 For going further, I need to be able to use only certain part of the primitive to apply the gravity. Therefore I have done a custom editor to be able to manipulate these option directly from editor:
 <br>
 <img src="Philae Unity Project/Misc/Pics/Gravity Toward Primitive With Override.gif" width="500">
