@@ -534,5 +534,15 @@ namespace hedCommon.extension.runtime
                 list.Add(items[i]);
             }
         }
+
+        public static List<T> Fill<T>(this List<T> list, int size, T element)
+        {
+            list = new List<T>(size);
+            for (int i = 0; i < size; i++)
+            {
+                list.Add(element);
+            }
+            return (list);
+        }
     }
 }

@@ -268,6 +268,21 @@ namespace hedCommon.time
         }
 
         /// <summary>
+        /// from 0 to 1
+        /// </summary>
+        /// <returns></returns>
+        public float GetCurrentPercentFromTheEnd()
+        {
+            if (IsNotRunning())
+            {
+                return (0f);
+            }
+            float currentTimer = GetTimer();
+            float currentPercent = currentTimer * 1f / _maxTime;
+            return (currentPercent);
+        }
+
+        /// <summary>
         /// reset the chrono to 0 & all the options
         /// </summary>
         public void Reset()
@@ -321,6 +336,7 @@ namespace hedCommon.time
             }
             return (Mathf.Abs(GetTimeScaledOrNot()) >= _timeStart + _maxTime);
         }
+
 
         #endregion
 

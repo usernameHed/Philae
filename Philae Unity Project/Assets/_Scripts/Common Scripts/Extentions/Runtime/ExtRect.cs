@@ -224,5 +224,34 @@ namespace hedCommon.extension.runtime
             return (isInside);
         }
 
+        /// <summary>
+        /// Set a gameObject
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="cursor"></param>
+        /// <param name="fill"></param>
+        /// <param name="floatRange">Min: from 0 to 1, 0 is nother, 1 is Max</param>
+        public static void SetToFillAmountPositonX(RectTransform parent, RectTransform cursor, float fillAmount, float minPercentOffset = 0, float maxPercentOffset = 0)
+        {
+            float minX = parent.rect.x;
+            float maxX = (minX + parent.rect.width);
+            float size = maxX - minX;
+
+            float percentMinToRemove = minPercentOffset * size / 1f;
+            float percentMaxToRemove = maxPercentOffset * size / 1f;
+
+            float currentX = (fillAmount * size / 1f) - (size * parent.pivot.x);
+            if (fillAmount < minPercentOffset)
+            {
+                currentX = minX + percentMinToRemove;
+            }
+            if (fillAmount > 1 - maxPercentOffset)
+            {
+                float pivot = parent.pivot.x == 0 ? 1 : parent.pivot.x;
+                currentX = (size * pivot) - percentMaxToRemove;
+            }
+
+            cursor.SetX(currentX, false);
+        }
     }
 }
