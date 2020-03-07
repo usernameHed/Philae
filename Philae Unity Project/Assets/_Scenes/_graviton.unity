@@ -1388,20 +1388,25 @@ PrefabInstance:
       propertyPath: _gravitonZoneLocalizer._isInsideAZone
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5392576495997722227, guid: 2376e8836daab2d4aa537cf39cddb436,
+        type: 3}
+      propertyPath: _initialPush
+      value: 
+      objectReference: {fileID: 715377777}
     - target: {fileID: 5392576497265070844, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -26.76198
+      value: 96.91683
       objectReference: {fileID: 0}
     - target: {fileID: 5392576497265070844, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.99882
+      value: 161.08607
       objectReference: {fileID: 0}
     - target: {fileID: 5392576497265070844, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 48.38363
+      value: 0.48103333
       objectReference: {fileID: 0}
     - target: {fileID: 5392576497265070844, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
@@ -1483,6 +1488,26 @@ MonoBehaviour:
   ShowName: 0
   ColorText: {r: 1, g: 1, b: 1, a: 1}
   HideHandle: 0
+--- !u!1 &715377772 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5392576495997722185, guid: 2376e8836daab2d4aa537cf39cddb436,
+    type: 3}
+  m_PrefabInstance: {fileID: 547159610}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &715377777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715377772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f35945ebfcb58147ab38c23b77614bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initialVelocity: {x: 50, y: 0, z: 0}
+  _rigidbody: {fileID: 0}
 --- !u!1 &757537883
 GameObject:
   m_ObjectHideFlags: 0
