@@ -18,8 +18,8 @@ namespace philae.gravity.attractor
     [CustomEditor(typeof(AttractorLineOverride))]
     public class AttractorLineOverrideEditor : AttractorLineEditor
     {
-        private const string PROPERTY_GRAVITY_OVERRIDE = "GravityOverride";
-        protected AttractorLineOverride _attractorLineOverride;
+        private AttractorLineOverride _attractorLineOverride;
+        private AttractorOverrideGenericEditor _attractorOverrideGeneric = new AttractorOverrideGenericEditor();
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -46,7 +46,7 @@ namespace philae.gravity.attractor
         public override void ShowTinyEditorContent()
         {
             base.ShowTinyEditorContent();
-            EditorOptions.Instance.ShowGravityOverride = GUILayout.Toggle(EditorOptions.Instance.ShowGravityOverride, "Setup Gravity", EditorStyles.miniButton);
+            _attractorOverrideGeneric.ShowTinyEditorContent();
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
@@ -66,32 +66,13 @@ namespace philae.gravity.attractor
             if (hasChanged)
             {
                 gravityLine.SetupGravity();
-                ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(this.GetPropertie(PROPERTY_GRAVITY_OVERRIDE), gravityLine);
+                ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(this.GetPropertie(AttractorOverrideGenericEditor.PROPERTY_GRAVITY_OVERRIDE), gravityLine);
                 this.ApplyModification();
             }
 
-            LockEditor();
+            _attractorOverrideGeneric.LockEditor();
         }
 
-        /// <summary>
-        /// need to be called at the end of the editor, lock the editor from deselecting the gameObject from the sceneView
-        /// </summary>
-        private void LockEditor()
-        {
-            //if nothing else, lock editor !
-            if (EditorOptions.Instance.ShowGravityOverride)
-            {
-                ExtSceneView.LockFromUnselect();
-            }
-            if (ExtEventEditor.IsKeyDown(KeyCode.Escape))
-            {
-                EditorOptions.Instance.ShowGravityOverride = false;
-            }
-
-            if (EditorOptions.Instance.ShowGravityOverride && ExtEventEditor.IsKeyDown(KeyCode.Delete))
-            {
-                ExtEventEditor.Use();
-            }
-        }
+        
     }
 }
