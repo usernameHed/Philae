@@ -13,17 +13,17 @@ namespace philae.gravity.attractor.line
     public class AttractorLine : Attractor
     {
         [SerializeField, OnValueChanged("ChangeLineSettings", true)]
-        protected ExtLine3d _line = default;
+        protected ExtLine3d _line3d = default;
 
         public override void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {
             base.InitOnCreation(attractorListerLogic);
-            _line = new ExtLine3d(Position, Rotation, LocalScale);
+            _line3d = new ExtLine3d(Position, Rotation, LocalScale);
         }
 
         public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {
-            closestPoint = _line.ClosestPointTo(graviton.Position);
+            closestPoint = _line3d.ClosestPointTo(graviton.Position);
             closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, SettingsLocal.MinRange, SettingsLocal.MaxRange, out bool outOfRange);
             
             bool canApplyGravity = true;
@@ -37,25 +37,25 @@ namespace philae.gravity.attractor.line
 
         public void ChangeLineSettings()
         {
-            _line.MoveSphape(Position, Rotation, LocalScale);
+            _line3d.MoveSphape(Position, Rotation, LocalScale);
         }
 
         public override void Move()
         {
-            _line.MoveSphape(Position, Rotation, LocalScale);
+            _line3d.MoveSphape(Position, Rotation, LocalScale);
         }
 
 #if UNITY_EDITOR
         protected override void DrawRange(Color color)
         {
-            _line.Draw(color);
+            _line3d.Draw(color);
             if (SettingsLocal.MinRange > 0)
             {
-                _line.DrawWithExtraSize(Color.gray, SettingsLocal.MinRange);
+                _line3d.DrawWithExtraSize(Color.gray, SettingsLocal.MinRange);
             }
             if (SettingsLocal.MaxRange > 0)
             {
-                _line.DrawWithExtraSize(color, SettingsLocal.MaxRange);
+                _line3d.DrawWithExtraSize(color, SettingsLocal.MaxRange);
             }
         }
 #endif

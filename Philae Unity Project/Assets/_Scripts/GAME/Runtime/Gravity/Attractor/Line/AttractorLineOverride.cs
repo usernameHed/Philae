@@ -17,7 +17,7 @@ namespace philae.gravity.attractor.line
 
         public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {
-            bool canApplyGravity = _line.GetClosestPointIfWeCan(graviton.Position, out closestPoint, GravityOverride);
+            bool canApplyGravity = _line3d.GetClosestPointIfWeCan(graviton.Position, out closestPoint, GravityOverride);
 
             if (canApplyGravity)
             {

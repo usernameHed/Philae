@@ -43,12 +43,6 @@ namespace hedCommon.geometry.shape2d
         [SerializeField]
         private Matrix4x4 _linesMatrix;
 
-#if UNITY_EDITOR
-        
-        [SerializeField]
-        private List<PointsInfo> _pointsInfos;
-#endif
-
         public ExtLine3d(Vector3 position, Quaternion rotation, Vector3 localScale) : this()
         {
             _position = position;

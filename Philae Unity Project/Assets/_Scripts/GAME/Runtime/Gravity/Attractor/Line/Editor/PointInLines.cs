@@ -8,11 +8,9 @@ namespace philae.gravity.attractor
 {
     public class PointInLines
     {
-        public int IndexLine;
-        public int IndexPoint;//0 or 1
+        public int IndexLine;           //the index of line, usefull if we have multiple PointInLines
+        public int IndexPoint;          //0 or 1: we need to know wich point we are, 0 or 1 on the line
         public PointsInfo PointInfo;
-        public SerializedProperty ExtLineFromGlobal;
-        public SerializedProperty ExtLineFromLocal;
 
         public SerializedProperty P1PropertieGlobal;
         public SerializedProperty P2PropertieGlobal;
@@ -22,22 +20,20 @@ namespace philae.gravity.attractor
 
         public PointInLines(int indexLine,
             int indexPoint,
-            PointsInfo pointInfo,
-            SerializedProperty extLineFromGlobal,
-            SerializedProperty extLineFromLocal)
+            SerializedProperty p1Local,
+            SerializedProperty p2Local,
+            SerializedProperty p1Global,
+            SerializedProperty p2Global)
         {
             IndexLine = indexLine;
             IndexPoint = indexPoint;
-            PointInfo = pointInfo;
+            PointInfo = new PointsInfo();
 
-            ExtLineFromGlobal = extLineFromGlobal;
-            ExtLineFromLocal = extLineFromLocal;
+            P1PropertieLocal = p1Local;
+            P2PropertieLocal = p2Local;
 
-            P1PropertieGlobal = extLineFromGlobal.GetPropertie("_p1");
-            P2PropertieGlobal = extLineFromGlobal.GetPropertie("_p2");
-
-            P1PropertieLocal = extLineFromLocal.GetPropertie("_p1");
-            P2PropertieLocal = extLineFromLocal.GetPropertie("_p2");
+            P1PropertieGlobal = p1Global;
+            P2PropertieGlobal = p2Global;
         }
 
         public Vector3 GetGlobalPointPosition()
@@ -61,6 +57,12 @@ namespace philae.gravity.attractor
             {
                 P2PropertieGlobal.vector3Value = pX;
             }
+        }
+
+        public void UpdateLocalPositionFromGlobalPosition(Matrix4x4 inverse)
+        {
+            P1PropertieLocal.vector3Value = inverse.MultiplyPoint3x4(P1PropertieGlobal.vector3Value);
+            P2PropertieLocal.vector3Value = inverse.MultiplyPoint3x4(P2PropertieGlobal.vector3Value);
         }
 
         public bool IsSelected()

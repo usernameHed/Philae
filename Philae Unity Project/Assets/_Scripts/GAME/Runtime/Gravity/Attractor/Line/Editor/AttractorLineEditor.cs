@@ -1,54 +1,18 @@
-﻿using ExtUnityComponents;
-using ExtUnityComponents.transform;
-using feerik.editor.utils;
-using hedCommon.extension.editor;
-using hedCommon.extension.runtime;
+﻿using hedCommon.extension.editor;
 using hedCommon.geometry.editor;
-using hedCommon.geometry.shape2d;
-using hedCommon.geometry.shape3d;
-using philae.gravity.attractor.gravityOverride;
-using philae.gravity.attractor.line;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering;
-using static hedCommon.geometry.shape3d.ExtPolyLines;
 
-namespace philae.gravity.attractor
+namespace philae.gravity.attractor.line
 {
     [CustomEditor(typeof(AttractorLine))]
     public class AttractorLineEditor : AttractorEditor
     {
         private AttractorLine _attractorLine;
-        private TransformHiddedTools _transformHiddedTools;
+        private AttractoLineGenericEditor _attractorLinesGeneric;
 
-        private Vector3 _lastPositionMoved;
-        private SerializedProperty _extLine3d;
-        private SerializedProperty _lineGlobal;
-        private SerializedProperty _lineLocale;
-        private SerializedProperty _pointInfosArray;
-        private SerializedProperty _lineMatrixPropertie;
-
-
-
-        private Vector2 _initialPositionDrag;
-        private Vector2 _currentDragPosition;
-        private Vector2 _endDragPosition;
-        private bool _isDragging = false;
-        private bool _isMovingMultiplePoints = false;
-        private Matrix4x4 _polyLineMatrix;
-        private Matrix4x4 _polyLineMatrixInverse;
-
-        private Vector3 _currentHandlePosition;
-
-        public List<PointInLines> Points = new List<PointInLines>(50);
-        public List<PointInLines> PointsSelected = new List<PointInLines>(50);
-
-
-
+        
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
         /// by telling it who we are (a Transform Inspector)
@@ -59,7 +23,7 @@ namespace philae.gravity.attractor
         public AttractorLineEditor()
             : base(false, "Line")
         {
-
+            _attractorLinesGeneric = new AttractoLineGenericEditor();
         }
 
         /// <summary>
@@ -69,488 +33,59 @@ namespace philae.gravity.attractor
         {
             base.OnCustomEnable();
             _attractorLine = (AttractorLine)GetTarget<Attractor>();
-            _transformHiddedTools = _attractorLine.gameObject.GetComponent<TransformHiddedTools>();
-            Tools.hidden = EditorOptions.Instance.SetupLinesOfSphape;
-            _transformHiddedTools.HideHandle = EditorOptions.Instance.SetupLinesOfSphape;
 
-            ConstructPoints();
-            SetupPointInLines();
-            UnSelectPoints();
+            _attractorLinesGeneric.OnCustomEnable(this, _attractorLine.gameObject, LinesHasBeenUpdated);
+            ConstructLines();
+        }
+
+        private void ConstructLines()
+        {
+            SerializedProperty line3d = this.GetPropertie("_line3d");
+            SerializedProperty matrix = line3d.GetPropertie("_linesMatrix");
+            SerializedProperty line = line3d.GetPropertie("_line");
+            SerializedProperty lineLocal = line3d.GetPropertie("_lineLocalPosition");
+
+            List<PointInLines> lines = new List<PointInLines>(2)
+            {
+                new PointInLines(0, 0, lineLocal.GetPropertie("_p1"), lineLocal.GetPropertie("_p2"), line.GetPropertie("_p1"), line.GetPropertie("_p2")),
+                new PointInLines(0, 1, lineLocal.GetPropertie("_p1"), lineLocal.GetPropertie("_p2"), line.GetPropertie("_p1"), line.GetPropertie("_p2"))
+            };
+
+            _attractorLinesGeneric.ConstructLines(matrix, lines);
         }
 
         /// <summary>
-        /// from pointsInfo save, construct array of points (useful for edior purpose)
+        /// called when lines points has been updated.
+        /// determine what to do (update delta & deltaSquared cached ?)
+        /// REMEMBER TO APPLY MODIFICATION AFTER !!!
         /// </summary>
-        public void ConstructPoints()
+        private void LinesHasBeenUpdated()
         {
-            this.UpdateEditor();
-            SetupAllSerializeObject();
-
-            //only one line here, with 2 points
-            int countLines = 1 * 2;
-            if (_pointInfosArray.arraySize != countLines)
-            {
-                _pointInfosArray.arraySize = countLines;
-            }
-            this.ApplyModification();
-        }
-
-        /// <summary>
-        /// unselect all current selected points
-        /// </summary>
-        private void UnSelectPoints(params PointInLines[] exception)
-        {
-            for (int i = 0; i < PointsSelected.Count; i++)
-            {
-                if (exception.Contains(PointsSelected[i]))
-                {
-                    continue;
-                }
-                PointsSelected[i].SetSelected(false);
-                SetPointsInfoOfLine(PointsSelected[i], false);
-            }
-            SetupPointInLines();
+            Debug.Log("ici line updated ??");
+            ExtShapeSerializeProperty.UpdateLineFromSerializeProperties(this.GetPropertie("_line3d").GetPropertie("_line"));
+            ExtShapeSerializeProperty.UpdateLineFromSerializeProperties(this.GetPropertie("_line3d").GetPropertie("_lineLocalPosition"));
             this.ApplyModification();
         }
 
         public override void OnCustomDisable()
         {
             base.OnCustomDisable();
-            Tools.hidden = false;
+            _attractorLinesGeneric.OnCustomDisable();
         }
 
         public override void ShowTinyEditorContent()
         {
             base.ShowTinyEditorContent();
-
-            EditorGUI.BeginChangeCheck();
-            {
-                EditorOptions.Instance.SetupLinesOfSphape = GUILayout.Toggle(EditorOptions.Instance.SetupLinesOfSphape, "Setup Lines", EditorStyles.miniButton);
-
-                if (EditorOptions.Instance.SetupLinesOfSphape)
-                {
-                    ButtonsSetupsLinesTools();
-                }
-
-                if (EditorGUI.EndChangeCheck())
-                {
-                    Tools.hidden = EditorOptions.Instance.SetupLinesOfSphape;
-                    _lastPositionMoved = _attractorLine.Position;
-                    _transformHiddedTools.HideHandle = EditorOptions.Instance.SetupLinesOfSphape;
-                }
-            }
-        }
-
-        private void ButtonsSetupsLinesTools()
-        {
-            if (_isMovingMultiplePoints && PointsSelected.Count >= 2)
-            {
-                ShowMergeSelectedPointsButton();
-                UnMergeSelectedPoint();
-            }
-        }
-
-        public void ShowMergeSelectedPointsButton()
-        {
-            bool pointAreAtSamePlace = true;
-            Vector3 pointPosition = PointsSelected[0].GetGlobalPointPosition();
-            for (int i = 1; i < PointsSelected.Count; i++)
-            {
-                if (pointPosition != PointsSelected[i].GetGlobalPointPosition())
-                {
-                    pointAreAtSamePlace = false;
-                    break;
-                }
-            }
-            if (pointAreAtSamePlace)
-            {
-                return;
-            }
-
-            if (GUILayout.Button("Merge Points"))
-            {
-                MergeSelectedPoints();
-            }
-        }
-
-        public void MergeSelectedPoints()
-        {
-            Debug.Log("a");
-            this.UpdateEditor();
-            for (int i = 0; i < PointsSelected.Count; i++)
-            {
-                PointsSelected[i].SetGlobalPointPosition(_currentHandlePosition);
-                MovePoints(_polyLineMatrixInverse, PointsSelected[i]);
-            }
-            this.ApplyModification();
-        }
-
-        public void UnMergeSelectedPoint()
-        {
-            using (ExtGUIScopes.Horiz())
-            {
-                for (int i = 0; i < PointsSelected.Count; i++)
-                {
-                    if (GUILayout.Button(i.ToString()))
-                    {
-                        this.UpdateEditor();
-                        UnSelectPoints(PointsSelected[i]);
-                        this.ApplyModification();
-                    }
-                }
-            }
-        }
-
-        private void ShowPointsSelectedText()
-        {
-            if (PointsSelected.Count < 2)
-            {
-                return;
-            }
-            for (int i = 0; i < PointsSelected.Count; i++)
-            {
-                Vector3 middleLine = ExtVector3.GetMeanOfXPoints(PointsSelected[i].GetGlobalPointPosition(), PointsSelected[i].GetMiddleLine());
-                ExtSceneView.DisplayStringIn3D(middleLine, i.ToString(), Color.black);
-            }
-        }
-
-        /// <summary>
-        /// setup serialized properties
-        /// </summary>
-        private void SetupAllSerializeObject()
-        {
-            _extLine3d = this.GetPropertie("_line");
-            _lineGlobal = _extLine3d.GetPropertie("_line");
-            _lineLocale = _extLine3d.GetPropertie("_lineLocalPosition");
-            _lineMatrixPropertie = _extLine3d.GetPropertie("_linesMatrix");
-            _pointInfosArray = _extLine3d.GetPropertie("_pointsInfos");
-
-            //if a change occured in lnie array, update this array size
-            int countLines = 1 * 2;
-            if (_pointInfosArray.arraySize != countLines)
-            {
-                _pointInfosArray.arraySize = countLines;
-            }
-
-            _polyLineMatrix = _lineMatrixPropertie.GetValue<Matrix4x4>();
-            _polyLineMatrixInverse = _polyLineMatrix.inverse;
+            _attractorLinesGeneric.ShowTinyEditorContent();
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
             base.CustomOnSceneGUI(sceneview);
-            if (!EditorOptions.Instance.SetupLinesOfSphape || !_attractorLine.gameObject.activeInHierarchy)
-            {
-                return;
-            }
 
-            this.UpdateEditor();
-            SetupAllSerializeObject();
+            //this.UpdateSerializeProperties();
+            _attractorLinesGeneric.CustomOnSceneGUI(sceneview);
 
-            _isMovingMultiplePoints = PointsSelected.Count > 1;
-            _currentHandlePosition = GetMiddleOfAllSelectedPoints();
-
-            HandlePoints(_currentHandlePosition);
-
-            HandleSpherePoints();
-
-            FramePointsWithF();
-            ManageDragRect();
-            AttemptToUselectPoints();
-            ShowPointsSelectedText();
-            LockEditor();
-        }
-
-        /// <summary>
-        /// create a rectangle of selection
-        /// (event drag & release)
-        /// 
-        ///     +---------+
-        ///     |         |
-        ///     |         |
-        ///     |         |
-        ///     +--------- mouse
-        ///     
-        ///  if points are inside, select them
-        /// </summary>
-        private void ManageDragRect()
-        {
-            if (Event.current.alt || Event.current.control || Event.current.shift)
-            {
-                return;
-            }
-
-            if (ExtEventEditor.IsLeftMouseDown(Event.current) && !_isDragging)
-            {
-                _isDragging = true;
-                _currentDragPosition = _initialPositionDrag = Event.current.mousePosition;
-            }
-            if (ExtEventEditor.IsLeftMouseUp(Event.current))
-            {
-                _endDragPosition = Event.current.mousePosition;
-                ChangePointSelectionStateInsideMouseRectangleSelection();
-                _isDragging = false;
-            }
-
-            Handles.BeginGUI();
-            if (_isDragging)
-            {
-                float width =  Event.current.mousePosition.x - _initialPositionDrag.x;
-                float height = Event.current.mousePosition.y - _initialPositionDrag.y;
-                //Debug.Log(width + ", " + height);
-                ExtSceneView.GUIDrawRect(new Rect(_initialPositionDrag.x, _initialPositionDrag.y, width, height), new Color(0.1f, 0.1f, 0.1f, 0.4f));
-            }
-            Handles.EndGUI();
-        }
-
-        /// <summary>
-        /// 
-        ///     +---------+
-        ///     |         |
-        ///     |         |
-        ///     |         |
-        ///     +--------- mouse
-        ///     
-        ///  if points are inside, select them
-        /// </summary>
-        private void ChangePointSelectionStateInsideMouseRectangleSelection()
-        {
-            float width = Event.current.mousePosition.x - _initialPositionDrag.x;
-            float height = Event.current.mousePosition.y - _initialPositionDrag.y;
-            Rect rect = new Rect(_initialPositionDrag.x, _initialPositionDrag.y, width, height);
-            rect = ExtRect.ReverseRectIfNeeded(rect);
-
-            bool hasChanged = false;
-
-            for (int i = 0; i < Points.Count; i++)
-            {
-                if (ExtRect.Is3dPointInside2dRectInScreenSpace(ExtSceneView.Camera(), rect, Points[i].GetGlobalPointPosition()))
-                {
-                    Points[i].SetSelected(true);
-                    SetPointsInfoOfLine(Points[i], false);
-                    hasChanged = true;
-                }
-            }
-            
-            if (hasChanged)
-            {
-                SetupPointInLines();
-                this.ApplyModification();
-            }
-        }
-
-        /// <summary>
-        /// focus the current selected point moved, OR the last selected point (if nothing was moved)
-        /// </summary>
-        private void FramePointsWithF()
-        {
-            if (ExtEventEditor.IsKeyDown(KeyCode.F) && _lastPositionMoved != Vector3.zero)
-            {
-                if (Event.current.type != EventType.Layout)
-                {
-                    Event.current.Use();
-                }
-                ExtSceneView.Frame(_lastPositionMoved);
-            }
-        }
-
-        /// <summary>
-        /// need to be called at the end of the editor, lock the editor from deselecting the gameObject from the sceneView
-        /// </summary>
-        private void LockEditor()
-        {
-            //if nothing else, lock editor !
-            if (EditorOptions.Instance.SetupLinesOfSphape)
-            {
-                ExtSceneView.LockFromUnselect();
-            }
-            if (ExtEventEditor.IsKeyDown(KeyCode.Escape))
-            {
-                Selection.activeObject = null;
-            }
-
-            if (EditorOptions.Instance.SetupLinesOfSphape && ExtEventEditor.IsKeyDown(KeyCode.Delete))
-            {
-                ExtEventEditor.Use();
-            }
-        }
-
-        /// <summary>
-        /// if clickUp, and mouse position is close to the initial drag position, unselect all points !
-        /// </summary>
-        private void AttemptToUselectPoints()
-        {
-            if (ExtEventEditor.IsLeftMouseUp(Event.current) && ExtVector3.IsClose(_initialPositionDrag, _endDragPosition, 0.01f))
-            {
-                SetupPointInLines();
-                UnSelectPoints();
-            }
-        }
-
-        /// <summary>
-        /// the most important function, it save every state of points inside arrays
-        /// MUST BE UPDATED every time a change occure in datas
-        /// </summary>
-        private void SetupPointInLines()
-        {
-            Points.Clear();
-            PointsSelected.Clear();
-
-            //SerializedProperty extLineFromGlobal = _line.GetArrayElementAtIndex(i);
-            //SerializedProperty extLineFromLocal = _lineLocal.GetArrayElementAtIndex(i);
-            PointsInfo pointInfo1 = GetPointInfoOfPointLine(0, 0);
-            PointsInfo pointInfo2 = GetPointInfoOfPointLine(0, 1);
-
-            Points.Add(new PointInLines(0, 0, pointInfo1, _lineGlobal, _lineLocale));
-            Points.Add(new PointInLines(0, 1, pointInfo2, _lineGlobal, _lineLocale));
-
-            if (pointInfo1.IsSelected)
-            {
-                PointsSelected.Add(new PointInLines(0, 0, pointInfo1, _lineGlobal, _lineLocale));
-            }
-            if (pointInfo2.IsSelected)
-            {
-                PointsSelected.Add(new PointInLines(0, 1, pointInfo2, _lineGlobal, _lineLocale));
-            }
-        }
-
-        /// <summary>
-        /// return the middle of all selected points
-        /// if there is no point selected, return Vector3.zero;
-        /// </summary>
-        /// <returns></returns>
-        private Vector3 GetMiddleOfAllSelectedPoints()
-        {
-            Vector3 middle = Vector3.zero;
-            List<Vector3> positions = new List<Vector3>(PointsSelected.Count);
-            for (int i = 0; i < PointsSelected.Count; i++)
-            {
-                positions.Add(PointsSelected[i].GetGlobalPointPosition());
-            }
-            middle = ExtVector3.GetMeanOfXPoints(positions.ToArray());
-            return (middle);
-        }
-
-        /// <summary>
-        /// for all unselected points, draw a handle sphere: we can clic on it, and therefore select it
-        /// </summary>
-        private void HandleSpherePoints()
-        {
-            bool changed = false;
-            Color colorSelected = Color.green;
-            Color colorUnselected = Color.red;
-
-            for (int i = 0; i < Points.Count; i++)
-            {
-                //determine the color of the point
-                Color color = Points[i].IsSelected() ? colorSelected : colorUnselected;
-
-                //if there is only one point selected, show only the visual of the point, not the handleSphere
-                if (ExtVector3.IsClose(_currentHandlePosition, Points[i].GetGlobalPointPosition(), 0.3f))
-                {
-                    if (Points[i].IsSelected())
-                    {
-                        ExtGravityOverrideEditor.DrawPoint(Points[i].GetGlobalPointPosition(), EditorOptions.Instance.SizeLinesPoints * 0.5f, colorSelected);
-                    }
-                    else
-                    {
-                        ExtGravityOverrideEditor.DrawPoint(Points[i].GetGlobalPointPosition(), EditorOptions.Instance.SizeLinesPoints, colorUnselected);
-                    }
-                    continue;
-                }
-
-                ExtGravityOverrideEditor.DrawPoint(false, Points[i].GetGlobalPointPosition(), color, EditorOptions.Instance.SizeLinesPoints, out bool hasChanged);
-                if (hasChanged)
-                {
-                    if (!Event.current.control)
-                    {
-                        UnSelectPoints();
-                    }
-                    _lastPositionMoved = Points[i].GetGlobalPointPosition();
-                    bool selectionSetting = !Points[i].IsSelected();
-                    Points[i].SetSelected(selectionSetting);
-                    SetPointsInfoOfLine(Points[i], false);
-
-                    SelectOtherIfThereAreAtExactSamePosition(Points[i], selectionSetting);
-
-                    SetupPointInLines();
-                    changed = true;
-                }
-            }
-            if (changed)
-            {
-                this.ApplyModification();
-            }
-        }
-
-        private void SelectOtherIfThereAreAtExactSamePosition(PointInLines pointClicked, bool selectionSetting)
-        {
-            Vector3 positionPointClicked = pointClicked.GetGlobalPointPosition();
-            for (int i = 0; i < Points.Count; i++)
-            {
-                if (Points[i] == pointClicked)
-                {
-                    continue;
-                }
-                if (Points[i].GetGlobalPointPosition() == positionPointClicked)
-                {
-                    Points[i].SetSelected(selectionSetting);
-                    SetPointsInfoOfLine(Points[i], false);
-                }
-            }
-        }
-
-        private void HandlePoints(Vector3 middle)
-        {
-            Vector3 newMiddle = ExtHandle.DoHandleMove(middle, _attractor.Rotation, out bool hasChangedPoint);
-            if (!hasChangedPoint)
-            {
-                return;
-            }
-            _lastPositionMoved = newMiddle;
-
-            Vector3 offsetFromOld = newMiddle - middle;
-            for (int i = 0; i < PointsSelected.Count; i++)
-            {
-                PointsSelected[i].SetGlobalPointPosition(PointsSelected[i].GetGlobalPointPosition() + offsetFromOld);
-                MovePoints(_polyLineMatrixInverse, PointsSelected[i]);
-            }
-
-            this.ApplyModification();
-        }
-
-        private void MovePoints(Matrix4x4 inverse, PointInLines point)
-        {
-            Vector3 p1 = point.P1PropertieGlobal.vector3Value;
-            Vector3 p2 = point.P2PropertieGlobal.vector3Value;
-
-            Vector3 inverseP1 = inverse.MultiplyPoint3x4(p1);
-            Vector3 inverseP2 = inverse.MultiplyPoint3x4(p2);
-
-            ExtShapeSerializeProperty.MoveLineFromSerializeProperties(point.ExtLineFromLocal, inverseP1, inverseP2);
-            ExtShapeSerializeProperty.MoveLineFromSerializeProperties(point.ExtLineFromGlobal, p1, p2);
-        }
-
-        private PointsInfo GetPointInfoOfPointLine(int indexLine, int indexPoint)
-        {
-            PointsInfo pointInfo = new PointsInfo();
-            SerializedProperty pointInfoLines = _pointInfosArray.GetArrayElementAtIndex(indexLine * 2 + indexPoint);
-
-            pointInfo.IsAttached = pointInfoLines.GetPropertie("IsAttached").boolValue;
-            pointInfo.IsSelected = pointInfoLines.GetPropertie("IsSelected").boolValue;
-            return (pointInfo);
-        }
-
-        private void SetPointsInfoOfLine(PointInLines point, bool updatePoints)
-        {
-            SerializedProperty pointInfoLines = _pointInfosArray.GetArrayElementAtIndex(point.IndexLine * 2 + point.IndexPoint);
-            pointInfoLines.GetPropertie("IsAttached").boolValue = point.PointInfo.IsAttached;
-            pointInfoLines.GetPropertie("IsSelected").boolValue = point.PointInfo.IsSelected;
-
-            if (updatePoints)
-            {
-                SetupPointInLines();
-            }
         }
     }
 }

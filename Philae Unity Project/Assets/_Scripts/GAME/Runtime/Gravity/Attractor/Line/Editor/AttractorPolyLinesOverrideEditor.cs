@@ -15,6 +15,7 @@ using UnityEngine.Rendering;
 
 namespace philae.gravity.attractor
 {
+    /*
     [CustomEditor(typeof(AttractorPolyLinesOverride), true)]
     public class AttractorPolyLinesOverrideEditor : AttractorPolyLinesEditor
     {
@@ -85,4 +86,5 @@ namespace philae.gravity.attractor
             this.GetPropertie("GravityOverride").DeleteArrayElementAtIndex(index);
         }
     }
+    */
 }
