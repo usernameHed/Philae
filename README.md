@@ -19,20 +19,22 @@ Here you see the direction of gravity can be facing:
 For going further, I need to be able to use only certain part of the primitive to apply the gravity. Therefore I have done a custom editor to be able to manipulate these option directly from editor:
 <br>
 <img src="Philae Unity Project/Misc/Pics/Gravity Toward Primitive With Override.gif" width="500">
-
-
-
 <br>
-<img src="Philae Unity Project/Misc/Pics/ClosestPoints.jpg" width="500">
 
-Overriding primitives option to prevent Closest point calculation from happening to certain location of my level design
+I have worked hard to have as many primitive as possible, and for each of them, as many Gravity override as I can.
 <br>
 <img src="Philae Unity Project/Misc/Pics/Gravity Override Cube.gif" width="500">
+<br>
 
-Creation of a line editor, thanks to serializeProperty. Here I am using a cached Matrix TRS from the position of my line.
+Here the final list of all primitives:
+<br>
+<img src="Philae Unity Project/Misc/Pics/ClosestPoints.jpg" width="500">
+<br>
+
+
+I have even created a line editor to have custom gravity setup for some level:
 <br>
 <img src="Philae Unity Project/Misc/Pics/Line Editor.gif" width="500">
-
 
 This editor is of course, compatible with both gravityOverride, and LineMovement:
 <img src="Philae Unity Project/Misc/Pics/Line Editor With Gravity.gif" width="500">
