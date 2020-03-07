@@ -13,7 +13,6 @@ namespace philae.gravity.attractor.line
         private AttractorLine _attractorLine;
         private AttractoLineGenericEditor _attractorLinesGeneric;
 
-        
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
         /// by telling it who we are (a Transform Inspector)
@@ -81,10 +80,7 @@ namespace philae.gravity.attractor.line
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
             base.CustomOnSceneGUI(sceneview);
-
-            //this.UpdateSerializeProperties();
             _attractorLinesGeneric.CustomOnSceneGUI(sceneview);
-
         }
     }
 }

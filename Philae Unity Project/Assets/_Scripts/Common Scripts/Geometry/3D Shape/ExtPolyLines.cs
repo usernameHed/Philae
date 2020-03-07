@@ -30,11 +30,6 @@ namespace hedCommon.geometry.shape3d
         [SerializeField]
         private Matrix4x4 _polyLinesMatrix;
 
-#if UNITY_EDITOR
-        [SerializeField]
-        private List<PointsInfo> _pointsInfos;
-#endif
-
         public ExtPolyLines(Vector3 position,
             Quaternion rotation,
             Vector3 localScale) : this()

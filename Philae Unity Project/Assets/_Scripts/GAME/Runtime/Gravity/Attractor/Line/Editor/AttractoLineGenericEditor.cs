@@ -50,6 +50,7 @@ namespace philae.gravity.attractor.line
             Tools.hidden = EditorOptions.Instance.SetupLinesOfSphape;
             _transformHiddedTools.HideHandle = EditorOptions.Instance.SetupLinesOfSphape;
 
+            _targetEditor.UpdateEditor();
             _needToReConstructLines?.Invoke();
         }
 
