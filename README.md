@@ -2,7 +2,7 @@
 
 This project is a big sand box for me, my final goal is to create a mario galaxy like physics engine, and may be some game based on that later.
 <br><br>
-<img src="Philae Unity Project/Misc/Pics/Philae.gif" width="291"><img src="Philae Unity Project/Misc/Pics/Philae 2.gif" width="291"><img src="Philae Unity Project/Misc/Pics/Philae 3.gif" width="291">
+<img src="Philae Unity Project/Misc/Pics/Philae.gif" width="290"><img src="Philae Unity Project/Misc/Pics/Philae 2.gif" width="290"><img src="Philae Unity Project/Misc/Pics/Philae 3.gif" width="290">
 
 <br>
 
