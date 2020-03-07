@@ -41,6 +41,16 @@ namespace philae.gravity.attractor
             return (IsPoint1()) ? P1PropertieGlobal.vector3Value : P2PropertieGlobal.vector3Value;
         }
 
+        public Vector3 GetLocalPosition()
+        {
+            return (IsPoint1()) ? P1PropertieLocal.vector3Value : P2PropertieLocal.vector3Value;
+        }
+
+        public Vector3 GetOtherLocalPoint()
+        {
+            return (IsPoint1()) ? P2PropertieLocal.vector3Value : P1PropertieLocal.vector3Value;
+        }
+
         public Vector3 GetMiddleLine()
         {
             Vector3 middleLine = ExtVector3.GetMeanOfXPoints(P1PropertieGlobal.vector3Value, P2PropertieGlobal.vector3Value);

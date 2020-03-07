@@ -74,24 +74,98 @@ namespace philae.gravity.attractor.line
 
         private void ButtonsSetupsLinesTools()
         {
-            if (GUILayout.Button("Add Line"))
+            using (ExtGUIScopes.Horiz())
             {
-                AddLine();
+                if (GUILayout.Button("Add Line"))
+                {
+                    AddLine(false);
+                }
+                if (CanJonction() && GUILayout.Button("Add Jonction"))
+                {
+                    AddLine(true);
+                }
             }
         }
 
-        private void AddLine()
+        private bool CanJonction()
+        {
+            if (PointsSelected.Count < 2)
+            {
+                return (false);
+            }
+            Vector3 point = PointsSelected[0].GetGlobalPointPosition();
+            for (int i = 1; i < PointsSelected.Count; i++)
+            {
+                if (PointsSelected[i].GetGlobalPointPosition() != point)
+                {
+                    return (true);
+                }
+            }
+            return (false);
+        }
+
+        private void AddLine(bool canJonction)
         {
             _targetEditor.UpdateEditor();
 
             Vector3 p1 = GetAddPointLocalPosition();
             Vector3 p2 = p1 + new Vector3(0, 0, 0.2f);
+
+            if (canJonction)
+            {
+                TestToLinkTwoLines(ref p1, ref p2);
+            }
+
             AddLineLocal(p1, p2);
 
             _targetEditor.ApplyModification();
 
             AddedLine?.Invoke();
             _needToReConstructLines?.Invoke();
+        }
+
+        /// <summary>
+        /// search if there is 2 selected points not linked. If so, link them
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        private void TestToLinkTwoLines(ref Vector3 p1, ref Vector3 p2)
+        {
+            if (PointsSelected.Count < 2)
+            {
+                return;
+            }
+            Vector3 point1 = PointsSelected[0].GetLocalPosition();
+            Vector3 point2 = PointsSelected[0].GetOtherLocalPoint();
+            
+            for (int i = 1; i < PointsSelected.Count; i++)
+            {
+                if (IsPointIsConnectedToOtherPoint(point1, PointsSelected[i].GetLocalPosition()))
+                {
+                    continue;
+                }
+                Debug.Log("create junction ?");
+                Debug.Log(point1 + ", " + point2 + ", other: " + PointsSelected[i].GetLocalPosition() + ", " + PointsSelected[i].GetOtherLocalPoint());
+                p1 = point1;
+                p2 = PointsSelected[i].GetLocalPosition();
+                return;
+            }
+        }
+
+        private bool IsPointIsConnectedToOtherPoint(Vector3 point1, Vector3 point2)
+        {
+            for (int i = 0; i < Points.Count; i++)
+            {
+                if (Points[i].GetLocalPosition() == point1 && Points[i].GetOtherLocalPoint() == point2)
+                {
+                    return (true);
+                }
+                if (Points[i].GetLocalPosition() == point2 && Points[i].GetOtherLocalPoint() == point1)
+                {
+                    return (true);
+                }
+            }
+            return (false);
         }
 
         private Vector3 GetAddPointLocalPosition()
