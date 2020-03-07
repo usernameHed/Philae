@@ -58,7 +58,7 @@ This editor is of course, compatible with both **GravityOverride**, and **Line E
 <br>
 <br>
 
-To Optimize calculation, I need to be able to organize level design into chunk, and calculate only attractors inside this chunk.
+To optimize calculation, I need to be able to organize the level design into chunk, and calculate only attractors inside this chunk.
 I have create Special **Zone**, which contain a list of **Attractors**:
 <br><br>
 <img src="Philae Unity Project/Misc/Pics/Zone.gif" width="500">
