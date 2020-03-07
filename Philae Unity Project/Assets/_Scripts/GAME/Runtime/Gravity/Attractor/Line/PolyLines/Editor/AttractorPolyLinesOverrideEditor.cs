@@ -92,7 +92,6 @@ namespace philae.gravity.attractor
 
         protected override void LineHasBeenAdded()
         {
-            Debug.Log("line added ??");
             int countLines = this.GetPropertie(PROPEPRTY_POLY_EXT_LINE_3D).GetPropertie(PROPERTY_LIST_LINE_GLOBAL).arraySize;
             _gravityOverride.arraySize = countLines;
             this.ApplyModification();
@@ -100,7 +99,6 @@ namespace philae.gravity.attractor
 
         protected override void LineHasBeenDeleted(int index)
         {
-            Debug.Log("gravity Override delete array at index " + index);
             _gravityOverride.DeleteArrayElementAtIndex(index);
             this.ApplyModification();
         }

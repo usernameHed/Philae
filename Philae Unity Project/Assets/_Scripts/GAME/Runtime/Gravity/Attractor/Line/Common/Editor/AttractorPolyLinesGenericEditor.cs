@@ -84,14 +84,39 @@ namespace philae.gravity.attractor.line
         {
             _targetEditor.UpdateEditor();
 
-            Vector3 p1 = new Vector3(0, 0, 0);
-            Vector3 p2 = new Vector3(0, 0, 0.3f);
+            Vector3 p1 = GetAddPointLocalPosition();
+            Vector3 p2 = p1 + new Vector3(0, 0, 0.2f);
             AddLineLocal(p1, p2);
 
             _targetEditor.ApplyModification();
 
             AddedLine?.Invoke();
             _needToReConstructLines?.Invoke();
+        }
+
+        private Vector3 GetAddPointLocalPosition()
+        {
+            Vector3 globalPosition = GetAddPointPosition();
+            return (_polyLineMatrixInverse.MultiplyPoint3x4(globalPosition));
+        }
+
+        private Vector3 GetAddPointPosition()
+        {
+            if (PointsSelected.Count == 0)
+            {
+                return (GetClosestPointFromCamera());
+            }
+            return (PointsSelected[PointsSelected.Count - 1].GetGlobalPointPosition());
+        }
+
+        private Vector3 GetClosestPointFromCamera()
+        {
+            List<Vector3> points = new List<Vector3>(Points.Count);
+            for (int i = 0; i < Points.Count; i++)
+            {
+                points.Add(Points[i].GetGlobalPointPosition());
+            }
+            return (ExtMathf.GetClosestPoint(ExtSceneView.GetSceneViewCameraTransform().position, points, out int indexFound));
         }
 
         public void AddLineLocal(Vector3 p1, Vector3 p2)

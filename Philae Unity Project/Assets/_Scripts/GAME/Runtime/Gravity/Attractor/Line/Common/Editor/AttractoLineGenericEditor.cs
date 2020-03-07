@@ -32,7 +32,7 @@ namespace philae.gravity.attractor.line
         private Vector2 _endDragPosition;
         private bool _isDragging = false;
         protected Matrix4x4 _polyLineMatrix;
-        private Matrix4x4 _polyLineMatrixInverse;
+        protected Matrix4x4 _polyLineMatrixInverse;
 
         private Vector3 _currentHandlePosition;
 
