@@ -55,7 +55,8 @@ Here the final list of all current **Attractors**:
 
 I have created a line editor to have custom gravity setup for some level. This editor is of course, compatible with both **GravityOverride**, and **Line Edition**
 <br><br>
-<img src="Philae Unity Project/Misc/Pics/Line Editor.gif" width="410"><img src="Philae Unity Project/Misc/Pics/Line Editor With Gravity.gif" width="410">
+<img src="Philae Unity Project/Misc/Pics/Line Editor.gif" width="500">
+<img src="Philae Unity Project/Misc/Pics/Line Editor With Gravity.gif" width="500">
 <br>
 <br>
 <br>
