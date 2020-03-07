@@ -11,6 +11,7 @@ Bellow some iteration of that idea:
 First, I am calculating closest points to cylinder primitive:
 <br>
 <img src="Philae Unity Project/Misc/Pics/Gravity Toward Primitive.gif" width="500">
+<br>
 Here you see the direction of gravity can be facing:
 - the trunk of the cylinder,
 - the extremity of the disk top or bottom
@@ -20,10 +21,15 @@ For going further, I need to be able to use only certain part of the primitive t
 <br>
 <img src="Philae Unity Project/Misc/Pics/Gravity Toward Primitive With Override.gif" width="500">
 <br>
+You see here that I can choose to not apply gravity when the player is over a certain part of the primitive.
 
 I have worked hard to have as many primitive as possible, and for each of them, as many Gravity override as I can.
 <br>
 <img src="Philae Unity Project/Misc/Pics/Gravity Override Cube.gif" width="500">
+<br>
+These primitive can be Moved, Rotated and Scaled like a normal gameObject in editor !
+<br>
+<img src="Philae Unity Project/Misc/Pics/Move Rotate Scale.gif" width="500">
 <br>
 
 Here the final list of all primitives:
