@@ -30,8 +30,6 @@ namespace hedCommon.geometry.shape3d
         [SerializeField]
         private Matrix4x4 _polyLinesMatrix;
 
-        private List<Vector3> _cachedClosestLineCalculation;
-
         public ExtPolyLines(Vector3 position,
             Quaternion rotation,
             Vector3 localScale) : this()
@@ -45,8 +43,6 @@ namespace hedCommon.geometry.shape3d
             _listLinesLocal[0] = new ExtLine(new Vector3(0, 0, 0), new Vector3(-0.3f, 0, -0.2f));
             _listLinesLocal[1] = new ExtLine(new Vector3(0, 0, 0), new Vector3(0.3f, 0, -0.2f));
             _listLinesLocal[2] = new ExtLine(new Vector3(0, 0, 0), new Vector3(0, 0, 0.3f));
-            _cachedClosestLineCalculation = new List<Vector3>(3);
-
             UpdateMatrix();
         }
 
@@ -92,28 +88,14 @@ namespace hedCommon.geometry.shape3d
         /// </summary>
         public Vector3 GetClosestPoint(Vector3 k)
         {
-            return (ExtLine.GetClosestPointFromLines(k, _listLines));
+            return (ExtLine.GetClosestPointFromLines(k, _listLines, out int indexLine));
         }
 
         public bool GetClosestPointIfWeCan(Vector3 k, out Vector3 closestPoint, GravityOverrideLineTopDown[] gravityOverride)
         {
-            _cachedClosestLineCalculation.Clear();
-            closestPoint = Vector3.zero;
-
-            for (int i = 0; i < _listLines.Length; i++)
-            {
-                bool canApplyGravity = _listLines[i].GetClosestPointIfWeCan(k, out closestPoint, gravityOverride[i]);
-                if (canApplyGravity)
-                {
-                    _cachedClosestLineCalculation.Add(closestPoint);
-                }
-            }
-            if (_cachedClosestLineCalculation.Count == 0)
-            {
-                return (false);
-            }
-            closestPoint = ExtMathf.GetClosestPoint(k, _cachedClosestLineCalculation, out int indexFound);
-            return (true);
+            closestPoint = ExtLine.GetClosestPointFromLines(k, _listLines, out int indexLine);
+            bool canApplyGravity = _listLines[indexLine].GetClosestPointIfWeCan(k, out closestPoint, gravityOverride[indexLine]);
+            return (canApplyGravity);
         }
 
 

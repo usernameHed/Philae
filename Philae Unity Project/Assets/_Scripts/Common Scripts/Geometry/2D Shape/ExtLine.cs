@@ -142,10 +142,11 @@ namespace hedCommon.geometry.shape2d
         }
 #endif
 
-        public static Vector3 GetClosestPointFromLines(Vector3 k, ExtLine[] lines)
+        public static Vector3 GetClosestPointFromLines(Vector3 k, ExtLine[] lines, out int indexLine)
         {
             Vector3 closestFound = lines[0].ClosestPointTo(k);
             float sqrDist = (k - closestFound).sqrMagnitude;
+            indexLine = 0;
 
             for (int i = 1; i < lines.Length; i++)
             {
@@ -155,6 +156,7 @@ namespace hedCommon.geometry.shape2d
                 {
                     sqrDist = dist;
                     closestFound = closest;
+                    indexLine = i;
                 }
             }
             return (closestFound);
