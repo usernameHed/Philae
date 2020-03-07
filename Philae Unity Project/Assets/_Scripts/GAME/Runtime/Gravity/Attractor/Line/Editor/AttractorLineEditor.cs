@@ -35,8 +35,7 @@ namespace philae.gravity.attractor.line
             base.OnCustomEnable();
             _attractorLine = (AttractorLine)GetTarget<Attractor>();
 
-            _attractorLinesGeneric.OnCustomEnable(this, _attractorLine.gameObject, LinesHasBeenUpdated);
-            ConstructLines();
+            _attractorLinesGeneric.OnCustomEnable(this, _attractorLine.gameObject, LinesHasBeenUpdated, ConstructLines);
         }
 
         private void ConstructLines()

@@ -24,8 +24,9 @@ namespace philae.gravity.attractor.line
         public List<PointInLines> Points = new List<PointInLines>(20);
         public List<PointInLines> PointsSelected = new List<PointInLines>(20);
         public delegate void NeedToUpdateLines();
+        public delegate void NeedToReConstructLines();
         private NeedToUpdateLines _linesPointsHasBeenUpdated;
-
+        private NeedToReConstructLines _needToReConstructLines;
 
         private Vector2 _initialPositionDrag;
         private Vector2 _endDragPosition;
@@ -38,15 +39,18 @@ namespace philae.gravity.attractor.line
         /// <summary>
         /// you should use that function instead of OnEnable()
         /// </summary>
-        public void OnCustomEnable(Editor targetEditor, GameObject targetGameObject, NeedToUpdateLines needToUpdateLines)
+        public void OnCustomEnable(Editor targetEditor, GameObject targetGameObject, NeedToUpdateLines needToUpdateLines, NeedToReConstructLines needToReConstructLines)
         {
             _targetEditor = targetEditor;
             _targetGameObject = targetGameObject;
             _linesPointsHasBeenUpdated = needToUpdateLines;
+            _needToReConstructLines = needToReConstructLines;
 
             _transformHiddedTools = _targetGameObject.GetComponent<TransformHiddedTools>();
             Tools.hidden = EditorOptions.Instance.SetupLinesOfSphape;
             _transformHiddedTools.HideHandle = EditorOptions.Instance.SetupLinesOfSphape;
+
+            _needToReConstructLines?.Invoke();
         }
 
         public void ConstructLines(SerializedProperty matrix, List<PointInLines> pointInLines)
@@ -59,15 +63,6 @@ namespace philae.gravity.attractor.line
             _polyLineMatrix = _matrixPropertie.GetValue<Matrix4x4>();
             _polyLineMatrixInverse = _polyLineMatrix.inverse;
         }
-
-        /*
-        public void UpdateLines(SerializedProperty matrix)
-        {
-            _matrixPropertie = matrix;
-            _polyLineMatrix = _matrixPropertie.GetValue<Matrix4x4>();
-            _polyLineMatrixInverse = _polyLineMatrix.inverse;
-        }
-        */
 
         public void OnCustomDisable()
         {
@@ -91,6 +86,7 @@ namespace philae.gravity.attractor.line
             FramePointsWithF();
             ManageDragRect();
             AttemptToUselectPoints();
+            ShowPointsSelectedText();
             LockEditor();
         }
 
@@ -103,10 +99,8 @@ namespace philae.gravity.attractor.line
             {
                 if (exception.Contains(PointsSelected[i]))
                 {
-                    Debug.Log("exeption");
                     continue;
                 }
-                Debug.Log("unselect point " + PointsSelected[i]);
                 PointsSelected[i].SetSelected(false);
             }
             FillSelectedPoints();
@@ -120,11 +114,88 @@ namespace philae.gravity.attractor.line
             EditorGUI.BeginChangeCheck();
             {
                 EditorOptions.Instance.SetupLinesOfSphape = GUILayout.Toggle(EditorOptions.Instance.SetupLinesOfSphape, "Setup Lines", EditorStyles.miniButton);
-
                 if (EditorGUI.EndChangeCheck())
                 {
                     SetupLineChanged();
+                    _needToReConstructLines?.Invoke();
                 }
+
+                if (EditorOptions.Instance.SetupLinesOfSphape)
+                {
+                    ButtonsSetupsLinesTools();
+                }
+            }
+        }
+
+        private void ButtonsSetupsLinesTools()
+        {
+            if (PointsSelected.Count >= 2)
+            {
+                ShowMergeSelectedPointsButton();
+                UnMergeSelectedPoint();
+            }
+        }
+
+        public void ShowMergeSelectedPointsButton()
+        {
+            bool pointAreAtSamePlace = true;
+            Vector3 pointPosition = PointsSelected[0].GetGlobalPointPosition();
+            for (int i = 1; i < PointsSelected.Count; i++)
+            {
+                if (pointPosition != PointsSelected[i].GetGlobalPointPosition())
+                {
+                    pointAreAtSamePlace = false;
+                    break;
+                }
+            }
+            if (pointAreAtSamePlace)
+            {
+                return;
+            }
+
+            if (GUILayout.Button("Merge Points"))
+            {
+                MergeSelectedPoints();
+            }
+        }
+
+        public void MergeSelectedPoints()
+        {
+            _targetEditor.UpdateEditor();
+            for (int i = 0; i < PointsSelected.Count; i++)
+            {
+                PointsSelected[i].SetGlobalPointPosition(_currentHandlePosition);
+                PointsSelected[i].UpdateLocalPositionFromGlobalPosition(_polyLineMatrixInverse);
+            }
+            _linesPointsHasBeenUpdated?.Invoke();
+            _targetEditor.ApplyModification();
+        }
+
+        public void UnMergeSelectedPoint()
+        {
+            using (ExtGUIScopes.Horiz())
+            {
+                for (int i = 0; i < PointsSelected.Count; i++)
+                {
+                    if (GUILayout.Button(i.ToString()))
+                    {
+                        _targetEditor.UpdateEditor();
+                        UnSelectPoints(PointsSelected[i]);
+                    }
+                }
+            }
+        }
+
+        private void ShowPointsSelectedText()
+        {
+            if (PointsSelected.Count < 2)
+            {
+                return;
+            }
+            for (int i = 0; i < PointsSelected.Count; i++)
+            {
+                Vector3 middleLine = ExtVector3.GetMeanOfXPoints(PointsSelected[i].GetGlobalPointPosition(), PointsSelected[i].GetMiddleLine());
+                ExtSceneView.DisplayStringIn3D(middleLine, i.ToString(), Color.black);
             }
         }
 
@@ -254,7 +325,6 @@ namespace philae.gravity.attractor.line
         {
             if (ExtEventEditor.IsLeftMouseUp(Event.current) && ExtVector3.IsClose(_initialPositionDrag, _endDragPosition, 0.01f))
             {
-                Debug.Log("unselect ?");
                 UnSelectPoints();
             }
         }
