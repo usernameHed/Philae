@@ -888,31 +888,31 @@ PrefabInstance:
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[0]
       value: '"path":"CurrentZone.Cube","value":{"$id":0,"$type":"hedCommon.geometry.shape3d.ExtCube,
-        Assembly-CSharp","_position":{"$type":"UnityEngine.Vector3, UnityEngine.CoreModule",0,0,0},"_rotation":{"$type":"UnityEngine.Quaternion,
+        Assembly-CSharp","_position":{"$type":"UnityEngine.Vector3, UnityEngine.CoreModule",-20,0,10},"_rotation":{"$type":"UnityEngine.Quaternion,
         UnityEngine.CoreModule",0,0,0,1},"_localScale":{"$type":"UnityEngine.Vector3,
         UnityEngine.CoreModule",1000,1000,1000},"_cubeMatrix":{"$type":"UnityEngine.Matrix4x4,
-        UnityEngine.CoreModule","m00":1000,"m10":0,"m20":0,"m30":0,"m01":0,"m11":1000,"m21":0,"m31":0,"m02":0,"m12":0,"m22":1000,"m32":0,"m03":0,"m13":0,"m23":0,"m33":1},"_p1":{"$type":"UnityEngine.Vector3,
-        UnityEngine.CoreModule",-500,-500,-500},"_p2":{"$type":"UnityEngine.Vector3,
-        UnityEngine.CoreModule",-500,-500,500},"_p3":{"$type":"UnityEngine.Vector3,
-        UnityEngine.CoreModule",500,-500,500},"_p4":{"$type":"UnityEngine.Vector3,
-        UnityEngine.CoreModule",500,-500,-500},"_p5":{"$type":"UnityEngine.Vector3,
-        UnityEngine.CoreModule",-500,500,-500},"_p6":{"$type":"UnityEngine.Vector3,
-        UnityEngine.CoreModule",-500,500,500},"_p7":{"$type":"UnityEngine.Vector3,
-        UnityEngine.CoreModule",500,500,500},"_p8":{"$type":"UnityEngine.Vector3,
-        UnityEngine.CoreModule",500,500,-500},"_v41":{"$type":"UnityEngine.Vector3,
+        UnityEngine.CoreModule","m00":1000,"m10":0,"m20":0,"m30":0,"m01":0,"m11":1000,"m21":0,"m31":0,"m02":0,"m12":0,"m22":1000,"m32":0,"m03":-20,"m13":0,"m23":10,"m33":1},"_p1":{"$type":"UnityEngine.Vector3,
+        UnityEngine.CoreModule",-520,-500,-490},"_p2":{"$type":"UnityEngine.Vector3,
+        UnityEngine.CoreModule",-520,-500,510},"_p3":{"$type":"UnityEngine.Vector3,
+        UnityEngine.CoreModule",480,-500,510},"_p4":{"$type":"UnityEngine.Vector3,
+        UnityEngine.CoreModule",480,-500,-490},"_p5":{"$type":"UnityEngine.Vector3,
+        UnityEngine.CoreModule",-520,500,-490},"_p6":{"$type":"UnityEngine.Vector3,
+        UnityEngine.CoreModule",-520,500,510},"_p7":{"$type":"UnityEngine.Vector3,
+        UnityEngine.CoreModule",480,500,510},"_p8":{"$type":"UnityEngine.Vector3,
+        UnityEngine.CoreModule",480,500,-490},"_v41":{"$type":"UnityEngine.Vector3,
         UnityEngine.CoreModule",1000,0,0},"_v51":{"$type":"UnityEngine.Vector3, UnityEngine.CoreModule",0,1000,0},"_v21":{"$type":"UnityEngine.Vector3,
-        UnityEngine.CoreModule",0,0,1000},"_v41Squared":1000000,"_v51Squared":1000000,"_v21Squared":1000000,"_uP1":500000,"_uP2":-500000,"_vP1":500000,"_vP4":-500000,"_wP1":500000,"_wP5":-500000,"_face1":{"$type":"hedCommon.geometry.shape2d.ExtPlane,
-        Assembly-CSharp","Point":{"$type":"UnityEngine.Vector3, UnityEngine.CoreModule",-500,-500,-500},"Normal":{"$type":"UnityEngine.Vector3,
+        UnityEngine.CoreModule",0,0,1000},"_v41Squared":1000000,"_v51Squared":1000000,"_v21Squared":1000000,"_uP1":490000,"_uP2":-510000,"_vP1":520000,"_vP4":-480000,"_wP1":500000,"_wP5":-500000,"_face1":{"$type":"hedCommon.geometry.shape2d.ExtPlane,
+        Assembly-CSharp","Point":{"$type":"UnityEngine.Vector3, UnityEngine.CoreModule",-520,-500,-490},"Normal":{"$type":"UnityEngine.Vector3,
         UnityEngine.CoreModule",0,0,-1000000},"_allowBottom":false},"_face2":{"$type":"hedCommon.geometry.shape2d.ExtPlane,
-        Assembly-CSharp","Point":{"$type":"UnityEngine.Vector3, UnityEngine.CoreModule",500,-500,-500},"Normal":{"$type":"UnityEngine.Vector3,
+        Assembly-CSharp","Point":{"$type":"UnityEngine.Vector3, UnityEngine.CoreModule",480,-500,-490},"Normal":{"$type":"UnityEngine.Vector3,
         UnityEngine.CoreModule",1000000,0,0},"_allowBottom":false},"_face3":{"$type":"hedCommon.geometry.shape2d.ExtPlane,
-        Assembly-CSharp","Point":{"$type":"UnityEngine.Vector3, UnityEngine.CoreModule",-500,500,-500},"Normal":{"$type":"UnityEngine.Vector3,
+        Assembly-CSharp","Point":{"$type":"UnityEngine.Vector3, UnityEngine.CoreModule",-520,500,-490},"Normal":{"$type":"UnityEngine.Vector3,
         UnityEngine.CoreModule",0,1000000,0},"_allowBottom":false},"_face4":{"$type":"hedCommon.geometry.shape2d.ExtPlane,
-        Assembly-CSharp","Point":{"$type":"UnityEngine.Vector3, UnityEngine.CoreModule",-500,-500,500},"Normal":{"$type":"UnityEngine.Vector3,
+        Assembly-CSharp","Point":{"$type":"UnityEngine.Vector3, UnityEngine.CoreModule",-520,-500,510},"Normal":{"$type":"UnityEngine.Vector3,
         UnityEngine.CoreModule",0,-1000000,0},"_allowBottom":false},"_face5":{"$type":"hedCommon.geometry.shape2d.ExtPlane,
-        Assembly-CSharp","Point":{"$type":"UnityEngine.Vector3, UnityEngine.CoreModule",-500,-500,500},"Normal":{"$type":"UnityEngine.Vector3,
+        Assembly-CSharp","Point":{"$type":"UnityEngine.Vector3, UnityEngine.CoreModule",-520,-500,510},"Normal":{"$type":"UnityEngine.Vector3,
         UnityEngine.CoreModule",-1000000,0,0},"_allowBottom":false},"_face6":{"$type":"hedCommon.geometry.shape2d.ExtPlane,
-        Assembly-CSharp","Point":{"$type":"UnityEngine.Vector3, UnityEngine.CoreModule",500,-500,500},"Normal":{"$type":"UnityEngine.Vector3,
+        Assembly-CSharp","Point":{"$type":"UnityEngine.Vector3, UnityEngine.CoreModule",480,-500,510},"Normal":{"$type":"UnityEngine.Vector3,
         UnityEngine.CoreModule",0,0,1000000},"_allowBottom":false}}'
       objectReference: {fileID: 0}
     - target: {fileID: 3156696025954553127, guid: f5160676ec70dea42bbd2c2f5383c1fe,
@@ -5069,7 +5069,7 @@ PrefabInstance:
     - target: {fileID: 6961074297713559367, guid: 2c12788eaebacdc43b913f94d4f68159,
         type: 3}
       propertyPath: _gravitonsInside.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6961074297713559367, guid: 2c12788eaebacdc43b913f94d4f68159,
         type: 3}
@@ -5854,12 +5854,12 @@ PrefabInstance:
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
       propertyPath: _line3d._lineLocalPosition._p1.z
-      value: 0.3
+      value: 0.40112853
       objectReference: {fileID: 0}
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
       propertyPath: _line3d._line._p1.x
-      value: -160
+      value: -158.47717
       objectReference: {fileID: 0}
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
@@ -5869,7 +5869,7 @@ PrefabInstance:
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
       propertyPath: _line3d._line._p2.x
-      value: -160
+      value: -162.97092
       objectReference: {fileID: 0}
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
@@ -5909,42 +5909,42 @@ PrefabInstance:
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
       propertyPath: _line3d._line._p1.z
-      value: 3
+      value: 4.0112853
       objectReference: {fileID: 0}
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
       propertyPath: _line3d._line._delta.z
-      value: -6
+      value: -7.911043
       objectReference: {fileID: 0}
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
       propertyPath: _line3d._line._deltaSquared
-      value: 36
+      value: 82.778336
       objectReference: {fileID: 0}
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
       propertyPath: _line3d._lineLocalPosition._delta.z
-      value: -0.6
+      value: -0.7911043
       objectReference: {fileID: 0}
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
       propertyPath: _line3d._lineLocalPosition._deltaSquared
-      value: 0.36
+      value: 0.8277834
       objectReference: {fileID: 0}
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
       propertyPath: _line3d._lineLocalPosition._p2.z
-      value: -0.3
+      value: -0.38997576
       objectReference: {fileID: 0}
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
       propertyPath: _line3d._line._p2.z
-      value: -3
+      value: -3.8997576
       objectReference: {fileID: 0}
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
       propertyPath: _line3d._lineLocalPosition._p1.x
-      value: -0.00000023841858
+      value: 0.15228248
       objectReference: {fileID: 0}
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
@@ -5954,7 +5954,7 @@ PrefabInstance:
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
       propertyPath: _line3d._lineLocalPosition._p2.x
-      value: -0.00000023841858
+      value: -0.29709193
       objectReference: {fileID: 0}
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
@@ -5964,12 +5964,12 @@ PrefabInstance:
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
       propertyPath: _line3d._lineLocalPosition._delta.x
-      value: 0
+      value: -0.4493744
       objectReference: {fileID: 0}
     - target: {fileID: 4136450915242420246, guid: 426f095eca5b14f41a310562b10fd69b,
         type: 3}
       propertyPath: _line3d._line._delta.x
-      value: 0
+      value: -4.493744
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 426f095eca5b14f41a310562b10fd69b, type: 3}

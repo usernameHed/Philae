@@ -6,9 +6,10 @@ using UnityEngine;
 
 namespace philae.gravity.attractor.line
 {
-    [CustomEditor(typeof(AttractorLine))]
+    [CustomEditor(typeof(AttractorLine), true)]
     public class AttractorLineEditor : AttractorEditor
     {
+        protected const string PROPERTY_EXT_LINE_3D = "_line3d";
         private AttractorLine _attractorLine;
         private AttractoLineGenericEditor _attractorLinesGeneric;
 
@@ -40,7 +41,7 @@ namespace philae.gravity.attractor.line
 
         private void ConstructLines()
         {
-            SerializedProperty line3d = this.GetPropertie("_line3d");
+            SerializedProperty line3d = this.GetPropertie(PROPERTY_EXT_LINE_3D);
             SerializedProperty matrix = line3d.GetPropertie("_linesMatrix");
             SerializedProperty line = line3d.GetPropertie("_line");
             SerializedProperty lineLocal = line3d.GetPropertie("_lineLocalPosition");
@@ -61,9 +62,8 @@ namespace philae.gravity.attractor.line
         /// </summary>
         private void LinesHasBeenUpdated()
         {
-            Debug.Log("ici line updated ??");
-            ExtShapeSerializeProperty.UpdateLineFromSerializeProperties(this.GetPropertie("_line3d").GetPropertie("_line"));
-            ExtShapeSerializeProperty.UpdateLineFromSerializeProperties(this.GetPropertie("_line3d").GetPropertie("_lineLocalPosition"));
+            ExtShapeSerializeProperty.UpdateLineFromSerializeProperties(this.GetPropertie(PROPERTY_EXT_LINE_3D).GetPropertie("_line"));
+            ExtShapeSerializeProperty.UpdateLineFromSerializeProperties(this.GetPropertie(PROPERTY_EXT_LINE_3D).GetPropertie("_lineLocalPosition"));
             this.ApplyModification();
         }
 

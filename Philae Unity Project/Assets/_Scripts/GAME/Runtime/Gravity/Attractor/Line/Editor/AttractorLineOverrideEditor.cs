@@ -15,9 +15,10 @@ using UnityEngine.Rendering;
 
 namespace philae.gravity.attractor
 {
-    [CustomEditor(typeof(AttractorLineOverride), true)]
+    [CustomEditor(typeof(AttractorLineOverride))]
     public class AttractorLineOverrideEditor : AttractorLineEditor
     {
+        private const string PROPERTY_GRAVITY_OVERRIDE = "GravityOverride";
         protected AttractorLineOverride _attractorLineOverride;
 
         /// <summary>
@@ -59,14 +60,37 @@ namespace philae.gravity.attractor
 
             this.UpdateEditor();
 
-            ExtLine3d line = this.GetPropertie("_line").GetValue<ExtLine3d>();
+            ExtLine3d line = this.GetPropertie(PROPERTY_EXT_LINE_3D).GetValue<ExtLine3d>();
             GravityOverrideLineTopDown gravityLine = ExtGravityOverrideEditor.DrawLine3d(line, _attractorLineOverride.GravityOverride, Color.red, out bool hasChanged);
 
             if (hasChanged)
             {
                 gravityLine.SetupGravity();
-                ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(this.GetPropertie("GravityOverride"), gravityLine);
+                ExtGravityOverrideEditor.ApplyModificationToCapsuleOrLine(this.GetPropertie(PROPERTY_GRAVITY_OVERRIDE), gravityLine);
                 this.ApplyModification();
+            }
+
+            LockEditor();
+        }
+
+        /// <summary>
+        /// need to be called at the end of the editor, lock the editor from deselecting the gameObject from the sceneView
+        /// </summary>
+        private void LockEditor()
+        {
+            //if nothing else, lock editor !
+            if (EditorOptions.Instance.ShowGravityOverride)
+            {
+                ExtSceneView.LockFromUnselect();
+            }
+            if (ExtEventEditor.IsKeyDown(KeyCode.Escape))
+            {
+                EditorOptions.Instance.ShowGravityOverride = false;
+            }
+
+            if (EditorOptions.Instance.ShowGravityOverride && ExtEventEditor.IsKeyDown(KeyCode.Delete))
+            {
+                ExtEventEditor.Use();
             }
         }
     }
