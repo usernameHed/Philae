@@ -120,10 +120,6 @@ namespace philae.gravity.attractor.line
                 }
                 int indexInArray = PointsSelected[i].IndexLine - deletedLines.Count;
                 DeleteLine(indexInArray);
-                if (DeleteLineByIndex != null)
-                {
-                    DeleteLineByIndex.Invoke(indexInArray);
-                }
                 deletedLines.Add(PointsSelected[i].IndexLine);
             }
 

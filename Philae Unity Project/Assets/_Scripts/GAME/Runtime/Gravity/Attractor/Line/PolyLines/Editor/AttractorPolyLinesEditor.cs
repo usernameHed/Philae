@@ -18,7 +18,6 @@ namespace philae.gravity.attractor.line
         protected const string PROPEPRTY_POLY_EXT_LINE_3D = "_polyLines";
 
         private AttractorPolyLines _attractorPolyLine;
-        //private AttractoLineGenericEditor _attractorLinesGeneric;
         private AttractorPolyLinesGenericEditor _attractorPolyLinesGeneric;
 
         /// <summary>
@@ -31,7 +30,6 @@ namespace philae.gravity.attractor.line
         public AttractorPolyLinesEditor()
             : base(false, "PolyLine")
         {
-            //_attractorLinesGeneric = new AttractoLineGenericEditor();
             _attractorPolyLinesGeneric = new AttractorPolyLinesGenericEditor();
         }
 
@@ -98,12 +96,12 @@ namespace philae.gravity.attractor.line
             this.ApplyModification();
         }
 
-        private void LineHasBeenAdded()
+        protected virtual void LineHasBeenAdded()
         {
             Debug.Log("add line");
         }
 
-        private void LineHasBeenDeleted(int index)
+        protected virtual void LineHasBeenDeleted(int index)
         {
             Debug.Log("delete line " + index);
         }

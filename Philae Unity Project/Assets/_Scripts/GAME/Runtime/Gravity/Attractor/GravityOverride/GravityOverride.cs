@@ -85,7 +85,6 @@ namespace philae.gravity.attractor.gravityOverride
         public void SetupGravity()
         {
             _canApplyGravity = Trunk || Top || Bottom;
-            Debug.Log("setup gravity of capsule ! " + _canApplyGravity);
         }
     }
 

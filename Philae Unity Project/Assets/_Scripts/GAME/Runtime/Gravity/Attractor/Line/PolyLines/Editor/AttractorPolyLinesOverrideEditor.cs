@@ -15,11 +15,15 @@ using UnityEngine.Rendering;
 
 namespace philae.gravity.attractor
 {
-    /*
     [CustomEditor(typeof(AttractorPolyLinesOverride), true)]
     public class AttractorPolyLinesOverrideEditor : AttractorPolyLinesEditor
     {
+        private const string PROPERTY_LIST_LINE_GLOBAL = "_listLines";
         private AttractorPolyLinesOverride _attractorPolyLineOverride;
+        private SerializedProperty _gravityOverride;
+
+        private AttractorOverrideGenericEditor _attractorOverrideGeneric = new AttractorOverrideGenericEditor();
+
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -41,30 +45,33 @@ namespace philae.gravity.attractor
         {
             base.OnCustomEnable();
             _attractorPolyLineOverride = (AttractorPolyLinesOverride)GetTarget<Attractor>();
-            DeleteLineByIndex = DeleteGravityOverrideLineAtIndex;
+            this.UpdateEditor();
+            _gravityOverride = this.GetPropertie(AttractorOverrideGenericEditor.PROPERTY_GRAVITY_OVERRIDE);
         }
 
         public override void ShowTinyEditorContent()
         {
             base.ShowTinyEditorContent();
-            EditorOptions.Instance.ShowGravityOverride = GUILayout.Toggle(EditorOptions.Instance.ShowGravityOverride, "Setup Gravity", EditorStyles.miniButton);
+            _attractorOverrideGeneric.ShowTinyEditorContent();
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
             base.CustomOnSceneGUI(sceneview);
 
-            if (!EditorOptions.Instance.ShowGravityOverride || !_attractorPolyLineOverride.gameObject.activeInHierarchy)
+            if (!_attractorOverrideGeneric.CanSetupGravity() || !_attractorPolyLineOverride.gameObject.activeInHierarchy)
             {
                 return;
             }
             this.UpdateEditor();
 
-            ExtPolyLines polyLine = this.GetPropertie("_polyLines").GetValue<ExtPolyLines>();
-            int countLines = this.GetPropertie("_polyLines").GetPropertie("_listLines").arraySize;
-            if (countLines != this.GetPropertie("GravityOverride").arraySize)
+            
+
+            ExtPolyLines polyLine = this.GetPropertie(PROPEPRTY_POLY_EXT_LINE_3D).GetValue<ExtPolyLines>();
+            int countLines = this.GetPropertie(PROPEPRTY_POLY_EXT_LINE_3D).GetPropertie(PROPERTY_LIST_LINE_GLOBAL).arraySize;
+            if (countLines != _gravityOverride.arraySize)
             {
-                this.GetPropertie("GravityOverride").arraySize = countLines;
+                _gravityOverride.arraySize = countLines;
                 this.ApplyModification();
             }
 
@@ -76,15 +83,26 @@ namespace philae.gravity.attractor
                 {
                     gravityLine[i].SetupGravity();
                 }
-                ExtGravityOverrideEditor.ApplyModificationOfExtPolyLine(this.GetPropertie("GravityOverride"), gravityLine);
+                ExtGravityOverrideEditor.ApplyModificationOfExtPolyLine(_gravityOverride, gravityLine);
                 this.ApplyModification();
             }
+
+            _attractorOverrideGeneric.LockEditor();
         }
 
-        private void DeleteGravityOverrideLineAtIndex(int index)
+        protected override void LineHasBeenAdded()
         {
-            this.GetPropertie("GravityOverride").DeleteArrayElementAtIndex(index);
+            Debug.Log("line added ??");
+            int countLines = this.GetPropertie(PROPEPRTY_POLY_EXT_LINE_3D).GetPropertie(PROPERTY_LIST_LINE_GLOBAL).arraySize;
+            _gravityOverride.arraySize = countLines;
+            this.ApplyModification();
+        }
+
+        protected override void LineHasBeenDeleted(int index)
+        {
+            Debug.Log("gravity Override delete array at index " + index);
+            _gravityOverride.DeleteArrayElementAtIndex(index);
+            this.ApplyModification();
         }
     }
-    */
 }
