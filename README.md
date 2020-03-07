@@ -1,6 +1,12 @@
 # Philae
 
 This project is a big sand box for me, my final goal is to create a mario galaxy like physics engine, and may be some game based on that later.
+<br><br>
+<img src="Philae Unity Project/Misc/Pics/Philae.gif" width="291"><img src="Philae Unity Project/Misc/Pics/Philae 2.gif" width="291"><img src="Philae Unity Project/Misc/Pics/Philae 3.gif" width="291">
+
+<br>
+
+
 
 The direction of the gravity is relative to the environement. I Need to quickly setup in wich direction the gravity is facing for each environement. To Have a generic aproche, my idea is to have the direction of gravity facing the closest object in the level Design.
 
@@ -47,13 +53,9 @@ Here the final list of all current **Attractors**:
 <br>
 
 
-I have created a line editor to have custom gravity setup for some level:
+I have created a line editor to have custom gravity setup for some level. This editor is of course, compatible with both **GravityOverride**, and **Line Edition**
 <br><br>
-<img src="Philae Unity Project/Misc/Pics/Line Editor.gif" width="500">
-
-This editor is of course, compatible with both **GravityOverride**, and **Line Edition**:
-<br><br>
-<img src="Philae Unity Project/Misc/Pics/Line Editor With Gravity.gif" width="500">
+<img src="Philae Unity Project/Misc/Pics/Line Editor.gif" width="436"><img src="Philae Unity Project/Misc/Pics/Line Editor With Gravity.gif" width="436">
 <br>
 <br>
 <br>
