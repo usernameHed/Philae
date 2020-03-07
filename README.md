@@ -2,7 +2,7 @@
 
 This project is a big sand box for me, my final goal is to create a mario galaxy like physics engine, and may be some game based on that later.
 <br><br>
-<img src="Philae Unity Project/Misc/Pics/Philae.gif" width="290"><img src="Philae Unity Project/Misc/Pics/Philae 2.gif" width="290"><img src="Philae Unity Project/Misc/Pics/Philae 3.gif" width="290">
+<img src="Philae Unity Project/Misc/Pics/Philae.gif" width="285"><img src="Philae Unity Project/Misc/Pics/Philae 2.gif" width="285"><img src="Philae Unity Project/Misc/Pics/Philae 3.gif" width="285">
 
 <br>
 
@@ -55,7 +55,7 @@ Here the final list of all current **Attractors**:
 
 I have created a line editor to have custom gravity setup for some level. This editor is of course, compatible with both **GravityOverride**, and **Line Edition**
 <br><br>
-<img src="Philae Unity Project/Misc/Pics/Line Editor.gif" width="436"><img src="Philae Unity Project/Misc/Pics/Line Editor With Gravity.gif" width="436">
+<img src="Philae Unity Project/Misc/Pics/Line Editor.gif" width="410"><img src="Philae Unity Project/Misc/Pics/Line Editor With Gravity.gif" width="410">
 <br>
 <br>
 <br>
