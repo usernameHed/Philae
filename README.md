@@ -2,7 +2,9 @@
 
 This project is a big sand box of tools & test, my initial goal was to create a mario galaxy like. 
 <br><br>
-<img src="Philae Unity Project/Misc/Pics/Philae.gif" width="285"><img src="Philae Unity Project/Misc/Pics/Philae 2.gif" width="285"><img src="Philae Unity Project/Misc/Pics/Philae 3.gif" width="285">
+<img src="Philae Unity Project/Misc/Pics/Philae 3.gif" width="500">
+<img src="Philae Unity Project/Misc/Pics/Philae.gif" width="500">
+
 
 <br>
 This readyme will show you the iteration I have done to complete this task.
