@@ -10,7 +10,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace philae.gravity.attractor
+namespace philae.gravity.attractor.line
 {
     [CustomEditor(typeof(AttractorPolyLines), true)]
     public class AttractorPolyLinesEditor : AttractorEditor
@@ -19,6 +19,7 @@ namespace philae.gravity.attractor
 
         private AttractorPolyLines _attractorPolyLine;
         private AttractoLineGenericEditor _attractorLinesGeneric;
+        //private AttractorPolyLinesGenericEditor _attractorPolyLinesGeneric;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -31,6 +32,7 @@ namespace philae.gravity.attractor
             : base(false, "PolyLine")
         {
             _attractorLinesGeneric = new AttractoLineGenericEditor();
+            //_attractorPolyLinesGeneric = new AttractorPolyLinesGenericEditor();
         }
 
         /// <summary>
