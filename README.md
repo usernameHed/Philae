@@ -50,5 +50,23 @@ I have created a line editor to have custom gravity setup for some level:
 <img src="Philae Unity Project/Misc/Pics/Line Editor.gif" width="500">
 
 This editor is of course, compatible with both **GravityOverride**, and **Line Edition**:
+<br>
 <img src="Philae Unity Project/Misc/Pics/Line Editor With Gravity.gif" width="500">
+<br>
+<br>
+<br>
 
+To Optimize calculation, I need to be able to organize level design into chunk, and calculate only attractors inside this chunk.
+I have create Special **Zone**, which contain a list of **Attractors**:
+<br>
+<img src="Philae Unity Project/Misc/Pics/Zone.gif" width="500">
+<br>
+I can explicitly set a **Zone** inclusive, or exclusive from others:
+<br>
+<img src="Philae Unity Project/Misc/Pics/Zone Substractive.gif" width="500">
+<br>
+
+Here a list of **zone** shape I can choose:
+<br>
+<img src="Philae Unity Project/Misc/Pics/Zones List.gif" width="500">
+<br>
