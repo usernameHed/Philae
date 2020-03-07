@@ -8,7 +8,20 @@ To Have a generic aproche, my idea is to have the direction of gravity facing th
 
 Bellow some iteration of that idea:
 
-First, I am calculating closest points to primitives
+First, I am calculating closest points to cylinder primitive:
+<br>
+<img src="Philae Unity Project/Misc/Pics/Gravity Toward Primitive.gif" width="500">
+Here you see the direction of gravity can be facing:
+- the trunk of the cylinder,
+- the extremity of the disk top or bottom
+- inside the disk top or bottom
+
+For going further, I need to be able to use only certain part of the primitive to apply the gravity. Therefore I have done a custom editor to be able to manipulate these option directly from editor:
+<br>
+<img src="Philae Unity Project/Misc/Pics/Gravity Toward Primitive With Override.gif" width="500">
+
+
+
 <br>
 <img src="Philae Unity Project/Misc/Pics/ClosestPoints.jpg" width="500">
 
