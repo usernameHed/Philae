@@ -4,11 +4,10 @@ This project is a big sand box of tools & test, my initial goal was to create a 
 <br><br><br>
 <img src="Philae Unity Project/Misc/Pics/Philae.gif" width="285"><img src="Philae Unity Project/Misc/Pics/Philae 2.gif" width="285"><img src="Philae Unity Project/Misc/Pics/Philae 3.gif" width="285">
 
-<br><br><br><br><br>
+<br><br><br>
 
 This readyme will show you the iteration I have done to complete this task.
 
-<br><br><br><br><br>
 <br><br><br><br><br>
 
 The direction of the gravity is relative to the environement. I Need to quickly setup in wich direction the gravity is facing for each environement. To Have a generic aproche, my idea is to have the direction of gravity facing the closest object in the level Design.
