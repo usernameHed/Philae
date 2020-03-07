@@ -14,7 +14,7 @@ namespace philae.gravity.attractor.line
     public class AttractoLineGenericEditor
     {
         private GameObject _targetGameObject;
-        private Editor _targetEditor;
+        protected Editor _targetEditor;
 
         private TransformHiddedTools _transformHiddedTools;
 
@@ -26,12 +26,12 @@ namespace philae.gravity.attractor.line
         public delegate void NeedToUpdateLines();
         public delegate void NeedToReConstructLines();
         private NeedToUpdateLines _linesPointsHasBeenUpdated;
-        private NeedToReConstructLines _needToReConstructLines;
+        protected NeedToReConstructLines _needToReConstructLines;
 
         private Vector2 _initialPositionDrag;
         private Vector2 _endDragPosition;
         private bool _isDragging = false;
-        private Matrix4x4 _polyLineMatrix;
+        protected Matrix4x4 _polyLineMatrix;
         private Matrix4x4 _polyLineMatrixInverse;
 
         private Vector3 _currentHandlePosition;
@@ -39,7 +39,7 @@ namespace philae.gravity.attractor.line
         /// <summary>
         /// you should use that function instead of OnEnable()
         /// </summary>
-        public void OnCustomEnable(Editor targetEditor, GameObject targetGameObject, NeedToUpdateLines needToUpdateLines, NeedToReConstructLines needToReConstructLines)
+        public virtual void OnCustomEnable(Editor targetEditor, GameObject targetGameObject, NeedToUpdateLines needToUpdateLines, NeedToReConstructLines needToReConstructLines)
         {
             _targetEditor = targetEditor;
             _targetGameObject = targetGameObject;
@@ -54,7 +54,7 @@ namespace philae.gravity.attractor.line
             _needToReConstructLines?.Invoke();
         }
 
-        public void ConstructLines(SerializedProperty matrix, List<PointInLines> pointInLines)
+        public virtual void ConstructLines(SerializedProperty matrix, List<PointInLines> pointInLines)
         {
             _matrixPropertie = matrix;
 
@@ -65,12 +65,12 @@ namespace philae.gravity.attractor.line
             _polyLineMatrixInverse = _polyLineMatrix.inverse;
         }
 
-        public void OnCustomDisable()
+        public virtual void OnCustomDisable()
         {
             Tools.hidden = false;
         }
 
-        public void CustomOnSceneGUI(SceneView sceneview)
+        public virtual void CustomOnSceneGUI(SceneView sceneview)
         {
             if (!EditorOptions.Instance.SetupLinesOfSphape || !_targetGameObject.activeInHierarchy)
             {
@@ -89,6 +89,28 @@ namespace philae.gravity.attractor.line
             AttemptToUselectPoints();
             ShowPointsSelectedText();
             LockEditor();
+            PreventDelete();
+        }
+
+        /// <summary>
+        /// called on a Tiny Editor Content
+        /// </summary>
+        public virtual void ShowTinyEditorContent()
+        {
+            EditorGUI.BeginChangeCheck();
+            {
+                EditorOptions.Instance.SetupLinesOfSphape = GUILayout.Toggle(EditorOptions.Instance.SetupLinesOfSphape, "Setup Lines", EditorStyles.miniButton);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    SetupLineChanged();
+                    _needToReConstructLines?.Invoke();
+                }
+
+                if (EditorOptions.Instance.SetupLinesOfSphape)
+                {
+                    ButtonsSetupsLinesTools();
+                }
+            }
         }
 
         /// <summary>
@@ -105,27 +127,6 @@ namespace philae.gravity.attractor.line
                 PointsSelected[i].SetSelected(false);
             }
             FillSelectedPoints();
-        }
-
-        /// <summary>
-        /// called on a Tiny Editor Content
-        /// </summary>
-        public void ShowTinyEditorContent()
-        {
-            EditorGUI.BeginChangeCheck();
-            {
-                EditorOptions.Instance.SetupLinesOfSphape = GUILayout.Toggle(EditorOptions.Instance.SetupLinesOfSphape, "Setup Lines", EditorStyles.miniButton);
-                if (EditorGUI.EndChangeCheck())
-                {
-                    SetupLineChanged();
-                    _needToReConstructLines?.Invoke();
-                }
-
-                if (EditorOptions.Instance.SetupLinesOfSphape)
-                {
-                    ButtonsSetupsLinesTools();
-                }
-            }
         }
 
         private void ButtonsSetupsLinesTools()
@@ -312,7 +313,10 @@ namespace philae.gravity.attractor.line
                 EditorOptions.Instance.SetupLinesOfSphape = false;
                 SetupLineChanged();
             }
+        }
 
+        protected virtual void PreventDelete()
+        {
             if (EditorOptions.Instance.SetupLinesOfSphape && ExtEventEditor.IsKeyDown(KeyCode.Delete))
             {
                 ExtEventEditor.Use();
