@@ -1,7 +1,9 @@
 # Philae
 
 Calculating closest points to primitives:
-![alt tag](https://raw.githubusercontent.com/usernameHed/Philae/master/Misc/Pics/ClosestPoints.jpg)
+<br>
+<img src="Philae%20Unity%20Project/Misc/Pics/ClosestPoints.jpg" width="500">
 
 Overriding primitives option to prevent Closest point calculation from happening:
-![alt tag](https://raw.githubusercontent.com/usernameHed/Philae/master/Misc/Pics/Gravity Override Cube.gif)
+<br>
+<img src="Philae%20Unity%20Project/Misc/Pics/Gravity%20Override%20Cube.gif" width="500">
