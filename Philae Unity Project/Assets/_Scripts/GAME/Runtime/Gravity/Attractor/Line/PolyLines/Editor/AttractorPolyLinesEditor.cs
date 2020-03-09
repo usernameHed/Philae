@@ -16,7 +16,11 @@ namespace philae.gravity.attractor.line
     public class AttractorPolyLinesEditor : AttractorEditor
     {
         protected const string PROPEPRTY_POLY_EXT_LINE_3D = "_polyLines";
-
+        private const string PROPERTY_POLY_LINE_MATRIX = "_polyLinesMatrix";
+        private const string PROPERTY_LIST_LINES_LOCAL = "_listLinesLocal";
+        private const string PROPERTY_LIST_LINES_GLOBAL = "_listLines";
+        private const string PROPERTY_P1 = "_p1";
+        private const string PROPERTY_P2 = "_p2";
         private AttractorPolyLines _attractorPolyLine;
         private AttractorPolyLinesGenericEditor _attractorPolyLinesGeneric;
 
@@ -53,9 +57,9 @@ namespace philae.gravity.attractor.line
         protected void ConstructLines()
         {
             SerializedProperty polyLine = this.GetPropertie(PROPEPRTY_POLY_EXT_LINE_3D);
-            SerializedProperty matrix = polyLine.GetPropertie("_polyLinesMatrix");
-            SerializedProperty listLinesLocal = polyLine.GetPropertie("_listLinesLocal");
-            SerializedProperty listLines = polyLine.GetPropertie("_listLines");
+            SerializedProperty matrix = polyLine.GetPropertie(PROPERTY_POLY_LINE_MATRIX);
+            SerializedProperty listLinesLocal = polyLine.GetPropertie(PROPERTY_LIST_LINES_LOCAL);
+            SerializedProperty listLines = polyLine.GetPropertie(PROPERTY_LIST_LINES_GLOBAL);
 
             if (listLines.arraySize != listLinesLocal.arraySize)
             {
@@ -67,8 +71,8 @@ namespace philae.gravity.attractor.line
             {
                 SerializedProperty lineLocal = listLinesLocal.GetArrayElementAtIndex(i);
                 SerializedProperty line = listLines.GetArrayElementAtIndex(i);
-                points.Add(new PointInLines(i, 0, lineLocal.GetPropertie("_p1"), lineLocal.GetPropertie("_p2"), line.GetPropertie("_p1"), line.GetPropertie("_p2")));
-                points.Add(new PointInLines(i, 1, lineLocal.GetPropertie("_p1"), lineLocal.GetPropertie("_p2"), line.GetPropertie("_p1"), line.GetPropertie("_p2")));
+                points.Add(new PointInLines(i, 0, lineLocal.GetPropertie(PROPERTY_P1), lineLocal.GetPropertie(PROPERTY_P2), line.GetPropertie(PROPERTY_P1), line.GetPropertie(PROPERTY_P2)));
+                points.Add(new PointInLines(i, 1, lineLocal.GetPropertie(PROPERTY_P1), lineLocal.GetPropertie(PROPERTY_P2), line.GetPropertie(PROPERTY_P1), line.GetPropertie(PROPERTY_P2)));
             }
 
             _attractorPolyLinesGeneric.ConstructLines(matrix, points, listLines, listLinesLocal);
@@ -82,8 +86,8 @@ namespace philae.gravity.attractor.line
         private void LinesHasBeenUpdated()
         {
             SerializedProperty polyLine = this.GetPropertie(PROPEPRTY_POLY_EXT_LINE_3D);
-            SerializedProperty listLinesLocal = polyLine.GetPropertie("_listLinesLocal");
-            SerializedProperty listLines = polyLine.GetPropertie("_listLines");
+            SerializedProperty listLinesLocal = polyLine.GetPropertie(PROPERTY_LIST_LINES_LOCAL);
+            SerializedProperty listLines = polyLine.GetPropertie(PROPERTY_LIST_LINES_GLOBAL);
 
             for (int i = 0; i < listLinesLocal.arraySize; i++)
             {
