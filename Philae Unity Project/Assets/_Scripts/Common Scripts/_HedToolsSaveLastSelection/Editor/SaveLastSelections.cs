@@ -14,16 +14,11 @@ namespace hedCommon.saveLastSelection
     {
         private const int NUMBER_SELECTED_OBJECTS = 20;
         private const string KEY_EDITOR_PREF_SAVE_LAST_SELECTION = "KEY_EDITOR_PREF_SAVE_LAST_SELECTION";
+        private List<UnityEngine.Object> _selectedObjects = new List<UnityEngine.Object>(NUMBER_SELECTED_OBJECTS);
         private UnityEngine.Object _lastSelectedObject;
 
-        [Serializable]
-        private struct WrapperStringList
-        {
-            public List<string> List;
-        }
-
         private const string LAST_SELECTED_KEY_SAVE = "LAST_SELECTED_KEY_SAVE";
-        private List<UnityEngine.Object> _selectedObjects = new List<UnityEngine.Object>(NUMBER_SELECTED_OBJECTS);
+
         private List<UnityEngine.Object> _selectedObjectsWithoutDoublon = new List<UnityEngine.Object>(NUMBER_SELECTED_OBJECTS);
 
         private int _currentIndex;
@@ -37,67 +32,12 @@ namespace hedCommon.saveLastSelection
             _tinyEditorWindowSceneView.TinyInit(KEY_EDITOR_PREF_SAVE_LAST_SELECTION, "Save Last Selection", TinyEditorWindowSceneView.DEFAULT_POSITION.UP_LEFT);
             _tinyEditorWindowSceneView.IsClosed = true;
             SceneView.duringSceneGui += OnCustomGUI;
-
-            Load();
         }
 
         ~SaveLastSelections()
         {
             EditorApplication.update -= UpdateEditor;
             SceneView.duringSceneGui -= OnCustomGUI;
-        }
-
-        public void Load()
-        {
-            if (EditorPrefs.HasKey(LAST_SELECTED_KEY_SAVE))
-            {
-                _selectedObjects = GetFromJsonDatasEditorPref(EditorPrefs.GetString(LAST_SELECTED_KEY_SAVE));
-                _selectedObjectsWithoutDoublon = ExtList.RemoveRedundancy(_selectedObjects);
-            }
-            else
-            {
-                _selectedObjects.Clear();
-                _selectedObjectsWithoutDoublon.Clear();
-            }
-        }
-
-        public void Save()
-        {
-            string jsonToSave = GetJsonOfSave();
-            EditorPrefs.SetString(LAST_SELECTED_KEY_SAVE, jsonToSave);
-        }
-
-        public List<UnityEngine.Object> GetFromJsonDatasEditorPref(string json)
-        {
-            WrapperStringList wrapperStringList = JsonUtility.FromJson<WrapperStringList>(json);
-
-            Debug.Log(wrapperStringList);
-            for (int i = 0; i < wrapperStringList.List.Count; i++)
-            {
-                Debug.Log(wrapperStringList.List[i]);
-            }
-            List<UnityEngine.Object> list = new List<UnityEngine.Object>(wrapperStringList.List.Count);
-            for (int i = 0; i < wrapperStringList.List.Count; i++)
-            {
-                UnityEngine.Object itemInList = JsonUtility.FromJson<UnityEngine.Object>(wrapperStringList.List[i]);
-                Debug.Log(itemInList);
-                list.Add(itemInList);
-            }
-            return (list);
-        }
-
-        public string GetJsonOfSave()
-        {
-            WrapperStringList wrapperStringList = new WrapperStringList();
-            wrapperStringList.List = new List<string>(_selectedObjects.Count);
-
-            for (int i = 0; i < _selectedObjects.Count; i++)
-            {
-                string item = EditorJsonUtility.ToJson(_selectedObjects[i]);
-                wrapperStringList.List.Add(item);
-            }
-            string json = EditorJsonUtility.ToJson(wrapperStringList);
-            return (json);
         }
 
         private void UpdateEditor()
@@ -113,14 +53,13 @@ namespace hedCommon.saveLastSelection
         {
             _lastSelectedObject = currentSelectedObject;
             _selectedObjects.Add(_lastSelectedObject);
-            if (_selectedObjects.Count >= NUMBER_SELECTED_OBJECTS)
+            if (_selectedObjects.Count > NUMBER_SELECTED_OBJECTS)
             {
                 _selectedObjects.RemoveAt(0);
             }
             _currentIndex = _selectedObjects.Count - 1;
 
             _selectedObjectsWithoutDoublon = ExtList.RemoveRedundancy(_selectedObjects);
-            Save();
         }
 
         public void DisplayButton()
@@ -146,7 +85,7 @@ namespace hedCommon.saveLastSelection
                 }
                 ForceSelection(_selectedObjects[_currentIndex]);
             }
-            GUILayout.Label(_currentIndex.ToString());
+            GUILayout.Label((_currentIndex + 1).ToString());
         }
 
         private void ForceSelection(UnityEngine.Object forcedSelection)
@@ -175,10 +114,6 @@ namespace hedCommon.saveLastSelection
             for (int i = 0; i < _selectedObjectsWithoutDoublon.Count; i++)
             {
                 GUI.color = (_lastSelectedObject == _selectedObjectsWithoutDoublon[i]) ? Color.green : Color.white;
-                if (_selectedObjectsWithoutDoublon[i] == null)
-                {
-                    continue;
-                }
                 if (GUILayout.Button(_selectedObjectsWithoutDoublon[i].name))
                 {
                     ForceSelection(_selectedObjectsWithoutDoublon[i]);
