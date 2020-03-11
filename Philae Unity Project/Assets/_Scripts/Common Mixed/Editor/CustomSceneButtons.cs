@@ -1,5 +1,6 @@
 ﻿using hedCommon.extension.editor;
 using hedCommon.extension.runtime;
+using hedCommon.saveLastSelection;
 using philae.architecture;
 using philae.editor.editorGlobal;
 using System.Collections;
@@ -15,6 +16,7 @@ namespace hedCommon.mixed
         private Texture _wheelTexture;
         private Texture _viperTexture;
         private RefGamesAsset _refGameAsset;
+        //private SaveLastSelections _saveLastSelections;
 
         public void InitTextures()
         {
@@ -22,7 +24,7 @@ namespace hedCommon.mixed
             _wheelTexture = (Texture)EditorGUIUtility.Load("SceneView/wheel.png");
             _viperTexture = (Texture)EditorGUIUtility.Load("SceneView/viper.png");
             _refGameAsset = ExtFind.GetAssetByGenericType<RefGamesAsset>();
-
+            //_saveLastSelections = new SaveLastSelections();
         }
 
         public void OnLeftToolbarGUI()

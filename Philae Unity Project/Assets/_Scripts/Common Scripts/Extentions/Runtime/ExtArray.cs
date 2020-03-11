@@ -111,7 +111,7 @@ namespace hedCommon.extension.runtime
 
         /// <summary>
         /// return true if the array is null, or empty, or if the 
-        /// array containt null
+        /// array contain null
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="collection"></param>

@@ -57,8 +57,7 @@ namespace hedCommon.extension.editor
         public static void SetSearch(string search, ExtReflection.AllNameAssemblyKnown nameEditorWindow = AllNameAssemblyKnown.SceneView)
         {
             //open animation window
-            System.Type animationWindowType = null;
-            EditorWindow animationWindowEditor = ExtReflection.OpenEditorWindow(nameEditorWindow, ref animationWindowType);
+            EditorWindow animationWindowEditor = ExtReflection.OpenEditorWindow(nameEditorWindow, out System.Type animationWindowType);
 
             //System.Type type = typeof(EditorWindow).Assembly.GetType("UnityEditor.SceneHierarchyWindow");
             //EditorApplication.ExecuteMenuItem("Window/General/Hierarchy");
@@ -81,12 +80,10 @@ namespace hedCommon.extension.editor
         public static void SetPlayButton(out bool isPlayingAnimation)
         {
             //open animator
-            System.Type animatorWindowType = null;
-            EditorWindow animatorWindow = ExtReflection.OpenEditorWindow(ExtReflection.AllNameAssemblyKnown.AnimatorControllerTool, ref animatorWindowType);
+            EditorWindow animatorWindow = ExtReflection.OpenEditorWindow(ExtReflection.AllNameAssemblyKnown.AnimatorControllerTool, out System.Type animatorWindowType);
 
             //open animation
-            System.Type animationWindowType = null;
-            EditorWindow animationWindowEditor = ExtReflection.OpenEditorWindow(ExtReflection.AllNameAssemblyKnown.AnimationWindow, ref animationWindowType);
+            EditorWindow animationWindowEditor = ExtReflection.OpenEditorWindow(ExtReflection.AllNameAssemblyKnown.AnimationWindow, out System.Type animationWindowType);
 
             //Get field m_AnimEditor
             FieldInfo animEditorFI = animationWindowType.GetField("m_AnimEditor", ExtReflection.GetFullBinding());
@@ -192,7 +189,7 @@ namespace hedCommon.extension.editor
         /// <param name="editorWindowName">name of the editorWindow to open</param>
         /// <param name="animationWindowType">type of the editorWindow (useful for others functions)</param>
         /// <returns></returns>
-        public static EditorWindow OpenEditorWindow(AllNameAssemblyKnown editorWindowName, ref System.Type animationWindowType)
+        public static EditorWindow OpenEditorWindow(AllNameAssemblyKnown editorWindowName, out System.Type animationWindowType)
         {
             animationWindowType = GetEditorWindowTypeByName(editorWindowName.ToString());
             EditorWindow animatorWindow = EditorWindow.GetWindow(animationWindowType);
@@ -595,6 +592,5 @@ namespace hedCommon.extension.editor
             }
             return (null);
         }
-
     }
 }

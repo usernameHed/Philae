@@ -21,7 +21,7 @@ namespace philae.gravity.attractor.line
         private const string PROPERTY_POINT_LOCAL = "PointLocal";
         private const string PROPERTY_POINT_GLOBAL = "PointGlobal";
         private AttractorSpline _attractorSpline;
-        private AttractoLineGenericEditor _attractoLineGenericEditor;
+        private AttractorSplineGenericEditor _attractoSplineGenericEditor;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -33,7 +33,7 @@ namespace philae.gravity.attractor.line
         public AttractorSplineEditor()
             : base(false, "Spline")
         {
-            _attractoLineGenericEditor = new AttractoLineGenericEditor();
+            _attractoSplineGenericEditor = new AttractorSplineGenericEditor();
         }
 
         /// <summary>
@@ -45,11 +45,13 @@ namespace philae.gravity.attractor.line
             _attractorSpline = (AttractorSpline)GetTarget<Attractor>();
 
 
-            _attractoLineGenericEditor.OnCustomEnable(
+            _attractoSplineGenericEditor.OnCustomEnable(
                 this,
                 _attractorSpline.gameObject,
                 LinesHasBeenUpdated,
-                ConstructLines);
+                ConstructLines,
+                LineHasBeenAdded,
+                LineHasBeenDeleted);
         }
 
         
@@ -70,9 +72,9 @@ namespace philae.gravity.attractor.line
                     points.Add(new PointInLines(i, 1, point1.GetPropertie(PROPERTY_POINT_LOCAL), point2.GetPropertie(PROPERTY_POINT_LOCAL), point1.GetPropertie(PROPERTY_POINT_GLOBAL), point2.GetPropertie(PROPERTY_POINT_GLOBAL)));
                 }
             }
-            _attractoLineGenericEditor.ConstructLines(matrix, points);
+            //_attractoSplineGenericEditor.ConstructLines(matrix, points, listLines, listLinesLocal);
         }
-        
+
 
         /// <summary>
         /// called when lines points has been updated.
@@ -82,9 +84,9 @@ namespace philae.gravity.attractor.line
         private void LinesHasBeenUpdated()
         {
             /*
-            SerializedProperty polyLine = this.GetPropertie(PROPEPRTY_EXT_SPLINE);
-            SerializedProperty listLinesLocal = polyLine.GetPropertie("_listLinesLocal");
-            SerializedProperty listLines = polyLine.GetPropertie("_listLines");
+            SerializedProperty polyLine = this.GetPropertie(PROPEPRTY_POLY_EXT_LINE_3D);
+            SerializedProperty listLinesLocal = polyLine.GetPropertie(PROPERTY_LIST_LINES_LOCAL);
+            SerializedProperty listLines = polyLine.GetPropertie(PROPERTY_LIST_LINES_GLOBAL);
 
             for (int i = 0; i < listLinesLocal.arraySize; i++)
             {
@@ -97,24 +99,34 @@ namespace philae.gravity.attractor.line
             this.ApplyModification();
             */
         }
-        
+
+        protected virtual void LineHasBeenAdded()
+        {
+            Debug.Log("add line");
+        }
+
+        protected virtual void LineHasBeenDeleted(int index)
+        {
+            Debug.Log("delete line " + index);
+        }
+
 
         public override void OnCustomDisable()
         {
             base.OnCustomDisable();
-            _attractoLineGenericEditor.OnCustomDisable();
+            _attractoSplineGenericEditor.OnCustomDisable();
         }
 
         public override void ShowTinyEditorContent()
         {
             base.ShowTinyEditorContent();
-            _attractoLineGenericEditor.ShowTinyEditorContent();
+            _attractoSplineGenericEditor.ShowTinyEditorContent();
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
             base.CustomOnSceneGUI(sceneview);
-            _attractoLineGenericEditor.CustomOnSceneGUI(sceneview);
+            _attractoSplineGenericEditor.CustomOnSceneGUI(sceneview);
         }
     }
 }
