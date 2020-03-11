@@ -17,8 +17,6 @@ namespace hedCommon.saveLastSelection
         private List<UnityEngine.Object> _selectedObjects = new List<UnityEngine.Object>(NUMBER_SELECTED_OBJECTS);
         private UnityEngine.Object _lastSelectedObject;
 
-        private const string LAST_SELECTED_KEY_SAVE = "LAST_SELECTED_KEY_SAVE";
-
         private List<UnityEngine.Object> _selectedObjectsWithoutDoublon = new List<UnityEngine.Object>(NUMBER_SELECTED_OBJECTS);
 
         private int _currentIndex;
@@ -52,11 +50,11 @@ namespace hedCommon.saveLastSelection
         private void AddNewSelection(UnityEngine.Object currentSelectedObject)
         {
             _lastSelectedObject = currentSelectedObject;
-            _selectedObjects.Add(_lastSelectedObject);
-            if (_selectedObjects.Count > NUMBER_SELECTED_OBJECTS)
+            if (_selectedObjects.Count >= NUMBER_SELECTED_OBJECTS)
             {
                 _selectedObjects.RemoveAt(0);
             }
+            _selectedObjects.Add(_lastSelectedObject);
             _currentIndex = _selectedObjects.Count - 1;
 
             _selectedObjectsWithoutDoublon = ExtList.RemoveRedundancy(_selectedObjects);
@@ -69,23 +67,34 @@ namespace hedCommon.saveLastSelection
                 ExtReflection.OpenEditorWindow(ExtReflection.AllNameAssemblyKnown.SceneView, out Type animationWindowType);
                 _tinyEditorWindowSceneView.IsClosed = !_tinyEditorWindowSceneView.IsClosed;
             }
-            if (GUILayout.Button("<"))
+            EditorGUI.BeginDisabledGroup(_selectedObjects.Count == 0);
             {
-                if (Selection.activeObject != null)
+                if (GUILayout.Button("<"))
                 {
-                    AddToIndex(-1);
+                    if (Selection.activeObject != null)
+                    {
+                        AddToIndex(-1);
+                    }
+                    ForceSelection(_selectedObjects[_currentIndex]);
                 }
-                ForceSelection(_selectedObjects[_currentIndex]);
-            }
-            if (GUILayout.Button(">"))
-            {
-                if (Selection.activeObject != null)
+                if (GUILayout.Button(">"))
                 {
-                    AddToIndex(1);
+                    if (Selection.activeObject != null)
+                    {
+                        AddToIndex(1);
+                    }
+                    ForceSelection(_selectedObjects[_currentIndex]);
                 }
-                ForceSelection(_selectedObjects[_currentIndex]);
+                if (_selectedObjects.Count == 0)
+                {
+                    GUILayout.Label("-/-");
+                }
+                else
+                {
+                    GUILayout.Label((_currentIndex + 1).ToString() + "/" + (_selectedObjects.Count));
+                }
             }
-            GUILayout.Label((_currentIndex + 1).ToString());
+            EditorGUI.EndDisabledGroup();
         }
 
         private void ForceSelection(UnityEngine.Object forcedSelection)
