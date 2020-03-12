@@ -238,7 +238,24 @@ namespace Sabresaurus.PlayerPrefsExtensions
         }
 
         /// <summary>
-        /// This returns an array of the stored PlayerPrefs from the file system (OSX) or registry (Windows), to allow 
+        /// Converts a string to an int
+        /// </summary>
+        /// <param name="value">value to convert</param>
+        /// <param name="defaultValue">default value if could not convert</param>
+        public int ToInt(string value, int defaultValue = 0)
+        {
+            // exit if null
+            if (string.IsNullOrEmpty(value))
+                return defaultValue;
+
+            // convert
+            int rVal;
+            return int.TryParse(value, out rVal) ? rVal : defaultValue;
+        }
+
+
+        /// <summary>
+        /// This returns an array of the stored PlayerPrefs from the file system (OSX) or registry (Windows), to allow
         /// us to to look up what's actually in the PlayerPrefs. This is used as a kind of lookup table.
         /// </summary>
         private PlayerPrefPair[] RetrieveSavedPrefs(string companyName, string productName)
@@ -306,8 +323,13 @@ namespace Sabresaurus.PlayerPrefsExtensions
                 if (showEditorPrefs)
                 {
                     string majorVersion = Application.unityVersion.Split('.')[0];
-
-                    registryKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Software\\Unity Technologies\\Unity Editor " + majorVersion + ".x");
+                    int major = ToInt(majorVersion);
+                    if (major >= 2017)
+                    {
+                        majorVersion = "5";
+                    }
+                    string pathEditorPrefs = "Software\\Unity Technologies\\Unity Editor " + majorVersion + ".x";
+                    registryKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(pathEditorPrefs);
                 }
                 else
                 {
@@ -343,7 +365,7 @@ namespace Sabresaurus.PlayerPrefsExtensions
                         object ambiguousValue = registryKey.GetValue(valueName);
 
                         // Unfortunately floats will come back as an int (at least on 64 bit) because the float is stored as
-                        // 64 bit but marked as 32 bit - which confuses the GetValue() method greatly! 
+                        // 64 bit but marked as 32 bit - which confuses the GetValue() method greatly!
                         if (ambiguousValue.GetType() == typeof(int))
                         {
                             // If the PlayerPref is not actually an int then it must be a float, this will evaluate to true
@@ -448,7 +470,7 @@ namespace Sabresaurus.PlayerPrefsExtensions
             // Has the toggle changed?
             if (newIndex != oldIndex)
             {
-                // Reset 
+                // Reset
                 lastDeserialization = null;
                 showEditorPrefs = (newIndex == 1);
             }
@@ -491,7 +513,7 @@ namespace Sabresaurus.PlayerPrefsExtensions
 
             // The following code has been optimised so that rather than attempting to draw UI for every single PlayerPref
             // it instead only draws the UI for those currently visible in the scroll view and pads above and below those
-            // results to maintain the right size using GUILayout.Space(). This enables us to work with thousands of 
+            // results to maintain the right size using GUILayout.Space(). This enables us to work with thousands of
             // PlayerPrefs without slowing the interface to a halt.
 
             // Fixed height of one of the rows in the table
@@ -584,7 +606,7 @@ namespace Sabresaurus.PlayerPrefsExtensions
                         textFieldStyle.normal.textColor = Color.red;
                         textFieldStyle.focused.textColor = Color.red;
 
-                        // Track that the auto decrypt failed, so we can prevent any editing 
+                        // Track that the auto decrypt failed, so we can prevent any editing
                         failedAutoDecrypt = true;
                     }
                 }
@@ -594,7 +616,7 @@ namespace Sabresaurus.PlayerPrefsExtensions
                 // The type of PlayerPref being stored (in auto decrypt mode this works with the decrypted values too)
                 Type valueType;
 
-                // If it's an encrypted playerpref, we're automatically decrypting and it didn't fail the earlier 
+                // If it's an encrypted playerpref, we're automatically decrypting and it didn't fail the earlier
                 // auto decrypt test
                 if (isEncryptedPair && automaticDecryption && !failedAutoDecrypt)
                 {
@@ -625,7 +647,7 @@ namespace Sabresaurus.PlayerPrefsExtensions
                 }
                 else
                 {
-                    // Otherwise fallback to the type of the cached value (for non-encrypted values this will be 
+                    // Otherwise fallback to the type of the cached value (for non-encrypted values this will be
                     // correct). For encrypted values when not in auto-decrypt mode, this will return string type
                     valueType = deserializedValue.GetType();
                 }
@@ -1063,7 +1085,7 @@ namespace Sabresaurus.PlayerPrefsExtensions
                 // Determine when the plist was last written to
                 DateTime lastWriteTime = File.GetLastWriteTimeUtc(playerPrefsPath);
 
-                // If we haven't deserialized the PlayerPrefs already, or the written file has changed then deserialize 
+                // If we haven't deserialized the PlayerPrefs already, or the written file has changed then deserialize
                 // the latest version
                 if (!lastDeserialization.HasValue || lastDeserialization.Value != lastWriteTime)
                 {
@@ -1210,7 +1232,7 @@ namespace Sabresaurus.PlayerPrefsExtensions
             get
             {
 #if UNITY_3_4
-			if(EditorPrefs.GetInt("UserSkin") == 1)		
+			if(EditorPrefs.GetInt("UserSkin") == 1)
 			{
 				return true;
 			}
