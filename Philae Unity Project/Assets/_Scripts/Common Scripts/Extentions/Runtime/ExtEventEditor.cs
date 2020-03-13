@@ -71,6 +71,46 @@ namespace hedCommon.extension.runtime
             return (ButtonType.NONE);
         }
 
+
+        public static bool IsScrolling(Event current, out Vector2 delta)
+        {
+            delta = Vector2.zero;
+            int controlId = GUIUtility.GetControlID(FocusType.Passive);
+            EventType eventType = current.GetTypeForControl(controlId);
+            if (eventType == EventType.ScrollWheel)
+            {
+                delta = current.delta;
+                return (true);
+            }
+            return (false);
+        }
+
+        public static bool IsScrollingUp(Event current, out float delta)
+        {
+            delta = 0;
+            int controlId = GUIUtility.GetControlID(FocusType.Passive);
+            EventType eventType = current.GetTypeForControl(controlId);
+            if (eventType == EventType.ScrollWheel)
+            {
+                delta = current.delta.y;
+                return (delta > 0);
+            }
+            return (false);
+        }
+
+        public static bool IsScrollingDown(Event current, out float delta)
+        {
+            delta = 0;
+            int controlId = GUIUtility.GetControlID(FocusType.Passive);
+            EventType eventType = current.GetTypeForControl(controlId);
+            if (eventType == EventType.ScrollWheel)
+            {
+                delta = current.delta.y;
+                return (delta < 0);
+            }
+            return (false);
+        }
+
         public static bool IsLeftMouseUp(Event current)
         {
             bool clicked = IsMouseClicked(current, out EventType eventType, out List<Modifier> modifiers, out ButtonType buttonType);

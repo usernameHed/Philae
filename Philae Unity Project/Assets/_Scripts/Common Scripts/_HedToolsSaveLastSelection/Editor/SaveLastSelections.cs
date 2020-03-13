@@ -69,7 +69,7 @@ namespace hedCommon.saveLastSelection
             }
             EditorGUI.BeginDisabledGroup(_selectedObjects.Count == 0);
             {
-                if (GUILayout.Button("<"))
+                if (GUILayout.Button("<") || ExtEventEditor.IsScrollingDown(Event.current, out float delta))
                 {
                     if (Selection.activeObject != null)
                     {
@@ -77,7 +77,7 @@ namespace hedCommon.saveLastSelection
                     }
                     ForceSelection(_selectedObjects[_currentIndex]);
                 }
-                if (GUILayout.Button(">"))
+                if (GUILayout.Button(">") || ExtEventEditor.IsScrollingUp(Event.current, out delta))
                 {
                     if (Selection.activeObject != null)
                     {
