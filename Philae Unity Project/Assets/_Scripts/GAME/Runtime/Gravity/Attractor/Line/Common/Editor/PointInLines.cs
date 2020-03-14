@@ -95,4 +95,53 @@ namespace philae.gravity.attractor
             return (IndexPoint == 1);
         }
     }
+
+    public class PointInSplines
+    {
+        public int IndexPoint;          //0 or 1: we need to know wich point we are, 0 or 1 on the line
+        public PointsInfo PointInfo;
+
+        public SerializedProperty PointPropertieGlobal;
+        public SerializedProperty PointPropertieLocal;
+
+        public PointInSplines(int indexPoint,
+            SerializedProperty p1Local,
+            SerializedProperty p1Global)
+        {
+            IndexPoint = indexPoint;
+            PointInfo = new PointsInfo();
+            PointPropertieLocal = p1Local;
+            PointPropertieGlobal = p1Global;
+        }
+
+        public Vector3 GetGlobalPointPosition()
+        {
+            return (PointPropertieGlobal.vector3Value);
+        }
+
+        public Vector3 GetLocalPosition()
+        {
+            return (PointPropertieLocal.vector3Value);
+        }
+
+        public void SetGlobalPointPosition(Vector3 pX)
+        {
+            PointPropertieGlobal.vector3Value = pX;
+        }
+
+        public void UpdateLocalPositionFromGlobalPosition(Matrix4x4 inverse)
+        {
+            PointPropertieLocal.vector3Value = inverse.MultiplyPoint3x4(PointPropertieGlobal.vector3Value);
+        }
+
+        public bool IsSelected()
+        {
+            return (PointInfo.IsSelected);
+        }
+
+        public void SetSelected(bool selected)
+        {
+            PointInfo.IsSelected = selected;
+        }
+    }
 }

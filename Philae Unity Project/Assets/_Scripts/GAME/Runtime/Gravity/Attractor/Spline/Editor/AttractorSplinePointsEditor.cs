@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace philae.gravity.attractor.line
 {
-    public class AttractoLineGenericEditor
+    public class AttractorSplinePointsEditor
     {
         private GameObject _targetGameObject;
         protected Editor _targetEditor;
@@ -21,11 +21,9 @@ namespace philae.gravity.attractor.line
         private Vector3 _lastPositionMoved;
 
         private SerializedProperty _matrixPropertie;
-        public List<PointInLines> Points = new List<PointInLines>(20);
-        public List<PointInLines> PointsSelected = new List<PointInLines>(20);
-        public delegate void NeedToUpdateLines();
+        public List<PointInSplines> Points = new List<PointInSplines>(20);
+        public List<PointInSplines> PointsSelected = new List<PointInSplines>(20);
         public delegate void NeedToReConstructLines();
-        private NeedToUpdateLines _linesPointsHasBeenUpdated;
         protected NeedToReConstructLines _needToReConstructLines;
 
         private Vector2 _initialPositionDrag;
@@ -39,11 +37,10 @@ namespace philae.gravity.attractor.line
         /// <summary>
         /// you should use that function instead of OnEnable()
         /// </summary>
-        public virtual void OnCustomEnable(Editor targetEditor, GameObject targetGameObject, NeedToUpdateLines needToUpdateLines, NeedToReConstructLines needToReConstructLines)
+        public virtual void OnCustomEnable(Editor targetEditor, GameObject targetGameObject, NeedToReConstructLines needToReConstructLines)
         {
             _targetEditor = targetEditor;
             _targetGameObject = targetGameObject;
-            _linesPointsHasBeenUpdated = needToUpdateLines;
             _needToReConstructLines = needToReConstructLines;
 
             _transformHiddedTools = _targetGameObject.GetComponent<TransformHiddedTools>();
@@ -54,11 +51,11 @@ namespace philae.gravity.attractor.line
             _needToReConstructLines?.Invoke();
         }
 
-        public virtual void ConstructLines(SerializedProperty matrix, List<PointInLines> pointInLines)
+        public virtual void ConstructLines(SerializedProperty matrix, List<PointInSplines> pointInSplines)
         {
             _matrixPropertie = matrix;
 
-            Points = pointInLines;
+            Points = pointInSplines;
             PointsSelected.Clear();
 
             _polyLineMatrix = _matrixPropertie.GetValue<Matrix4x4>();
@@ -87,7 +84,7 @@ namespace philae.gravity.attractor.line
             FramePointsWithF();
             ManageDragRect();
             AttemptToUselectPoints();
-            ShowPointsSelectedText();
+            ShowPointsText();
             LockEditor();
             PreventDelete();
         }
@@ -105,18 +102,13 @@ namespace philae.gravity.attractor.line
                     SetupLineChanged();
                     _needToReConstructLines?.Invoke();
                 }
-
-                if (EditorOptions.Instance.SetupLinesOfSphape)
-                {
-                    ButtonsSetupsLinesTools();
-                }
             }
         }
 
         /// <summary>
         /// unselect all current selected points
         /// </summary>
-        private void UnSelectPoints(params PointInLines[] exception)
+        private void UnSelectPoints(params PointInSplines[] exception)
         {
             for (int i = 0; i < PointsSelected.Count; i++)
             {
@@ -129,75 +121,12 @@ namespace philae.gravity.attractor.line
             FillSelectedPoints();
         }
 
-        private void ButtonsSetupsLinesTools()
+        private void ShowPointsText()
         {
-            if (PointsSelected.Count >= 2)
+            for (int i = 0; i < Points.Count; i++)
             {
-                ShowMergeSelectedPointsButton();
-                UnMergeSelectedPoint();
-            }
-        }
-
-        public void ShowMergeSelectedPointsButton()
-        {
-            bool pointAreAtSamePlace = true;
-            Vector3 pointPosition = PointsSelected[0].GetGlobalPointPosition();
-            for (int i = 1; i < PointsSelected.Count; i++)
-            {
-                if (pointPosition != PointsSelected[i].GetGlobalPointPosition())
-                {
-                    pointAreAtSamePlace = false;
-                    break;
-                }
-            }
-            if (pointAreAtSamePlace)
-            {
-                return;
-            }
-
-            if (GUILayout.Button("Merge Points"))
-            {
-                MergeSelectedPoints();
-            }
-        }
-
-        public void MergeSelectedPoints()
-        {
-            _targetEditor.UpdateEditor();
-            for (int i = 0; i < PointsSelected.Count; i++)
-            {
-                PointsSelected[i].SetGlobalPointPosition(_currentHandlePosition);
-                PointsSelected[i].UpdateLocalPositionFromGlobalPosition(_polyLineMatrixInverse);
-            }
-            _linesPointsHasBeenUpdated?.Invoke();
-            _targetEditor.ApplyModification();
-        }
-
-        public void UnMergeSelectedPoint()
-        {
-            using (ExtGUIScopes.Horiz())
-            {
-                for (int i = 0; i < PointsSelected.Count; i++)
-                {
-                    if (GUILayout.Button(i.ToString()))
-                    {
-                        _targetEditor.UpdateEditor();
-                        UnSelectPoints(PointsSelected[i]);
-                    }
-                }
-            }
-        }
-
-        private void ShowPointsSelectedText()
-        {
-            if (PointsSelected.Count < 2)
-            {
-                return;
-            }
-            for (int i = 0; i < PointsSelected.Count; i++)
-            {
-                Vector3 middleLine = ExtVector3.GetMeanOfXPoints(PointsSelected[i].GetGlobalPointPosition(), PointsSelected[i].GetMiddleLine());
-                ExtSceneView.DisplayStringIn3D(middleLine, i.ToString(), Color.black);
+                Vector3 pointPosition = Points[i].GetGlobalPointPosition();
+                ExtSceneView.DisplayStringIn3D(pointPosition, i.ToString(), Color.black);
             }
         }
 
@@ -350,6 +279,12 @@ namespace philae.gravity.attractor.line
             return (middle);
         }
 
+        protected void SelectPointAtIndex(int index)
+        {
+            Points[index].SetSelected(true);
+            FillSelectedPoints();
+        }
+
         /// <summary>
         /// for all unselected points, draw a handle sphere: we can clic on it, and therefore select it
         /// </summary>
@@ -388,24 +323,7 @@ namespace philae.gravity.attractor.line
                     _lastPositionMoved = Points[i].GetGlobalPointPosition();
                     bool selectionSetting = !Points[i].IsSelected();
                     Points[i].SetSelected(selectionSetting);
-                    SelectOtherIfThereAreAtExactSamePosition(Points[i], selectionSetting);
                     FillSelectedPoints();
-                }
-            }
-        }
-
-        private void SelectOtherIfThereAreAtExactSamePosition(PointInLines pointClicked, bool selectionSetting)
-        {
-            Vector3 positionPointClicked = pointClicked.GetGlobalPointPosition();
-            for (int i = 0; i < Points.Count; i++)
-            {
-                if (Points[i] == pointClicked)
-                {
-                    continue;
-                }
-                if (Points[i].GetGlobalPointPosition() == positionPointClicked)
-                {
-                    Points[i].SetSelected(selectionSetting);
                 }
             }
         }
@@ -442,7 +360,6 @@ namespace philae.gravity.attractor.line
                 PointsSelected[i].SetGlobalPointPosition(PointsSelected[i].GetGlobalPointPosition() + offsetFromOld);
                 PointsSelected[i].UpdateLocalPositionFromGlobalPosition(_polyLineMatrixInverse);
             }
-            _linesPointsHasBeenUpdated?.Invoke();
             _targetEditor.ApplyModification();
         }
     }

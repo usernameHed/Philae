@@ -40,5 +40,19 @@ namespace hedCommon.geometry.editor
             delta.vector3Value = p2Propertie.vector3Value - p1Propertie.vector3Value;
             deltaSquared.floatValue = ExtVector3.DotProduct(delta.vector3Value, delta.vector3Value);
         }
+
+        public static void MoveSplinePointFromSerializePropertie(SerializedProperty extSpline, Vector3 p1)
+        {
+            SerializedProperty listPointsOnSpline = extSpline.GetPropertie("_listPoints");
+            listPointsOnSpline.arraySize = listPointsOnSpline.arraySize + 1;
+
+            SerializedProperty point = listPointsOnSpline.GetArrayElementAtIndex(listPointsOnSpline.arraySize - 1);
+            SerializedProperty localPoint = point.GetPropertie("PointLocal");
+            SerializedProperty globalPoint = point.GetPropertie("PointGlobal");
+
+            localPoint.vector3Value = p1;
+            Matrix4x4 matrix = extSpline.GetPropertie("_splinesMatrix").GetValue<Matrix4x4>();
+            globalPoint.vector3Value = matrix.MultiplyPoint3x4(p1);
+        }
     }
 }

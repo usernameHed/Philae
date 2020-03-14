@@ -11,7 +11,7 @@ namespace philae.gravity.attractor.line
     {
         protected const string PROPERTY_EXT_LINE_3D = "_line3d";
         private AttractorLine _attractorLine;
-        private AttractoLineGenericEditor _attractorLinesGeneric;
+        private AttractorLineGenericEditor _attractorLinesGeneric;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -23,7 +23,7 @@ namespace philae.gravity.attractor.line
         public AttractorLineEditor()
             : base(false, "Line")
         {
-            _attractorLinesGeneric = new AttractoLineGenericEditor();
+            _attractorLinesGeneric = new AttractorLineGenericEditor();
         }
 
         /// <summary>

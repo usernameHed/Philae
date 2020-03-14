@@ -21,7 +21,7 @@ namespace philae.gravity.attractor.line
         private const string PROPERTY_POINT_LOCAL = "PointLocal";
         private const string PROPERTY_POINT_GLOBAL = "PointGlobal";
         private AttractorSpline _attractorSpline;
-        private AttractorSplineGenericEditor _attractoSplineGenericEditor;
+        private AttractorSplineArrayEditor _attractoSplineGenericEditor;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -33,7 +33,7 @@ namespace philae.gravity.attractor.line
         public AttractorSplineEditor()
             : base(false, "Spline")
         {
-            _attractoSplineGenericEditor = new AttractorSplineGenericEditor();
+            _attractoSplineGenericEditor = new AttractorSplineArrayEditor();
         }
 
         /// <summary>
@@ -48,7 +48,6 @@ namespace philae.gravity.attractor.line
             _attractoSplineGenericEditor.OnCustomEnable(
                 this,
                 _attractorSpline.gameObject,
-                LinesHasBeenUpdated,
                 ConstructLines,
                 LineHasBeenAdded,
                 LineHasBeenDeleted);
@@ -57,47 +56,20 @@ namespace philae.gravity.attractor.line
         
         protected void ConstructLines()
         {
+            Debug.Log("reconstruct lines ???");
+
             SerializedProperty spline = this.GetPropertie(PROPEPRTY_EXT_SPLINE);
             SerializedProperty matrix = spline.GetPropertie(PROPERTY_MATRIX);
-            SerializedProperty listLinesLocal = spline.GetPropertie(PROPERTY_LIST_POINTS);
+            SerializedProperty listPointsOnSpline = spline.GetPropertie(PROPERTY_LIST_POINTS);
 
-            List<PointInLines> points = new List<PointInLines>(listLinesLocal.arraySize);
-            for (int i = 1; i < listLinesLocal.arraySize; i++)
+            List<PointInSplines> points = new List<PointInSplines>(listPointsOnSpline.arraySize);
+            for (int i = 0; i < listPointsOnSpline.arraySize; i++)
             {
-                SerializedProperty point1 = listLinesLocal.GetArrayElementAtIndex(i - 1);
-                SerializedProperty point2 = listLinesLocal.GetArrayElementAtIndex(i);
-                points.Add(new PointInLines(i, 0, point1.GetPropertie(PROPERTY_POINT_LOCAL), point2.GetPropertie(PROPERTY_POINT_LOCAL), point1.GetPropertie(PROPERTY_POINT_GLOBAL), point2.GetPropertie(PROPERTY_POINT_GLOBAL)));
-                if (i == listLinesLocal.arraySize - 1)
-                {
-                    points.Add(new PointInLines(i, 1, point1.GetPropertie(PROPERTY_POINT_LOCAL), point2.GetPropertie(PROPERTY_POINT_LOCAL), point1.GetPropertie(PROPERTY_POINT_GLOBAL), point2.GetPropertie(PROPERTY_POINT_GLOBAL)));
-                }
+                SerializedProperty point = listPointsOnSpline.GetArrayElementAtIndex(i);
+                points.Add(new PointInSplines(i, point.GetPropertie(PROPERTY_POINT_LOCAL), point.GetPropertie(PROPERTY_POINT_GLOBAL)));
             }
-            //_attractoSplineGenericEditor.ConstructLines(matrix, points, listLines, listLinesLocal);
-        }
 
-
-        /// <summary>
-        /// called when lines points has been updated.
-        /// determine what to do (update delta & deltaSquared cached ?)
-        /// REMEMBER TO APPLY MODIFICATION AFTER !!!
-        /// </summary>
-        private void LinesHasBeenUpdated()
-        {
-            /*
-            SerializedProperty polyLine = this.GetPropertie(PROPEPRTY_POLY_EXT_LINE_3D);
-            SerializedProperty listLinesLocal = polyLine.GetPropertie(PROPERTY_LIST_LINES_LOCAL);
-            SerializedProperty listLines = polyLine.GetPropertie(PROPERTY_LIST_LINES_GLOBAL);
-
-            for (int i = 0; i < listLinesLocal.arraySize; i++)
-            {
-                SerializedProperty lineLocal = listLinesLocal.GetArrayElementAtIndex(i);
-                SerializedProperty line = listLines.GetArrayElementAtIndex(i);
-
-                ExtShapeSerializeProperty.UpdateLineFromSerializeProperties(line);
-                ExtShapeSerializeProperty.UpdateLineFromSerializeProperties(lineLocal);
-            }
-            this.ApplyModification();
-            */
+            _attractoSplineGenericEditor.ConstructLines(matrix, points, spline, listPointsOnSpline);
         }
 
         protected virtual void LineHasBeenAdded()

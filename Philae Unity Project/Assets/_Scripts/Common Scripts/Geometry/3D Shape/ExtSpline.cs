@@ -40,6 +40,8 @@ namespace hedCommon.geometry.shape3d
                 PointGlobal = matrix.MultiplyPoint3x4(PointLocal);
             }
         }
+        [SerializeField]
+        private bool _closed;
 
         [SerializeField]
         private Vector3 _position;
@@ -141,6 +143,10 @@ namespace hedCommon.geometry.shape3d
             for (int i = 1; i < _listPoints.Length; i++)
             {
                 Debug.DrawLine(_listPoints[i - 1].PointGlobal, _listPoints[i].PointGlobal, color);
+            }
+            if (_closed)
+            {
+                Debug.DrawLine(_listPoints[_listPoints.Length - 1].PointGlobal, _listPoints[0].PointGlobal, color);
             }
         }
 

@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace philae.gravity.attractor.line
 {
-    public class AttractorPolyLinesGenericEditor : AttractoLineGenericEditor
+    public class AttractorPolyLinesGenericEditor : AttractorLineGenericEditor
     {
         public delegate void DeleteLineAtIndex(int index);
         public delegate void AddLineAtTheEnd();
@@ -122,6 +122,8 @@ namespace philae.gravity.attractor.line
 
             AddedLine?.Invoke();
             _needToReConstructLines?.Invoke();
+
+            SelectPointAtIndex((_listLinesLocal.arraySize * 2) - 1);
         }
 
         /// <summary>
