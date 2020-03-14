@@ -56,58 +56,9 @@ namespace hedCommon.extension.runtime
         {
             return PrefabUtility.IsPartOfPrefabAsset(gameObject) || IsEditingInPrefabMode(gameObject);
         }
-
-        /// <summary>
-        /// save the MeshFilter of the selected object in Assets/Resources/Procedural/
-        /// </summary>
-        [MenuItem("PERSO/Procedural/Save Selected Mesh")]
-        public static void SaveSelectedMesh()
-        {
-            GameObject activeOne = Selection.activeGameObject;
-            if (activeOne == null)
-                return;
-            SaveSelectedMeshObj(activeOne);
-        }
-
-        public static Mesh SaveSelectedMeshObj(GameObject activeOne)
-        {
-            if (activeOne == null)
-                return (null);
-
-            MeshFilter meshRoad = activeOne.GetComponent<MeshFilter>();
-            if (meshRoad == null)
-            {
-                return (null);
-            }
-
-            Mesh tempMesh = (Mesh)UnityEngine.Object.Instantiate(meshRoad.sharedMesh);
-
-            string path = "Assets/Resources/Procedural/" + SaveAsset("savedMesh");
-            Debug.Log(path);
-            AssetDatabase.CreateAsset(tempMesh, path);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-
-            return (tempMesh);
-        }
 #endif
 
 #if UNITY_EDITOR
-        /// <summary>
-        /// delete the mesh asset in the gameObject if it exist
-        /// </summary>
-        /// <param name="obj"></param>
-        public static void DeleteSelectedMesh(GameObject obj)
-        {
-            MeshFilter meshRoad = obj.GetComponent<MeshFilter>();
-            if (!meshRoad)
-            {
-                return;
-            }
-            Mesh tempMesh = meshRoad.sharedMesh;
-            AssetDatabase.DeleteAsset("Assets/Resources/Procedural/" + meshRoad.sharedMesh.name);
-        }
-
         private static string SaveAsset(string nameMesh, string extention = "asset")
         {
             return string.Format("{0}_{1}.{2}",

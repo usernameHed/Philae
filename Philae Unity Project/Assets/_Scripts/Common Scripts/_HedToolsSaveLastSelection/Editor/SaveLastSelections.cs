@@ -40,6 +40,7 @@ namespace hedCommon.saveLastSelection
 
         private void UpdateEditor()
         {
+            AttemptToRemoveNull();
             UnityEngine.Object currentSelectedObject = Selection.activeObject;
             if (currentSelectedObject != null && currentSelectedObject != _lastSelectedObject)
             {
@@ -62,6 +63,11 @@ namespace hedCommon.saveLastSelection
 
         public void DisplayButton()
         {
+            if (_currentIndex >= _selectedObjects.Count)
+            {
+                _currentIndex = _selectedObjects.Count - 1;
+            }
+
             if (GUILayout.Button("..."))
             {
                 ExtReflection.OpenEditorWindow(ExtReflection.AllNameAssemblyKnown.SceneView, out Type animationWindowType);
@@ -71,18 +77,18 @@ namespace hedCommon.saveLastSelection
             {
                 if (GUILayout.Button("<") || ExtEventEditor.IsScrollingDown(Event.current, out float delta))
                 {
-                    if (Selection.activeObject != null)
-                    {
+                    //if (Selection.activeObject != null)
+                    //{
                         AddToIndex(-1);
-                    }
+                    //}
                     ForceSelection(_selectedObjects[_currentIndex]);
                 }
                 if (GUILayout.Button(">") || ExtEventEditor.IsScrollingUp(Event.current, out delta))
                 {
-                    if (Selection.activeObject != null)
-                    {
+                    //if (Selection.activeObject != null)
+                    //{
                         AddToIndex(1);
-                    }
+                    //}
                     ForceSelection(_selectedObjects[_currentIndex]);
                 }
                 if (_selectedObjects.Count == 0)
@@ -95,6 +101,15 @@ namespace hedCommon.saveLastSelection
                 }
             }
             EditorGUI.EndDisabledGroup();
+        }
+
+        private void AttemptToRemoveNull()
+        {
+            if (_selectedObjects.IsThereNullInList())
+            {
+                _selectedObjects = ExtList.CleanNullFromList(_selectedObjects, out bool hasChanged);
+                _selectedObjectsWithoutDoublon = ExtList.CleanNullFromList(_selectedObjectsWithoutDoublon, out hasChanged);
+            }
         }
 
         private void ForceSelection(UnityEngine.Object forcedSelection)
@@ -122,6 +137,11 @@ namespace hedCommon.saveLastSelection
             GUILayout.Label("previously selected:");
             for (int i = 0; i < _selectedObjectsWithoutDoublon.Count; i++)
             {
+                if (_selectedObjectsWithoutDoublon[i] == null)
+                {
+                    continue;
+                }
+
                 GUI.color = (_lastSelectedObject == _selectedObjectsWithoutDoublon[i]) ? Color.green : Color.white;
                 if (GUILayout.Button(_selectedObjectsWithoutDoublon[i].name))
                 {

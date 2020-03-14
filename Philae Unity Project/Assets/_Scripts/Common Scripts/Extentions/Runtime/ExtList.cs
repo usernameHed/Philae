@@ -148,6 +148,18 @@ namespace hedCommon.extension.runtime
             return (newList);
         }
 
+        public static bool IsThereNullInList<T>(this List<T> listToClean)
+        {
+            for (int i = 0; i < listToClean.Count; i++)
+            {
+                if (listToClean[i].ToString() == "null")
+                {
+                    return (true);
+                }
+            }
+            return (false);
+        }
+
         /// <summary>
         /// Clean  null item (do not remove items, remove only the list)
         /// </summary>
@@ -162,7 +174,7 @@ namespace hedCommon.extension.runtime
             }
             for (int i = listToClean.Count - 1; i >= 0; i--)
             {
-                if (listToClean[i] == null)
+                if (listToClean[i].ToString() == "null")
                 {
                     listToClean.RemoveAt(i);
                     hasChanged = true;
