@@ -75,12 +75,12 @@ namespace hedCommon.extension.editor
             {
                 using (HorizontalScope horizontalScopeSlider = new HorizontalScope(GUILayout.MaxWidth(50)))
                 {
-                    newValue = FloatField(valueToModify, label, toolTipText, min, max, delayedFloatField, defaultWidth, options);
+                    newValue = FloatFieldWithSlider(valueToModify, label, toolTipText, min, max, delayedFloatField, defaultWidth, options);
                 }
             }
             else
             {
-                newValue = FloatField(valueToModify, label, toolTipText, min, max, delayedFloatField, defaultWidth, options);
+                newValue = FloatFieldWithSlider(valueToModify, label, toolTipText, min, max, delayedFloatField, defaultWidth, options);
             }
 
             valueHasChanged = oldValue != newValue;
@@ -117,7 +117,7 @@ namespace hedCommon.extension.editor
             return (newValue);
         }
 
-        private static float FloatField(float value, string label = "", string toolTipText = "", float min = -9999, float max = 9999, bool delayedFloatField = false, float defaultWidth = 40, params GUILayoutOption[] options)
+        public static float FloatFieldWithSlider(float value, string label = "", string toolTipText = "", float min = -9999, float max = 9999, bool delayedFloatField = false, float defaultWidth = 40, params GUILayoutOption[] options)
         {
             if (!label.IsNullOrEmpty())
             {
@@ -129,9 +129,6 @@ namespace hedCommon.extension.editor
                 GUIContent gUIContent = new GUIContent("", toolTipText);
                 GUILayout.Label(gUIContent);
             }
-
-            //value = EditorGUILayout.FloatField(value, options);
-
 
             Rect newRect = GUILayoutUtility.GetLastRect();
             Rect posRect = new Rect(newRect.x + newRect.width - 2, newRect.y, defaultWidth, 15);

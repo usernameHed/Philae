@@ -42,19 +42,23 @@ namespace hedCommon.geometry.shape2d
             _radiusSquared = _radius * _radius;
         }
 
+#if UNITY_EDITOR
         public void Draw(Color color, bool displayNormal = false, string index = "1")
         {
-#if UNITY_EDITOR
             ExtDrawGuizmos.DrawCircle(this, color, _radius, displayNormal, index);
-#endif
         }
+#endif
 
+#if UNITY_EDITOR
         public void DrawWithExtraSize(Color color, float extraSize, bool displayNormal = false, string index = "1")
         {
-#if UNITY_EDITOR
             ExtDrawGuizmos.DrawCircle(this, color, _radius + extraSize, displayNormal, index);
-#endif
         }
+        public void DrawWithExtraOffset(Color color, Vector3 extraOffset, bool displayNormal = false, string index = "1")
+        {
+            ExtDrawGuizmos.DrawCircle(_plane.Point + _plane.Normal * extraOffset.x + _plane.Normal * extraOffset.y + _plane.Normal * extraOffset.z, _plane.Normal, color, _radius, displayNormal, index);
+        }
+#endif
 
         public void MoveSphape(Vector3 position, Vector3 normal)
         {

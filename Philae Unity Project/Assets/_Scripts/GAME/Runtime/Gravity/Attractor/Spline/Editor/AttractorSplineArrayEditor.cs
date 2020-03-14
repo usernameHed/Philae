@@ -75,14 +75,14 @@ namespace philae.gravity.attractor.line
         {
             using (ExtGUIScopes.Horiz())
             {
-                if (GUILayout.Button("Add Line"))
+                if (GUILayout.Button("Add Point"))
                 {
-                    AddLine();
+                    AddPoint();
                 }
             }
         }
 
-        private void AddLine()
+        private void AddPoint()
         {
             _targetEditor.UpdateEditor();
 

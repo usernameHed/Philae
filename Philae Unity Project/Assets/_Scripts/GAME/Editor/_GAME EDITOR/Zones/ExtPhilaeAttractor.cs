@@ -18,6 +18,7 @@ namespace philae.editor.extension.attractor
         private const string CUBE_OVERRIDE = "GameObject/Philae/Attractor/Cube/Cube With gravity override";
         private const string DISC = "GameObject/Philae/Attractor/Disc/Disc";
         private const string DISC_OVERRIDE = "GameObject/Philae/Attractor/Disc/Disc with gravity override";
+        private const string DONUT = "GameObject/Philae/Attractor/Donut";
         private const string CYLINDER = "GameObject/Philae/Attractor/Cylinder/Cylinder";
         private const string CYLINDER_OVERRIDE = "GameObject/Philae/Attractor/Cylinder/Cylinder with gravity override";
         private const string CAPSULE = "GameObject/Philae/Attractor/Capsule/Capsule";
@@ -62,6 +63,11 @@ namespace philae.editor.extension.attractor
         private static void AttractorDiscOverride()
         {
             CreateAttractor("Disc Override");
+        }
+        [MenuItem(DONUT, false, -1)]
+        private static void AttractorDonut()
+        {
+            CreateAttractor("Donut");
         }
         [MenuItem(CYLINDER, false, -1)]
         private static void AttractorCylinder()
@@ -176,6 +182,7 @@ namespace philae.editor.extension.attractor
         [MenuItem(CUBE_OVERRIDE, true)]
         [MenuItem(DISC, true)]
         [MenuItem(DISC_OVERRIDE, true)]
+        [MenuItem(DONUT, true)]
         [MenuItem(CYLINDER, true)]
         [MenuItem(CYLINDER_OVERRIDE, true)]
         [MenuItem(CAPSULE, true)]

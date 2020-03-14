@@ -12,7 +12,11 @@ namespace philae.gravity.attractor
     [CustomEditor(typeof(AttractorDisc), true)]
     public class AttractorDiscEditor : AttractorEditor
     {
-        protected new AttractorDisc _attractor;
+        private const string PROPERTY_EXT_DISC = "_disc";
+        private const string PROPETY_EXT_CIRCLE = "_circle";
+        private const string PROPERTY_EXT_PLANE = "_plane";
+        private const string PROPERTY_ALLOW_BOTTOM = "_allowBottom";
+        protected AttractorDisc _attractorDisc;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -38,23 +42,23 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractor = (AttractorDisc)GetTarget<Attractor>();
+            _attractorDisc = (AttractorDisc)GetTarget<Attractor>();
         }
 
         public override void ShowTinyEditorContent()
         {
             this.UpdateEditor();
             base.ShowTinyEditorContent();
-            bool allowDown = this.GetPropertie("_disc").GetPropertie("_circle").GetPropertie("_plane").GetPropertie("_allowBottom").boolValue;
+            bool allowDown = this.GetPropertie(PROPERTY_EXT_DISC).GetPropertie(PROPETY_EXT_CIRCLE).GetPropertie(PROPERTY_EXT_PLANE).GetPropertie(PROPERTY_ALLOW_BOTTOM).boolValue;
 
             bool allowDownChange = GUILayout.Toggle(allowDown, "Allow Down", EditorStyles.miniButton);
             if (allowDownChange != allowDown)
             {
                 Debug.Log("ici !");
-                SerializedProperty disc = this.GetPropertie("_disc");
-                SerializedProperty circle = disc.GetPropertie("_circle");
-                SerializedProperty plane = circle.GetPropertie("_plane");
-                SerializedProperty allowBottom = plane.GetPropertie("_allowBottom");
+                SerializedProperty disc = this.GetPropertie(PROPERTY_EXT_DISC);
+                SerializedProperty circle = disc.GetPropertie(PROPETY_EXT_CIRCLE);
+                SerializedProperty plane = circle.GetPropertie(PROPERTY_EXT_PLANE);
+                SerializedProperty allowBottom = plane.GetPropertie(PROPERTY_ALLOW_BOTTOM);
                 allowBottom.boolValue = allowDownChange;
                 this.ApplyModification();
             }

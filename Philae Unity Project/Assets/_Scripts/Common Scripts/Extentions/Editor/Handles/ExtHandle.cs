@@ -77,6 +77,13 @@ namespace hedCommon.extension.editor
             if (newPosition != toMove.position)
             {
                 hasChanged = true;
+                if (EditorOptions.Instance.Snap != 0 && Event.current.shift)
+                {
+                    newPosition = new Vector3(
+                        RoundToGrid(newPosition.x),
+                        RoundToGrid(newPosition.y),
+                        RoundToGrid(newPosition.z));
+                }
                 toMove.position = newPosition;
                 if (record)
                 {
@@ -94,6 +101,13 @@ namespace hedCommon.extension.editor
             if (newPosition != toMove.ExtractPosition())
             {
                 hasChanged = true;
+                if (EditorOptions.Instance.Snap != 0 && Event.current.shift)
+                {
+                    newPosition = new Vector3(
+                        RoundToGrid(newPosition.x),
+                        RoundToGrid(newPosition.y),
+                        RoundToGrid(newPosition.z));
+                }
                 toMove = toMove.SetPosition(newPosition);
             }
         }

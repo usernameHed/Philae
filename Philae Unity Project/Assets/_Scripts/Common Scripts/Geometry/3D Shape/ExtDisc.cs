@@ -12,11 +12,15 @@ namespace hedCommon.geometry.shape3d
     [Serializable]
     public struct ExtDisc
     {
+        [SerializeField]
         private Vector3 _position;
         public Vector3 Position { get { return (_position); } }
+        [SerializeField]
         private Quaternion _rotation;
         public Quaternion Rotation { get { return (_rotation); } }
+        [SerializeField]
         private Vector3 _localScale;
+        public Vector3 LocalScale { get { return (_localScale); } }
 
         [SerializeField]
         private ExtCircle _circle;
@@ -51,28 +55,6 @@ namespace hedCommon.geometry.shape3d
         {
             _discMatrix = Matrix4x4.TRS(_position, _rotation, _localScale * _radius);
             _circle.MoveSphape(_position, _discMatrix.UpFast(), _realRadius);
-        }
-
-        public void Draw(Color color)
-        {
-#if UNITY_EDITOR
-            _circle.Draw(color, true, "");
-#endif
-        }
-
-        public void DrawWithExtraSize(Color color, Vector3 extraSize)
-        {
-#if UNITY_EDITOR
-            if (extraSize.Maximum() <= 1f)
-            {
-                return;
-            }
-
-            Matrix4x4 cylinderMatrix = Matrix4x4.TRS(_position, _rotation, (_localScale + extraSize) * _radius);
-            float realRadius = _radius * MaxXY(_localScale + extraSize);
-            ExtCircle circle = new ExtCircle(_position, -cylinderMatrix.UpFast(), realRadius);
-            circle.Draw(color, true, "");
-#endif
         }
 
         private float MaxXY(Vector3 size)
@@ -132,6 +114,28 @@ namespace hedCommon.geometry.shape3d
             }
             return (_circle.GetClosestPointOnDiscIfWeCan(k, gravityOverride, out closestPoint));
         }
+
+#if UNITY_EDITOR
+        public void Draw(Color color)
+        {
+            _circle.Draw(color, true, "");
+        }
+#endif
+
+#if UNITY_EDITOR
+        public void DrawWithExtraSize(Color color, Vector3 extraSize)
+        {
+            if (extraSize.Maximum() <= 1f)
+            {
+                return;
+            }
+
+            Matrix4x4 cylinderMatrix = Matrix4x4.TRS(_position, _rotation, (_localScale + extraSize) * _radius);
+            float realRadius = _radius * MaxXY(_localScale + extraSize);
+            ExtCircle circle = new ExtCircle(_position, -cylinderMatrix.UpFast(), realRadius);
+            circle.Draw(color, true, "");
+        }
+#endif
         //end class
     }
     //end nameSpace

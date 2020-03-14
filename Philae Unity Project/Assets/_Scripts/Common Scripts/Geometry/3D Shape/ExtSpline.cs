@@ -13,18 +13,18 @@ namespace hedCommon.geometry.shape3d
     public struct ExtSpline
     {
         [Serializable]
-        public struct PointsOnSpline
+        public struct PointsSelectable
         {
             public Vector3 PointLocal;
             public Vector3 PointGlobal;
 
-            public PointsOnSpline(Vector3 localPoint)
+            public PointsSelectable(Vector3 localPoint)
             {
                 PointLocal = localPoint;
                 PointGlobal = localPoint;
             }
 
-            public PointsOnSpline(Vector3 localPoint, Matrix4x4 matrix) : this()
+            public PointsSelectable(Vector3 localPoint, Matrix4x4 matrix) : this()
             {
                 MovePoint(localPoint, matrix);
             }
@@ -54,7 +54,7 @@ namespace hedCommon.geometry.shape3d
         public Vector3 LocalScale { get { return (_localScale); } }
 
         [SerializeField]
-        private PointsOnSpline[] _listPoints;
+        private PointsSelectable[] _listPoints;
         [SerializeField]
         private Matrix4x4 _splinesMatrix;
 
@@ -66,10 +66,10 @@ namespace hedCommon.geometry.shape3d
             _rotation = rotation;
             _localScale = localScale;
 
-            _listPoints = new PointsOnSpline[3];
-            _listPoints[0] = new PointsOnSpline(new Vector3(0, 0, 0));
-            _listPoints[1] = new PointsOnSpline(new Vector3(-0.1f, 0, 0.2f));
-            _listPoints[2] = new PointsOnSpline(new Vector3(0.1f, 0, 0.4f));
+            _listPoints = new PointsSelectable[3];
+            _listPoints[0] = new PointsSelectable(new Vector3(0, 0, 0));
+            _listPoints[1] = new PointsSelectable(new Vector3(-0.1f, 0, 0.2f));
+            _listPoints[2] = new PointsSelectable(new Vector3(0.1f, 0, 0.4f));
             UpdateMatrix();
         }
 
@@ -98,7 +98,7 @@ namespace hedCommon.geometry.shape3d
 
         public void AddPointLocal(Vector3 p1)
         {
-            _listPoints = ExtArray.Add(_listPoints, new PointsOnSpline(p1, _splinesMatrix));
+            _listPoints = ExtArray.Add(_listPoints, new PointsSelectable(p1, _splinesMatrix));
         }
 
         public void MoveSphape(Vector3 position, Quaternion rotation, Vector3 localScale)
@@ -114,7 +114,7 @@ namespace hedCommon.geometry.shape3d
         /// </summary>
         public Vector3 GetClosestPoint(Vector3 k)
         {
-            return (Vector3.zero);
+            return (_position);
             //return (ExtLine.GetClosestPointFromLines(k, _listLines, out int indexLine));
         }
 

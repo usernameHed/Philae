@@ -56,8 +56,6 @@ namespace philae.gravity.attractor.line
         
         protected void ConstructLines()
         {
-            Debug.Log("reconstruct lines ???");
-
             SerializedProperty spline = this.GetPropertie(PROPEPRTY_EXT_SPLINE);
             SerializedProperty matrix = spline.GetPropertie(PROPERTY_MATRIX);
             SerializedProperty listPointsOnSpline = spline.GetPropertie(PROPERTY_LIST_POINTS);
