@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8370210718118043909}
-  - component: {fileID: 4164157699047260207}
+  - component: {fileID: 7087272113683812951}
+  - component: {fileID: 3903487818044643479}
   - component: {fileID: 8370210718118044410}
   - component: {fileID: 6897426719485075165}
   - component: {fileID: 7060097704065550054}
@@ -34,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4164157699047260207
+--- !u!114 &7087272113683812951
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,10 +44,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8370210718118043908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7761ddbd816e663468a87e8fb98f94e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 9dab3cd3725b31e4a9e8b9319b36ea3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SettingsGlobal: {fileID: 11400000, guid: 8a8d77476a1cbc842b42150b078f9f26, type: 2}
+  SettingsGlobal: {fileID: 11400000, guid: 253c6c93137fe84478ca7ff580cb500c, type: 2}
   SettingsLocal:
     Gravity: 9.81
     AddMinRange: 0
@@ -59,27 +60,50 @@ MonoBehaviour:
   _minRangeWithScale: 0
   _maxRangeWithScale: 0
   _gravitonsInside: []
+  _movableShape: {fileID: 3903487818044643479}
+  _movableSpline: {fileID: 3903487818044643479}
+--- !u!114 &3903487818044643479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8370210718118043908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f471e9b7ecc82b489f07885bf50f23f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ColorShape: {r: 1, g: 1, b: 1, a: 1}
   _spline:
-    _position: {x: 0, y: 0, z: 0}
-    _rotation: {x: 0, y: 0, z: 0, w: 0}
-    _localScale: {x: 0, y: 0, z: 0}
+    _closed: 0
+    _position: {x: 135.208, y: 0, z: -15.08}
+    _rotation: {x: -0, y: -0, z: -0, w: 1}
+    _localScale: {x: 1, y: 1, z: 1}
+    _listPoints:
+    - PointLocal: {x: 0, y: 0, z: 0}
+      PointGlobal: {x: 135.208, y: 0, z: -15.08}
+    - PointLocal: {x: -0.1, y: 0, z: 0.2}
+      PointGlobal: {x: 135.10799, y: 0, z: -14.88}
+    - PointLocal: {x: 0.1, y: 0, z: 0.4}
+      PointGlobal: {x: 135.308, y: 0, z: -14.68}
     _splinesMatrix:
-      e00: 0
+      e00: 1
       e01: 0
       e02: 0
-      e03: 0
+      e03: 135.208
       e10: 0
-      e11: 0
+      e11: 1
       e12: 0
       e13: 0
       e20: 0
       e21: 0
-      e22: 0
-      e23: 0
+      e22: 1
+      e23: -15.08
       e30: 0
       e31: 0
       e32: 0
-      e33: 0
+      e33: 1
 --- !u!114 &8370210718118044410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowName: 1
   ColorText: {r: 1, g: 0, b: 0, a: 1}
-  HideHandle: 0
+  HideHandle: 1
 --- !u!114 &6897426719485075165
 MonoBehaviour:
   m_ObjectHideFlags: 0
