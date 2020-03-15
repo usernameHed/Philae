@@ -1,10 +1,6 @@
 ﻿using ExtUnityComponents.transform;
 using hedCommon.extension.editor;
-using hedCommon.extension.runtime;
-using hedCommon.geometry.editor;
-using hedCommon.geometry.shape2d;
-using philae.gravity.attractor.gravityOverride;
-using philae.gravity.attractor.line;
+using hedCommon.geometry.movable;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;

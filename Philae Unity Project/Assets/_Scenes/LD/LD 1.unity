@@ -778,6 +778,98 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 156788266}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &235514296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 235514300}
+  - component: {fileID: 235514299}
+  - component: {fileID: 235514298}
+  - component: {fileID: 235514297}
+  m_Layer: 0
+  m_Name: Movable Donut
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &235514297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235514296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf614b8fd65a6b448ad8c234e1d4baa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movableShape: {fileID: 235514298}
+  _isMovableOnPlay: 1
+  _oldScale: {x: 2.5634613, y: 2.5634613, z: 2.5634613}
+--- !u!114 &235514298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235514296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8c7d3874ce47764999c5e127d6721af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ColorShape: {r: 1, g: 1, b: 1, a: 1}
+  _donut:
+    _position: {x: 10.06, y: 0, z: 0.64}
+    _rotation: {x: 0, y: 0, z: 0, w: 1}
+    _localScale: {x: 2.5634613, y: 2.5634613, z: 2.5634613}
+    _circle:
+      _plane:
+        Point: {x: 10.06, y: 0, z: 0.64}
+        Normal: {x: 0, y: 1.2817307, z: 0}
+        _allowBottom: 0
+      _radius: 1.2817307
+    _radius: 0.5
+    _radiusSquared: 0.25
+    _thickNess: 0.1
+    _realThickNess: 0.25634614
+    _realRadius: 1.2817307
+    _realSquaredRadius: 1.6428335
+--- !u!114 &235514299
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235514296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7957031ad32d0fb4e9535cf20b3cb154, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowName: 0
+  ColorText: {r: 1, g: 1, b: 1, a: 1}
+  HideHandle: 0
+--- !u!4 &235514300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235514296}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.06, y: 0, z: 0.64}
+  m_LocalScale: {x: 2.5634613, y: 2.5634613, z: 2.5634613}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &292269297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6568,7 +6660,7 @@ PrefabInstance:
     - target: {fileID: 1075477444687378063, guid: 605f9ceb2bd44b54c892b21d24e68923,
         type: 3}
       propertyPath: _donut._thickNess
-      value: 0.12
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1075477444687378063, guid: 605f9ceb2bd44b54c892b21d24e68923,
         type: 3}
@@ -6613,7 +6705,7 @@ PrefabInstance:
     - target: {fileID: 1075477444687378063, guid: 605f9ceb2bd44b54c892b21d24e68923,
         type: 3}
       propertyPath: _donut._realThickNess
-      value: 1.1999999
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1075477444687378063, guid: 605f9ceb2bd44b54c892b21d24e68923,
         type: 3}
@@ -6679,6 +6771,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _donut._circle._plane._allowBottom
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1075477444687378063, guid: 605f9ceb2bd44b54c892b21d24e68923,
+        type: 3}
+      propertyPath: _donut._radiusSquared
+      value: 0.7396
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 605f9ceb2bd44b54c892b21d24e68923, type: 3}

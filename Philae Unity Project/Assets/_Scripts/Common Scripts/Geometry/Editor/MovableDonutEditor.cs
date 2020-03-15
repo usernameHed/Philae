@@ -1,6 +1,5 @@
 ﻿using ExtUnityComponents;
 using hedCommon.extension.editor;
-using hedCommon.geometry.movable;
 using hedCommon.geometry.shape2d;
 using hedCommon.geometry.shape3d;
 using philae.gravity.attractor.line;
@@ -9,12 +8,12 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace philae.gravity.attractor
+namespace hedCommon.geometry.movable
 {
-    [CustomEditor(typeof(AttractorDonut), true)]
-    public class AttractorDonutEditor : AttractorEditor
+    [CustomEditor(typeof(MovableDonut), true)]
+    public class MovableDonutEditor : MovableShapeEditor
     {
-        protected AttractorDonut _attractorDonut;
+        protected MovableDonut _attractorDonut;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -23,13 +22,13 @@ namespace philae.gravity.attractor
         ///   witch doesn't have a Unity Editor, you can call base() without parametter:
         ///   : base()
         /// </summary>
-        public AttractorDonutEditor(bool showExtension, string tinyEditorName)
+        public MovableDonutEditor(bool showExtension, string tinyEditorName)
             : base(showExtension, tinyEditorName)
         {
 
         }
-        public AttractorDonutEditor()
-            : base(false, "Donus")
+        public MovableDonutEditor()
+            : base(false, "Donut")
         {
 
         }
@@ -40,7 +39,7 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractorDonut = (AttractorDonut)GetTarget<Attractor>();
+            _attractorDonut = (MovableDonut)GetTarget<MovableShape>();
         }
 
         public override void ShowTinyEditorContent()

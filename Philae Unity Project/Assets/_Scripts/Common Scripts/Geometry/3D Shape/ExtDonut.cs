@@ -7,10 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-#if UNITY_EDITOR
-    using UnityEditor;
-#endif
-
 namespace hedCommon.geometry.shape3d
 {
     [Serializable]
@@ -32,6 +28,7 @@ namespace hedCommon.geometry.shape3d
         [SerializeField]
         private float _radius;
         public float Radius { get { return (_radius); } }
+        [SerializeField]
         private float _radiusSquared;
         [SerializeField]
         private float _thickNess;

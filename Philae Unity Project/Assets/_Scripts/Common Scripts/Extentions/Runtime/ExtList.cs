@@ -174,7 +174,7 @@ namespace hedCommon.extension.runtime
             }
             for (int i = listToClean.Count - 1; i >= 0; i--)
             {
-                if (listToClean[i].ToString() == "null")
+                if (listToClean[i] == null || listToClean[i].ToString() == "null")
                 {
                     listToClean.RemoveAt(i);
                     hasChanged = true;

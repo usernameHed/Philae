@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace hedCommon.geometry.editor
+namespace hedCommon.geometry.movable
 {
     public static class ExtShapeSerializeProperty
     {
