@@ -93,7 +93,7 @@ namespace hedCommon.geometry.shape3d
 
         public bool GetClosestPointIfWeCan(Vector3 k, out Vector3 closestPoint, GravityOverrideLineTopDown[] gravityOverride)
         {
-            if (_listLines.Length == 0)
+            if (_listLines.Length == 0 || gravityOverride.Length != _listLines.Length)
             {
                 closestPoint = Vector3.zero;
                 return (false);

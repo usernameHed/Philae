@@ -30,7 +30,11 @@ namespace hedCommon.geometry.movable
             base.OnCustomEnable(targetEditor, targetGameObject, needToUpdateLines, needToReConstructLines);
             AddedLine = addLine;
             DeleteLineByIndex = deletedLine;
+
+            //Undo.undoRedoPerformed += MyUndoCallback;
         }
+
+        
 
         public virtual void ConstructLines(
             SerializedProperty matrix,
@@ -124,6 +128,15 @@ namespace hedCommon.geometry.movable
             SelectPointAtIndex((_listLinesLocal.arraySize * 2) - 1);
         }
 
+        /*
+        void MyUndoCallback()
+        {
+            // code for the action to take on Undo
+            //Debug.Log("reconstruct ??");
+            _needToReConstructLines?.Invoke();
+        }
+        */
+
         /// <summary>
         /// search if there is 2 selected points not linked. If so, link them
         /// </summary>
@@ -203,10 +216,10 @@ namespace hedCommon.geometry.movable
             _listLinesLocal.arraySize = _listLinesLocal.arraySize + 1;
             _listLinesGlobal.arraySize = _listLinesGlobal.arraySize + 1;
             SerializedProperty lastLineLocal = _listLinesLocal.GetArrayElementAtIndex(_listLinesLocal.arraySize - 1);
-            ExtShapeSerializeProperty.MoveLineFromSerializeProperties(lastLineLocal, p1, p2);
+            ExtPolyLineProperty.MoveLineFromSerializeProperties(lastLineLocal, p1, p2);
 
             SerializedProperty lastLineGlobal = _listLinesGlobal.GetArrayElementAtIndex(_listLinesGlobal.arraySize - 1);
-            ExtShapeSerializeProperty.MoveLineFromSerializeProperties(lastLineGlobal, _polyLineMatrix.MultiplyPoint3x4(p1), _polyLineMatrix.MultiplyPoint3x4(p2));
+            ExtPolyLineProperty.MoveLineFromSerializeProperties(lastLineGlobal, _polyLineMatrix.MultiplyPoint3x4(p1), _polyLineMatrix.MultiplyPoint3x4(p2));
         }
 
         private void DeleteSelectedPoints()

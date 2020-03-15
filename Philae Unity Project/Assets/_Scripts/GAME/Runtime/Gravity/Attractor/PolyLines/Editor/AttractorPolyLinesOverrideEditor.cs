@@ -2,6 +2,7 @@
 using feerik.editor.utils;
 using hedCommon.extension.editor;
 using hedCommon.extension.runtime;
+using hedCommon.geometry.movable;
 using hedCommon.geometry.shape2d;
 using hedCommon.geometry.shape3d;
 using philae.gravity.attractor.gravityOverride;
@@ -15,15 +16,15 @@ using UnityEngine.Rendering;
 
 namespace philae.gravity.attractor
 {
-    [CustomEditor(typeof(AttractorPolyLinesOverride), true)]
-    public class AttractorPolyLinesOverrideEditor : AttractorPolyLinesEditor
+    [CustomEditor(typeof(AttractorPolyLinesGravityOverride), true)]
+    public class AttractorPolyLinesOverrideEditor : AttractorEditor
     {
-        private const string PROPERTY_LIST_LINE_GLOBAL = "_listLines";
-        private AttractorPolyLinesOverride _attractorPolyLineOverride;
+        private AttractorPolyLinesGravityOverride _attractorPolyLineOverride;
         private SerializedProperty _gravityOverride;
 
         private AttractorOverrideGenericEditor _attractorOverrideGeneric = new AttractorOverrideGenericEditor();
 
+        private MovablePolyLinesEditor _moveLineReference;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -44,9 +45,27 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractorPolyLineOverride = (AttractorPolyLinesOverride)GetTarget<Attractor>();
+            _attractorPolyLineOverride = (AttractorPolyLinesGravityOverride)GetTarget<Attractor>();
             this.UpdateEditor();
             _gravityOverride = this.GetPropertie(AttractorOverrideGenericEditor.PROPERTY_GRAVITY_OVERRIDE);
+
+            MovablePolyLinesEditor[] editors = (MovablePolyLinesEditor[])Resources.FindObjectsOfTypeAll(typeof(MovablePolyLinesEditor));
+            if (editors.Length > 0)
+            {
+                _moveLineReference = editors[0];
+                _moveLineReference.LineAdded += LineHasBeenAdded;
+                _moveLineReference.LineDeleteAt += LineHasBeenDeleted;
+            }
+        }
+
+        public override void OnCustomDisable()
+        {
+            base.OnCustomDisable();
+            if (_moveLineReference)
+            {
+                _moveLineReference.LineAdded -= LineHasBeenAdded;
+                _moveLineReference.LineDeleteAt -= LineHasBeenDeleted;
+            }
         }
 
         public override void ShowTinyEditorContent()
@@ -65,10 +84,11 @@ namespace philae.gravity.attractor
             }
             this.UpdateEditor();
 
-            
+            SerializedObject movablePolyLine = this.GetPropertie(ExtPolyLineProperty.PROPEPRTY_MOVABLE_POLY_LINE).ToSerializeObject<MovablePolyLines>();
+            SerializedProperty extPolyLine = movablePolyLine.GetPropertie(ExtPolyLineProperty.PROPEPRTY_POLY_EXT_LINE_3D);
 
-            ExtPolyLines polyLine = this.GetPropertie(PROPEPRTY_POLY_EXT_LINE_3D).GetValue<ExtPolyLines>();
-            int countLines = this.GetPropertie(PROPEPRTY_POLY_EXT_LINE_3D).GetPropertie(PROPERTY_LIST_LINE_GLOBAL).arraySize;
+            ExtPolyLines polyLine = extPolyLine.GetValue<ExtPolyLines>();
+            int countLines = extPolyLine.GetPropertie(ExtPolyLineProperty.PROPERTY_LIST_LINES_GLOBAL).arraySize;
             if (countLines != _gravityOverride.arraySize)
             {
                 _gravityOverride.arraySize = countLines;
@@ -90,9 +110,15 @@ namespace philae.gravity.attractor
             _attractorOverrideGeneric.LockEditor();
         }
 
-        protected override void LineHasBeenAdded()
+        protected void LineHasBeenAdded()
         {
-            int countLines = this.GetPropertie(PROPEPRTY_POLY_EXT_LINE_3D).GetPropertie(PROPERTY_LIST_LINE_GLOBAL).arraySize;
+            this.UpdateEditor();
+
+            SerializedObject movablePolyLine = this.GetPropertie(ExtPolyLineProperty.PROPEPRTY_MOVABLE_POLY_LINE).ToSerializeObject<MovablePolyLines>();
+            SerializedProperty extPolyLine = movablePolyLine.GetPropertie(ExtPolyLineProperty.PROPEPRTY_POLY_EXT_LINE_3D);
+
+
+            int countLines = extPolyLine.GetPropertie(ExtPolyLineProperty.PROPERTY_LIST_LINES_GLOBAL).arraySize;
             _gravityOverride.arraySize = countLines;
             SerializedProperty lastGravityoverrideCreated = _gravityOverride.GetArrayElementAtIndex(countLines - 1);
 
@@ -101,8 +127,9 @@ namespace philae.gravity.attractor
             this.ApplyModification();
         }
 
-        protected override void LineHasBeenDeleted(int index)
+        protected void LineHasBeenDeleted(int index)
         {
+            this.UpdateEditor();
             _gravityOverride.DeleteArrayElementAtIndex(index);
             this.ApplyModification();
         }

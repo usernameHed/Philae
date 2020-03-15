@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3784656264804646245}
+  - component: {fileID: 174107278644722289}
   - component: {fileID: 1435789632903324486}
   - component: {fileID: 3784656264804646246}
   - component: {fileID: 2215473923261414492}
@@ -35,6 +36,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &174107278644722289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3784656264804646244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 511956442531de24c9c330ab10b88f2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SettingsGlobal: {fileID: 11400000, guid: 253c6c93137fe84478ca7ff580cb500c, type: 2}
+  SettingsLocal:
+    Gravity: 9.81
+    AddMinRange: 0
+    AddMaxRange: 0
+    MinRange: 0
+    MaxRange: 0
+    IsKinematic: 1
+  _rigidAttractor: {fileID: 2215473923261414492}
+  _attractorListerLogic: []
+  _minRangeWithScale: 0
+  _maxRangeWithScale: 0
+  _gravitonsInside: []
+  _movableShape: {fileID: 1435789632903324486}
+  _movablePolyLines: {fileID: 1435789632903324486}
 --- !u!114 &1435789632903324486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47,24 +75,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89f9b38166b97d9418d98d4dd07442a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SettingsGlobal: {fileID: 11400000, guid: 8a8d77476a1cbc842b42150b078f9f26, type: 2}
-  SettingsLocal:
-    Gravity: 9.81
-    AddMinRange: 1
-    AddMaxRange: 0
-    MinRange: 1.2
-    MaxRange: 1.2
-    IsKinematic: 1
-  _rigidAttractor: {fileID: 2215473923261414492}
-  _attractorListerLogic:
-  - {fileID: 0}
-  _minRangeWithScale: 12
-  _maxRangeWithScale: 12
-  _gravitonsInside:
-  - {fileID: 0}
+  ColorShape: {r: 1, g: 1, b: 1, a: 1}
   _polyLines:
-    _position: {x: -170, y: 0, z: 0}
-    _rotation: {x: -0, y: -0, z: -0, w: 1}
+    _position: {x: 136.156, y: 0, z: -16.749}
+    _rotation: {x: 0, y: 0, z: 0, w: 1}
     _localScale: {x: 10, y: 10, z: 10}
     _listLinesLocal:
     - _p1: {x: 0, y: 0, z: 0}
@@ -80,23 +94,23 @@ MonoBehaviour:
       _delta: {x: 0, y: 0, z: 0.3}
       _deltaSquared: 0.09
     _listLines:
-    - _p1: {x: -170, y: 0, z: 0}
-      _p2: {x: -173, y: 0, z: -2}
+    - _p1: {x: 136.156, y: 0, z: -16.749}
+      _p2: {x: 133.156, y: 0, z: -18.749}
       _delta: {x: -3, y: 0, z: -2}
       _deltaSquared: 13
-    - _p1: {x: -170, y: 0, z: 0}
-      _p2: {x: -167, y: 0, z: -2}
+    - _p1: {x: 136.156, y: 0, z: -16.749}
+      _p2: {x: 139.156, y: 0, z: -18.749}
       _delta: {x: 3, y: 0, z: -2}
       _deltaSquared: 13
-    - _p1: {x: -170, y: 0, z: 0}
-      _p2: {x: -170, y: 0, z: 3}
+    - _p1: {x: 136.156, y: 0, z: -16.749}
+      _p2: {x: 136.156, y: 0, z: -13.749001}
       _delta: {x: 0, y: 0, z: 3}
       _deltaSquared: 9
     _polyLinesMatrix:
       e00: 10
       e01: 0
       e02: 0
-      e03: -170
+      e03: 136.156
       e10: 0
       e11: 10
       e12: 0
@@ -104,24 +118,11 @@ MonoBehaviour:
       e20: 0
       e21: 0
       e22: 10
-      e23: 0
+      e23: -16.749
       e30: 0
       e31: 0
       e32: 0
       e33: 1
-    _pointsInfos:
-    - IsAttached: 0
-      IsSelected: 0
-    - IsAttached: 0
-      IsSelected: 0
-    - IsAttached: 0
-      IsSelected: 0
-    - IsAttached: 0
-      IsSelected: 0
-    - IsAttached: 0
-      IsSelected: 0
-    - IsAttached: 0
-      IsSelected: 0
 --- !u!114 &3784656264804646246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowName: 1
   ColorText: {r: 1, g: 0, b: 0, a: 1}
-  HideHandle: 1
+  HideHandle: 0
 --- !u!114 &2215473923261414492
 MonoBehaviour:
   m_ObjectHideFlags: 0

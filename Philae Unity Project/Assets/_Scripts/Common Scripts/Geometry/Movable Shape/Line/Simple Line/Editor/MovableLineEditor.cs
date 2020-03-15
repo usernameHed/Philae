@@ -10,8 +10,8 @@ namespace philae.gravity.attractor.line
     public class MovableLineEditor : MovableShapeEditor
     {
         protected const string PROPERTY_EXT_LINE_3D = "_line3d";
-        private MovableLine _attractorLine;
-        private MovableLineGenericEditor _attractorLinesGeneric;
+        private MovableLine _movableLine;
+        private MovableLineGenericEditor _movableLinesGeneric;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -23,7 +23,7 @@ namespace philae.gravity.attractor.line
         public MovableLineEditor()
             : base(false, "Line")
         {
-            _attractorLinesGeneric = new MovableLineGenericEditor();
+            _movableLinesGeneric = new MovableLineGenericEditor();
         }
 
         /// <summary>
@@ -32,9 +32,9 @@ namespace philae.gravity.attractor.line
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractorLine = (MovableLine)GetTarget<MovableShape>();
+            _movableLine = (MovableLine)GetTarget<MovableShape>();
 
-            _attractorLinesGeneric.OnCustomEnable(this, _attractorLine.gameObject, LinesHasBeenUpdated, ConstructLines);
+            _movableLinesGeneric.OnCustomEnable(this, _movableLine.gameObject, LinesHasBeenUpdated, ConstructLines);
         }
 
         private void ConstructLines()
@@ -50,7 +50,7 @@ namespace philae.gravity.attractor.line
                 new PointInLines(0, 1, lineLocal.GetPropertie("_p1"), lineLocal.GetPropertie("_p2"), line.GetPropertie("_p1"), line.GetPropertie("_p2"))
             };
 
-            _attractorLinesGeneric.ConstructLines(matrix, lines);
+            _movableLinesGeneric.ConstructLines(matrix, lines);
         }
 
         /// <summary>
@@ -60,27 +60,27 @@ namespace philae.gravity.attractor.line
         /// </summary>
         private void LinesHasBeenUpdated()
         {
-            ExtShapeSerializeProperty.UpdateLineFromSerializeProperties(this.GetPropertie(PROPERTY_EXT_LINE_3D).GetPropertie("_line"));
-            ExtShapeSerializeProperty.UpdateLineFromSerializeProperties(this.GetPropertie(PROPERTY_EXT_LINE_3D).GetPropertie("_lineLocalPosition"));
+            ExtPolyLineProperty.UpdateLineFromSerializeProperties(this.GetPropertie(PROPERTY_EXT_LINE_3D).GetPropertie("_line"));
+            ExtPolyLineProperty.UpdateLineFromSerializeProperties(this.GetPropertie(PROPERTY_EXT_LINE_3D).GetPropertie("_lineLocalPosition"));
             this.ApplyModification();
         }
 
         public override void OnCustomDisable()
         {
             base.OnCustomDisable();
-            _attractorLinesGeneric.OnCustomDisable();
+            _movableLinesGeneric.OnCustomDisable();
         }
 
         public override void ShowTinyEditorContent()
         {
             base.ShowTinyEditorContent();
-            _attractorLinesGeneric.ShowTinyEditorContent();
+            _movableLinesGeneric.ShowTinyEditorContent();
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
             base.CustomOnSceneGUI(sceneview);
-            _attractorLinesGeneric.CustomOnSceneGUI(sceneview);
+            _movableLinesGeneric.CustomOnSceneGUI(sceneview);
         }
     }
 }

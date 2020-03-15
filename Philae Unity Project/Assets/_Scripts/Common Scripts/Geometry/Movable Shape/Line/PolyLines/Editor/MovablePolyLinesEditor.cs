@@ -8,17 +8,17 @@ using UnityEngine;
 
 namespace philae.gravity.attractor.line
 {
-    [CustomEditor(typeof(AttractorPolyLines), true)]
-    public class AttractorPolyLinesEditor : AttractorEditor
+    [CustomEditor(typeof(MovablePolyLines), true)]
+    public class MovablePolyLinesEditor : MovableShapeEditor
     {
-        protected const string PROPEPRTY_POLY_EXT_LINE_3D = "_polyLines";
-        private const string PROPERTY_POLY_LINE_MATRIX = "_polyLinesMatrix";
-        private const string PROPERTY_LIST_LINES_LOCAL = "_listLinesLocal";
-        private const string PROPERTY_LIST_LINES_GLOBAL = "_listLines";
-        private const string PROPERTY_P1 = "_p1";
-        private const string PROPERTY_P2 = "_p2";
-        private AttractorPolyLines _attractorPolyLine;
-        private MovablePolyLinesGenericEditor _attractorPolyLinesGeneric;
+        private MovablePolyLines _movablePolyLine;
+        private MovablePolyLinesGenericEditor _movablePolyLinesGeneric;
+        
+        public delegate void LineAdd();
+        public delegate void LineDeletedAt(int index);
+        public LineAdd LineAdded;
+        public LineDeletedAt LineDeleteAt;
+
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -27,10 +27,10 @@ namespace philae.gravity.attractor.line
         ///   witch doesn't have a Unity Editor, you can call base() without parametter:
         ///   : base()
         /// </summary>
-        public AttractorPolyLinesEditor()
+        public MovablePolyLinesEditor()
             : base(false, "PolyLine")
         {
-            _attractorPolyLinesGeneric = new MovablePolyLinesGenericEditor();
+            _movablePolyLinesGeneric = new MovablePolyLinesGenericEditor();
         }
 
         /// <summary>
@@ -39,11 +39,11 @@ namespace philae.gravity.attractor.line
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractorPolyLine = (AttractorPolyLines)GetTarget<Attractor>();
+            _movablePolyLine = (MovablePolyLines)GetTarget<MovableShape>();
 
-            _attractorPolyLinesGeneric.OnCustomEnable(
+            _movablePolyLinesGeneric.OnCustomEnable(
                 this,
-                _attractorPolyLine.gameObject,
+                _movablePolyLine.gameObject,
                 LinesHasBeenUpdated,
                 ConstructLines,
                 LineHasBeenAdded,
@@ -52,10 +52,10 @@ namespace philae.gravity.attractor.line
 
         protected void ConstructLines()
         {
-            SerializedProperty polyLine = this.GetPropertie(PROPEPRTY_POLY_EXT_LINE_3D);
-            SerializedProperty matrix = polyLine.GetPropertie(PROPERTY_POLY_LINE_MATRIX);
-            SerializedProperty listLinesLocal = polyLine.GetPropertie(PROPERTY_LIST_LINES_LOCAL);
-            SerializedProperty listLines = polyLine.GetPropertie(PROPERTY_LIST_LINES_GLOBAL);
+            SerializedProperty polyLine = this.GetPropertie(ExtPolyLineProperty.PROPEPRTY_POLY_EXT_LINE_3D);
+            SerializedProperty matrix = polyLine.GetPropertie(ExtPolyLineProperty.PROPERTY_POLY_LINE_MATRIX);
+            SerializedProperty listLinesLocal = polyLine.GetPropertie(ExtPolyLineProperty.PROPERTY_LIST_LINES_LOCAL);
+            SerializedProperty listLines = polyLine.GetPropertie(ExtPolyLineProperty.PROPERTY_LIST_LINES_GLOBAL);
 
             if (listLines.arraySize != listLinesLocal.arraySize)
             {
@@ -67,11 +67,11 @@ namespace philae.gravity.attractor.line
             {
                 SerializedProperty lineLocal = listLinesLocal.GetArrayElementAtIndex(i);
                 SerializedProperty line = listLines.GetArrayElementAtIndex(i);
-                points.Add(new PointInLines(i, 0, lineLocal.GetPropertie(PROPERTY_P1), lineLocal.GetPropertie(PROPERTY_P2), line.GetPropertie(PROPERTY_P1), line.GetPropertie(PROPERTY_P2)));
-                points.Add(new PointInLines(i, 1, lineLocal.GetPropertie(PROPERTY_P1), lineLocal.GetPropertie(PROPERTY_P2), line.GetPropertie(PROPERTY_P1), line.GetPropertie(PROPERTY_P2)));
+                points.Add(new PointInLines(i, 0, lineLocal.GetPropertie(ExtPolyLineProperty.PROPERTY_P1), lineLocal.GetPropertie(ExtPolyLineProperty.PROPERTY_P2), line.GetPropertie(ExtPolyLineProperty.PROPERTY_P1), line.GetPropertie(ExtPolyLineProperty.PROPERTY_P2)));
+                points.Add(new PointInLines(i, 1, lineLocal.GetPropertie(ExtPolyLineProperty.PROPERTY_P1), lineLocal.GetPropertie(ExtPolyLineProperty.PROPERTY_P2), line.GetPropertie(ExtPolyLineProperty.PROPERTY_P1), line.GetPropertie(ExtPolyLineProperty.PROPERTY_P2)));
             }
 
-            _attractorPolyLinesGeneric.ConstructLines(matrix, points, listLines, listLinesLocal);
+            _movablePolyLinesGeneric.ConstructLines(matrix, points, listLines, listLinesLocal);
         }
 
         /// <summary>
@@ -81,47 +81,49 @@ namespace philae.gravity.attractor.line
         /// </summary>
         private void LinesHasBeenUpdated()
         {
-            SerializedProperty polyLine = this.GetPropertie(PROPEPRTY_POLY_EXT_LINE_3D);
-            SerializedProperty listLinesLocal = polyLine.GetPropertie(PROPERTY_LIST_LINES_LOCAL);
-            SerializedProperty listLines = polyLine.GetPropertie(PROPERTY_LIST_LINES_GLOBAL);
+            SerializedProperty polyLine = this.GetPropertie(ExtPolyLineProperty.PROPEPRTY_POLY_EXT_LINE_3D);
+            SerializedProperty listLinesLocal = polyLine.GetPropertie(ExtPolyLineProperty.PROPERTY_LIST_LINES_LOCAL);
+            SerializedProperty listLines = polyLine.GetPropertie(ExtPolyLineProperty.PROPERTY_LIST_LINES_GLOBAL);
 
             for (int i = 0; i < listLinesLocal.arraySize; i++)
             {
                 SerializedProperty lineLocal = listLinesLocal.GetArrayElementAtIndex(i);
                 SerializedProperty line = listLines.GetArrayElementAtIndex(i);
 
-                ExtShapeSerializeProperty.UpdateLineFromSerializeProperties(line);
-                ExtShapeSerializeProperty.UpdateLineFromSerializeProperties(lineLocal);
+                ExtPolyLineProperty.UpdateLineFromSerializeProperties(line);
+                ExtPolyLineProperty.UpdateLineFromSerializeProperties(lineLocal);
             }
             this.ApplyModification();
         }
 
-        protected virtual void LineHasBeenAdded()
+        public virtual void LineHasBeenAdded()
         {
             Debug.Log("add line");
+            LineAdded?.Invoke();
         }
 
         protected virtual void LineHasBeenDeleted(int index)
         {
             Debug.Log("delete line " + index);
+            LineDeleteAt?.Invoke(index);
         }
 
         public override void OnCustomDisable()
         {
             base.OnCustomDisable();
-            _attractorPolyLinesGeneric.OnCustomDisable();
+            _movablePolyLinesGeneric.OnCustomDisable();
         }
 
         public override void ShowTinyEditorContent()
         {
             base.ShowTinyEditorContent();
-            _attractorPolyLinesGeneric.ShowTinyEditorContent();
+            _movablePolyLinesGeneric.ShowTinyEditorContent();
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
             base.CustomOnSceneGUI(sceneview);
-            _attractorPolyLinesGeneric.CustomOnSceneGUI(sceneview);
+            _movablePolyLinesGeneric.CustomOnSceneGUI(sceneview);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using hedCommon.extension.runtime;
-using hedCommon.geometry.shape2d;
+using hedCommon.geometry.movable;
 using hedCommon.geometry.shape3d;
 using philae.gravity.attractor.logic;
 using philae.gravity.graviton;
@@ -8,24 +8,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace philae.gravity.attractor.line
+namespace philae.gravity.attractor
 {
     public class AttractorPolyLines : Attractor
     {
-        [SerializeField, OnValueChanged("ChangePolyLinesSettings", true)]
-        protected ExtPolyLines _polyLines = default;
+        [SerializeField]
+        protected MovablePolyLines _movablePolyLines;
 
         public override void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {
             base.InitOnCreation(attractorListerLogic);
-            _polyLines = new ExtPolyLines(Position, Rotation, LocalScale);
         }
 
         public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {
-            closestPoint = _polyLines.GetClosestPoint(graviton.Position);
-            closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, SettingsLocal.MinRange, SettingsLocal.MaxRange    , out bool outOfRange);
-            
+            closestPoint = _movablePolyLines.PolyLines.GetClosestPoint(graviton.Position);
+            closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2, _maxRangeWithScale / 2, out bool outOfRange);
+
             bool canApplyGravity = true;
             if (outOfRange)
             {
@@ -35,27 +34,17 @@ namespace philae.gravity.attractor.line
             return (canApplyGravity);
         }
 
-        public void ChangePolyLinesSettings()
-        {
-            _polyLines.MoveSphape(Position, Rotation, LocalScale);
-        }
-
-        public override void Move()
-        {
-            _polyLines.MoveSphape(Position, Rotation, LocalScale);
-        }
-
 #if UNITY_EDITOR
         protected override void DrawRange(Color color)
         {
-            _polyLines.Draw(color);
+            _movablePolyLines.PolyLines.Draw(color);
             if (SettingsLocal.MinRange > 0)
             {
-                _polyLines.DrawWithExtraSize(Color.gray, SettingsLocal.MinRange);
+                _movablePolyLines.PolyLines.DrawWithExtraSize(Color.gray, SettingsLocal.MinRange);
             }
             if (SettingsLocal.MaxRange > 0)
             {
-                _polyLines.DrawWithExtraSize(color, SettingsLocal.MaxRange);
+                _movablePolyLines.PolyLines.DrawWithExtraSize(color, SettingsLocal.MaxRange);
             }
         }
 #endif

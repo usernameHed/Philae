@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3784656264804646245}
-  - component: {fileID: 454393346065838987}
+  - component: {fileID: 3063836465848348352}
+  - component: {fileID: 8358810096580592281}
   - component: {fileID: 3784656264804646246}
   - component: {fileID: 2215473923261414492}
   - component: {fileID: 4726036847518728112}
@@ -35,7 +36,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &454393346065838987
+--- !u!114 &3063836465848348352
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,10 +45,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3784656264804646244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53c25b32497e9574b9fdda8e6936e42e, type: 3}
+  m_Script: {fileID: 11500000, guid: f3f0c50098a40154c874f0f125c3c4a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SettingsGlobal: {fileID: 11400000, guid: 8a8d77476a1cbc842b42150b078f9f26, type: 2}
+  SettingsGlobal: {fileID: 11400000, guid: 253c6c93137fe84478ca7ff580cb500c, type: 2}
   SettingsLocal:
     Gravity: 9.81
     AddMinRange: 0
@@ -60,12 +61,52 @@ MonoBehaviour:
   _minRangeWithScale: 0
   _maxRangeWithScale: 0
   _gravitonsInside: []
+  _movableShape: {fileID: 8358810096580592281}
+  _movablePolyLines: {fileID: 8358810096580592281}
+  GravityOverride: []
+--- !u!114 &8358810096580592281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3784656264804646244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89f9b38166b97d9418d98d4dd07442a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ColorShape: {r: 1, g: 1, b: 1, a: 1}
   _polyLines:
     _position: {x: 136.156, y: 0, z: -16.749}
     _rotation: {x: 0, y: 0, z: 0, w: 1}
     _localScale: {x: 10, y: 10, z: 10}
-    _listLinesLocal: []
-    _listLines: []
+    _listLinesLocal:
+    - _p1: {x: 0, y: 0, z: 0}
+      _p2: {x: -0.3, y: 0, z: -0.2}
+      _delta: {x: -0.3, y: 0, z: -0.2}
+      _deltaSquared: 0.13000001
+    - _p1: {x: 0, y: 0, z: 0}
+      _p2: {x: 0.3, y: 0, z: -0.2}
+      _delta: {x: 0.3, y: 0, z: -0.2}
+      _deltaSquared: 0.13000001
+    - _p1: {x: 0, y: 0, z: 0}
+      _p2: {x: 0, y: 0, z: 0.3}
+      _delta: {x: 0, y: 0, z: 0.3}
+      _deltaSquared: 0.09
+    _listLines:
+    - _p1: {x: 136.156, y: 0, z: -16.749}
+      _p2: {x: 133.156, y: 0, z: -18.749}
+      _delta: {x: -3, y: 0, z: -2}
+      _deltaSquared: 13
+    - _p1: {x: 136.156, y: 0, z: -16.749}
+      _p2: {x: 139.156, y: 0, z: -18.749}
+      _delta: {x: 3, y: 0, z: -2}
+      _deltaSquared: 13
+    - _p1: {x: 136.156, y: 0, z: -16.749}
+      _p2: {x: 136.156, y: 0, z: -13.749001}
+      _delta: {x: 0, y: 0, z: 3}
+      _deltaSquared: 9
     _polyLinesMatrix:
       e00: 10
       e01: 0
@@ -83,8 +124,6 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    _pointsInfos: []
-  GravityOverride: []
 --- !u!114 &3784656264804646246
 MonoBehaviour:
   m_ObjectHideFlags: 0

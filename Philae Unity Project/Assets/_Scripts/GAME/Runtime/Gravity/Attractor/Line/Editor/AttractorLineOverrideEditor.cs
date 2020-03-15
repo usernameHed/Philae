@@ -61,9 +61,8 @@ namespace philae.gravity.attractor
 
             this.UpdateEditor();
 
-            MovableLine movableLine = this.GetPropertie(ExtLineProperty.PROPERTY_MOVABLE_LINE).GetValue<MovableLine>();
-
-            ExtLine3d line = movableLine.Line3d;
+            SerializedObject movablePolyLine = this.GetPropertie(ExtLineProperty.PROPERTY_MOVABLE_LINE).ToSerializeObject<MovableLine>();
+            ExtLine3d line = movablePolyLine.GetPropertie(ExtLineProperty.PROPERTY_EXT_LINE_3D).GetValue<ExtLine3d>();
             GravityOverrideLineTopDown gravityLine = ExtGravityOverrideEditor.DrawLine3d(line, _attractorLineOverride.GravityOverride, Color.red, out bool hasChanged);
 
             if (hasChanged)

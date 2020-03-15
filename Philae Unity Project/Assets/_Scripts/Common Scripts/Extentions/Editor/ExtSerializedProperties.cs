@@ -45,9 +45,27 @@ namespace hedCommon.extension.editor
             return (editor.serializedObject.FindProperty(propertie));
         }
 
+        /// <summary>
+        /// use this if you want to acces a private class B inside class A.
+        /// this class B will be converted to SerializeObject,
+        /// then you can access to property inside that class B
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public static SerializedObject ToSerializeObject<T>(this SerializedProperty property)
+            where T : UnityEngine.Object
+        {
+            return (new SerializedObject(property.GetValue<T>()));
+        }
+
         public static SerializedProperty GetPropertie(this SerializedProperty editor, string propertie)
         {
             return (editor.FindPropertyRelative(propertie));
+        }
+
+        public static SerializedProperty GetPropertie(this SerializedObject serializedObject, string property)
+        {
+            return (serializedObject.FindProperty(property));
         }
 
         public static T GetValue<T>(this Editor editor, string propertieName)
