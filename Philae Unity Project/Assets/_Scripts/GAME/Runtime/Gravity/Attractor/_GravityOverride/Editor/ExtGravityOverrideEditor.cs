@@ -309,7 +309,6 @@ namespace philae.gravity.attractor.gravityOverride
                 scaleCylinder,
                 ExtGravityOverrideEditor.LineHandleCap))
             {
-                Debug.Log("extremity pressed");
                 trunk = !trunk;
                 hasChanged = true;
                 Event.current.Use();

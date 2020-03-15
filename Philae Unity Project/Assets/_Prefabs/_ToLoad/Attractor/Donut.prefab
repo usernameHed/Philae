@@ -151,19 +151,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ColorShape: {r: 1, g: 1, b: 1, a: 1}
   _donut:
-    _position: {x: -219.1, y: -0.02, z: 2}
+    _position: {x: -222.38, y: -0.25, z: 1.51}
     _rotation: {x: -0, y: -0, z: 0.03462887, w: 0.9994003}
     _localScale: {x: 10.176168, y: 10.176168, z: 10.176168}
     _circle:
       _plane:
-        Point: {x: -219.1, y: -0.02, z: 2}
+        Point: {x: -222.38, y: -0.25, z: 1.51}
         Normal: {x: -0.35217792, y: 5.0758815, z: -0}
         _allowBottom: 0
       _radius: 5.088084
     _radius: 0.5
     _radiusSquared: 0.25
-    _thickNess: 0.1
-    _realThickNess: 1.0176169
+    _thickNess: 0.11
+    _realThickNess: 1.1193786
     _realRadius: 5.088084
     _realSquaredRadius: 25.888601
 --- !u!33 &3548683924822629672

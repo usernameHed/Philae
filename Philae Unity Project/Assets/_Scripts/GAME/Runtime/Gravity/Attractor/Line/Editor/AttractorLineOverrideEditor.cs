@@ -2,6 +2,7 @@
 using feerik.editor.utils;
 using hedCommon.extension.editor;
 using hedCommon.extension.runtime;
+using hedCommon.geometry.movable;
 using hedCommon.geometry.shape2d;
 using hedCommon.geometry.shape3d;
 using philae.gravity.attractor.gravityOverride;
@@ -15,10 +16,10 @@ using UnityEngine.Rendering;
 
 namespace philae.gravity.attractor
 {
-    [CustomEditor(typeof(AttractorLineOverride))]
-    public class AttractorLineOverrideEditor : AttractorLineEditor
+    [CustomEditor(typeof(AttractorLineGravityOverride))]
+    public class AttractorLineOverrideEditor : AttractorEditor
     {
-        private AttractorLineOverride _attractorLineOverride;
+        private AttractorLineGravityOverride _attractorLineOverride;
         private AttractorOverrideGenericEditor _attractorOverrideGeneric = new AttractorOverrideGenericEditor();
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace philae.gravity.attractor
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractorLineOverride = (AttractorLineOverride)GetTarget<Attractor>();
+            _attractorLineOverride = GetTarget<AttractorLineGravityOverride>();
         }
 
         public override void ShowTinyEditorContent()
@@ -60,7 +61,9 @@ namespace philae.gravity.attractor
 
             this.UpdateEditor();
 
-            ExtLine3d line = this.GetPropertie(PROPERTY_EXT_LINE_3D).GetValue<ExtLine3d>();
+            MovableLine movableLine = this.GetPropertie(ExtLineProperty.PROPERTY_MOVABLE_LINE).GetValue<MovableLine>();
+
+            ExtLine3d line = movableLine.Line3d;
             GravityOverrideLineTopDown gravityLine = ExtGravityOverrideEditor.DrawLine3d(line, _attractorLineOverride.GravityOverride, Color.red, out bool hasChanged);
 
             if (hasChanged)

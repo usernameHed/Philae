@@ -80,9 +80,9 @@ namespace hedCommon.geometry.shape2d
         /// <param name="k"></param>
         /// <param name="nullIfOutside"></param>
         /// <returns></returns>
-        public Vector3 ClosestPointTo(Vector3 k)
+        public Vector3 GetClosestPoint(Vector3 k)
         {
-            return (_line.ClosestPointTo(k));
+            return (_line.GetClosestPoint(k));
         }
 
         public bool GetClosestPointIfWeCan(Vector3 k, out Vector3 closestPoint, GravityOverrideLineTopDown gravityOverride)

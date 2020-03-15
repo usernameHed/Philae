@@ -18,7 +18,7 @@ namespace hedCommon.geometry.movable
         private const string PROPERTY_POINT_LOCAL = "PointLocal";
         private const string PROPERTY_POINT_GLOBAL = "PointGlobal";
         private MovableSpline _movableSpline;
-        private MovableSplineArrayEditor _movableSplineGenericEditor;
+        private MovableSplineArrayEditor _movableSplineGenericEditor = new MovableSplineArrayEditor();
 
 
         /// <summary>

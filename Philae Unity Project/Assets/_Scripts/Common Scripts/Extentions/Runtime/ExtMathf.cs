@@ -284,7 +284,7 @@ namespace hedCommon.extension.runtime
             for (int i = 0; i < closestPointInLines.Length - 1; i++)
             {
                 ExtLine line = new ExtLine(chunkPath[i], chunkPath[i + 1]);
-                closestPointInLines[i] = line.ClosestPointTo(pos);
+                closestPointInLines[i] = line.GetClosestPoint(pos);
                 lenghtAllLine[i] = (float)line.GetLenght();
             }
 

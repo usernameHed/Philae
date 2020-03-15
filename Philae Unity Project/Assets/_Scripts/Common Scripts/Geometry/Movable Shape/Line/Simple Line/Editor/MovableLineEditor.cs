@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace philae.gravity.attractor.line
 {
-    [CustomEditor(typeof(AttractorLine), true)]
-    public class AttractorLineEditor : AttractorEditor
+    [CustomEditor(typeof(MovableLine), true)]
+    public class MovableLineEditor : MovableShapeEditor
     {
         protected const string PROPERTY_EXT_LINE_3D = "_line3d";
-        private AttractorLine _attractorLine;
+        private MovableLine _attractorLine;
         private MovableLineGenericEditor _attractorLinesGeneric;
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace philae.gravity.attractor.line
         ///   witch doesn't have a Unity Editor, you can call base() without parametter:
         ///   : base()
         /// </summary>
-        public AttractorLineEditor()
+        public MovableLineEditor()
             : base(false, "Line")
         {
             _attractorLinesGeneric = new MovableLineGenericEditor();
@@ -32,7 +32,7 @@ namespace philae.gravity.attractor.line
         public override void OnCustomEnable()
         {
             base.OnCustomEnable();
-            _attractorLine = (AttractorLine)GetTarget<Attractor>();
+            _attractorLine = (MovableLine)GetTarget<MovableShape>();
 
             _attractorLinesGeneric.OnCustomEnable(this, _attractorLine.gameObject, LinesHasBeenUpdated, ConstructLines);
         }

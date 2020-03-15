@@ -105,7 +105,7 @@ namespace hedCommon.saveLastSelection
 
         private void AttemptToRemoveNull()
         {
-            if (_selectedObjects.IsThereNullInList())
+            if (_selectedObjects != null && _selectedObjects.IsThereNullInList())
             {
                 _selectedObjects = ExtList.CleanNullFromList(_selectedObjects, out bool hasChanged);
                 _selectedObjectsWithoutDoublon = ExtList.CleanNullFromList(_selectedObjectsWithoutDoublon, out hasChanged);

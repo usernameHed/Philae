@@ -1,5 +1,5 @@
 ﻿using hedCommon.extension.runtime;
-using hedCommon.geometry.shape2d;
+using hedCommon.geometry.movable;
 using hedCommon.geometry.shape3d;
 using philae.gravity.attractor.gravityOverride;
 using philae.gravity.attractor.logic;
@@ -9,15 +9,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace philae.gravity.attractor.line
+namespace philae.gravity.attractor
 {
-    public class AttractorLineOverride : AttractorLine
+    public class AttractorLineGravityOverride : AttractorLine
     {
         public GravityOverrideLineTopDown GravityOverride;
 
         public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {
-            bool canApplyGravity = _line3d.GetClosestPointIfWeCan(graviton.Position, out closestPoint, GravityOverride);
+            bool canApplyGravity = _movableLine.Line3d.GetClosestPointIfWeCan(graviton.Position, out closestPoint, GravityOverride);
 
             if (canApplyGravity)
             {
