@@ -9,31 +9,31 @@ using UnityEngine;
 
 namespace hedCommon.geometry.movable
 {
-    public class MovableDonut : MovableShape
+    public class MovableSpline : MovableShape
     {
         [SerializeField, OnValueChanged("ChangeShapeStucture", true)]
-        protected ExtDonut _donut = default;
-        public ExtDonut Donut { get { return (_donut); } }
+        protected ExtSpline _spline = default;
+        public ExtSpline Spline { get { return (_spline); } }
 
         public override void InitOnCreation()
         {
-            _donut = new ExtDonut(Position, Rotation, LocalScale, 0.5f, 0.1f);
+            _spline = new ExtSpline(Position, Rotation, LocalScale);
         }
 
         public override void ChangeShapeStucture()
         {
-            _donut.MoveSphape(Position, Rotation, LocalScale, _donut.Radius, _donut.ThickNess);
+            _spline.MoveSphape(Position, Rotation, LocalScale);
         }
 
         public override void Move()
         {
-            _donut.MoveSphape(Position, Rotation, LocalScale);
+            _spline.MoveSphape(Position, Rotation, LocalScale);
         }
 
 #if UNITY_EDITOR
         public override void Draw(Color color)
         {
-            _donut.Draw(color);
+            _spline.Draw(color);
         }
 #endif
     }

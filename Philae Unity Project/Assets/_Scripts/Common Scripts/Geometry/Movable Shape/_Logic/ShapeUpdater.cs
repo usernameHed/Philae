@@ -15,12 +15,6 @@ namespace hedCommon.geometry.movable
         [SerializeField]
         protected MovableShape _movableShape;
 
-        [SerializeField]
-        protected bool _isMovableOnPlay = true;
-
-        [SerializeField]
-        private Vector3 _oldScale = new Vector3(-1, -1, -1);
-
         private void OnEnable()
         {
             if (_movableShape == null)
@@ -29,25 +23,14 @@ namespace hedCommon.geometry.movable
             }
         }
 
-        public void CustomUpdateIfCanMove()
-        {
-            bool canMove =  !Application.isPlaying
-                             || (Application.isPlaying && _isMovableOnPlay);
-
-            if (canMove && transform.hasChanged)
-            {
-                if (transform.localScale != _oldScale)
-                {
-                    _oldScale = transform.localScale;
-                }
-                _movableShape.Move();
-                transform.hasChanged = false;
-            }
-        }
-
         private void Update()
         {
-            CustomUpdateIfCanMove();
+            _movableShape.CustomUpdateIfCanMove();
+        }
+
+        private void OnDrawGizmos()
+        {
+            _movableShape.Draw(_movableShape.ColorShape);
         }
     }
 }

@@ -63,25 +63,8 @@ namespace philae.gravity.attractor
             {
                 return;
             }
-            SetStaticIfNotMovable();
             LockAttractorTransform();
         }
-
-        /// <summary>
-        /// set/unset static for this attractor (depending if the object is movable or not...)
-        /// </summary>
-        private void SetStaticIfNotMovable()
-        {
-            if (!_attractor.SettingsGlobal.IsMovable && !_attractor.gameObject.isStatic)
-            {
-                _attractor.gameObject.SetStaticRecursively(true);
-            }
-            else if (_attractor.SettingsGlobal.IsMovable && _attractor.gameObject.isStatic)
-            {
-                _attractor.gameObject.SetStaticRecursively(false);
-            }
-        }
-
         
         private void LockAttractorTransform()
         {

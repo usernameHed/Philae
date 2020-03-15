@@ -152,7 +152,7 @@ namespace hedCommon.extension.runtime
         {
             for (int i = 0; i < listToClean.Count; i++)
             {
-                if (listToClean[i].ToString() == "null")
+                if (listToClean[i] == null || listToClean[i].ToString() == "null")
                 {
                     return (true);
                 }

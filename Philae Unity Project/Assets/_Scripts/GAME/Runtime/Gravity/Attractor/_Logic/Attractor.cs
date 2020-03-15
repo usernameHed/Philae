@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using philae.gravity.graviton;
 using philae.gravity.physicsBody;
+using hedCommon.geometry.movable;
 
 namespace philae.gravity.attractor
 {
@@ -19,14 +20,13 @@ namespace philae.gravity.attractor
         [FoldoutGroup("Settings")]
         public AttractorSettingsLocal SettingsLocal = new AttractorSettingsLocal();
 
+        
+
         [SerializeField]
         protected RigidAttractor _rigidAttractor = default;
 
-        //[SerializeField, ReadOnly]
-        //protected Transform _parent;
         [SerializeField]
         protected List<AttractorListerLogic> _attractorListerLogic;
-        //public GravityAttractorZone Zone { get {  return (_attractorListerLogic?.Zone); } }
 
         [SerializeField, ReadOnly]
         protected float _minRangeWithScale = 0f;
@@ -36,11 +36,12 @@ namespace philae.gravity.attractor
         [SerializeField, ReadOnly]
         protected List<Graviton> _gravitonsInside = new List<Graviton>(50);
 
-        private Vector3 _oldScale = new Vector3(-1, -1, -1);
+        public Vector3 Position { get { return (_movableShape.Position); } }
+        public Quaternion Rotation { get { return (_movableShape.Rotation); } }
+        public Vector3 LocalScale { get { return (_movableShape.LocalScale); } }
 
-        public Vector3 Position { get { return (transform.position); } }
-        public Quaternion Rotation { get { return (transform.rotation); } }
-        public Vector3 LocalScale { get { return (transform.localScale); } }
+        [SerializeField]
+        protected MovableShape _movableShape;
 
         /// <summary>
         /// CALLED ONLY when creating the attractor from editor, NEVER AFTER
@@ -48,11 +49,11 @@ namespace philae.gravity.attractor
         /// <param name="attractorListerLogic"></param>
         public virtual void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {
+            _movableShape.InitOnCreation();
+
             _attractorListerLogic = attractorListerLogic;
             SetupLinkToAttractorListers();
 
-            transform.hasChanged = false;
-            _oldScale = new Vector3(-1, -1, -1);
             _rigidAttractor.IsKinematic = true;
             Init();
         }
@@ -114,6 +115,9 @@ namespace philae.gravity.attractor
             SettingsLocal.GravityChanged += OnGravityChanged;
             SettingsLocal.OnKinematicChanged -= OnKinematicChanged;
             SettingsLocal.OnKinematicChanged += OnKinematicChanged;
+
+            _movableShape.HasScaled += MinMaxRangeChanged;
+            _movableShape.HasMoved += Move;
         }
 
         private void OnDisable()
@@ -121,6 +125,8 @@ namespace philae.gravity.attractor
             SettingsLocal.MinMaxRangeChanged -= MinMaxRangeChanged;
             SettingsLocal.GravityChanged -= OnGravityChanged;
             SettingsLocal.OnKinematicChanged -= OnKinematicChanged;
+            _movableShape.HasScaled -= MinMaxRangeChanged;
+            _movableShape.HasMoved -= Move;
 
             RemoveLinkToAttractorListers();
         }
@@ -137,7 +143,10 @@ namespace philae.gravity.attractor
         /// <summary>
         /// called after init, or when transform has changed
         /// </summary>
-        public abstract void Move();
+        public virtual void Move()
+        {
+            _movableShape.Move();
+        }
 
         private void OnGravityChanged()
         {
@@ -174,25 +183,10 @@ namespace philae.gravity.attractor
 
         public abstract bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint);
         
+        
         public virtual void CustomUpdateIfCanMove()
         {
-            bool canMove = !Application.isPlaying
-                || (Application.isPlaying && SettingsGlobal.IsMovable);
-
-            if (canMove && transform.hasChanged)
-            {
-                if (transform.localScale != _oldScale)
-                {
-                    MinMaxRangeChanged();
-                    _oldScale = transform.localScale;
-                }
-                else
-                {
-                    Move();
-                }
-
-                transform.hasChanged = false;
-            }
+            _movableShape.CustomUpdateIfCanMove();
         }
 
         public Vector3 GetRightPosWithRange(Vector3 posEntity, Vector3 posCenter, float range, float maxRange, out bool outOfRange)
@@ -247,9 +241,6 @@ namespace philae.gravity.attractor
         }
 
        
-
-        
-
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
@@ -278,8 +269,10 @@ namespace philae.gravity.attractor
             DrawRange(GetColor());
         }
 
-        protected abstract void DrawRange(Color color);
-
+        protected virtual void DrawRange(Color color)
+        {
+            _movableShape.Draw(color);
+        }
 #endif
     }
 }

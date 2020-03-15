@@ -13,7 +13,6 @@ namespace philae.data.gravity
     [CreateAssetMenu(fileName = "AttractorSettings", menuName = "Philae/Gravity/AttractorSettings")]
     public class AttractorSettings : ScriptableObject
     {
-        public bool IsMovable = true;
         public bool ShowRange = true;
         public bool ShowRangeOnSelect = true;
         public ConstrainPosition ConstrainPositions;
