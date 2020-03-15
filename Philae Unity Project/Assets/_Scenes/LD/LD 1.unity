@@ -811,7 +811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movableShape: {fileID: 235514298}
   _isMovableOnPlay: 1
-  _oldScale: {x: 2.5634613, y: 2.5634613, z: 2.5634613}
+  _oldScale: {x: 10, y: 10, z: 10}
 --- !u!114 &235514298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -826,21 +826,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ColorShape: {r: 1, g: 1, b: 1, a: 1}
   _donut:
-    _position: {x: 10.06, y: 0, z: 0.64}
-    _rotation: {x: 0, y: 0, z: 0, w: 1}
-    _localScale: {x: 2.5634613, y: 2.5634613, z: 2.5634613}
+    _position: {x: -232.74, y: -0.08, z: 0}
+    _rotation: {x: -0, y: -0, z: -0, w: 1}
+    _localScale: {x: 10, y: 10, z: 10}
     _circle:
       _plane:
-        Point: {x: 10.06, y: 0, z: 0.64}
-        Normal: {x: 0, y: 1.2817307, z: 0}
+        Point: {x: -232.74, y: -0.08, z: 0}
+        Normal: {x: 0, y: 5, z: 0}
         _allowBottom: 0
-      _radius: 1.2817307
+      _radius: 5
     _radius: 0.5
     _radiusSquared: 0.25
     _thickNess: 0.1
-    _realThickNess: 0.25634614
-    _realRadius: 1.2817307
-    _realSquaredRadius: 1.6428335
+    _realThickNess: 1
+    _realRadius: 5
+    _realSquaredRadius: 25
 --- !u!114 &235514299
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -864,11 +864,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 235514296}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.06, y: 0, z: 0.64}
-  m_LocalScale: {x: 2.5634613, y: 2.5634613, z: 2.5634613}
+  m_LocalPosition: {x: -232.74, y: -0.08, z: 0}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 1282041411}
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &292269297
 PrefabInstance:
@@ -6522,6 +6522,7 @@ Transform:
   - {fileID: 1071292984}
   - {fileID: 101550692}
   - {fileID: 1283880383}
+  - {fileID: 235514300}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
