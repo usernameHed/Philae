@@ -12,23 +12,20 @@ namespace hedCommon.saveLastSelection
 {
     public class SaveLastSelections
     {
-        private const int NUMBER_SELECTED_OBJECTS = 20;
-        private const string KEY_EDITOR_PREF_SAVE_LAST_SELECTION = "KEY_EDITOR_PREF_SAVE_LAST_SELECTION";
-        private List<UnityEngine.Object> _selectedObjects = new List<UnityEngine.Object>(NUMBER_SELECTED_OBJECTS);
-        private UnityEngine.Object _lastSelectedObject;
-
-        private List<UnityEngine.Object> _selectedObjectsWithoutDoublon = new List<UnityEngine.Object>(NUMBER_SELECTED_OBJECTS);
-
-        private int _currentIndex;
+        private SaveLastSelectionsEditorWindow _saveLastSelectionsEditorWindow;
         private TinyEditorWindowSceneView _tinyEditorWindowSceneView;
+        private const string KEY_EDITOR_PREF_SAVE_LAST_SELECTION = "KEY_EDITOR_PREF_SAVE_LAST_SELECTION";
+
 
         public SaveLastSelections()
         {
-            _selectedObjects.Clear();
-            EditorApplication.update += UpdateEditor;
+            _saveLastSelectionsEditorWindow = SaveLastSelectionsEditorWindow.ShowSaveLastSelections();
+
             _tinyEditorWindowSceneView = new TinyEditorWindowSceneView();
             _tinyEditorWindowSceneView.TinyInit(KEY_EDITOR_PREF_SAVE_LAST_SELECTION, "Save Last Selection", TinyEditorWindowSceneView.DEFAULT_POSITION.UP_LEFT);
             _tinyEditorWindowSceneView.IsClosed = true;
+
+            EditorApplication.update += UpdateEditor;
             SceneView.duringSceneGui += OnCustomGUI;
         }
 
@@ -42,90 +39,126 @@ namespace hedCommon.saveLastSelection
         {
             AttemptToRemoveNull();
             UnityEngine.Object currentSelectedObject = Selection.activeObject;
-            if (currentSelectedObject != null && currentSelectedObject != _lastSelectedObject)
+            if (currentSelectedObject != null && currentSelectedObject != _saveLastSelectionsEditorWindow.LastSelectedObject)
             {
                 AddNewSelection(currentSelectedObject);
             }
         }
 
-        private void AddNewSelection(UnityEngine.Object currentSelectedObject)
+        private void AttemptToRemoveNull()
         {
-            _lastSelectedObject = currentSelectedObject;
-            if (_selectedObjects.Count >= NUMBER_SELECTED_OBJECTS)
+            if (_saveLastSelectionsEditorWindow.SelectedObjects != null && _saveLastSelectionsEditorWindow.SelectedObjects.IsThereNullInList())
             {
-                _selectedObjects.RemoveAt(0);
+                _saveLastSelectionsEditorWindow.SelectedObjects = CleanNullFromList(_saveLastSelectionsEditorWindow.SelectedObjects, out bool hasChanged);
+                _saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon = CleanNullFromList(_saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon, out hasChanged);
             }
-            _selectedObjects.Add(_lastSelectedObject);
-            _currentIndex = _selectedObjects.Count - 1;
+        }
 
-            _selectedObjectsWithoutDoublon = ExtList.RemoveRedundancy(_selectedObjects);
+        /// <summary>
+        /// Clean  null item (do not remove items, remove only the list)
+        /// </summary>
+        /// <param name="listToClean"></param>
+        /// <returns>true if list changed</returns>
+        public static List<UnityEngine.Object> CleanNullFromList(List<UnityEngine.Object> listToClean, out bool hasChanged)
+        {
+            hasChanged = false;
+            if (listToClean == null)
+            {
+                return (listToClean);
+            }
+            for (int i = listToClean.Count - 1; i >= 0; i--)
+            {
+                if (listToClean[i] == null || listToClean[i].ToString() == "null")
+                {
+                    listToClean.RemoveAt(i);
+                    hasChanged = true;
+                }
+            }
+            return (listToClean);
         }
 
         public void DisplayButton()
         {
-            if (_currentIndex >= _selectedObjects.Count)
+            if (_saveLastSelectionsEditorWindow.CurrentIndex >= _saveLastSelectionsEditorWindow.SelectedObjects.Count)
             {
-                _currentIndex = _selectedObjects.Count - 1;
+                _saveLastSelectionsEditorWindow.CurrentIndex = _saveLastSelectionsEditorWindow.SelectedObjects.Count - 1;
             }
 
             if (GUILayout.Button("..."))
             {
                 ExtReflection.OpenEditorWindow(ExtReflection.AllNameAssemblyKnown.SceneView, out Type animationWindowType);
+
+                if (_saveLastSelectionsEditorWindow == null)
+                {
+                    _saveLastSelectionsEditorWindow = SaveLastSelectionsEditorWindow.ShowSaveLastSelections();
+                }
+
                 _tinyEditorWindowSceneView.IsClosed = !_tinyEditorWindowSceneView.IsClosed;
             }
-            EditorGUI.BeginDisabledGroup(_selectedObjects.Count == 0);
+            EditorGUI.BeginDisabledGroup(_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0);
             {
                 if (GUILayout.Button("<") || ExtEventEditor.IsScrollingDown(Event.current, out float delta))
                 {
-                    //if (Selection.activeObject != null)
-                    //{
-                        AddToIndex(-1);
-                    //}
-                    ForceSelection(_selectedObjects[_currentIndex]);
+                    AddToIndex(-1);
+                    ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjects[_saveLastSelectionsEditorWindow.CurrentIndex]);
                 }
                 if (GUILayout.Button(">") || ExtEventEditor.IsScrollingUp(Event.current, out delta))
                 {
-                    //if (Selection.activeObject != null)
-                    //{
-                        AddToIndex(1);
-                    //}
-                    ForceSelection(_selectedObjects[_currentIndex]);
+                    AddToIndex(1);
+                    ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjects[_saveLastSelectionsEditorWindow.CurrentIndex]);
                 }
-                if (_selectedObjects.Count == 0)
+                if (_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0)
                 {
                     GUILayout.Label("-/-");
                 }
                 else
                 {
-                    GUILayout.Label((_currentIndex + 1).ToString() + "/" + (_selectedObjects.Count));
+                    GUILayout.Label((_saveLastSelectionsEditorWindow.CurrentIndex + 1).ToString() + "/" + (_saveLastSelectionsEditorWindow.SelectedObjects.Count));
                 }
             }
             EditorGUI.EndDisabledGroup();
         }
 
-        private void AttemptToRemoveNull()
+        private void AddNewSelection(UnityEngine.Object currentSelectedObject)
         {
-            if (_selectedObjects != null && _selectedObjects.IsThereNullInList())
+            _saveLastSelectionsEditorWindow.LastSelectedObject = currentSelectedObject;
+            if (_saveLastSelectionsEditorWindow.SelectedObjects.Count >= SaveLastSelectionsEditorWindow.NUMBER_SELECTED_OBJECTS)
             {
-                _selectedObjects = ExtList.CleanNullFromList(_selectedObjects, out bool hasChanged);
-                _selectedObjectsWithoutDoublon = ExtList.CleanNullFromList(_selectedObjectsWithoutDoublon, out hasChanged);
+                _saveLastSelectionsEditorWindow.SelectedObjects.RemoveAt(0);
             }
+            _saveLastSelectionsEditorWindow.SelectedObjects.Add(_saveLastSelectionsEditorWindow.LastSelectedObject);
+            _saveLastSelectionsEditorWindow.CurrentIndex = _saveLastSelectionsEditorWindow.SelectedObjects.Count - 1;
+
+            _saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon = ExtList.RemoveRedundancy(_saveLastSelectionsEditorWindow.SelectedObjects);
         }
 
-        private void ForceSelection(UnityEngine.Object forcedSelection)
+
+
+        private void ForceSelection(UnityEngine.Object forcedSelection, bool select = true)
         {
-            _lastSelectedObject = forcedSelection;
-            Selection.activeObject = _lastSelectedObject;
+            _saveLastSelectionsEditorWindow.LastSelectedObject = forcedSelection;
+            if (select)
+            {
+                ExtSelection.PingAndSelect(_saveLastSelectionsEditorWindow.LastSelectedObject);
+            }
+            else
+            {
+                ExtSelection.Ping(_saveLastSelectionsEditorWindow.LastSelectedObject);
+            }
         }
 
         private void AddToIndex(int add)
         {
-            _currentIndex += add;
-            _currentIndex = Mathf.Clamp(_currentIndex, 0, _selectedObjects.Count - 1);
+            _saveLastSelectionsEditorWindow.CurrentIndex += add;
+            _saveLastSelectionsEditorWindow.CurrentIndex = Mathf.Clamp(_saveLastSelectionsEditorWindow.CurrentIndex, 0, _saveLastSelectionsEditorWindow.SelectedObjects.Count - 1);
         }
 
         private void OnCustomGUI(SceneView sceneView)
         {
+            if (_tinyEditorWindowSceneView == null)
+            {
+                return;
+            }
             if (!_tinyEditorWindowSceneView.IsClosed)
             {
                 _tinyEditorWindowSceneView.ShowEditorWindow(DrawList, SceneView.currentDrawingSceneView, Event.current);
@@ -135,21 +168,26 @@ namespace hedCommon.saveLastSelection
         private void DrawList()
         {
             GUILayout.Label("previously selected:");
-            for (int i = 0; i < _selectedObjectsWithoutDoublon.Count; i++)
+            for (int i = 0; i < _saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon.Count; i++)
             {
-                if (_selectedObjectsWithoutDoublon[i] == null)
+                if (_saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon[i] == null)
                 {
                     continue;
                 }
 
-                GUI.color = (_lastSelectedObject == _selectedObjectsWithoutDoublon[i]) ? Color.green : Color.white;
-                if (GUILayout.Button(_selectedObjectsWithoutDoublon[i].name))
+                GUI.color = (_saveLastSelectionsEditorWindow.LastSelectedObject == _saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon[i]) ? Color.green : Color.white;
+                using (ExtGUIScopes.Horiz())
                 {
-                    ForceSelection(_selectedObjectsWithoutDoublon[i]);
+                    if (ExtGUIButtons.ButtonImage("ping", GUILayout.Width(17), GUILayout.Height(17)))
+                    {
+                        ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon[i], false);
+                    }
+                    if (GUILayout.Button(_saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon[i].name))
+                    {
+                        ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon[i]);
+                    }
                 }
             }
         }
-
-        
     }
 }

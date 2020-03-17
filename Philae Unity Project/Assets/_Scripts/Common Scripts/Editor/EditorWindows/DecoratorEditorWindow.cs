@@ -28,7 +28,7 @@ public abstract class DecoratorEditorWindow : EditorWindow
     /// <summary>
     /// override it with "new" keyword
     /// </summary>
-    [MenuItem("PERSO/DecoratorWIndow")]
+    [MenuItem("PERSO/DecoratorWindow")]
     public static void ShowEditorWindow()
     {
         DecoratorEditorWindow window = EditorWindow.GetWindow<DecoratorEditorWindow>("DecoratorEditorWindow");
@@ -69,15 +69,18 @@ public abstract class DecoratorEditorWindow : EditorWindow
     /// </summary>
     public virtual void InitConstructor()
     {
-        SetMinSize(new Vector2(500, 100));
         ActualizeOnCreationOrAfterCompiling();
-
         this.wantsMouseMove = true;
     }
 
     protected virtual void SetMinSize(Vector2 minSize)
     {
         this.minSize = minSize;
+    }
+
+    protected virtual void SetMaxSize(Vector2 maxSize)
+    {
+        this.maxSize = maxSize;
     }
 
     /// <summary>

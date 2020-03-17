@@ -111,6 +111,14 @@ namespace hedCommon.extension.runtime
             return output;
         }
 
+        public static Vector3 SmoothDampUsingLastPastTarget(Vector3 pastPosition, Vector3 pastTargetPosition, Vector3 targetPosition, float speed)
+        {
+            float t = Time.deltaTime * speed;
+            Vector3 v = (targetPosition - pastTargetPosition) / t;
+            Vector3 f = pastPosition - pastTargetPosition + v;
+            return targetPosition - v + f * Mathf.Exp(-t);
+        }
+
         /// <summary>
         /// has a target reach a position in space ?
         /// </summary>
