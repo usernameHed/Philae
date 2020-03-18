@@ -18,6 +18,10 @@ namespace hedCommon.saveLastSelection
         public List<UnityEngine.Object> SelectedObjectsWithoutDoublon = new List<UnityEngine.Object>(NUMBER_SELECTED_OBJECTS);
         public int CurrentIndex;
 
+        public TinyEditorWindowSceneView TinyEditorWindowSceneView = new TinyEditorWindowSceneView();
+        private const string KEY_EDITOR_PREF_SAVE_LAST_SELECTION = "KEY_EDITOR_PREF_SAVE_LAST_SELECTION";
+
+
         /// <summary>
         /// override it with "new" keyword
         /// </summary>
@@ -32,7 +36,14 @@ namespace hedCommon.saveLastSelection
             window.SetMaxSize(new Vector2(0, 0));
             window.position = position;
 
+            window.ConstructTinyEditorWindow();
+
             return (window);
+        }
+
+        public void ConstructTinyEditorWindow()
+        {
+            TinyEditorWindowSceneView.TinyInit(KEY_EDITOR_PREF_SAVE_LAST_SELECTION, "Save Last Selection", TinyEditorWindowSceneView.DEFAULT_POSITION.UP_LEFT);
         }
 
         public void Reset()

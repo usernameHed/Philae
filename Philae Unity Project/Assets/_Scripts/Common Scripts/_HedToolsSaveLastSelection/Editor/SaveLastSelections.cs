@@ -13,17 +13,11 @@ namespace hedCommon.saveLastSelection
     public class SaveLastSelections
     {
         private SaveLastSelectionsEditorWindow _saveLastSelectionsEditorWindow;
-        private TinyEditorWindowSceneView _tinyEditorWindowSceneView;
-        private const string KEY_EDITOR_PREF_SAVE_LAST_SELECTION = "KEY_EDITOR_PREF_SAVE_LAST_SELECTION";
-
+        
 
         public SaveLastSelections()
         {
             _saveLastSelectionsEditorWindow = SaveLastSelectionsEditorWindow.ShowSaveLastSelections();
-
-            _tinyEditorWindowSceneView = new TinyEditorWindowSceneView();
-            _tinyEditorWindowSceneView.TinyInit(KEY_EDITOR_PREF_SAVE_LAST_SELECTION, "Save Last Selection", TinyEditorWindowSceneView.DEFAULT_POSITION.UP_LEFT);
-            _tinyEditorWindowSceneView.IsClosed = true;
 
             EditorApplication.update += UpdateEditor;
             SceneView.duringSceneGui += OnCustomSceneGUI;
@@ -93,7 +87,7 @@ namespace hedCommon.saveLastSelection
                     _saveLastSelectionsEditorWindow = SaveLastSelectionsEditorWindow.ShowSaveLastSelections();
                 }
 
-                _tinyEditorWindowSceneView.IsClosed = !_tinyEditorWindowSceneView.IsClosed;
+                _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed = !_saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed;
             }
             EditorGUI.BeginDisabledGroup(_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0);
             {
@@ -157,13 +151,13 @@ namespace hedCommon.saveLastSelection
 
         private void OnCustomSceneGUI(SceneView sceneView)
         {
-            if (_tinyEditorWindowSceneView == null)
+            if (_saveLastSelectionsEditorWindow.TinyEditorWindowSceneView == null)
             {
                 return;
             }
-            if (!_tinyEditorWindowSceneView.IsClosed)
+            if (!_saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed)
             {
-                _tinyEditorWindowSceneView.ShowEditorWindow(DrawList, SceneView.currentDrawingSceneView, Event.current);
+                _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.ShowEditorWindow(DrawList, SceneView.currentDrawingSceneView, Event.current);
                 /*
                 if (_tinyEditorWindowSceneView.IsMouseOver())
                 {
