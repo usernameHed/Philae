@@ -25,7 +25,7 @@ namespace hedCommon.extension.runtime
 
         public static void Use()
         {
-            if (Event.current.type != EventType.Layout)
+            if (Event.current.type != EventType.Layout && Event.current.type != EventType.Repaint)
             {
                 Event.current.Use();
             }

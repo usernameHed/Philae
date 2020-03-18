@@ -26,13 +26,13 @@ namespace hedCommon.saveLastSelection
             _tinyEditorWindowSceneView.IsClosed = true;
 
             EditorApplication.update += UpdateEditor;
-            SceneView.duringSceneGui += OnCustomGUI;
+            SceneView.duringSceneGui += OnCustomSceneGUI;
         }
 
         ~SaveLastSelections()
         {
             EditorApplication.update -= UpdateEditor;
-            SceneView.duringSceneGui -= OnCustomGUI;
+            SceneView.duringSceneGui -= OnCustomSceneGUI;
         }
 
         private void UpdateEditor()
@@ -97,12 +97,14 @@ namespace hedCommon.saveLastSelection
             }
             EditorGUI.BeginDisabledGroup(_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0);
             {
-                if (GUILayout.Button("<") || ExtEventEditor.IsScrollingDown(Event.current, out float delta))
+                bool isScrollingDown = ExtEventEditor.IsScrollingDown(Event.current, out float delta);
+                if (GUILayout.Button("<") || isScrollingDown)
                 {
                     AddToIndex(-1);
                     ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjects[_saveLastSelectionsEditorWindow.CurrentIndex]);
                 }
-                if (GUILayout.Button(">") || ExtEventEditor.IsScrollingUp(Event.current, out delta))
+                bool isScrollingUp = ExtEventEditor.IsScrollingUp(Event.current, out delta);
+                if (GUILayout.Button(">") || isScrollingUp)
                 {
                     AddToIndex(1);
                     ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjects[_saveLastSelectionsEditorWindow.CurrentIndex]);
@@ -139,7 +141,7 @@ namespace hedCommon.saveLastSelection
             _saveLastSelectionsEditorWindow.LastSelectedObject = forcedSelection;
             if (select)
             {
-                ExtSelection.PingAndSelect(_saveLastSelectionsEditorWindow.LastSelectedObject);
+                Selection.activeObject = _saveLastSelectionsEditorWindow.LastSelectedObject;
             }
             else
             {
@@ -153,7 +155,7 @@ namespace hedCommon.saveLastSelection
             _saveLastSelectionsEditorWindow.CurrentIndex = Mathf.Clamp(_saveLastSelectionsEditorWindow.CurrentIndex, 0, _saveLastSelectionsEditorWindow.SelectedObjects.Count - 1);
         }
 
-        private void OnCustomGUI(SceneView sceneView)
+        private void OnCustomSceneGUI(SceneView sceneView)
         {
             if (_tinyEditorWindowSceneView == null)
             {
@@ -162,7 +164,25 @@ namespace hedCommon.saveLastSelection
             if (!_tinyEditorWindowSceneView.IsClosed)
             {
                 _tinyEditorWindowSceneView.ShowEditorWindow(DrawList, SceneView.currentDrawingSceneView, Event.current);
+                /*
+                if (_tinyEditorWindowSceneView.IsMouseOver())
+                {
+                    if (ExtEventEditor.IsScrollingDown(Event.current, out float delta))
+                    {
+                        AddToIndex(-1);
+                        ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjects[_saveLastSelectionsEditorWindow.CurrentIndex]);
+                        ExtEventEditor.Use();
+                    }
+                    if (ExtEventEditor.IsScrollingUp(Event.current, out delta))
+                    {
+                        AddToIndex(1);
+                        ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjects[_saveLastSelectionsEditorWindow.CurrentIndex]);
+                        ExtEventEditor.Use();
+                    }
+                }
+                */
             }
+
         }
 
         private void DrawList()
@@ -188,6 +208,18 @@ namespace hedCommon.saveLastSelection
                     }
                 }
             }
+
+            GUI.color = Color.white;
+            ExtGUI.HorizontalLine();
+
+            EditorGUI.BeginDisabledGroup(_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0);
+            {
+                if (GUILayout.Button("clear"))
+                {
+                    _saveLastSelectionsEditorWindow.Reset();
+                }
+            }
+            EditorGUI.EndDisabledGroup();
         }
     }
 }

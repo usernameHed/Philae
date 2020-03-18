@@ -400,6 +400,18 @@ namespace hedCommon.editor.editorWindow
             return (_windowMenu);
         }
 
+        public bool IsMouseOver()
+        {
+            Vector2 mousePosition = Event.current.mousePosition;
+            bool isMouseOver =
+                    mousePosition.x >= _windowMenu.x
+                && mousePosition.x <= _windowMenu.x + _windowMenu.width
+                && mousePosition.y >= _windowMenu.y
+                && mousePosition.y <= _windowMenu.y + _windowMenu.height;
+
+            return (isMouseOver);
+        }
+
         private string DisplayName(string nameUncut)
         {
             return (ExtString.Truncate(nameUncut, 20, "..."));

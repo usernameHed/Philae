@@ -34,5 +34,13 @@ namespace hedCommon.saveLastSelection
 
             return (window);
         }
+
+        public void Reset()
+        {
+            SelectedObjects.Clear();
+            LastSelectedObject = null;
+            SelectedObjectsWithoutDoublon.Clear();
+            CurrentIndex = -1;
+        }
     }
 }
