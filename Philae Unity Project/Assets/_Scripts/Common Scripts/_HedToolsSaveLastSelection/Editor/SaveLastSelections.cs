@@ -2,6 +2,7 @@
 using hedCommon.extension.editor;
 using hedCommon.extension.editor.editorWindow;
 using hedCommon.extension.runtime;
+using hedCommon.time;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace hedCommon.saveLastSelection
     {
         private SaveLastSelectionsEditorWindow _saveLastSelectionsEditorWindow;
         private bool _isInit = false;
+        private FrequencyCoolDown _frequencyCoolDown = new FrequencyCoolDown();
 
         public SaveLastSelections()
         {
@@ -39,6 +41,11 @@ namespace hedCommon.saveLastSelection
         {
             if (_saveLastSelectionsEditorWindow == null)
             {
+                if (_frequencyCoolDown.IsNotRunning())
+                {
+                    _saveLastSelectionsEditorWindow = SaveLastSelectionsEditorWindow.ShowSaveLastSelections();
+                    _frequencyCoolDown.StartCoolDown(2f);
+                }
                 return;
             }
 

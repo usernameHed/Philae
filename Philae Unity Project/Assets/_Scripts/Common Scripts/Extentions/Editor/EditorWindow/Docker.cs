@@ -32,6 +32,15 @@ namespace hedCommon.extension.editor.editorWindow
 			return new Vector2(wnd.position.x + mousePosition.x, wnd.position.y + mousePosition.y);
 		}
 
+		public static bool IsDocked(EditorWindow editorWindow)
+		{
+			BindingFlags fullBinding = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+
+			MethodInfo isDockedMethod = typeof(EditorWindow).GetProperty("docked", fullBinding).GetGetMethod(true);
+
+			return ((bool)isDockedMethod.Invoke(editorWindow, null));			
+		}
+
 		/// <summary>
 		/// Docks the "docked" window to the "anchor" window at the given position
 		/// </summary>

@@ -22,6 +22,7 @@ namespace hedCommon.saveLastSelection
         public TinyEditorWindowSceneView TinyEditorWindowSceneView = new TinyEditorWindowSceneView();
         private const string KEY_EDITOR_PREF_SAVE_LAST_SELECTION = "KEY_EDITOR_PREF_SAVE_LAST_SELECTION";
 
+        private static Rect _positionHidedEditorWindow = new Rect(10000, 10000, 0, 0);
 
         /// <summary>
         /// override it with "new" keyword
@@ -29,26 +30,12 @@ namespace hedCommon.saveLastSelection
         [MenuItem("PERSO/DecoratorWindow/SaveLastSelections")]
         public static SaveLastSelectionsEditorWindow ShowSaveLastSelections()
         {
-            Rect position = new Rect(0, 0, 500, 30);
-
-            //Type inspectorType = Type.GetType("UnityEditor.InspectorWindow,UnityEditor.dll");
             SaveLastSelectionsEditorWindow window = EditorWindow.GetWindow<SaveLastSelectionsEditorWindow>("", false, typeof(SceneView));
-            window.ShowPopup();
-            //SaveLastSelectionsEditorWindow window = EditorWindow.GetWindow<SaveLastSelectionsEditorWindow>("SaveLastSelections");
-
-            
             window.InitConstructor();
             window.SetMinSize(new Vector2(0, 0));
-            window.SetMaxSize(new Vector2(500, 30));
-            window.position = position;
-
-            //SceneView scene = EditorWindow.GetWindow<SceneView>();
-            //Docker.DockWindow(scene, window, Docker.DockPosition.Bottom);
-
-
-
+            window.SetMaxSize(new Vector2(0, 0));
+            window.position = _positionHidedEditorWindow;
             window.ConstructTinyEditorWindow();
-
             return (window);
         }
 

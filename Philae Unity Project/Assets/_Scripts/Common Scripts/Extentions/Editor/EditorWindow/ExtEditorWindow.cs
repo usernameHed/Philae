@@ -65,6 +65,16 @@ namespace hedCommon.extension.editor.editorWindow
             return (animatorWindow);
         }
 
+        public static void DockWindow(EditorWindow reference, EditorWindow editorWindow, Docker.DockPosition position)
+        {
+            Docker.DockWindow(reference, editorWindow, position);
+        }
+
+        public static bool IsDocked(EditorWindow editorWindow)
+        {
+            return (Docker.IsDocked(editorWindow));
+        }
+
         #region reflection
         /// <summary>
         /// for adding, do a GetAllEditorWindowTypes(true);

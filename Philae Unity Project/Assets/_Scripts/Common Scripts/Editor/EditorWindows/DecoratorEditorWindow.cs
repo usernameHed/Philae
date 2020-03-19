@@ -17,13 +17,18 @@ public abstract class DecoratorEditorWindow : EditorWindow
     #region virtual function
     protected virtual void OnCustomEnable()
     {
+        EditorApplication.update += UpdateEditor;
         //EditorPrefs.SetBool(EditorContants.EditorOpenPreference.KEY_EDITOR_PREF_SCRUB_IS_OPEN, true);
     }
     protected virtual void OnCustomDestroy()
     {
+        EditorApplication.update -= UpdateEditor;
         //EditorPrefs.SetBool(EditorContants.EditorOpenPreference.KEY_EDITOR_PREF_SCRUB_IS_OPEN, false);
     }
-    protected virtual void OnCustomDisable() { }
+    protected virtual void OnCustomDisable()
+    {
+        EditorApplication.update -= UpdateEditor;
+    }
 
     /// <summary>
     /// override it with "new" keyword
@@ -37,6 +42,8 @@ public abstract class DecoratorEditorWindow : EditorWindow
 
     protected virtual void InitOnCustomGUI() { }
     protected virtual void OnCustomGUI() { }
+
+    protected virtual void UpdateEditor() { }
 
     #endregion
 
