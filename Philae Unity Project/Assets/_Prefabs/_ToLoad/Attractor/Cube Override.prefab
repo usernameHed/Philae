@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5416466520114392406}
-  - component: {fileID: 291306345162312313}
+  - component: {fileID: 1883423546805426745}
+  - component: {fileID: 3923252773152534717}
   - component: {fileID: 5416466520114392405}
   - component: {fileID: 4565394342054342756}
   - component: {fileID: 944002704061009675}
@@ -39,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &291306345162312313
+--- !u!114 &1883423546805426745
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,10 +49,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5416466520114392403}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56846572bfe443b48b46a46b32016224, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ff52f92a33156f47b00addd72998120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SettingsGlobal: {fileID: 11400000, guid: 8a8d77476a1cbc842b42150b078f9f26, type: 2}
+  SettingsGlobal: {fileID: 11400000, guid: 253c6c93137fe84478ca7ff580cb500c, type: 2}
   SettingsLocal:
     Gravity: 9.81
     AddMinRange: 0
@@ -66,71 +67,8 @@ MonoBehaviour:
   _maxRangeWithScale: 0
   _gravitonsInside:
   - {fileID: 0}
-  _cube:
-    _position: {x: -20, y: 40, z: 0}
-    _rotation: {x: -0, y: -0, z: -0, w: 1}
-    _localScale: {x: 10, y: 10, z: 10}
-    _cubeMatrix:
-      e00: 10
-      e01: 0
-      e02: 0
-      e03: -20
-      e10: 0
-      e11: 10
-      e12: 0
-      e13: 40
-      e20: 0
-      e21: 0
-      e22: 10
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    _p1: {x: -25, y: 35, z: -5}
-    _p2: {x: -25, y: 35, z: 5}
-    _p3: {x: -15, y: 35, z: 5}
-    _p4: {x: -15, y: 35, z: -5}
-    _p5: {x: -25, y: 45, z: -5}
-    _p6: {x: -25, y: 45, z: 5}
-    _p7: {x: -15, y: 45, z: 5}
-    _p8: {x: -15, y: 45, z: -5}
-    _v41: {x: 10, y: 0, z: 0}
-    _v51: {x: 0, y: 10, z: 0}
-    _v21: {x: 0, y: 0, z: 10}
-    _v41Squared: 100
-    _v51Squared: 100
-    _v21Squared: 100
-    _uP1: 50
-    _uP2: -50
-    _vP1: 250
-    _vP4: 150
-    _wP1: -350
-    _wP5: -450
-    _face1:
-      Point: {x: -25, y: 35, z: -5}
-      Normal: {x: 0, y: 0, z: -100}
-      _allowBottom: 0
-    _face2:
-      Point: {x: -15, y: 35, z: -5}
-      Normal: {x: 100, y: 0, z: 0}
-      _allowBottom: 0
-    _face3:
-      Point: {x: -25, y: 45, z: -5}
-      Normal: {x: 0, y: 100, z: 0}
-      _allowBottom: 0
-    _face4:
-      Point: {x: -25, y: 35, z: 5}
-      Normal: {x: 0, y: -100, z: 0}
-      _allowBottom: 0
-    _face5:
-      Point: {x: -25, y: 35, z: 5}
-      Normal: {x: -100, y: 0, z: 0}
-      _allowBottom: 0
-    _face6:
-      Point: {x: -15, y: 35, z: 5}
-      Normal: {x: 0, y: -0, z: 100}
-      _allowBottom: 0
+  _movableShape: {fileID: 3923252773152534717}
+  _movableCube: {fileID: 3923252773152534717}
   GravityOverride:
     Face1: 1
     Face2: 1
@@ -165,6 +103,84 @@ MonoBehaviour:
     _canApplyGravityBordersAndFace4: 1
     _canApplyGravityBordersAndFace5: 1
     _canApplyGravityBordersAndFace6: 1
+--- !u!114 &3923252773152534717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5416466520114392403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e955af5674c443d459414488e9508fda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ColorShape: {r: 1, g: 1, b: 1, a: 1}
+  _cube:
+    _position: {x: -160, y: 30, z: -10}
+    _rotation: {x: -0, y: -0, z: -0, w: 1}
+    _localScale: {x: 10, y: 10, z: 10}
+    _cubeMatrix:
+      e00: 10
+      e01: 0
+      e02: 0
+      e03: -160
+      e10: 0
+      e11: 10
+      e12: 0
+      e13: 30
+      e20: 0
+      e21: 0
+      e22: 10
+      e23: -10
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    _p1: {x: -165, y: 25, z: -15}
+    _p2: {x: -165, y: 25, z: -5}
+    _p3: {x: -155, y: 25, z: -5}
+    _p4: {x: -155, y: 25, z: -15}
+    _p5: {x: -165, y: 35, z: -15}
+    _p6: {x: -165, y: 35, z: -5}
+    _p7: {x: -155, y: 35, z: -5}
+    _p8: {x: -155, y: 35, z: -15}
+    _v41: {x: 10, y: 0, z: 0}
+    _v51: {x: 0, y: 10, z: 0}
+    _v21: {x: 0, y: 0, z: 10}
+    _v41Squared: 100
+    _v51Squared: 100
+    _v21Squared: 100
+    _uP1: 150
+    _uP2: 50
+    _vP1: 1650
+    _vP4: 1550
+    _wP1: -250
+    _wP5: -350
+    _face1:
+      Point: {x: -165, y: 25, z: -15}
+      Normal: {x: 0, y: 0, z: -100}
+      _allowBottom: 0
+    _face2:
+      Point: {x: -155, y: 25, z: -15}
+      Normal: {x: 100, y: 0, z: 0}
+      _allowBottom: 0
+    _face3:
+      Point: {x: -165, y: 35, z: -15}
+      Normal: {x: 0, y: 100, z: 0}
+      _allowBottom: 0
+    _face4:
+      Point: {x: -165, y: 25, z: -5}
+      Normal: {x: 0, y: -100, z: 0}
+      _allowBottom: 0
+    _face5:
+      Point: {x: -165, y: 25, z: -5}
+      Normal: {x: -100, y: 0, z: 0}
+      _allowBottom: 0
+    _face6:
+      Point: {x: -155, y: 25, z: -5}
+      Normal: {x: 0, y: -0, z: 100}
+      _allowBottom: 0
 --- !u!114 &5416466520114392405
 MonoBehaviour:
   m_ObjectHideFlags: 0

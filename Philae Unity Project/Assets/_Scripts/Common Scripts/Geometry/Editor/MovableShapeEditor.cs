@@ -35,7 +35,7 @@ namespace hedCommon.geometry.movable
         }
 
         public MovableShapeEditor()
-            : base(false, "Movable")
+            : base(false, "")
         {
 
         }
