@@ -9,6 +9,7 @@ namespace hedCommon.extension.editor
         public static readonly GUIStyle boxBackground;
         public static readonly GUIStyle helpBox;
         public static readonly GUIStyle box;
+        public static readonly GUIStyle invisibleEditorWindow;
 
         static ExtGUIStyles()
         {
@@ -25,6 +26,11 @@ namespace hedCommon.extension.editor
                 fontSize = 12,
                 alignment = TextAnchor.MiddleCenter,
                 imagePosition = ImagePosition.ImageAbove,
+                fontStyle = FontStyle.Bold,
+            };
+
+            invisibleEditorWindow = new GUIStyle("invisibleEditorWindow")
+            {
                 fontStyle = FontStyle.Bold,
             };
 

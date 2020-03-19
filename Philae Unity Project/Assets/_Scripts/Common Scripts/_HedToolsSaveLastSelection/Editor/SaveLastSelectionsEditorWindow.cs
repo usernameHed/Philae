@@ -28,13 +28,19 @@ namespace hedCommon.saveLastSelection
         [MenuItem("PERSO/DecoratorWindow/SaveLastSelections")]
         public static SaveLastSelectionsEditorWindow ShowSaveLastSelections()
         {
-            Rect position = new Rect(0, 0, 0, 0);
+            Rect position = new Rect(0, 0, 500, 30);
             SaveLastSelectionsEditorWindow window = EditorWindow.GetWindow<SaveLastSelectionsEditorWindow>("SaveLastSelections");
-            
+
+            Debug.Log("Get Window: " + window.name + ", " + window.GetInstanceID());
+
             window.InitConstructor();
             window.SetMinSize(new Vector2(0, 0));
-            window.SetMaxSize(new Vector2(0, 0));
+            window.SetMaxSize(new Vector2(500, 30));
             window.position = position;
+
+
+
+            //GUI.skin = = ExtGUIStyles.invisibleEditorWindow;
 
             window.ConstructTinyEditorWindow();
 

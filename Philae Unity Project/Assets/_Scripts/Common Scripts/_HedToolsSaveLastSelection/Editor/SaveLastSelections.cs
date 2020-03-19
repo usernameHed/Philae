@@ -13,12 +13,11 @@ namespace hedCommon.saveLastSelection
     public class SaveLastSelections
     {
         private SaveLastSelectionsEditorWindow _saveLastSelectionsEditorWindow;
-        
+        private bool _isInit = false;
 
         public SaveLastSelections()
         {
-            _saveLastSelectionsEditorWindow = SaveLastSelectionsEditorWindow.ShowSaveLastSelections();
-
+            _isInit = false;
             EditorApplication.update += UpdateEditor;
             SceneView.duringSceneGui += OnCustomSceneGUI;
         }
@@ -27,6 +26,12 @@ namespace hedCommon.saveLastSelection
         {
             EditorApplication.update -= UpdateEditor;
             SceneView.duringSceneGui -= OnCustomSceneGUI;
+        }
+
+        public void Init()
+        {
+            _isInit = true;
+            _saveLastSelectionsEditorWindow = SaveLastSelectionsEditorWindow.ShowSaveLastSelections();
         }
 
         private void UpdateEditor()
@@ -73,6 +78,11 @@ namespace hedCommon.saveLastSelection
 
         public void DisplayButton()
         {
+            if (_saveLastSelectionsEditorWindow == null)
+            {
+                return;
+            }
+
             if (_saveLastSelectionsEditorWindow.CurrentIndex >= _saveLastSelectionsEditorWindow.SelectedObjects.Count)
             {
                 _saveLastSelectionsEditorWindow.CurrentIndex = _saveLastSelectionsEditorWindow.SelectedObjects.Count - 1;
@@ -151,6 +161,14 @@ namespace hedCommon.saveLastSelection
 
         private void OnCustomSceneGUI(SceneView sceneView)
         {
+            if (!_isInit)
+            {
+                Init();
+            }
+            if (_saveLastSelectionsEditorWindow == null)
+            {
+                return;
+            }
             if (_saveLastSelectionsEditorWindow.TinyEditorWindowSceneView == null)
             {
                 return;
