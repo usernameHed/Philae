@@ -16,6 +16,7 @@ namespace hedCommon.saveLastSelection
     {
         private SaveLastSelectionsEditorWindow _saveLastSelectionsEditorWindow;
         private bool _isInit = false;
+        private bool _isClosed = false;
         private FrequencyCoolDown _frequencyCoolDown = new FrequencyCoolDown();
 
         public SaveLastSelections()
@@ -35,6 +36,7 @@ namespace hedCommon.saveLastSelection
         {
             _isInit = true;
             _saveLastSelectionsEditorWindow = SaveLastSelectionsEditorWindow.ShowSaveLastSelections();
+            _isClosed = _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed;
         }
 
         private void UpdateEditor()
@@ -123,6 +125,8 @@ namespace hedCommon.saveLastSelection
                 }
 
                 _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed = !_saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed;
+                _saveLastSelectionsEditorWindow.SaveCloseStatus();
+                _isClosed = _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed;
             }
             EditorGUI.BeginDisabledGroup(_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0);
             {
@@ -201,25 +205,13 @@ namespace hedCommon.saveLastSelection
             if (!_saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed)
             {
                 _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.ShowEditorWindow(DrawList, SceneView.currentDrawingSceneView, Event.current);
-                /*
-                if (_tinyEditorWindowSceneView.IsMouseOver())
-                {
-                    if (ExtEventEditor.IsScrollingDown(Event.current, out float delta))
-                    {
-                        AddToIndex(-1);
-                        ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjects[_saveLastSelectionsEditorWindow.CurrentIndex]);
-                        ExtEventEditor.Use();
-                    }
-                    if (ExtEventEditor.IsScrollingUp(Event.current, out delta))
-                    {
-                        AddToIndex(1);
-                        ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjects[_saveLastSelectionsEditorWindow.CurrentIndex]);
-                        ExtEventEditor.Use();
-                    }
-                }
-                */
+                
             }
-
+            if (_isClosed != _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed)
+            {
+                _saveLastSelectionsEditorWindow.SaveCloseStatus();
+                _isClosed = _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed;
+            }
         }
 
         private void DrawList()

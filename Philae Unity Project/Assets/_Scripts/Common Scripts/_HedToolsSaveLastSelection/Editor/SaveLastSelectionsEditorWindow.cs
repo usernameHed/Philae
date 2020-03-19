@@ -21,6 +21,7 @@ namespace hedCommon.saveLastSelection
 
         public TinyEditorWindowSceneView TinyEditorWindowSceneView = new TinyEditorWindowSceneView();
         private const string KEY_EDITOR_PREF_SAVE_LAST_SELECTION = "KEY_EDITOR_PREF_SAVE_LAST_SELECTION";
+        private const string KEY_EDITOR_PREF_SAVE_LAST_SELECTION_CLOSED = "KEY_EDITOR_PREF_SAVE_LAST_SELECTION_CLOSED";
 
         private static Rect _positionHidedEditorWindow = new Rect(10000, 10000, 0, 0);
 
@@ -42,6 +43,12 @@ namespace hedCommon.saveLastSelection
         public void ConstructTinyEditorWindow()
         {
             TinyEditorWindowSceneView.TinyInit(KEY_EDITOR_PREF_SAVE_LAST_SELECTION, "Save Last Selection", TinyEditorWindowSceneView.DEFAULT_POSITION.UP_LEFT);
+            TinyEditorWindowSceneView.IsClosed = EditorPrefs.GetBool("KEY_EDITOR_PREF_SAVE_LAST_SELECTION_CLOSED");
+        }
+
+        public void SaveCloseStatus()
+        {
+            EditorPrefs.SetBool("KEY_EDITOR_PREF_SAVE_LAST_SELECTION_CLOSED", TinyEditorWindowSceneView.IsClosed);
         }
 
         public void Reset()
