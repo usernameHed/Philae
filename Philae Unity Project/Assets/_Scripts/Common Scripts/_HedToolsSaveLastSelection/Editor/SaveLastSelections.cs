@@ -1,5 +1,6 @@
 ﻿using hedCommon.editor.editorWindow;
 using hedCommon.extension.editor;
+using hedCommon.extension.editor.editorWindow;
 using hedCommon.extension.runtime;
 using System;
 using System.Collections;
@@ -36,6 +37,11 @@ namespace hedCommon.saveLastSelection
 
         private void UpdateEditor()
         {
+            if (_saveLastSelectionsEditorWindow == null)
+            {
+                return;
+            }
+
             AttemptToRemoveNull();
             UnityEngine.Object currentSelectedObject = Selection.activeObject;
             if (currentSelectedObject != null && currentSelectedObject != _saveLastSelectionsEditorWindow.LastSelectedObject)
@@ -76,6 +82,18 @@ namespace hedCommon.saveLastSelection
             return (listToClean);
         }
 
+        public static bool IsThereNullInList(List<UnityEngine.Object> listToClean)
+        {
+            for (int i = 0; i < listToClean.Count; i++)
+            {
+                if (listToClean[i] == null || listToClean[i].ToString() == "null")
+                {
+                    return (true);
+                }
+            }
+            return (false);
+        }
+
         public void DisplayButton()
         {
             if (_saveLastSelectionsEditorWindow == null)
@@ -90,7 +108,7 @@ namespace hedCommon.saveLastSelection
 
             if (GUILayout.Button("..."))
             {
-                ExtReflection.OpenEditorWindow(ExtReflection.AllNameAssemblyKnown.SceneView, out Type animationWindowType);
+                ExtEditorWindow.OpenEditorWindow(ExtEditorWindow.AllNameAssemblyKnown.SceneView, out Type animationWindowType);
 
                 if (_saveLastSelectionsEditorWindow == null)
                 {

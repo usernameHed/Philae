@@ -1,5 +1,6 @@
 ﻿using hedCommon.editor.editorWindow;
 using hedCommon.extension.editor;
+using hedCommon.extension.editor.editorWindow;
 using hedCommon.extension.runtime;
 using System;
 using System.Collections;
@@ -29,18 +30,22 @@ namespace hedCommon.saveLastSelection
         public static SaveLastSelectionsEditorWindow ShowSaveLastSelections()
         {
             Rect position = new Rect(0, 0, 500, 30);
-            SaveLastSelectionsEditorWindow window = EditorWindow.GetWindow<SaveLastSelectionsEditorWindow>("SaveLastSelections");
 
-            Debug.Log("Get Window: " + window.name + ", " + window.GetInstanceID());
+            //Type inspectorType = Type.GetType("UnityEditor.InspectorWindow,UnityEditor.dll");
+            SaveLastSelectionsEditorWindow window = EditorWindow.GetWindow<SaveLastSelectionsEditorWindow>("", false, typeof(SceneView));
+            window.ShowPopup();
+            //SaveLastSelectionsEditorWindow window = EditorWindow.GetWindow<SaveLastSelectionsEditorWindow>("SaveLastSelections");
 
+            
             window.InitConstructor();
             window.SetMinSize(new Vector2(0, 0));
             window.SetMaxSize(new Vector2(500, 30));
             window.position = position;
 
+            //SceneView scene = EditorWindow.GetWindow<SceneView>();
+            //Docker.DockWindow(scene, window, Docker.DockPosition.Bottom);
 
 
-            //GUI.skin = = ExtGUIStyles.invisibleEditorWindow;
 
             window.ConstructTinyEditorWindow();
 

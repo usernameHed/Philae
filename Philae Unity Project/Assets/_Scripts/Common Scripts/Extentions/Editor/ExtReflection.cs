@@ -4,6 +4,7 @@ using System.Reflection;
 using System;
 using UnityEditorInternal;
 using UnityEditor.SceneManagement;
+using hedCommon.extension.editor.editorWindow;
 
 namespace hedCommon.extension.editor
 {
@@ -54,10 +55,10 @@ namespace hedCommon.extension.editor
         /// use: ExtReflexion.SetSearch("to find", ExtReflexion.AllNameAssemblyKnown.SceneView);
         /// </summary>
         /// <param name="search"></param>
-        public static void SetSearch(string search, ExtReflection.AllNameAssemblyKnown nameEditorWindow = AllNameAssemblyKnown.SceneView)
+        public static void SetSearch(string search, ExtEditorWindow.AllNameAssemblyKnown nameEditorWindow = ExtEditorWindow.AllNameAssemblyKnown.SceneView)
         {
             //open animation window
-            EditorWindow animationWindowEditor = ExtReflection.OpenEditorWindow(nameEditorWindow, out System.Type animationWindowType);
+            EditorWindow animationWindowEditor = ExtEditorWindow.OpenEditorWindow(nameEditorWindow, out System.Type animationWindowType);
 
             //System.Type type = typeof(EditorWindow).Assembly.GetType("UnityEditor.SceneHierarchyWindow");
             //EditorApplication.ExecuteMenuItem("Window/General/Hierarchy");
@@ -80,10 +81,10 @@ namespace hedCommon.extension.editor
         public static void SetPlayButton(out bool isPlayingAnimation)
         {
             //open animator
-            EditorWindow animatorWindow = ExtReflection.OpenEditorWindow(ExtReflection.AllNameAssemblyKnown.AnimatorControllerTool, out System.Type animatorWindowType);
+            EditorWindow animatorWindow = ExtEditorWindow.OpenEditorWindow(ExtEditorWindow.AllNameAssemblyKnown.AnimatorControllerTool, out System.Type animatorWindowType);
 
             //open animation
-            EditorWindow animationWindowEditor = ExtReflection.OpenEditorWindow(ExtReflection.AllNameAssemblyKnown.AnimationWindow, out System.Type animationWindowType);
+            EditorWindow animationWindowEditor = ExtEditorWindow.OpenEditorWindow(ExtEditorWindow.AllNameAssemblyKnown.AnimationWindow, out System.Type animationWindowType);
 
             //Get field m_AnimEditor
             FieldInfo animEditorFI = animationWindowType.GetField("m_AnimEditor", ExtReflection.GetFullBinding());
@@ -147,54 +148,7 @@ namespace hedCommon.extension.editor
             }
         }
 
-        /// <summary>
-        /// Open of focus an editor Window
-        /// if canDuplicate = true, duplicate the window if it existe
-        /// </summary>
-        public static T OpenEditorWindow<T>(bool canDuplicate = false) where T : EditorWindow
-        {
-            T raceTrackNavigator;
-
-            if (canDuplicate)
-            {
-                raceTrackNavigator = ScriptableObject.CreateInstance<T>();
-                raceTrackNavigator.Show();
-                return (raceTrackNavigator);
-            }
-
-            // create a new instance
-            raceTrackNavigator = EditorWindow.GetWindow<T>();
-
-            // show the window
-            raceTrackNavigator.Show();
-            return (raceTrackNavigator);
-        }
-
-        public static void CloseEditorWindow<T>() where T : EditorWindow
-        {
-            T raceTrackNavigator = EditorWindow.GetWindow<T>();
-            raceTrackNavigator.Close();
-        }
-
-
-        /// <summary>
-        /// from a given name, Open an EditorWindow.
-        /// you can also do:
-        /// EditorApplication.ExecuteMenuItem("Window/General/Hierarchy");
-        /// to open an known EditorWindow
-        /// 
-        /// To get the type of a known script, like UnityEditor.SceneHierarchyWindow, you can do also:
-        /// System.Type type = typeof(EditorWindow).Assembly.GetType("UnityEditor.SceneHierarchyWindow");
-        /// </summary>
-        /// <param name="editorWindowName">name of the editorWindow to open</param>
-        /// <param name="animationWindowType">type of the editorWindow (useful for others functions)</param>
-        /// <returns></returns>
-        public static EditorWindow OpenEditorWindow(AllNameAssemblyKnown editorWindowName, out System.Type animationWindowType)
-        {
-            animationWindowType = GetEditorWindowTypeByName(editorWindowName.ToString());
-            EditorWindow animatorWindow = EditorWindow.GetWindow(animationWindowType);
-            return (animatorWindow);
-        }
+        
 
         /// <summary>
         /// collapse an object
@@ -291,134 +245,6 @@ namespace hedCommon.extension.editor
 
         /////////////////////////utility reflexion
 
-        /// <summary>
-        /// for adding, do a GetAllEditorWindowTypes(true);
-        /// </summary>
-        public enum AllNameAssemblyKnown
-        {
-            BuildPlayerWindow,
-            ConsoleWindow,
-            IconSelector,
-            ObjectSelector,
-            ProjectBrowser,
-            ProjectTemplateWindow,
-            RagdollBuilder,
-            SceneHierarchySortingWindow,
-            SceneHierarchyWindow,
-            ScriptableWizard,
-            AddCurvesPopup,
-            AnimationWindow,
-            CurveEditorWindow,
-            MinMaxCurveEditorWindow,
-            AnnotationWindow,
-            LayerVisibilityWindow,
-            AssetStoreInstaBuyWindow,
-            AssetStoreLoginWindow,
-            AssetStoreWindow,
-            AudioMixerWindow,
-            CollabPublishDialog,
-            CollabCannotPublishDialog,
-            GameView,
-            AboutWindow,
-            AssetSaveDialog,
-            BumpMapSettingsFixingWindow,
-            ColorPicker,
-            EditorUpdateWindow,
-            FallbackEditorWindow,
-            GradientPicker,
-            PackageExport,
-            PackageImport,
-            PopupWindow,
-            PopupWindowWithoutFocus,
-            PragmaFixingWindow,
-            SaveWindowLayout,
-            DeleteWindowLayout,
-            EditorToolWindow,
-            SnapSettings,
-            TreeViewTestWindow,
-            GUIViewDebuggerWindow,
-            InspectorWindow,
-            PreviewWindow,
-            AddShaderVariantWindow,
-            AddComponentWindow,
-            AdvancedDropdownWindow,
-            LookDevView,
-            AttachToPlayerPlayerIPWindow,
-            HolographicEmulationWindow,
-            FrameDebuggerWindow,
-            SearchableEditorWindow,
-            LightingExplorerWindow,
-            LightingWindow,
-            LightmapPreviewWindow,
-            NavMeshEditorWindow,
-            OcclusionCullingWindow,
-            PhysicsDebugWindow,
-            TierSettingsWindow,
-            SceneView,
-            SettingsWindow,
-            ProjectSettingsWindow,
-            PreferenceSettingsWindow,
-            PackerWindow,
-            SpriteUtilityWindow,
-            TroubleshooterWindow,
-            UIElementsEditorWindowCreator,
-            UndoWindow,
-            UnityConnectConsentView,
-            UnityConnectEditorWindow,
-            MetroCertificatePasswordWindow,
-            MetroCreateTestCertificateWindow,
-            WindowChange,
-            WindowCheckoutFailure,
-            WindowPending,
-            WindowResolve,
-            WindowRevert,
-            WebViewEditorStaticWindow,
-            WebViewEditorWindow,
-            WebViewEditorWindowTabs,
-            SearchWindow,
-            LicenseManagementWindow,
-            PackageManagerWindow,
-            ParticleSystemWindow,
-            PresetSelector,
-            ProfilerWindow,
-            UISystemPreviewWindow,
-            ConflictResolverWindow,
-            DeleteShortcutProfileWindow,
-            PromptWindow,
-            ShortcutManagerWindow,
-            SketchUpImportDlg,
-            TerrainWizard,
-            ImportRawHeightmap,
-            ExportRawHeightmap,
-            TreeWizard,
-            DetailMeshWizard,
-            DetailTextureWizard,
-            PlaceTreeWizard,
-            FlattenHeightmap,
-            TestEditorWindow,
-            PanelDebugger,
-            UIElementsDebugger,
-            PainterSwitcherWindow,
-            AllocatorDebugger,
-            UIRDebugger,
-            UIElementsSamples,
-            AnimatorControllerTool,
-            LayerSettingsWindow,
-            ParameterControllerEditor,
-            AddStateMachineBehaviourComponentWindow,
-            AndroidKeystoreWindow,
-            TimelineWindow,
-            TMP_ProjectConversionUtility,
-            TMP_SpriteAssetImporter,
-            TMPro_FontAssetCreatorWindow,
-            CollabHistoryWindow,
-            CollabToolbarWindow,
-            TestRunnerWindow,
-            TMP_PackageResourceImporterWindow,
-
-            ConsoleE_Window,
-        }
-
 
         public enum AllNameEditorWindowKnown
         {
@@ -461,33 +287,7 @@ namespace hedCommon.extension.editor
             return result.ToArray();
         }
 
-        public static System.Type GetEditorWindowTypeByName(string editorToFind, bool showDebug = false)
-        {
-            var result = new System.Collections.Generic.List<System.Type>();
-            System.Reflection.Assembly[] AS = System.AppDomain.CurrentDomain.GetAssemblies();
-            System.Type editorWindow = typeof(EditorWindow);
-            foreach (var A in AS)
-            {
-                System.Type[] types = A.GetTypes();
-                foreach (var T in types)
-                {
-                    if (T.IsSubclassOf(editorWindow))
-                    {
-                        if (showDebug)
-                        {
-                            Debug.Log(T.Name);
-                        }
-                        if (T.Name.Equals(editorToFind))
-                        {
-                            return (T);
-                        }
-                    }
-
-                }
-            }
-            return (null);
-        }
-
+        
 
         /// <summary>
         /// System.Type animationWindowType = ExtReflexion.GetTypeFromAssembly("AnimationWindow", editorAssembly);

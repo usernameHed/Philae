@@ -57,10 +57,20 @@ namespace hedCommon.time
         {
             get
             {
+                if (Instance == null)
+                {
+                    return (Time.timeScale);
+                }
                 return (Instance._timeScale);
             }
             set
             {
+                if (Instance == null)
+                {
+                    Time.timeScale = value;
+                    return;
+                }
+
                 if (value != Instance._timeScale)
                 {
                     Instance._timeScale = value;

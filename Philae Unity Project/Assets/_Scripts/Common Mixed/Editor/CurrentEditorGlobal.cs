@@ -1,4 +1,5 @@
 ﻿using hedCommon.extension.editor;
+using hedCommon.extension.editor.editorWindow;
 using hedCommon.extension.runtime;
 using philae.architecture;
 using philae.editor;
@@ -36,9 +37,8 @@ namespace hedCommon.mixed
         /// </summary>
         public void OpenSomeEditorWindow()
         {
-
             //open or focus raceTrackNavigator
-            BasicEditorWindow basicEditorWindow = ExtReflection.OpenEditorWindow<BasicEditorWindow>();
+            BasicEditorWindow basicEditorWindow = ExtEditorWindow.OpenEditorWindow<BasicEditorWindow>();
             basicEditorWindow.Init();
         }
 
