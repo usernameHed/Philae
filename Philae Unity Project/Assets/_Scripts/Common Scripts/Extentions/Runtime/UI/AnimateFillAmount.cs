@@ -1,4 +1,5 @@
-﻿using hedCommon.time;
+﻿using hedCommon.extension.runtime.animationCurve;
+using hedCommon.time;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace hedCommon.extension.runtime
         private float _fillAmountFrom = 0f;
         [SerializeField]
         private float _fillAmountTo = 1f;
-        [SerializeField]
+        [SerializeField, Curve(0, 1, 0, 1)]
         private AnimationCurve _curve = new AnimationCurve();
         [SerializeField]
         private FillAmountPosition _fillAmountPositionReference;

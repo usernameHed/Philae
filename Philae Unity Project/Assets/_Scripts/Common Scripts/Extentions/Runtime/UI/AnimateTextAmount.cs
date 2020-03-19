@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 using hedCommon.time;
+using hedCommon.extension.runtime.animationCurve;
 
 namespace hedCommon.extension.runtime
 {
@@ -19,7 +20,7 @@ namespace hedCommon.extension.runtime
         private int _fillAmountFrom = 0;
         [SerializeField]
         private int _fillAmountTo = 1;
-        [SerializeField]
+        [SerializeField, Curve(0, 1, 0, 1)]
         private AnimationCurve _curve = new AnimationCurve();
 
 
