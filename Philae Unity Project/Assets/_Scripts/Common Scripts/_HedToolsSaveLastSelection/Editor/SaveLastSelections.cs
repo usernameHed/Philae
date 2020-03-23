@@ -61,7 +61,7 @@ namespace hedCommon.saveLastSelection
 
         private void AttemptToRemoveNull()
         {
-            if (_saveLastSelectionsEditorWindow.SelectedObjects != null && _saveLastSelectionsEditorWindow.SelectedObjects.IsThereNullInList())
+            if (_saveLastSelectionsEditorWindow.SelectedObjects != null && IsThereNullInList(_saveLastSelectionsEditorWindow.SelectedObjects))
             {
                 _saveLastSelectionsEditorWindow.SelectedObjects = CleanNullFromList(_saveLastSelectionsEditorWindow.SelectedObjects, out bool hasChanged);
                 _saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon = CleanNullFromList(_saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon, out hasChanged);

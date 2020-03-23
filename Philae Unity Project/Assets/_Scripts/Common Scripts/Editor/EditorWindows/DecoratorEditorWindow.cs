@@ -4,135 +4,138 @@ using UnityEditor;
 using UnityEngine;
 using hedCommon.time;
 
-public abstract class DecoratorEditorWindow : EditorWindow
+namespace hedCommon.extension.editor.editorWindow
 {
-    protected bool _allowScrolling = true;
-    protected GUIStyle _textStyle = new GUIStyle();
-
-    private bool _isFirstGUI = false;
-    private Vector2 _scrollPosition;
-    private EditorChronoWithNoTimeEditor _refreshRateInspector = new EditorChronoWithNoTimeEditor();
-    protected float _timeRefreshInspector = 1f;
-
-    #region virtual function
-    protected virtual void OnCustomEnable()
+    public abstract class DecoratorEditorWindow : EditorWindow
     {
-        EditorApplication.update += UpdateEditor;
-        //EditorPrefs.SetBool(EditorContants.EditorOpenPreference.KEY_EDITOR_PREF_SCRUB_IS_OPEN, true);
-    }
-    protected virtual void OnCustomDestroy()
-    {
-        EditorApplication.update -= UpdateEditor;
-        //EditorPrefs.SetBool(EditorContants.EditorOpenPreference.KEY_EDITOR_PREF_SCRUB_IS_OPEN, false);
-    }
-    protected virtual void OnCustomDisable()
-    {
-        EditorApplication.update -= UpdateEditor;
-    }
+        protected bool _allowScrolling = true;
+        protected GUIStyle _textStyle = new GUIStyle();
 
-    /// <summary>
-    /// override it with "new" keyword
-    /// </summary>
-    [MenuItem("PERSO/DecoratorWindow")]
-    public static void ShowEditorWindow()
-    {
-        DecoratorEditorWindow window = EditorWindow.GetWindow<DecoratorEditorWindow>("DecoratorEditorWindow");
-        window.InitConstructor();
-    }
+        private bool _isFirstGUI = false;
+        private Vector2 _scrollPosition;
+        private EditorChronoWithNoTimeEditor _refreshRateInspector = new EditorChronoWithNoTimeEditor();
+        protected float _timeRefreshInspector = 1f;
 
-    protected virtual void InitOnCustomGUI() { }
-    protected virtual void OnCustomGUI() { }
-
-    protected virtual void UpdateEditor() { }
-
-    #endregion
-
-
-    private void OnEnable()
-    {
-        OnCustomEnable();
-    }
-
-    private void OnDestroy()
-    {
-        OnCustomDestroy();
-    }
-
-    private void OnDisable()
-    {
-        OnCustomDisable();
-    }
-    
-    /// <summary>
-    /// cosntructor
-    /// </summary>
-    public DecoratorEditorWindow()
-    {
-
-    }
-
-    /// <summary>
-    /// can't be a constructor
-    /// </summary>
-    public virtual void InitConstructor()
-    {
-        ActualizeOnCreationOrAfterCompiling();
-        this.wantsMouseMove = true;
-    }
-
-    protected virtual void SetMinSize(Vector2 minSize)
-    {
-        this.minSize = minSize;
-    }
-
-    protected virtual void SetMaxSize(Vector2 maxSize)
-    {
-        this.maxSize = maxSize;
-    }
-
-    /// <summary>
-    /// called every time we need to actualize the editor (at start, and after compilation)
-    /// </summary>
-    protected virtual void ActualizeOnCreationOrAfterCompiling()
-    {
-        _isFirstGUI = false;
-    }
-
-    private /*sealed */ void OnGUI()
-    {
-        if (!_isFirstGUI)
+        #region virtual function
+        protected virtual void OnCustomEnable()
         {
-            InitOnCustomGUI();
-            _isFirstGUI = true;
+            EditorApplication.update += UpdateEditor;
+            //EditorPrefs.SetBool(EditorContants.EditorOpenPreference.KEY_EDITOR_PREF_SCRUB_IS_OPEN, true);
         }
-        bool allosScroll = _allowScrolling;
-
-        if (allosScroll)
+        protected virtual void OnCustomDestroy()
         {
-            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
+            EditorApplication.update -= UpdateEditor;
+            //EditorPrefs.SetBool(EditorContants.EditorOpenPreference.KEY_EDITOR_PREF_SCRUB_IS_OPEN, false);
+        }
+        protected virtual void OnCustomDisable()
+        {
+            EditorApplication.update -= UpdateEditor;
         }
 
-        OnCustomGUI();
-
-        if (allosScroll)
+        /// <summary>
+        /// override it with "new" keyword
+        /// </summary>
+        [MenuItem("PERSO/DecoratorWindow")]
+        public static void ShowEditorWindow()
         {
-            EditorGUILayout.EndScrollView();
+            DecoratorEditorWindow window = EditorWindow.GetWindow<DecoratorEditorWindow>("DecoratorEditorWindow");
+            window.InitConstructor();
         }
-    }
 
-    public void OnInspectorUpdate()
-    {
-        if (_timeRefreshInspector == 0)
+        protected virtual void InitOnCustomGUI() { }
+        protected virtual void OnCustomGUI() { }
+
+        protected virtual void UpdateEditor() { }
+
+        #endregion
+
+
+        private void OnEnable()
         {
-            Repaint();
+            OnCustomEnable();
         }
-        else
+
+        private void OnDestroy()
         {
-            // This will only get called 2 times per second.
-            if (!_refreshRateInspector.IsRunning())
+            OnCustomDestroy();
+        }
+
+        private void OnDisable()
+        {
+            OnCustomDisable();
+        }
+
+        /// <summary>
+        /// cosntructor
+        /// </summary>
+        public DecoratorEditorWindow()
+        {
+
+        }
+
+        /// <summary>
+        /// can't be a constructor
+        /// </summary>
+        public virtual void InitConstructor()
+        {
+            ActualizeOnCreationOrAfterCompiling();
+            this.wantsMouseMove = true;
+        }
+
+        protected virtual void SetMinSize(Vector2 minSize)
+        {
+            this.minSize = minSize;
+        }
+
+        protected virtual void SetMaxSize(Vector2 maxSize)
+        {
+            this.maxSize = maxSize;
+        }
+
+        /// <summary>
+        /// called every time we need to actualize the editor (at start, and after compilation)
+        /// </summary>
+        protected virtual void ActualizeOnCreationOrAfterCompiling()
+        {
+            _isFirstGUI = false;
+        }
+
+        private /*sealed */ void OnGUI()
+        {
+            if (!_isFirstGUI)
+            {
+                InitOnCustomGUI();
+                _isFirstGUI = true;
+            }
+            bool allosScroll = _allowScrolling;
+
+            if (allosScroll)
+            {
+                _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
+            }
+
+            OnCustomGUI();
+
+            if (allosScroll)
+            {
+                EditorGUILayout.EndScrollView();
+            }
+        }
+
+        public void OnInspectorUpdate()
+        {
+            if (_timeRefreshInspector == 0)
             {
                 Repaint();
-                _refreshRateInspector.StartChrono(_timeRefreshInspector);
+            }
+            else
+            {
+                // This will only get called 2 times per second.
+                if (!_refreshRateInspector.IsRunning())
+                {
+                    Repaint();
+                    _refreshRateInspector.StartChrono(_timeRefreshInspector);
+                }
             }
         }
     }

@@ -224,6 +224,7 @@ namespace hedCommon.time
 #if UNITY_EDITOR
             EditorApplication.update += EditorUpdate;
 #endif
+            timeScale = 1;
             StartCoolDown();
         }
 

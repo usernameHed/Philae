@@ -3,6 +3,7 @@ using System.Collections;
 using System.Reflection;
 using UnityEditor;
 using hedCommon.geometry.shape2d;
+using hedCommon.geometry.shape3d;
 
 namespace hedCommon.extension.runtime
 {

@@ -9,7 +9,9 @@ namespace hedCommon.extension.editor
         public static readonly GUIStyle boxBackground;
         public static readonly GUIStyle helpBox;
         public static readonly GUIStyle box;
-        public static readonly GUIStyle invisibleEditorWindow;
+        public static readonly GUIStyle miniBox;
+        public static readonly GUIStyle miniText;
+
 
         static ExtGUIStyles()
         {
@@ -29,10 +31,18 @@ namespace hedCommon.extension.editor
                 fontStyle = FontStyle.Bold,
             };
 
-            invisibleEditorWindow = new GUIStyle("invisibleEditorWindow")
+            miniText = new GUIStyle()
             {
-                fontStyle = FontStyle.Bold,
+                fontSize = 9,
             };
+            miniText.normal.textColor = Color.white;
+
+            miniBox = new GUIStyle()
+            {
+                fontSize = 8,
+            };
+            miniBox.normal.background = ExtTexture.GetTexture2D("box");
+
 
             box = new GUIStyle("box");
 

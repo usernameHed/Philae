@@ -1,4 +1,5 @@
 ﻿using hedCommon.extension.runtime;
+using hedCommon.geometry.shape2d;
 using philae.gravity.attractor.gravityOverride;
 using Sirenix.OdinInspector;
 using System;
@@ -6,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace hedCommon.geometry.shape2d
+namespace hedCommon.geometry.shape3d
 {
 
     /// <summary>

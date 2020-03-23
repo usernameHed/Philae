@@ -17,12 +17,13 @@ namespace hedCommon.toolbarExtent
 
         static ToolsButton()
         {
+            _timeScaleSlider.Init();
             _customSceneButtons.InitTextures();
 
             ToolbarExtender.LeftToolbarGUI.Add(_saveLastSelections.DisplayButton);
-            ToolbarExtender.LeftToolbarGUI.Add(_timeScaleSlider.DisplaySlider);
             ToolbarExtender.LeftToolbarGUI.Add(_customSceneButtons.OnLeftToolbarGUI);
             ToolbarExtender.RightToolbarGUI.Add(_customSceneButtons.OnRightToolbarGUI);
+            ToolbarExtender.RightToolbarGUI.Add(_timeScaleSlider.DisplaySlider);
         }
     }
 }
