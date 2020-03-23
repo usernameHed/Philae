@@ -9,6 +9,8 @@ namespace hedCommon.geometry.movable
 {
     public static class ExtDiscProperty
     {
+        public const string PROPERTY_MOVABLE_DISC = "_movableDisc";
+
         public const string PROPERTY_EXT_DISC = "_disc";
         public const string PROPERTY_MATRIX = "_discMatrix";
 

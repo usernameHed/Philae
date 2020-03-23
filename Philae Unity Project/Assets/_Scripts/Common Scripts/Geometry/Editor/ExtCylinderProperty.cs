@@ -9,6 +9,8 @@ namespace hedCommon.geometry.movable
 {
     public static class ExtCylinderProperty
     {
+        public const string PROPERTY_MOVABLE_CYLINDER = "_movableCylinder";
+
         public const string PROPERTY_EXT_CYLINDER = "_cylinder";
         public const string PROPERTY_MATRIX = "_cylinderMatrix";
 

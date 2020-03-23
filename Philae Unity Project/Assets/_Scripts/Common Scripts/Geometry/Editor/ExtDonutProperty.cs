@@ -9,6 +9,8 @@ namespace hedCommon.geometry.movable
 {
     public static class ExtDonutProperty
     {
+        public const string PROPERTY_MOVABLE_DONUT = "_movableDonut";
+
         public const string PROPERTY_EXT_DONUT = "_donut";
         public const string PROPERTY_THICKNESS = "_thickNess";
         public const string PROPERTY_REAL_THICKNESS = "_realThickNess";

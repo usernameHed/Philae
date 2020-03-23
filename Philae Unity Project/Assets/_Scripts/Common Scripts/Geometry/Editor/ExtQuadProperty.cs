@@ -9,6 +9,8 @@ namespace hedCommon.geometry.movable
 {
     public static class ExtQuadProperty
     {
+        public const string PROPERTY_MOVABLE_QUAD = "_movableQuad";
+
         public const string PROPERTY_EXT_QUAD = "_quad";
         public const string PROPERTY_MATRIX = "_quadMatrix";
 

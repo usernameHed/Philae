@@ -9,6 +9,8 @@ namespace hedCommon.geometry.movable
 {
     public static class ExtConeProperty
     {
+        public const string PROPERTY_MOVABLE_CONE = "_movableCone";
+
         public const string PROPERTY_EXT_CONE = "_cone";
         public const string PROPERTY_MATRIX = "_coneMatrix";
 
