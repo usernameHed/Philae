@@ -12,11 +12,17 @@ namespace hedCommon.geometry.movable
         public const string PROPERTY_EXT_QUAD = "_quad";
         public const string PROPERTY_MATRIX = "_quadMatrix";
 
-        /*
-        public static float GetThickNess(this SerializedProperty extDonut)
+        public const string PROPERTY_EXT_PLANE = "_plane";
+        public const string PROPERTY_ALLOW_BOTTOM = "_allowBottom";
+
+        public static bool GetAllowDown(SerializedProperty extQuad)
         {
-            return (extDonut.GetPropertie(PROPERTY_THICKNESS).floatValue);
+            return (extQuad.GetPropertie(PROPERTY_EXT_PLANE).GetPropertie(PROPERTY_ALLOW_BOTTOM).boolValue);
         }
-        */
+
+        public static void SetAllowDown(SerializedProperty extQuad, bool newAllowDown)
+        {
+            extQuad.GetPropertie(PROPERTY_EXT_PLANE).GetPropertie(PROPERTY_ALLOW_BOTTOM).boolValue = newAllowDown;
+        }
     }
 }
