@@ -25,21 +25,12 @@ namespace hedCommon.geometry.movable
             return (extDonut.GetPropertie(PROPERTY_RADIUS).floatValue);
         }
 
-        /*
-        public static void SetRadius(this SerializedProperty extDonut, float radius)
-        {
-            ExtDonut donut = extDonut.GetValue<ExtDonut>();
-            donut.ChangeRadius(radius);
-            extDonut.SetValue<ExtDonut>(donut);
-        }
-        */
-
-        public static float GetThickNess(this SerializedProperty extDonut)
+        public static float GetThickNess(SerializedProperty extDonut)
         {
             return (extDonut.GetPropertie(PROPERTY_THICKNESS).floatValue);
         }
 
-        public static void SetThickNess(this SerializedProperty extDonut, float newThickNess)
+        public static void SetThickNess(SerializedProperty extDonut, float newThickNess)
         {
             ExtDonut donut = extDonut.GetValue<ExtDonut>();
 

@@ -49,13 +49,13 @@ namespace hedCommon.geometry.movable
 
             SerializedProperty donut = this.GetPropertie(ExtDonutProperty.PROPERTY_EXT_DONUT);
 
-            float thickNess = donut.GetThickNess();
+            float thickNess = ExtDonutProperty.GetThickNess(donut);
             float radius = donut.GetRadius();
 
             float newThickNess = ExtGUIFloatFields.FloatFieldWithSlider(thickNess, "ThickNess:", "Donut's ThickNess", 0, radius, false, 40, GUILayout.Width(80));
             if (newThickNess != thickNess)
             {
-                donut.SetThickNess(newThickNess);
+                ExtDonutProperty.SetThickNess(donut, newThickNess);
                 this.ApplyModification();
             }
             /*
