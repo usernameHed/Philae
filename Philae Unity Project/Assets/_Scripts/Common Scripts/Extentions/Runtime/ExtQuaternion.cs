@@ -74,7 +74,7 @@ namespace hedCommon.extension.runtime
         }
 
         //Returns the forward vector of a quaternion
-        public static Vector3 GetForwardVector(Quaternion q)
+        public static Vector3 GetForwardVector(this Quaternion q)
         {
             return q * Vector3.forward;
         }

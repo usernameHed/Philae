@@ -7,6 +7,79 @@ namespace hedCommon.extension.runtime
     public static class ExtRotation
     {
         /// <summary>
+        /// ⯇ ⯈ ⯅ ⯆ 🠴 🠶 🠵 🠷 ⭦ ⭧ ⭨ ⭩⭠ ⭢ ⭡ ⭣
+        /// 
+        ///   AR: vector director  
+        ///   A: anchor            
+        ///   U: up (AU)                                 [Pic 1]                        [Pic 2]
+        ///   R: to rotate                              vector director
+        ///                                     U              ⭣                   U                   
+        ///                                     |              ⭣                   |
+        ///                                     |           ⭢⭢⭢⭢R                |              ⭢⭢⭢R
+        ///                                     |       ⭧                          |              ⭡    
+        ///                                     A⭢⭢⭢⭢⭢⭢⭢⭢⭢⭢⭢R'              A⭢⭢⭢⭢⭢⭢⭢⭢⭢⭢⭢R'
+        ///                                    /           ⭡                      /  ⭨   R'''        ⭣
+        ///                                   /        projectedAR               /     ⭨ |          ⭩   Rotate  (0x, 45y, 0z)
+        ///                                  /                                  /        R''     ⭠
+        /// </summary>
+        /// <param name="pointAnchor"></param>
+        /// <param name="pointToRotate"></param>
+        /// <param name="up"></param>
+        /// <param name="rotationAxis"></param>
+        /// <returns></returns>
+        public static Vector3 RotatePointAroundAxis(Vector3 pointAnchor, Vector3 pointToRotate, Vector3 up, Vector3 rotationAxis)
+        {
+            Vector3 A = pointAnchor;
+            Vector3 R = pointToRotate;
+
+            Vector3 AR = R - A;                       //get the vector director
+
+            Quaternion rotation = QuaternionFromVectorDirector(-AR, up);    //transform vector director to a quaternion
+            Quaternion constrainRotation = TurretLookRotation(rotation, up);            //constrain rotation from up !!
+
+            //create a TRS matrix from point & rotation
+            Matrix4x4 rotationMatrix = Matrix4x4.TRS(pointAnchor, constrainRotation, Vector3.one);
+
+            Vector3 projectedAR = ExtVector3.GetProjectionOfAOnB(AR, rotationMatrix.ForwardFast(), up);
+            float distance = projectedAR.magnitude;
+
+            //display [Pic 1] axis
+            Debug.DrawRay(pointAnchor, rotationMatrix.ForwardFast(), Color.blue);
+            Debug.DrawRay(pointAnchor, rotationMatrix.RightFast(), Color.red);
+            Debug.DrawRay(pointAnchor, rotationMatrix.UpFast(), Color.green);
+
+            //rotate matrix in x, y & z
+            rotationMatrix = Matrix4x4.TRS(pointAnchor, constrainRotation * Quaternion.Euler(rotationAxis), Vector3.one);
+
+            //display [Pic 2] axis
+            Debug.DrawRay(pointAnchor, rotationMatrix.ForwardFast() * distance, Color.red);
+            Debug.DrawRay(pointAnchor, rotationMatrix.RightFast() * distance, Color.red);
+            Debug.DrawRay(pointAnchor, rotationMatrix.UpFast() * distance, Color.red);
+
+            //find R''
+            Vector3 newPosition = pointAnchor + rotationMatrix.ForwardFast() * distance;
+            ExtDrawGuizmos.DebugWireSphere(newPosition, 0.1f);
+
+            
+            Vector3 newToOldPosition = pointToRotate - newPosition;
+            Vector3 projectUp = up;
+            Vector3 projected = ExtVector3.GetProjectionOfAOnB(newToOldPosition, projectUp, projectUp);
+            Debug.DrawRay(newPosition, newToOldPosition);
+            Debug.DrawRay(newPosition, projectUp);
+
+            Debug.DrawRay(newPosition, projected, Color.green);
+
+            
+            return (newPosition + projected);
+        }
+
+        public static Matrix4x4 RotationMatrixAroundAxis(Ray axis, float rotation)
+        {
+            return Matrix4x4.TRS(-axis.origin, Quaternion.AngleAxis(rotation, axis.direction), Vector3.one)
+                 * Matrix4x4.TRS(axis.origin, Quaternion.identity, Vector3.one);
+        }
+
+        /// <summary>
         /// From a Line, Get the quaternion representing the Vector p2 - p1
         /// the up vector can be Vector3.up if you have no reference.
         /// </summary>
@@ -25,12 +98,12 @@ namespace hedCommon.extension.runtime
         /// From a Vector director, Get the quaternion representing this vector
         /// the up vector can be Vector3.up if you have no reference.
         /// </summary>
-        /// <param name="normal"></param>
+        /// <param name="vectorDirector"></param>
         /// <param name="up">default is Vector3.up</param>
         /// <returns>Quaternion representing the rotation of p2 - p1</returns>
-        public static Quaternion QuaternionFromVectorDirector(Vector3 normal, Vector3 up)
+        public static Quaternion QuaternionFromVectorDirector(Vector3 vectorDirector, Vector3 up)
         {
-            Matrix4x4 rotationMatrix = ExtMatrix.LookAt(normal, normal * 2, up);
+            Matrix4x4 rotationMatrix = ExtMatrix.LookAt(vectorDirector, vectorDirector * 2, up);
             Quaternion rotation = rotationMatrix.ExtractRotation();
             return (rotation);
         }
@@ -62,6 +135,15 @@ namespace hedCommon.extension.runtime
         public static Quaternion TurretLookRotation(Vector3 approximateForward, Vector3 exactUp)
         {
             Quaternion rotateZToUp = Quaternion.LookRotation(exactUp, -approximateForward);
+            Quaternion rotateYToZ = Quaternion.Euler(90f, 0f, 0f);
+
+            return rotateZToUp * rotateYToZ;
+        }
+        public static Quaternion TurretLookRotation(Quaternion approximateForward, Vector3 exactUp)
+        {
+            Vector3 forwardQuaternion = approximateForward.GetForwardVector();
+
+            Quaternion rotateZToUp = Quaternion.LookRotation(exactUp, -forwardQuaternion);
             Quaternion rotateYToZ = Quaternion.Euler(90f, 0f, 0f);
 
             return rotateZToUp * rotateYToZ;

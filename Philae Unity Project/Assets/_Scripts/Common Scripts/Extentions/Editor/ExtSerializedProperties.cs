@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEditor;
 using System.Reflection;
+using hedCommon.extension.runtime;
 
 namespace hedCommon.extension.editor
 {
@@ -338,6 +339,51 @@ namespace hedCommon.extension.editor
             for (int i = 0; i < listprop.arraySize; i++)
             {
                 listprop.GetArrayElementAtIndex(i).intValue = datas[i];
+            }
+        }
+
+        /// <summary>
+        /// from a given SerializePorperty Component reference, try to fill it if null
+        /// usage:
+        /// ExtSerializedProperties.SetObjectReferenceValueIfEmpty<MeshExploder>(this.GetPropertie("_meshExploder"), _unit.transform);
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="reference">SerializePorperty Component reference</param>
+        /// <param name="whereToSearch">Transform where to search in children</param>
+        public static void SetObjectReferenceValueIfEmpty<T>(SerializedProperty reference, Transform whereToSearch) where T : Component
+        {
+            if (reference.objectReferenceValue == null)
+            {
+                T component = whereToSearch.GetExtComponentInChildrens<T>(depth: 99, startWithOurSelf: true);
+                if (component != null)
+                {
+                    Debug.Log("set " + component.name);
+                    reference.objectReferenceValue = component;
+                }
+            }
+        }
+
+        public static void SetObjectReferenceValueIfEmptyFromNames<T>(SerializedProperty reference, Transform whereToSearch, params string[] nameOrPartialName) where T : Component
+        {
+            if (reference.objectReferenceValue == null)
+            {
+                Transform[] allChilds = whereToSearch.GetExtComponentsInChildrens<Transform>(depth: 99, startWithOurSelf: true);
+                for (int i = 0; i < allChilds.Length; i++)
+                {
+                    for (int k = 0; i < nameOrPartialName.Length; k++)
+                    {
+                        if (allChilds[i].name.Contains(nameOrPartialName[k]))
+                        {
+                            T component = allChilds[i].GetComponent<T>();
+                            if (component != null)
+                            {
+                                Debug.Log("set " + component.name);
+                                reference.objectReferenceValue = component;
+                                return;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

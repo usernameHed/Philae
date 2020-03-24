@@ -6,6 +6,44 @@ namespace hedCommon.extension.runtime
 {
     public static class ExtMatrix
     {
+        /// Creates a translation, rotation and scaling matrix.
+        /// The returned matrix is such that places things at position pos, oriented in rotation q and scaled by s.
+        ///                  row (horizontal)
+        ///               |  0   1   2   3
+        ///            ---+----------------
+        ///            0  | m00 m10 m20 m30      //GetColumn(0)
+        /// column     1  | m01 m11 m21 m31      //GetColumn(1)
+        /// (vertical) 2  | m02 m12 m22 m32      //GetColumn(2)
+        ///            3  | m03 m13 m23 m33      //GetColumn(3)
+        /// </remarks>
+        public static Matrix4x4 TRS(Vector3 pos, Quaternion q, Vector3 s)
+        {
+            Matrix4x4 result = new Matrix4x4();
+            // Rotation and Scale
+            // Quaternion multiplication can be used to represent rotation. 
+            // If a quaternion is represented by qw + i qx + j qy + k qz , then the equivalent matrix for rotation is (including scale):
+            // Remarks: https://forums.inovaestudios.com/t/math-combining-a-translation-rotation-and-scale-matrix-question-to-you-math-magicians/5194/2
+            double sqw = q.w * q.w;
+            double sqx = q.x * q.x;
+            double sqy = q.y * q.y;
+            double sqz = q.z * q.z;
+            result.m00 = (float)(1 - 2 * sqy - 2 * sqz) * (float)s.x;
+            result.m01 = (float)(2 * q.x * q.y - 2 * q.z * q.w);
+            result.m02 = (float)(2 * q.x * q.z + 2 * q.y * q.w);
+            result.m10 = (float)(2 * q.x * q.y + 2 * q.z * q.w);
+            result.m11 = (float)(1 - 2 * sqx - 2 * sqz) * (float)s.y;
+            result.m12 = (float)(2 * q.y * q.z - 2 * q.x * q.w);
+            result.m20 = (float)(2 * q.x * q.z - 2 * q.y * q.w);
+            result.m21 = (float)(2 * q.y * q.z + 2 * q.x * q.w);
+            result.m22 = (float)(1 - 2 * sqx - 2 * sqy) * (float)s.z;
+            // Translation
+            result.m03 = (float)pos.x;
+            result.m13 = (float)pos.y;
+            result.m23 = (float)pos.z;
+            result.m33 = 1.0f;
+            return result;
+        }
+
         /// <summary>
         /// apply a lerp between the 2 matrix by time
         /// // memory layout:
@@ -17,7 +55,6 @@ namespace hedCommon.extension.runtime
         // column     1  | m01 m11 m21 m31      //GetColumn(1)
         // (vertical) 2  | m02 m12 m22 m32      //GetColumn(2)
         //            3  | m03 m13 m23 m33      //GetColumn(3)
-
         /// </summary>
         /// <returns>Lerped matrix</returns>
         public static Matrix4x4 MatrixLerp(Matrix4x4 from, Matrix4x4 to, float time)
