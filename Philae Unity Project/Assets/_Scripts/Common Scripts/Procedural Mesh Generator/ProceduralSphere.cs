@@ -2,6 +2,8 @@
 using UnityEngine;
 
 using Sirenix.OdinInspector;
+using hedCommon.extension.runtime;
+using hedCommon.geometry.shape3d;
 
 namespace hedCommon.procedural
 {
@@ -18,15 +20,27 @@ namespace hedCommon.procedural
         private int _latitude = 16;
 
         /// <summary>
+        /// here generate the mesh...
+        /// </summary>
+        protected override void GenerateMesh()
+        {
+            Debug.Log("generate Sphere...");
+            CalculateVerticle();
+            CalculateNormals();
+            CalculateUvs();
+            CalculateTriangle();
+        }
+
+        /// <summary>
         /// calculate verticle
         /// </summary>
-        private void CalculateVerticle()
+        protected override void CalculateVerticle()
         {
-            _verticesObject = new Vector3[(_longitude + 1) * _latitude + 2];
+            _vertices = new Vector3[(_longitude + 1) * _latitude + 2];
             float _pi = Mathf.PI;
             float _2pi = _pi * 2f;
 
-            _verticesObject[0] = Vector3.up * _radius;
+            _vertices[0] = Vector3.up * _radius;
             for (int lat = 0; lat < _latitude; lat++)
             {
                 float a1 = _pi * (float)(lat + 1) / (_latitude + 1);
@@ -39,37 +53,37 @@ namespace hedCommon.procedural
                     float sin2 = Mathf.Sin(a2);
                     float cos2 = Mathf.Cos(a2);
 
-                    _verticesObject[lon + lat * (_longitude + 1) + 1] = new Vector3(sin1 * cos2, cos1, sin1 * sin2) * _radius;
+                    _vertices[lon + lat * (_longitude + 1) + 1] = new Vector3(sin1 * cos2, cos1, sin1 * sin2) * _radius;
                 }
             }
-            _verticesObject[_verticesObject.Length - 1] = Vector3.up * -_radius;
+            _vertices[_vertices.Length - 1] = Vector3.up * -_radius;
         }
 
         /// <summary>
         /// after having verticle, calculate normals of each points
         /// </summary>
-        private void CalculateNormals()
+        protected override void CalculateNormals()
         {
-            _normalesObject = new Vector3[_verticesObject.Length];
-            for (int n = 0; n < _verticesObject.Length; n++)
+            _normales = new Vector3[_vertices.Length];
+            for (int n = 0; n < _vertices.Length; n++)
             {
-                _normalesObject[n] = _verticesObject[n].normalized;
+                _normales[n] = _vertices[n].normalized;
             }
         }
 
         /// <summary>
         /// calculate UV of each points;
         /// </summary>
-        private void CalculateUvs()
+        protected override void CalculateUvs()
         {
-            _uvsObject = new Vector2[_verticesObject.Length];
-            _uvsObject[0] = Vector2.up;
-            _uvsObject[_uvsObject.Length - 1] = Vector2.zero;
+            _uvs = new Vector2[_vertices.Length];
+            _uvs[0] = Vector2.up;
+            _uvs[_uvs.Length - 1] = Vector2.zero;
             for (int lat = 0; lat < _latitude; lat++)
             {
                 for (int lon = 0; lon <= _longitude; lon++)
                 {
-                    _uvsObject[lon + lat * (_longitude + 1) + 1] = new Vector2((float)lon / _longitude, 1f - (float)(lat + 1) / (_latitude + 1));
+                    _uvs[lon + lat * (_longitude + 1) + 1] = new Vector2((float)lon / _longitude, 1f - (float)(lat + 1) / (_latitude + 1));
                 }
             }
         }
@@ -77,20 +91,20 @@ namespace hedCommon.procedural
         /// <summary>
         /// then save triangls of objects;
         /// </summary>
-        private void CalculateTriangle()
+        protected override void CalculateTriangle()
         {
-            int nbFaces = _verticesObject.Length;
+            int nbFaces = _vertices.Length;
             int nbTriangles = nbFaces * 2;
             int nbIndexes = nbTriangles * 3;
-            _trianglesObject = new int[nbIndexes];
+            _triangles = new int[nbIndexes];
 
             //Top Cap
             int i = 0;
             for (int lon = 0; lon < _longitude; lon++)
             {
-                _trianglesObject[i++] = lon + 2;
-                _trianglesObject[i++] = lon + 1;
-                _trianglesObject[i++] = 0;
+                _triangles[i++] = lon + 2;
+                _triangles[i++] = lon + 1;
+                _triangles[i++] = 0;
             }
 
             //Middle
@@ -101,35 +115,33 @@ namespace hedCommon.procedural
                     int current = lon + lat * (_longitude + 1) + 1;
                     int next = current + _longitude + 1;
 
-                    _trianglesObject[i++] = current;
-                    _trianglesObject[i++] = current + 1;
-                    _trianglesObject[i++] = next + 1;
+                    _triangles[i++] = current;
+                    _triangles[i++] = current + 1;
+                    _triangles[i++] = next + 1;
 
-                    _trianglesObject[i++] = current;
-                    _trianglesObject[i++] = next + 1;
-                    _trianglesObject[i++] = next;
+                    _triangles[i++] = current;
+                    _triangles[i++] = next + 1;
+                    _triangles[i++] = next;
                 }
             }
 
             //Bottom Cap
             for (int lon = 0; lon < _longitude; lon++)
             {
-                _trianglesObject[i++] = _verticesObject.Length - 1;
-                _trianglesObject[i++] = _verticesObject.Length - (lon + 2) - 1;
-                _trianglesObject[i++] = _verticesObject.Length - (lon + 1) - 1;
+                _triangles[i++] = _vertices.Length - 1;
+                _triangles[i++] = _vertices.Length - (lon + 2) - 1;
+                _triangles[i++] = _vertices.Length - (lon + 1) - 1;
             }
         }
 
         /// <summary>
-        /// here generate the mesh...
+        /// fit the meshCollider to the procedural shape
         /// </summary>
-        protected override void GenerateMesh()
+        public override void GenerateCollider()
         {
-            Debug.Log("generate Sphere...");
-            CalculateVerticle();
-            CalculateNormals();
-            CalculateUvs();
-            CalculateTriangle();
+            SphereCollider sphere = gameObject.GetOrAddComponent<SphereCollider>();
+            MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
+            ExtColliders.AutoSizeCollider3d(meshFilter, sphere);
         }
     }
 }
