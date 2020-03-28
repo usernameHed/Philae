@@ -14,16 +14,36 @@ namespace hedCommon.procedural
     {
         [SerializeField, Tooltip("radius")]
         private float _radius = 1f;
-        [SerializeField, Tooltip("longitude")]
+        [SerializeField, Tooltip("longitude"), Range(0, 30), OnValueChanged("GeneratePlease")]
         private int _longitude = 24;
-        [SerializeField, Tooltip("latitude")]
+        [SerializeField, Tooltip("longitude"), PropertyRange(0, "_longitudeEnd"), OnValueChanged("GeneratePlease")]
+        private int _longitudeStart = 0;
+        [SerializeField, Tooltip("longitude"), PropertyRange("_longitudeStart", "_longitude"), OnValueChanged("GeneratePlease")]
+        private int _longitudeEnd = 24;
+
+        [Space(10)]
+
+        [SerializeField, Tooltip("latitude"), Range(0, 30), OnValueChanged("GeneratePlease")]
         private int _latitude = 16;
+        [SerializeField, Tooltip("longitude"), PropertyRange(0, "_latitudeEnd"), OnValueChanged("GeneratePlease")]
+        private int _latitudeStart = 0;
+        [SerializeField, Tooltip("longitude"), PropertyRange("_latitudeStart", "_latitude"), OnValueChanged("GeneratePlease")]
+        private int _latitudeEnd = 16;
 
         /// <summary>
         /// here generate the mesh...
         /// </summary>
         protected override void GenerateMesh()
         {
+            _longitudeStart = ExtMathf.SetBetween(_longitudeStart, 0, _longitudeEnd);
+            _longitudeStart = ExtMathf.SetBetween(_longitudeStart, 0, _longitude);
+            _longitudeEnd = ExtMathf.SetBetween(_longitudeEnd, _longitudeStart, _longitude);
+
+            _latitudeStart = ExtMathf.SetBetween(_latitudeStart, 0, _latitudeEnd);
+            _latitudeStart = ExtMathf.SetBetween(_latitudeStart, 0, _latitude);
+            _latitudeEnd = ExtMathf.SetBetween(_latitudeEnd, _latitudeStart, _latitude);
+
+
             Debug.Log("generate Half Sphere...");
             CalculateVerticle();
             CalculateNormals();
@@ -41,13 +61,13 @@ namespace hedCommon.procedural
             float _2pi = _pi * 2f;
 
             _vertices[0] = Vector3.up * _radius;
-            for (int lat = 0; lat < _latitude; lat++)
+            for (int lat = _latitudeStart; lat < _latitudeEnd; lat++)
             {
                 float a1 = _pi * (float)(lat + 1) / (_latitude + 1);
                 float sin1 = Mathf.Sin(a1);
                 float cos1 = Mathf.Cos(a1);
 
-                for (int lon = 0; lon <= _longitude; lon++)
+                for (int lon = _longitudeStart; lon <= _longitudeEnd; lon++)
                 {
                     float a2 = _2pi * (float)(lon == _longitude ? 0 : lon) / _longitude;
                     float sin2 = Mathf.Sin(a2);
@@ -79,9 +99,9 @@ namespace hedCommon.procedural
             _uvs = new Vector2[_vertices.Length];
             _uvs[0] = Vector2.up;
             _uvs[_uvs.Length - 1] = Vector2.zero;
-            for (int lat = 0; lat < _latitude; lat++)
+            for (int lat = _latitudeStart; lat < _latitudeEnd; lat++)
             {
-                for (int lon = 0; lon <= _longitude; lon++)
+                for (int lon = _longitudeStart; lon <= _longitudeEnd; lon++)
                 {
                     _uvs[lon + lat * (_longitude + 1) + 1] = new Vector2((float)lon / _longitude, 1f - (float)(lat + 1) / (_latitude + 1));
                 }
@@ -100,7 +120,7 @@ namespace hedCommon.procedural
 
             //Top Cap
             int i = 0;
-            for (int lon = 0; lon < _longitude; lon++)
+            for (int lon = _longitudeStart; lon < _longitudeEnd; lon++)
             {
                 _triangles[i++] = lon + 2;
                 _triangles[i++] = lon + 1;
@@ -108,9 +128,9 @@ namespace hedCommon.procedural
             }
 
             //Middle
-            for (int lat = 0; lat < _latitude - 1; lat++)
+            for (int lat = _latitudeStart; lat < _latitudeEnd - 1; lat++)
             {
-                for (int lon = 0; lon < _longitude; lon++)
+                for (int lon = _longitudeStart; lon < _longitudeEnd; lon++)
                 {
                     int current = lon + lat * (_longitude + 1) + 1;
                     int next = current + _longitude + 1;
@@ -124,9 +144,8 @@ namespace hedCommon.procedural
                     _triangles[i++] = next;
                 }
             }
-
             //Bottom Cap
-            for (int lon = 0; lon < _longitude; lon++)
+            for (int lon = _longitudeStart; lon < _longitudeEnd; lon++)
             {
                 _triangles[i++] = _vertices.Length - 1;
                 _triangles[i++] = _vertices.Length - (lon + 2) - 1;
