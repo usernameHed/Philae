@@ -232,7 +232,12 @@ namespace ExtUnityComponents.transform
                     }
                 }
             }
-            Tools.pivotMode = _cachedPivotMode;
+
+            if (_lockChildrenPosition)
+            {
+                Tools.pivotMode = _cachedPivotMode;
+            }
+
             _hasBeenInternallyInit = false;
             //ExtReflexion.SetSearch("");
         }

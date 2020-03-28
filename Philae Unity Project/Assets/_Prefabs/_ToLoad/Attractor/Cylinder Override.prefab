@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 890260964629075817}
-  - component: {fileID: 7071830444470727967}
+  - component: {fileID: 822418355191651913}
+  - component: {fileID: 8171989785730420042}
   - component: {fileID: 890260964629075816}
   - component: {fileID: 3790968342761414836}
   - component: {fileID: 2947239296270084037}
@@ -38,7 +39,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7071830444470727967
+--- !u!114 &822418355191651913
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,10 +48,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 890260964629075818}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 868d5454fde48804ca9ead7a73a7a120, type: 3}
+  m_Script: {fileID: 11500000, guid: fee5b6929dafe8c479136aa5fe1b8aad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SettingsGlobal: {fileID: 11400000, guid: 8a8d77476a1cbc842b42150b078f9f26, type: 2}
+  SettingsGlobal: {fileID: 11400000, guid: 253c6c93137fe84478ca7ff580cb500c, type: 2}
   SettingsLocal:
     Gravity: 9.81
     AddMinRange: 0
@@ -59,51 +60,12 @@ MonoBehaviour:
     MaxRange: 0
     IsKinematic: 1
   _rigidAttractor: {fileID: 3790968342761414836}
-  _attractorListerLogic:
-  - {fileID: 0}
+  _attractorListerLogic: []
   _minRangeWithScale: 0
   _maxRangeWithScale: 0
-  _gravitonsInside:
-  - {fileID: 0}
-  _cylinder:
-    _circle1:
-      _plane:
-        Point: {x: -40, y: 50, z: 0}
-        Normal: {x: 0, y: 5, z: 0}
-        _allowBottom: 0
-      _radius: 5
-    _circle2:
-      _plane:
-        Point: {x: -40, y: 30, z: 0}
-        Normal: {x: -0, y: -5, z: -0}
-        _allowBottom: 0
-      _radius: 5
-    _radius: 0.5
-    _lenght: 4
-    _lenghtSquared: 0
-    _realRadius: 5
-    _realSquaredRadius: 25
-    _cylinderMatrix:
-      e00: 5
-      e01: 0
-      e02: 0
-      e03: -40
-      e10: 0
-      e11: 5
-      e12: 0
-      e13: 40
-      e20: 0
-      e21: 0
-      e22: 5
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    _p1: {x: -40, y: 50, z: 0}
-    _p2: {x: -40, y: 30, z: 0}
-    _delta: {x: 0, y: -20, z: 0}
-    _deltaSquared: 400
+  _gravitonsInside: []
+  _movableShape: {fileID: 8171989785730420042}
+  _movableCylinder: {fileID: 8171989785730420042}
   GravityOverride:
     Disc1:
       Face: 1
@@ -115,6 +77,58 @@ MonoBehaviour:
       _canApplyGravity: 1
     Trunk: 1
     _canApplyGravity: 1
+--- !u!114 &8171989785730420042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890260964629075818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 291f22f233cb93546974818e40e3556e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ColorShape: {r: 1, g: 1, b: 1, a: 1}
+  _cylinder:
+    _circle1:
+      _plane:
+        Point: {x: 0, y: 10, z: 0}
+        Normal: {x: 0, y: 5, z: 0}
+        _allowBottom: 0
+      _radius: 5
+    _circle2:
+      _plane:
+        Point: {x: 0, y: -10, z: 0}
+        Normal: {x: -0, y: -5, z: -0}
+        _allowBottom: 0
+      _radius: 5
+    _radius: 0.5
+    _lenght: 4
+    _lenghtSquared: 16
+    _realRadius: 5
+    _realSquaredRadius: 25
+    _cylinderMatrix:
+      e00: 5
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 5
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 5
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    _p1: {x: 0, y: 10, z: 0}
+    _p2: {x: 0, y: -10, z: 0}
+    _delta: {x: 0, y: -20, z: 0}
+    _deltaSquared: 400
 --- !u!114 &890260964629075816
 MonoBehaviour:
   m_ObjectHideFlags: 0

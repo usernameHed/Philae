@@ -807,6 +807,12 @@ namespace hedCommon.extension.runtime
             ExtDrawGuizmos.DebugCone(position + direction, -direction * 0.333f, color, 15, duration, depthTest);
         }
 
+        public static void DebugArrowConstant(Vector3 position, Vector3 direction, Color color, float size = 0.2f, float duration = 0, bool depthTest = true)
+        {
+            Debug.DrawRay(position, direction, color, duration, depthTest);
+            ExtDrawGuizmos.DebugCone(position + direction, -direction.FastNormalized() * size, color, 15, duration, depthTest);
+        }
+
         /// <summary>
         /// 	- Debugs an arrow.
         /// </summary>

@@ -507,16 +507,20 @@ namespace hedCommon.extension.runtime
             return point - 2 * normal * Vector3.Dot(point, normal) / Vector3.Dot(normal, normal);
         }
 
-        /// <summary>
-        /// Return the projection of A on B (with the good magnitude), based on ref (ex: Vector3.up)
-        /// </summary>
-        public static Vector3 GetProjectionOfAOnB(Vector3 A, Vector3 B, Vector3 refVector)
+        public static Vector3 ProjectAOnB(Vector3 A, Vector3 B)
         {
-            float angleDegre = SignedAngleBetween(A, B, refVector); //get angle A-B
-            angleDegre *= Mathf.Deg2Rad;                            //convert to rad
-            float magnitudeX = Mathf.Cos(angleDegre) * A.magnitude; //get magnitude
-            Vector3 realDir = B.normalized * magnitudeX;            //set magnitude of new Vector
-            return (realDir);   //vector A with magnitude based on B
+            float sqrMag = DotProduct(B, B);
+            if (sqrMag < Mathf.Epsilon)
+            {
+                return (Vector3.zero);
+            }
+            else
+            {
+                var dot = DotProduct(A, B);
+                return new Vector3(B.x * dot / sqrMag,
+                    B.y * dot / sqrMag,
+                    B.z * dot / sqrMag);
+            }
         }
 
         /// <summary>

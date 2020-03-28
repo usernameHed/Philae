@@ -11,24 +11,46 @@ namespace hedCommon.geometry.shape3d
     {
         public float Radius;
         public Vector3 Position;
+        public Vector3 LocalScale;
 
-        public ExtSphere(Vector3 position, float radius)
+        [SerializeField]
+        private float _realRadius;
+        public float RealRadius { get { return (_realRadius); } }
+
+        public ExtSphere(Vector3 position, float radius) : this()
         {
-            Position = position;
-            Radius = radius;
+            MoveSphape(position, Vector3.one, radius);
+        }
+
+        public ExtSphere(Vector3 position, Vector3 scale, float radius) : this()
+        {
+            MoveSphape(position, scale, radius);
         }
 
         public void Draw(Color color)
         {
-            ExtDrawGuizmos.DebugWireSphere(Position, color, Radius);
+            ExtDrawGuizmos.DebugWireSphere(Position, color, _realRadius);
+        }
+
+        public void DrawWithExtraRadius(Color color, float radius)
+        {
+            ExtDrawGuizmos.DebugWireSphere(Position, color, _realRadius + radius);
+        }
+
+        public void MoveSphape(Vector3 position, Vector3 scale, float radius)
+        {
+            Position = position;
+            LocalScale = scale;
+            Radius = radius;
+            _realRadius = radius * LocalScale.Maximum();
         }
 
         public void MoveSphape(Vector3 position, float radius)
         {
             Position = position;
             Radius = radius;
+            _realRadius = radius * LocalScale.Maximum();
         }
-
 
         /// <summary>
         /// return true if the position is inside the sphape

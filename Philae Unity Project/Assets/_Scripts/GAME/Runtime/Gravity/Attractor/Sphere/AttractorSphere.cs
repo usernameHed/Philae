@@ -10,10 +10,10 @@ using UnityEngine;
 
 namespace philae.gravity.attractor
 {
-    public class AttractorCapsule : Attractor
+    public class AttractorSphere : Attractor
     {
         [SerializeField]
-        protected MovableCapsule _movableCapsule;
+        protected MovableSphere _movableSphere;
 
         public override void InitOnCreation(List<AttractorListerLogic> attractorListerLogic)
         {
@@ -22,15 +22,12 @@ namespace philae.gravity.attractor
 
         public override bool GetClosestPointIfWeCan(Graviton graviton, out Vector3 closestPoint)
         {
-            closestPoint = _movableCapsule.Capsule.GetClosestPoint(graviton.Position);
-            closestPoint = this.GetRightPosWithRange(graviton.Position, closestPoint, _minRangeWithScale / 2f, _maxRangeWithScale / 2f, out bool outOfRange);
-
+            closestPoint = this.GetRightPosWithRange(graviton.Position, _movableSphere.Position, _movableSphere.Radius + _minRangeWithScale, _movableSphere.Radius + _maxRangeWithScale, out bool outOfRange);
             bool canApplyGravity = true;
             if (outOfRange)
             {
                 canApplyGravity = false;
             }
-
             AddOrRemoveGravitonFromList(graviton, canApplyGravity);
             return (canApplyGravity);
         }
@@ -38,14 +35,14 @@ namespace philae.gravity.attractor
 #if UNITY_EDITOR
         protected override void DrawRange(Color color)
         {
-            _movableCapsule.Capsule.Draw(color);
+            _movableSphere.Sphere.Draw(color);
             if (_minRangeWithScale > 0)
             {
-                _movableCapsule.Capsule.DrawWithExtraSize(Color.gray, new Vector3(_minRangeWithScale, _minRangeWithScale, _minRangeWithScale));
+                _movableSphere.Sphere.DrawWithExtraRadius(Color.gray, _minRangeWithScale);
             }
             if (_maxRangeWithScale > 0)
             {
-                _movableCapsule.Capsule.DrawWithExtraSize(color, new Vector3(_maxRangeWithScale, _maxRangeWithScale, _maxRangeWithScale));
+                _movableSphere.Sphere.DrawWithExtraRadius(Color.gray, _maxRangeWithScale);
             }
         }
 #endif

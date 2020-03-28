@@ -9,31 +9,32 @@ using UnityEngine;
 
 namespace hedCommon.geometry.movable
 {
-    public class MovableConeSphereBase : MovableShape
+    public class MovableSphere : MovableShape
     {
         [SerializeField, OnValueChanged("ChangeShapeStucture", true)]
-        protected ExtConeSphereBase _cone = default;
-        public ExtConeSphereBase Cone { get { return (_cone); } }
+        protected ExtSphere _sphere = default;
+        public ExtSphere Sphere { get { return (_sphere); } }
+        public float Radius { get { return (_sphere.RealRadius); } }
 
         public override void InitOnCreation()
         {
-            _cone = new ExtConeSphereBase(Position, Rotation, LocalScale, 0.5f, 2f);
+            _sphere = new ExtSphere(Position, LocalScale, 0.5f);
         }
 
         public override void ChangeShapeStucture()
         {
-            _cone.MoveSphape(Position, Rotation, LocalScale);
+            _sphere.MoveSphape(Position, LocalScale, _sphere.Radius);
         }
 
         public override void Move()
         {
-            _cone.MoveSphape(Position, Rotation, LocalScale);
+            _sphere.MoveSphape(Position, LocalScale, _sphere.Radius);
         }
 
 #if UNITY_EDITOR
         public override void Draw(Color color)
         {
-            _cone.Draw(color);
+            _sphere.Draw(color);
         }
 #endif
     }

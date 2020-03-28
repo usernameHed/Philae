@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5852033606303292278}
-  - component: {fileID: 5852033606303292284}
+  - component: {fileID: 4476214337221496602}
+  - component: {fileID: 7252781942082303468}
   - component: {fileID: 5852033606303292285}
   - component: {fileID: 5852033606303292274}
   - component: {fileID: 5852033606303292275}
@@ -38,7 +39,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5852033606303292284
+--- !u!114 &4476214337221496602
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,24 +48,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 5852033606303292279}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eba2da158b1c904e875357008015b14, type: 3}
+  m_Script: {fileID: 11500000, guid: e3f584cef39429f4a963e9fddcebc555, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SettingsGlobal: {fileID: 11400000, guid: 8a8d77476a1cbc842b42150b078f9f26, type: 2}
+  SettingsGlobal: {fileID: 11400000, guid: 253c6c93137fe84478ca7ff580cb500c, type: 2}
   SettingsLocal:
     Gravity: 9.81
     AddMinRange: 0
     AddMaxRange: 0
     MinRange: 0
-    MaxRange: 100
+    MaxRange: 0
     IsKinematic: 1
   _rigidAttractor: {fileID: 4959415676000389749}
-  _parent: {fileID: 0}
-  _attractorListerLogic: {fileID: 0}
+  _attractorListerLogic: []
   _minRangeWithScale: 0
   _maxRangeWithScale: 0
   _gravitonsInside: []
-  Mesh: {fileID: 4300000, guid: e3ad45ccab7222b48aac57c84169dbce, type: 3}
+  _movableShape: {fileID: 7252781942082303468}
+  _movableMeshConvexe: {fileID: 7252781942082303468}
+--- !u!114 &7252781942082303468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5852033606303292279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff7aa98b8e4c9946b21a3b8fae3e38f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ColorShape: {r: 1, g: 1, b: 1, a: 1}
 --- !u!33 &5852033606303292285
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -175,6 +189,7 @@ MonoBehaviour:
     ConstrainY: 0
     ConstrainZ: 0
   _velocityVector: {x: 0, y: 0, z: 0}
+  _lastVelocityVector: {x: 0, y: 0, z: 0}
   _rigidbody: {fileID: 1514529147858777352}
   _initialPush: {fileID: 0}
 --- !u!54 &1514529147858777352

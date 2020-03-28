@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4161897246364978426}
-  - component: {fileID: 232679035827604069}
+  - component: {fileID: 1947052746522255975}
+  - component: {fileID: 4612025075779585610}
   - component: {fileID: 4161897246364978429}
   - component: {fileID: 4092180761292765513}
   - component: {fileID: 2507520814865690081}
@@ -37,7 +38,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &232679035827604069
+--- !u!114 &1947052746522255975
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,10 +47,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4161897246364978427}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cef3d7afb1c4a8f45858fcb3d19e2db7, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f4b2fa310ee2014ba270974f370e37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SettingsGlobal: {fileID: 11400000, guid: 8a8d77476a1cbc842b42150b078f9f26, type: 2}
+  SettingsGlobal: {fileID: 11400000, guid: 253c6c93137fe84478ca7ff580cb500c, type: 2}
   SettingsLocal:
     Gravity: 9.81
     AddMinRange: 0
@@ -58,19 +59,32 @@ MonoBehaviour:
     MaxRange: 0
     IsKinematic: 1
   _rigidAttractor: {fileID: 4092180761292765513}
-  _attractorListerLogic:
-  - {fileID: 0}
+  _attractorListerLogic: []
   _minRangeWithScale: 0
   _maxRangeWithScale: 0
-  _gravitonsInside:
-  - {fileID: 0}
+  _gravitonsInside: []
+  _movableShape: {fileID: 4612025075779585610}
+  _movableCapsuleHalf: {fileID: 4612025075779585610}
+--- !u!114 &4612025075779585610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4161897246364978427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303ea7e95b94fcb45af6a64d5522a50a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ColorShape: {r: 1, g: 1, b: 1, a: 1}
   _capsuleHalf:
     _topSphere:
       Radius: 5
-      Position: {x: -120, y: 10, z: 0}
+      Position: {x: 0, y: 10, z: 0}
     _bottomCircle:
       _plane:
-        Point: {x: -120, y: -10, z: 0}
+        Point: {x: 0, y: -10, z: 0}
         Normal: {x: -0, y: -5, z: -0}
         _allowBottom: 0
       _radius: 5
@@ -83,7 +97,7 @@ MonoBehaviour:
       e00: 5
       e01: 0
       e02: 0
-      e03: -120
+      e03: 0
       e10: 0
       e11: 5
       e12: 0
@@ -96,8 +110,8 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    _p1: {x: -120, y: 10, z: 0}
-    _p2: {x: -120, y: -10, z: 0}
+    _p1: {x: 0, y: 10, z: 0}
+    _p2: {x: 0, y: -10, z: 0}
     _delta: {x: 0, y: -20, z: 0}
     _deltaSquared: 400
 --- !u!114 &4161897246364978429

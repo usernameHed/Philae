@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3126373271574030465}
-  - component: {fileID: 2354886815925374390}
+  - component: {fileID: 3911662816057993708}
   - component: {fileID: 2871800328476685589}
   - component: {fileID: 3126373271574030470}
   - component: {fileID: 8506959633823736520}
   - component: {fileID: 3587173519234550049}
   m_Layer: 11
-  m_Name: Triangle
+  m_Name: Triangle Override
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -35,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2354886815925374390
+--- !u!114 &3911662816057993708
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3126373271574030464}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dacf0e7aa9fb9f94d872db070236c7f4, type: 3}
+  m_Script: {fileID: 11500000, guid: e6e2110560309e74bb57763a7abe2f4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SettingsGlobal: {fileID: 11400000, guid: 253c6c93137fe84478ca7ff580cb500c, type: 2}

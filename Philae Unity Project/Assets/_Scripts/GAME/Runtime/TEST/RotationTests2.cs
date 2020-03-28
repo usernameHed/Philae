@@ -6,21 +6,20 @@ using UnityEngine;
 namespace hedCommon.extension.runtime
 {
     [ExecuteInEditMode]
-    public class RotationTests : MonoBehaviour
+    public class RotationTests2 : MonoBehaviour
     {
         [SerializeField]
         private Vector3 _rotateAxis;
         [SerializeField]
         private Transform _anchor;
-        [SerializeField]
-        private Transform _pointToRotate;
 
         private void Update()
         {
             //_pointToRotate.position = ExtRotation.RotatePointAroundAxis(_anchor.position, _pointToRotate.position, _anchor.up, _rotateAxis * TimeEditor.deltaTime);
-            Vector3 vectorDirector = _pointToRotate.position - _anchor.position;
-            vectorDirector = ExtRotation.RotateVectorAroundAxis(_anchor.position, vectorDirector, _anchor.up, _rotateAxis * TimeEditor.deltaTime);
-            _pointToRotate.position = _anchor.position + vectorDirector;
+            _anchor.rotation = ExtRotation.RotateVectorDirectorFromAxis(_anchor.forward, _anchor.up, _rotateAxis * TimeEditor.deltaTime);
+            ExtDrawGuizmos.DebugArrowConstant(_anchor.position, _anchor.up, Color.green);
+            ExtDrawGuizmos.DebugArrowConstant(_anchor.position, _anchor.forward, Color.blue);
+            ExtDrawGuizmos.DebugArrowConstant(_anchor.position, _anchor.right, Color.red);
         }
     }
 }

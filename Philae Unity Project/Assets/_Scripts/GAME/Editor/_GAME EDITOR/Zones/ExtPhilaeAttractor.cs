@@ -35,8 +35,9 @@ namespace philae.editor.extension.attractor
         private const string QUAD_OVERRIDE = "GameObject/Philae/Attractor/Quad/Quad with gravity override";
         private const string SPLINE = "GameObject/Philae/Attractor/Spline";
         private const string TRIANGLE = "GameObject/Philae/Attractor/Triangle";
+        private const string TRIANGLE_OVERRIDE = "GameObject/Philae/Attractor/Triangle with gravity override";
         private const string CONE_SPHERE_BASE = "GameObject/Philae/Attractor/Cone/Cone Sphere Base";
-        private const string CONE_SPHERE_BASE_OVERRIDE = "GameObject/Philae/Attractor/Cone/Cone Sphere Base Override";
+        private const string CONE_SPHERE_BASE_OVERRIDE = "GameObject/Philae/Attractor/Cone/Cone Sphere Base with gravity override";
 
         [MenuItem(SPHERE, false, -1)]
         private static void AttractorSphere()
@@ -155,6 +156,11 @@ namespace philae.editor.extension.attractor
         {
             CreateAttractor("Triangle");
         }
+        [MenuItem(TRIANGLE_OVERRIDE, false, -1)]
+        private static void AttractorTriangleOverride()
+        {
+            CreateAttractor("Triangle Override");
+        }
         [MenuItem(CONE_SPHERE_BASE, false, -1)]
         private static void AttractorConeSphereBase()
         {
@@ -199,6 +205,7 @@ namespace philae.editor.extension.attractor
         [MenuItem(QUAD_OVERRIDE, true)]
         [MenuItem(SPLINE, true)]
         [MenuItem(TRIANGLE, true)]
+        [MenuItem(TRIANGLE_OVERRIDE, true)]
         [MenuItem(CONE_SPHERE_BASE, true)]
         [MenuItem(CONE_SPHERE_BASE_OVERRIDE, true)]
         private static bool ValidateCreateZone()

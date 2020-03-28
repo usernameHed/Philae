@@ -112,7 +112,7 @@ namespace hedCommon.geometry.shape3d
             Vector3 y = p1 - p4;
 
             Vector3 up = ExtVector3.CrossProduct(x, y);
-            _rotation = ExtRotation.QuaternionFromVectorDirector(up, x);
+            _rotation = ExtRotation.QuaternionFromVectorDirector(up, x.FastNormalized());
             _rotation = ExtRotation.RotateQuaternion(_rotation, new Vector3(-90, 0, 0));
             _localScale = new Vector3(y.magnitude, 1, x.magnitude);
             UpdateMatrix();
