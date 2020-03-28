@@ -94,5 +94,14 @@ namespace hedCommon.extension.runtime
 
             return m;
         }
+
+        public static Material GetDefaultMaterial()
+        {
+            GameObject primitive = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            primitive.SetActive(false);
+            Material diffuse = primitive.GetComponent<MeshRenderer>().sharedMaterial;
+            GameObject.DestroyImmediate(primitive);
+            return (diffuse);
+        }
     }
 }

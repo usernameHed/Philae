@@ -350,11 +350,11 @@ namespace hedCommon.extension.editor
         /// <typeparam name="T"></typeparam>
         /// <param name="reference">SerializePorperty Component reference</param>
         /// <param name="whereToSearch">Transform where to search in children</param>
-        public static void SetObjectReferenceValueIfEmpty<T>(SerializedProperty reference, Transform whereToSearch) where T : Component
+        public static void SetObjectReferenceValueIfEmpty<T>(SerializedProperty reference, Transform whereToSearch, bool searchOnChilds = true) where T : Component
         {
             if (reference.objectReferenceValue == null)
             {
-                T component = whereToSearch.GetExtComponentInChildrens<T>(depth: 99, startWithOurSelf: true);
+                T component = (searchOnChilds) ? whereToSearch.GetExtComponentInChildrens<T>(depth: 99, startWithOurSelf: true) : whereToSearch.GetComponent<T>();
                 if (component != null)
                 {
                     Debug.Log("set " + component.name);
