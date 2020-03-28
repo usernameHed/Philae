@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 namespace hedCommon.procedural
 {
     /// <summary>
-    /// Plane Description
+    /// Generate a Plane with a given size, and resolution
     /// </summary>
     public class ProceduralPlane : Generate
     {

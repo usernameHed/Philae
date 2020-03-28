@@ -12,63 +12,26 @@ namespace hedCommon.procedural
     /// </summary>
     public class ProceduralIcoSphere : Generate
     {
-        [FoldoutGroup("GamePlay"), Tooltip("radius"), SerializeField]
-        float radius = 1f;
-        [FoldoutGroup("GamePlay"), Tooltip("radius"), SerializeField]
-        int recursionLevel = 3;
+        [SerializeField]
+        private float _radius = 1f;
+        [SerializeField, Range(0, 3)]
+        private int _recursionLevel = 3;
 
-        private List<Vector3> vertList = new List<Vector3>();
+        private List<Vector3> _vertList = new List<Vector3>();
 
-        Dictionary<long, int> middlePointIndexCache = new Dictionary<long, int>();
-        int index = 0;
+        private Dictionary<long, int> _middlePointIndexCache = new Dictionary<long, int>();
+        private int _index = 0;
 
-        private struct TriangleIndices
+        /// <summary>
+        /// here generate the mesh...
+        /// </summary>
+        protected override void GenerateMesh()
         {
-            public int v1;
-            public int v2;
-            public int v3;
-
-            public TriangleIndices(int v1, int v2, int v3)
-            {
-                this.v1 = v1;
-                this.v2 = v2;
-                this.v3 = v3;
-            }
-        }
-
-        // return index of point in the middle of p1 and p2
-        private static int getMiddlePoint(int p1, int p2, ref List<Vector3> vertices, ref Dictionary<long, int> cache, float radius)
-        {
-            // first check if we have it already
-            bool firstIsSmaller = p1 < p2;
-            long smallerIndex = firstIsSmaller ? p1 : p2;
-            long greaterIndex = firstIsSmaller ? p2 : p1;
-            long key = (smallerIndex << 32) + greaterIndex;
-
-            int ret;
-            if (cache.TryGetValue(key, out ret))
-            {
-                return ret;
-            }
-
-            // not in cache, calculate it
-            Vector3 point1 = vertices[p1];
-            Vector3 point2 = vertices[p2];
-            Vector3 middle = new Vector3
-            (
-                (point1.x + point2.x) / 2f,
-                (point1.y + point2.y) / 2f,
-                (point1.z + point2.z) / 2f
-            );
-
-            // add vertex makes sure point is on unit sphere
-            int i = vertices.Count;
-            vertices.Add(middle.normalized * radius);
-
-            // store it, return index
-            cache.Add(key, i);
-
-            return i;
+            Debug.Log("generate Sphere...");
+            CalculateVerticle();
+            CalculateNormals();
+            CalculateUvs();
+            CalculateTriangle();
         }
 
         /// <summary>
@@ -78,20 +41,20 @@ namespace hedCommon.procedural
         {
             float t = (1f + Mathf.Sqrt(5f)) / 2f;
 
-            vertList.Add(new Vector3(-1f, t, 0f).normalized * radius);
-            vertList.Add(new Vector3(1f, t, 0f).normalized * radius);
-            vertList.Add(new Vector3(-1f, -t, 0f).normalized * radius);
-            vertList.Add(new Vector3(1f, -t, 0f).normalized * radius);
+            _vertList.Add(new Vector3(-1f, t, 0f).normalized * _radius);
+            _vertList.Add(new Vector3(1f, t, 0f).normalized * _radius);
+            _vertList.Add(new Vector3(-1f, -t, 0f).normalized * _radius);
+            _vertList.Add(new Vector3(1f, -t, 0f).normalized * _radius);
 
-            vertList.Add(new Vector3(0f, -1f, t).normalized * radius);
-            vertList.Add(new Vector3(0f, 1f, t).normalized * radius);
-            vertList.Add(new Vector3(0f, -1f, -t).normalized * radius);
-            vertList.Add(new Vector3(0f, 1f, -t).normalized * radius);
+            _vertList.Add(new Vector3(0f, -1f, t).normalized * _radius);
+            _vertList.Add(new Vector3(0f, 1f, t).normalized * _radius);
+            _vertList.Add(new Vector3(0f, -1f, -t).normalized * _radius);
+            _vertList.Add(new Vector3(0f, 1f, -t).normalized * _radius);
 
-            vertList.Add(new Vector3(t, 0f, -1f).normalized * radius);
-            vertList.Add(new Vector3(t, 0f, 1f).normalized * radius);
-            vertList.Add(new Vector3(-t, 0f, -1f).normalized * radius);
-            vertList.Add(new Vector3(-t, 0f, 1f).normalized * radius);
+            _vertList.Add(new Vector3(t, 0f, -1f).normalized * _radius);
+            _vertList.Add(new Vector3(t, 0f, 1f).normalized * _radius);
+            _vertList.Add(new Vector3(-t, 0f, -1f).normalized * _radius);
+            _vertList.Add(new Vector3(-t, 0f, 1f).normalized * _radius);
         }
 
         /// <summary>
@@ -148,15 +111,15 @@ namespace hedCommon.procedural
 
 
             // refine triangles
-            for (int i = 0; i < recursionLevel; i++)
+            for (int i = 0; i < _recursionLevel; i++)
             {
                 List<TriangleIndices> faces2 = new List<TriangleIndices>();
                 foreach (var tri in faces)
                 {
                     // replace triangle by 4 triangles
-                    int a = getMiddlePoint(tri.v1, tri.v2, ref vertList, ref middlePointIndexCache, radius);
-                    int b = getMiddlePoint(tri.v2, tri.v3, ref vertList, ref middlePointIndexCache, radius);
-                    int c = getMiddlePoint(tri.v3, tri.v1, ref vertList, ref middlePointIndexCache, radius);
+                    int a = GetMiddlePoint(tri.v1, tri.v2, ref _vertList, ref _middlePointIndexCache, _radius);
+                    int b = GetMiddlePoint(tri.v2, tri.v3, ref _vertList, ref _middlePointIndexCache, _radius);
+                    int c = GetMiddlePoint(tri.v3, tri.v1, ref _vertList, ref _middlePointIndexCache, _radius);
 
                     faces2.Add(new TriangleIndices(tri.v1, a, c));
                     faces2.Add(new TriangleIndices(tri.v2, b, a));
@@ -166,7 +129,7 @@ namespace hedCommon.procedural
                 faces = faces2;
             }
 
-            _verticesObject = vertList.ToArray();
+            _verticesObject = _vertList.ToArray();
 
             List<int> triList = new List<int>();
             for (int i = 0; i < faces.Count; i++)
@@ -180,15 +143,47 @@ namespace hedCommon.procedural
         }
 
         /// <summary>
-        /// here generate the mesh...
+        /// return index of point in the middle of p1 and p2
         /// </summary>
-        protected override void GenerateMesh()
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <param name="vertices"></param>
+        /// <param name="cache"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        private static int GetMiddlePoint(int p1, int p2, ref List<Vector3> vertices, ref Dictionary<long, int> cache, float radius)
         {
-            Debug.Log("generate Sphere...");
-            CalculateVerticle();
-            CalculateNormals();
-            CalculateUvs();
-            CalculateTriangle();
+            // first check if we have it already
+            bool firstIsSmaller = p1 < p2;
+            long smallerIndex = firstIsSmaller ? p1 : p2;
+            long greaterIndex = firstIsSmaller ? p2 : p1;
+            long key = (smallerIndex << 32) + greaterIndex;
+
+            int ret;
+            if (cache.TryGetValue(key, out ret))
+            {
+                return ret;
+            }
+
+            // not in cache, calculate it
+            Vector3 point1 = vertices[p1];
+            Vector3 point2 = vertices[p2];
+            Vector3 middle = new Vector3
+            (
+                (point1.x + point2.x) / 2f,
+                (point1.y + point2.y) / 2f,
+                (point1.z + point2.z) / 2f
+            );
+
+            // add vertex makes sure point is on unit sphere
+            int i = vertices.Count;
+            vertices.Add(middle.normalized * radius);
+
+            // store it, return index
+            cache.Add(key, i);
+
+            return i;
         }
+
     }
 }
