@@ -7,13 +7,13 @@ using static UnityEditor.EditorGUILayout;
 
 namespace ExtUnityComponents.collider
 {
-    public class FitSphere
+    public class FitBox2D
     {
-        private SphereCollider[] _currentTargets = null;
+        private BoxCollider2D[] _currentTargets = null;
         private DecoratorComponentsEditor _currentEditor;
-        private MeshFilter[] _meshFilter;
+        private SpriteRenderer[] _spriteRenderer;
 
-        public void Init(SphereCollider[] parent, DecoratorComponentsEditor current)
+        public void Init(BoxCollider2D[] parent, DecoratorComponentsEditor current)
         {
             _currentTargets = parent;
             _currentEditor = current;
@@ -23,26 +23,26 @@ namespace ExtUnityComponents.collider
 
         private void SetupMeshFilter()
         {
-            _meshFilter = new MeshFilter[_currentTargets.Length];
+            _spriteRenderer = new SpriteRenderer[_currentTargets.Length];
             for (int i = 0; i < _currentTargets.Length; i++)
             {
-                _meshFilter[i] = _currentTargets[i].GetComponent<MeshFilter>();
+                _spriteRenderer[i] = _currentTargets[i].GetComponent<SpriteRenderer>();
             }
         }
 
         public bool IsNullOrEmptyOrEmptyContent()
         {
-            if (_meshFilter == null)
+            if (_spriteRenderer == null)
             {
                 return (true);
             }
-            if (_meshFilter.Length == 0)
+            if (_spriteRenderer.Length == 0)
             {
                 return (true);
             }
-            for (int i = 0; i < _meshFilter.Length; i++)
+            for (int i = 0; i < _spriteRenderer.Length; i++)
             {
-                if (_meshFilter[i] == null)
+                if (_spriteRenderer[i] == null)
                 {
                     return (true);
                 }
@@ -54,7 +54,7 @@ namespace ExtUnityComponents.collider
         {
             using (HorizontalScope horizontalScope = new HorizontalScope(EditorStyles.helpBox))
             {
-                GUILayout.Label("Fit collider to the mesh:");
+                GUILayout.Label("Fit collider to the sprite:");
 
                 if (!IsNullOrEmptyOrEmptyContent())
                 {
@@ -67,7 +67,7 @@ namespace ExtUnityComponents.collider
                 {
                     EditorGUI.BeginDisabledGroup(true);
                     {
-                        GUILayout.Button("No MeshFilter");
+                        GUILayout.Button("No spriteRenderer");
                     }
                     EditorGUI.EndDisabledGroup();
                 }
@@ -79,8 +79,8 @@ namespace ExtUnityComponents.collider
         {
             for (int k = 0; k < _currentTargets.Length; k++)
             {
-                Undo.RecordObject(_currentTargets[k], "datas Sphere Collider");
-                ExtColliders.AutoSizeColliders3d(_currentTargets[k].gameObject, _currentEditor.GetTargetIndex<SphereCollider>(k));
+                Undo.RecordObject(_currentTargets[k], "datas Box Collider");
+                ExtColliders.AutoSizeCollider2d(_spriteRenderer[k], _currentEditor.GetTargetIndex<BoxCollider2D>(k));
             }
         }
     }

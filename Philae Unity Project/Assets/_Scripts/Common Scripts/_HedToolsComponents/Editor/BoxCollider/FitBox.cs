@@ -79,29 +79,8 @@ namespace ExtUnityComponents.collider
         {
             for (int k = 0; k < _currentTargets.Length; k++)
             {
-                List<Vector3> positionChilds = new List<Vector3>();
-
                 Undo.RecordObject(_currentTargets[k], "datas Box Collider");
-
-
-                MeshFilter parent = _meshFilter[k];
-                if (parent == null)
-                {
-                    continue;
-                }
-
-                Bounds bigBounds = parent.sharedMesh.bounds;
-
-                MeshFilter[] allChilds = _currentTargets[k].gameObject.GetExtComponentsInChildrens<MeshFilter>(99, false);
-                for (int i = 0; i < allChilds.Length; i++)
-                {
-                    //Debug.Log(allChilds[i].name);
-                    positionChilds.Add(allChilds[i].transform.position);
-                    bigBounds.Encapsulate(allChilds[i].sharedMesh.bounds);
-                }
-
-                _currentEditor.GetTargetIndex<BoxCollider>(k).size = bigBounds.size;
-                _currentEditor.GetTargetIndex<BoxCollider>(k).center = bigBounds.center;
+                ExtColliders.AutoSizeColliders3d(_currentTargets[k].gameObject, _currentEditor.GetTargetIndex<BoxCollider>(k));
             }
         }
     }
