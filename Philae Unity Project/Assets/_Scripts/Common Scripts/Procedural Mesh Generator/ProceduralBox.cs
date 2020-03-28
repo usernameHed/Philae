@@ -2,6 +2,7 @@
 using UnityEngine;
 
 using Sirenix.OdinInspector;
+using hedCommon.extension.runtime;
 
 namespace hedCommon.procedural
 {
@@ -18,9 +19,21 @@ namespace hedCommon.procedural
         private float _height = 1f;
 
         /// <summary>
+        /// here generate the mesh...
+        /// </summary>
+        protected override void GenerateMesh()
+        {
+            Debug.Log("generate box...");
+            CalculateVerticle();
+            CalculateNormals();
+            CalculateUvs();
+            CalculateTriangle();
+        }
+
+        /// <summary>
         /// calculate verticle
         /// </summary>
-        private void CalculateVerticle()
+        protected override void CalculateVerticle()
         {
             Vector3 p0 = new Vector3(-_length * .5f, -_width * .5f, _height * .5f);
             Vector3 p1 = new Vector3(_length * .5f, -_width * .5f, _height * .5f);
@@ -32,7 +45,7 @@ namespace hedCommon.procedural
             Vector3 p6 = new Vector3(_length * .5f, _width * .5f, -_height * .5f);
             Vector3 p7 = new Vector3(-_length * .5f, _width * .5f, -_height * .5f);
 
-            _verticesObject = new Vector3[]
+            _vertices = new Vector3[]
             {
                 p0, p1, p2, p3, // Bottom 
 	            p7, p4, p0, p3, // Left
@@ -46,7 +59,7 @@ namespace hedCommon.procedural
         /// <summary>
         /// after having verticle, calculate normals of each points
         /// </summary>
-        private void CalculateNormals()
+        protected override void CalculateNormals()
         {
             Vector3 up = Vector3.up;
             Vector3 down = Vector3.down;
@@ -55,7 +68,7 @@ namespace hedCommon.procedural
             Vector3 left = Vector3.left;
             Vector3 right = Vector3.right;
 
-            _normalesObject = new Vector3[]
+            _normales = new Vector3[]
             {
                 down, down, down, down,     // Bottom
 	            left, left, left, left,     // Left
@@ -69,14 +82,14 @@ namespace hedCommon.procedural
         /// <summary>
         /// calculate UV of each points;
         /// </summary>
-        private void CalculateUvs()
+        protected override void CalculateUvs()
         {
             Vector2 _00 = new Vector2(0f, 0f);
             Vector2 _10 = new Vector2(1f, 0f);
             Vector2 _01 = new Vector2(0f, 1f);
             Vector2 _11 = new Vector2(1f, 1f);
 
-            _uvsObject = new Vector2[]
+            _uvs = new Vector2[]
             {
                 _11, _01, _00, _10,     // Bottom
 	            _11, _01, _00, _10,     // Left
@@ -90,9 +103,9 @@ namespace hedCommon.procedural
         /// <summary>
         /// then save triangls of objects;
         /// </summary>
-        private void CalculateTriangle()
+        protected override void CalculateTriangle()
         {
-            _trianglesObject = new int[]
+            _triangles = new int[]
             {
 	            // Bottom
 	            3, 1, 0,
@@ -121,15 +134,13 @@ namespace hedCommon.procedural
         }
 
         /// <summary>
-        /// here generate the mesh...
+        /// fit the meshCollider to the procedural shape
         /// </summary>
-        protected override void GenerateMesh()
+        public override void GenerateCollider()
         {
-            Debug.Log("generate box...");
-            CalculateVerticle();
-            CalculateNormals();
-            CalculateUvs();
-            CalculateTriangle();
+            BoxCollider box = gameObject.GetOrAddComponent<BoxCollider>();
+            MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
+            ExtColliders.AutoSizeCollider3d(meshFilter, box);
         }
     }
 }
