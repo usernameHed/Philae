@@ -15,8 +15,7 @@ GameObject:
   - component: {fileID: 5771555507302565262}
   - component: {fileID: 6273390849253849687}
   - component: {fileID: 6977522551967172915}
-  - component: {fileID: 3548683924822629672}
-  - component: {fileID: 2176275971708150739}
+  - component: {fileID: 9067747434307441641}
   m_Layer: 11
   m_Name: Donut
   m_TagString: Untagged
@@ -33,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 8405064908452197665}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 138.54, y: 0, z: -15.440001}
-  m_LocalScale: {x: 10.176168, y: 10.176168, z: 10.176168}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -151,64 +150,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ColorShape: {r: 1, g: 1, b: 1, a: 1}
   _donut:
-    _position: {x: -222.38, y: -0.25, z: 1.51}
-    _rotation: {x: -0, y: -0, z: 0.03462887, w: 0.9994003}
-    _localScale: {x: 10.176168, y: 10.176168, z: 10.176168}
+    _position: {x: -240, y: 0, z: -10}
+    _rotation: {x: -0, y: -0, z: -0, w: 1}
+    _localScale: {x: 10, y: 10, z: 10}
     _circle:
       _plane:
-        Point: {x: -222.38, y: -0.25, z: 1.51}
-        Normal: {x: -0.35217792, y: 5.0758815, z: -0}
+        Point: {x: -240, y: 0, z: -10}
+        Normal: {x: 0, y: 5, z: 0}
         _allowBottom: 0
-      _radius: 5.088084
+      _radius: 5
     _radius: 0.5
     _radiusSquared: 0.25
-    _thickNess: 0.11
-    _realThickNess: 1.1193786
-    _realRadius: 5.088084
-    _realSquaredRadius: 25.888601
---- !u!33 &3548683924822629672
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8405064908452197665}
-  m_Mesh: {fileID: 4300000, guid: 727889ab4b39c92429fddf160733ba3a, type: 2}
---- !u!23 &2176275971708150739
-MeshRenderer:
+    _thickNess: 0.1
+    _realThickNess: 1
+    _realRadius: 5
+    _realSquaredRadius: 25
+--- !u!114 &9067747434307441641
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8405064908452197665}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3728ee5fd49d0748bafb206219d40cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _meshFilter: {fileID: 0}
+  _meshRenderer: {fileID: 0}
+  _offsetMesh: {x: 0, y: 0, z: 0}
+  _showVertices: 0
+  radius1: 1
+  radius2: 0.3
+  nbRadSeg: 24
+  nbSides: 18

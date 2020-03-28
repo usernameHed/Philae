@@ -51,10 +51,17 @@ namespace hedCommon.procedural
                     this.ApplyModification();
                     SaveMesh();
                     this.ApplyModification();
+                    _generate.GenerateCollider();
+                    this.ApplyModification();
                 }
                 if (GUILayout.Button("Generate"))
                 {
                     Generate();
+                    this.ApplyModification();
+                }
+                if (GUILayout.Button("Collider"))
+                {
+                    _generate.GenerateCollider();
                     this.ApplyModification();
                 }
                 if (GUILayout.Button("Save"))
@@ -62,6 +69,7 @@ namespace hedCommon.procedural
                     SaveMesh();
                     this.ApplyModification();
                 }
+
             }
         }
 
@@ -96,6 +104,15 @@ namespace hedCommon.procedural
         {
             Mesh mesh = ExtMesh.SaveSelectedMeshObj(_generate.gameObject, true);
             _generate.gameObject.transform.GetOrAddComponent<MeshFilter>().sharedMesh = mesh;
+        }
+
+        protected override void CustomOnSceneGUI(SceneView sceneview)
+        {
+            bool canShow = this.GetPropertie("_showVertices").boolValue;
+            if (canShow)
+            {
+                ExtMeshEditor.ShowVerticesOfMesh(_generate.transform, _generate.MeshFilter.sharedMesh, 10);
+            }
         }
     }
 }

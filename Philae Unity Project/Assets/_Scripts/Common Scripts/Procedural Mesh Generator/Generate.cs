@@ -26,14 +26,20 @@ namespace hedCommon.procedural
     {
         [SerializeField]
         protected MeshFilter _meshFilter;
+        public MeshFilter MeshFilter { get { return (_meshFilter); } }
         [SerializeField]
         protected MeshRenderer _meshRenderer;
 
-        protected Vector3[] _verticesObject;           //verticle of object
-        protected Vector3[] _normalesObject;           //normals of all verticles
-        protected Vector2[] _uvsObject;                //uvs of points;
-        protected int[] _trianglesObject;              //then save triangle of objects
+        [SerializeField]
+        private Vector3 _offsetMesh;
+        [SerializeField]
+        private bool _showVertices = false;
 
+        protected Vector3[] _vertices;           //verticle of object
+        protected Vector3[] _normales;           //normals of all verticles
+        protected Vector2[] _uvs;                //uvs of points;
+        protected int[] _triangles;              //then save triangle of objects
+        protected const float PI_2 = Mathf.PI * 2f;
         protected Mesh _meshObject;
 
         /// <summary>
@@ -49,12 +55,29 @@ namespace hedCommon.procedural
             _meshObject = _meshFilter.sharedMesh;
             _meshObject.Clear();
             GenerateMesh();
-            _meshObject.vertices = _verticesObject;
-            _meshObject.normals = _normalesObject;
-            _meshObject.uv = _uvsObject;
-            _meshObject.triangles = _trianglesObject;
+            OffsetMesh();
+            _meshObject.vertices = _vertices;
+            _meshObject.normals = _normales;
+            _meshObject.uv = _uvs;
+            _meshObject.triangles = _triangles;
             _meshObject.RecalculateBounds();
+            _meshObject.Optimize();
         }
-        abstract protected void GenerateMesh(); //appelé à l'initialisation
+
+        public void OffsetMesh()
+        {
+            for (int i = 0; i < _vertices.Length; i++)
+            {
+                _vertices[i] += _offsetMesh;
+            }
+        }
+
+        abstract protected void GenerateMesh();
+        abstract protected void CalculateVerticle();
+        abstract protected void CalculateNormals();
+        abstract protected void CalculateUvs();
+        abstract protected void CalculateTriangle();
+
+        abstract public void GenerateCollider();
     }
 }
