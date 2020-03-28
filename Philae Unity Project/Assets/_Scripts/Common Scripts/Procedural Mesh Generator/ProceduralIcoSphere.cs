@@ -4,6 +4,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using TMPro;
 using System.Collections.Generic;
+using hedCommon.extension.runtime;
 
 namespace hedCommon.procedural
 {
@@ -37,7 +38,7 @@ namespace hedCommon.procedural
         /// <summary>
         /// calculate verticle
         /// </summary>
-        private void CalculateVerticle()
+        protected override void CalculateVerticle()
         {
             float t = (1f + Mathf.Sqrt(5f)) / 2f;
 
@@ -60,7 +61,7 @@ namespace hedCommon.procedural
         /// <summary>
         /// after having verticle, calculate normals of each points
         /// </summary>
-        private void CalculateNormals()
+        protected override void CalculateNormals()
         {
             //normales = ;
         }
@@ -68,7 +69,7 @@ namespace hedCommon.procedural
         /// <summary>
         /// calculate UV of each points;
         /// </summary>
-        private void CalculateUvs()
+        protected override void CalculateUvs()
         {
             //uvs = ;
         }
@@ -76,7 +77,7 @@ namespace hedCommon.procedural
         /// <summary>
         /// then save triangls of objects;
         /// </summary>
-        private void CalculateTriangle()
+        protected override void CalculateTriangle()
         {
             // create 20 triangles of the icosahedron
             List<TriangleIndices> faces = new List<TriangleIndices>();
@@ -129,7 +130,7 @@ namespace hedCommon.procedural
                 faces = faces2;
             }
 
-            _verticesObject = _vertList.ToArray();
+            _vertices = _vertList.ToArray();
 
             List<int> triList = new List<int>();
             for (int i = 0; i < faces.Count; i++)
@@ -138,8 +139,8 @@ namespace hedCommon.procedural
                 triList.Add(faces[i].v2);
                 triList.Add(faces[i].v3);
             }
-            _trianglesObject = triList.ToArray();
-            _uvsObject = new Vector2[_verticesObject.Length];
+            _triangles = triList.ToArray();
+            _uvs = new Vector2[_vertices.Length];
         }
 
         /// <summary>
@@ -185,5 +186,14 @@ namespace hedCommon.procedural
             return i;
         }
 
+        /// <summary>
+        /// fit the meshCollider to the procedural shape
+        /// </summary>
+        public override void GenerateCollider()
+        {
+            MeshCollider mesh = gameObject.GetOrAddComponent<MeshCollider>();
+            MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
+            ExtColliders.AutoSizeCollider3d(meshFilter, mesh);
+        }
     }
 }
