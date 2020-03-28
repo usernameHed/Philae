@@ -2,6 +2,7 @@
 using UnityEngine;
 
 using Sirenix.OdinInspector;
+using hedCommon.extension.runtime;
 
 namespace hedCommon.procedural
 {
@@ -41,9 +42,9 @@ namespace hedCommon.procedural
         /// <summary>
         /// calculate verticle
         /// </summary>
-        private void CalculateVerticle()
+        protected override void CalculateVerticle()
         {
-            _verticesObject = new Vector3[_resX * _resZ];    //setup size of verticle
+            _vertices = new Vector3[_resX * _resZ];    //setup size of verticle
 
             for (int z = 0; z < _resZ; z++)          //loop thought all vecticle
             {
@@ -53,7 +54,7 @@ namespace hedCommon.procedural
                 {
                     // [ -width / 2, width / 2 ]
                     float xPos = ((float)x / (_resX - 1) - .5f) * _width;
-                    _verticesObject[x + z * _resX] = new Vector3(xPos, 0f, zPos);
+                    _vertices[x + z * _resX] = new Vector3(xPos, 0f, zPos);
                 }
             }
         }
@@ -61,26 +62,26 @@ namespace hedCommon.procedural
         /// <summary>
         /// after having verticle, calculate normals of each points
         /// </summary>
-        private void CalculateNormals()
+        protected override void CalculateNormals()
         {
-            _normalesObject = new Vector3[_verticesObject.Length];
-            for (int n = 0; n < _normalesObject.Length; n++)
+            _normales = new Vector3[_vertices.Length];
+            for (int n = 0; n < _normales.Length; n++)
             {
-                _normalesObject[n] = transform.up;
+                _normales[n] = transform.up;
             }
         }
 
         /// <summary>
         /// calculate UV of each points;
         /// </summary>
-        private void CalculateUvs()
+        protected override void CalculateUvs()
         {
-            _uvsObject = new Vector2[_verticesObject.Length];
+            _uvs = new Vector2[_vertices.Length];
             for (int v = 0; v < _resZ; v++)
             {
                 for (int u = 0; u < _resX; u++)
                 {
-                    _uvsObject[u + v * _resX] = new Vector2((float)u / (_resX - 1), (float)v / (_resZ - 1));
+                    _uvs[u + v * _resX] = new Vector2((float)u / (_resX - 1), (float)v / (_resZ - 1));
                 }
             }
         }
@@ -88,24 +89,34 @@ namespace hedCommon.procedural
         /// <summary>
         /// then save triangls of objects;
         /// </summary>
-        private void CalculateTriangle()
+        protected override void CalculateTriangle()
         {
             int nbFaces = (_resX - 1) * (_resZ - 1);
-            _trianglesObject = new int[nbFaces * 6];
+            _triangles = new int[nbFaces * 6];
             int t = 0;
             for (int face = 0; face < nbFaces; face++)
             {
                 // Retrieve lower left corner from face ind
                 int i = face % (_resX - 1) + (face / (_resZ - 1) * _resX);
 
-                _trianglesObject[t++] = i + _resX;
-                _trianglesObject[t++] = i + 1;
-                _trianglesObject[t++] = i;
+                _triangles[t++] = i + _resX;
+                _triangles[t++] = i + 1;
+                _triangles[t++] = i;
 
-                _trianglesObject[t++] = i + _resX;
-                _trianglesObject[t++] = i + _resX + 1;
-                _trianglesObject[t++] = i + 1;
+                _triangles[t++] = i + _resX;
+                _triangles[t++] = i + _resX + 1;
+                _triangles[t++] = i + 1;
             }
+        }
+
+        /// <summary>
+        /// fit the meshCollider to the procedural shape
+        /// </summary>
+        public override void GenerateCollider()
+        {
+            MeshCollider mesh = gameObject.GetOrAddComponent<MeshCollider>();
+            MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
+            ExtColliders.AutoSizeCollider3d(meshFilter, mesh);
         }
     }
 }
