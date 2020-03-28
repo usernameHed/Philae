@@ -10,14 +10,13 @@ using static UnityEditor.EditorGUILayout;
 /// <summary>
 ///
 /// </summary>
-namespace ExtUnityComponents
+namespace ExtUnityComponents.collider
 {
     [CustomEditor(typeof(BoxCollider))]
     [CanEditMultipleObjects]
     public class BoxColliderEditor : DecoratorComponentsEditor
     {
-        private BoxColliderHiddedTools _boxColliderHiddedTools;
-        private FitMesh _fitMesh = new FitMesh();
+        private FitBox _fitBox = new FitBox();
 
         public BoxColliderEditor()
             : base(BUILT_IN_EDITOR_COMPONENTS.BoxColliderEditor)
@@ -30,14 +29,12 @@ namespace ExtUnityComponents
         /// </summary>
         protected override void InitOnFirstInspectorGUI()
         {
-           _boxColliderHiddedTools = ConcretTarget.GetOrAddComponent<BoxColliderHiddedTools>();
-
-            _fitMesh.Init(GetTargets<BoxCollider>(), this);
+            _fitBox.Init(GetTargets<BoxCollider>(), this);
         }
 
         protected override void OnCustomInspectorGUI()
         {
-            _fitMesh.DisplayFitMesh();
+            _fitBox.DisplayFitMesh();
         }
     }
 }

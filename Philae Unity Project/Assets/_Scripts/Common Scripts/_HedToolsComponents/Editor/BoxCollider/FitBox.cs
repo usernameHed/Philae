@@ -5,9 +5,9 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEditor.EditorGUILayout;
 
-namespace ExtUnityComponents
+namespace ExtUnityComponents.collider
 {
-    public class FitMesh
+    public class FitBox
     {
         private BoxCollider[] _currentTargets = null;
         private DecoratorComponentsEditor _currentEditor;
