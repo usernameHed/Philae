@@ -10,13 +10,13 @@ namespace hedCommon.procedural
     /// <summary>
     /// Plane Description
     /// </summary>
-    public class ProceduralSphere : Generate
+    public class ProceduralSphere : ProceduralShape
     {
-        [SerializeField, Tooltip("radius")]
+        [SerializeField, Tooltip("radius"), OnValueChanged("GenerateShape")]
         private float _radius = 1f;
-        [SerializeField, Tooltip("longitude")]
+        [SerializeField, Tooltip("longitude"), Range(2, 100), OnValueChanged("GenerateShape")]
         private int _longitude = 24;
-        [SerializeField, Tooltip("latitude")]
+        [SerializeField, Tooltip("latitude"), Range(1, 100), OnValueChanged("GenerateShape")]
         private int _latitude = 16;
 
         /// <summary>

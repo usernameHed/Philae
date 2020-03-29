@@ -7,15 +7,15 @@ using hedCommon.extension.runtime;
 namespace hedCommon.procedural
 {
     /// <summary>
-    /// Generate a Box, With a Given Size
+    /// Generate a Cube, With a Given Size
     /// </summary>
-    public class ProceduralBox : Generate
+    public class ProceduralCube : ProceduralShape
     {
-        [SerializeField]
+        [SerializeField, OnValueChanged("GenerateShape")]
         private float _length = 1f;
-        [SerializeField]
+        [SerializeField, OnValueChanged("GenerateShape")]
         private float _width = 1f;
-        [SerializeField]
+        [SerializeField, OnValueChanged("GenerateShape")]
         private float _height = 1f;
 
         /// <summary>

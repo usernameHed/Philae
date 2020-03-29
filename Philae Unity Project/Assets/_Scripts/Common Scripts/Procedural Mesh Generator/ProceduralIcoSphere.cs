@@ -11,7 +11,7 @@ namespace hedCommon.procedural
     /// <summary>
     /// Plane Description
     /// </summary>
-    public class ProceduralIcoSphere : Generate
+    public class ProceduralIcoSphere : ProceduralShape
     {
         [SerializeField]
         private float _radius = 1f;

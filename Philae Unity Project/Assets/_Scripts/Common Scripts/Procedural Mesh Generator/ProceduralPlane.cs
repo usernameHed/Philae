@@ -9,17 +9,17 @@ namespace hedCommon.procedural
     /// <summary>
     /// Generate a Plane with a given size, and resolution
     /// </summary>
-    public class ProceduralPlane : Generate
+    public class ProceduralPlane : ProceduralShape
     {
-        [SerializeField, Tooltip("Length"), OnValueChanged("GeneratePlease")]
+        [SerializeField, Tooltip("Length"), OnValueChanged("GenerateShape")]
         private float _length = 1f;
-        [SerializeField, Tooltip("width"), OnValueChanged("GeneratePlease")]
+        [SerializeField, Tooltip("width"), OnValueChanged("GenerateShape")]
         private float _width = 1f;
-        [SerializeField, Range(2, 100), OnValueChanged("GeneratePlease")]
+        [SerializeField, Range(2, 100), OnValueChanged("GenerateShape")]
         private int _resolution = 2;
 
 
-        private int _resX = 2; // 2 minimum
+        private int _resX = 2;
         private int _resZ = 2;
 
         /// <summary>

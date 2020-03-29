@@ -7,25 +7,25 @@ using hedCommon.extension.runtime;
 namespace hedCommon.procedural
 {
     /// <summary>
-    /// Plane Description
+    /// Generate a Torus
     /// </summary>
-    public class ProceduralDonut : Generate
+    public class ProceduralTorus : ProceduralShape
     {
-        [SerializeField]
-        private float radius1 = 1f;
-        [SerializeField]
-        private float radius2 = .3f;
-        [SerializeField]
-        private int nbRadSeg = 24;
-        [SerializeField]
-        private int nbSides = 18;
+        [SerializeField, OnValueChanged("GenerateShape")]
+        private float _radius = 0.5f;
+        [SerializeField, Range(0.0001f, 2), OnValueChanged("GenerateShape")]
+        private float _thickNess = .2f;
+        [SerializeField, Range(3, 100), OnValueChanged("GenerateShape")]
+        private int _nbRadSeg = 24;
+        [SerializeField, Range(3, 100), OnValueChanged("GenerateShape")]
+        private int _nbSides = 18;
 
         /// <summary>
         /// here generate the mesh...
         /// </summary>
         protected override void GenerateMesh()
         {
-            Debug.Log("generate Donut...");
+            Debug.Log("generate Torus...");
             CalculateVerticle();
             CalculateNormals();
             CalculateUvs();
@@ -37,24 +37,24 @@ namespace hedCommon.procedural
         /// </summary>
         protected override void CalculateVerticle()
         {
-            _vertices = new Vector3[(nbRadSeg + 1) * (nbSides + 1)];
+            _vertices = new Vector3[(_nbRadSeg + 1) * (_nbSides + 1)];
             float _2pi = Mathf.PI * 2f;
-            for (int seg = 0; seg <= nbRadSeg; seg++)
+            for (int seg = 0; seg <= _nbRadSeg; seg++)
             {
-                int currSeg = seg == nbRadSeg ? 0 : seg;
+                int currSeg = seg == _nbRadSeg ? 0 : seg;
 
-                float t1 = (float)currSeg / nbRadSeg * _2pi;
-                Vector3 r1 = new Vector3(Mathf.Cos(t1) * radius1, 0f, Mathf.Sin(t1) * radius1);
+                float t1 = (float)currSeg / _nbRadSeg * _2pi;
+                Vector3 r1 = new Vector3(Mathf.Cos(t1) * _radius, 0f, Mathf.Sin(t1) * _radius);
 
-                for (int side = 0; side <= nbSides; side++)
+                for (int side = 0; side <= _nbSides; side++)
                 {
-                    int currSide = side == nbSides ? 0 : side;
+                    int currSide = side == _nbSides ? 0 : side;
 
                     Vector3 normale = Vector3.Cross(r1, Vector3.up);
-                    float t2 = (float)currSide / nbSides * _2pi;
-                    Vector3 r2 = Quaternion.AngleAxis(-t1 * Mathf.Rad2Deg, Vector3.up) * new Vector3(Mathf.Sin(t2) * radius2, Mathf.Cos(t2) * radius2);
+                    float t2 = (float)currSide / _nbSides * _2pi;
+                    Vector3 r2 = Quaternion.AngleAxis(-t1 * Mathf.Rad2Deg, Vector3.up) * new Vector3(Mathf.Sin(t2) * _thickNess, Mathf.Cos(t2) * _thickNess);
 
-                    _vertices[side + seg * (nbSides + 1)] = r1 + r2;
+                    _vertices[side + seg * (_nbSides + 1)] = r1 + r2;
                 }
             }
         }
@@ -65,16 +65,16 @@ namespace hedCommon.procedural
         protected override void CalculateNormals()
         {
             _normales = new Vector3[_vertices.Length];
-            for (int seg = 0; seg <= nbRadSeg; seg++)
+            for (int seg = 0; seg <= _nbRadSeg; seg++)
             {
-                int currSeg = seg == nbRadSeg ? 0 : seg;
+                int currSeg = seg == _nbRadSeg ? 0 : seg;
 
-                float t1 = (float)currSeg / nbRadSeg * PI_2;
-                Vector3 r1 = new Vector3(Mathf.Cos(t1) * radius1, 0f, Mathf.Sin(t1) * radius1);
+                float t1 = (float)currSeg / _nbRadSeg * PI_2;
+                Vector3 r1 = new Vector3(Mathf.Cos(t1) * _radius, 0f, Mathf.Sin(t1) * _radius);
 
-                for (int side = 0; side <= nbSides; side++)
+                for (int side = 0; side <= _nbSides; side++)
                 {
-                    _normales[side + seg * (nbSides + 1)] = (_vertices[side + seg * (nbSides + 1)] - r1).normalized;
+                    _normales[side + seg * (_nbSides + 1)] = (_vertices[side + seg * (_nbSides + 1)] - r1).normalized;
                 }
             }
         }
@@ -85,11 +85,11 @@ namespace hedCommon.procedural
         protected override void CalculateUvs()
         {
             _uvs = new Vector2[_vertices.Length];
-            for (int seg = 0; seg <= nbRadSeg; seg++)
+            for (int seg = 0; seg <= _nbRadSeg; seg++)
             {
-                for (int side = 0; side <= nbSides; side++)
+                for (int side = 0; side <= _nbSides; side++)
                 {
-                    _uvs[side + seg * (nbSides + 1)] = new Vector2((float)seg / nbRadSeg, (float)side / nbSides);
+                    _uvs[side + seg * (_nbSides + 1)] = new Vector2((float)seg / _nbRadSeg, (float)side / _nbSides);
                 }
             }
         }
@@ -105,12 +105,12 @@ namespace hedCommon.procedural
             _triangles = new int[nbIndexes];
 
             int i = 0;
-            for (int seg = 0; seg <= nbRadSeg; seg++)
+            for (int seg = 0; seg <= _nbRadSeg; seg++)
             {
-                for (int side = 0; side <= nbSides - 1; side++)
+                for (int side = 0; side <= _nbSides - 1; side++)
                 {
-                    int current = side + seg * (nbSides + 1);
-                    int next = side + (seg < (nbRadSeg) ? (seg + 1) * (nbSides + 1) : 0);
+                    int current = side + seg * (_nbSides + 1);
+                    int next = side + (seg < (_nbRadSeg) ? (seg + 1) * (_nbSides + 1) : 0);
 
                     if (i < _triangles.Length - 6)
                     {

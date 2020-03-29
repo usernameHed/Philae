@@ -9,7 +9,7 @@ namespace hedCommon.procedural
     /// <summary>
     /// Plane Description
     /// </summary>
-    public class ProceduralDisc : Generate
+    public class ProceduralDisc : ProceduralShape
     {
         [SerializeField]
         protected float _radius = 0.5f;

@@ -10,24 +10,24 @@ namespace hedCommon.procedural
     /// <summary>
     /// Plane Description
     /// </summary>
-    public class ProceduralHalfSphere : Generate
+    public class ProceduralHalfSphere : ProceduralShape
     {
         [SerializeField, Tooltip("radius")]
         private float _radius = 1f;
-        [SerializeField, Tooltip("longitude"), Range(0, 30), OnValueChanged("GeneratePlease")]
-        private int _longitude = 24;
-        [SerializeField, Tooltip("longitude"), PropertyRange(0, "_longitudeEnd"), OnValueChanged("GeneratePlease")]
+        [SerializeField, Tooltip("longitude"), PropertyRange(0, "_longitudeEnd"), OnValueChanged("GenerateShape")]
         private int _longitudeStart = 0;
-        [SerializeField, Tooltip("longitude"), PropertyRange("_longitudeStart", "_longitude"), OnValueChanged("GeneratePlease")]
+        [SerializeField, Tooltip("longitude"), PropertyRange("_longitudeStart", "_longitude"), OnValueChanged("GenerateShape")]
         private int _longitudeEnd = 24;
+        [SerializeField, Tooltip("longitude"), Range(0, 30), OnValueChanged("GenerateShape")]
+        private int _longitude = 24;
 
         [Space(10)]
-        [SerializeField, Tooltip("latitude"), Range(0, 30), OnValueChanged("GeneratePlease")]
-        private int _latitude = 16;
-        [SerializeField, Tooltip("longitude"), PropertyRange(0, "_latitudeEnd"), OnValueChanged("GeneratePlease")]
+        [SerializeField, Tooltip("longitude"), PropertyRange(0, "_latitudeEnd"), OnValueChanged("GenerateShape")]
         private int _latitudeStart = 0;
-        [SerializeField, Tooltip("longitude"), PropertyRange("_latitudeStart", "_latitude"), OnValueChanged("GeneratePlease")]
+        [SerializeField, Tooltip("longitude"), PropertyRange("_latitudeStart", "_latitude"), OnValueChanged("GenerateShape")]
         private int _latitudeEnd = 16;
+        [SerializeField, Tooltip("latitude"), Range(0, 30), OnValueChanged("GenerateShape")]
+        private int _latitude = 16;
 
         /// <summary>
         /// here generate the mesh...

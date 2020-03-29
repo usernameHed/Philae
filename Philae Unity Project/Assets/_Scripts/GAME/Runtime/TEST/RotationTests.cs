@@ -17,10 +17,13 @@ namespace hedCommon.extension.runtime
 
         private void Update()
         {
-            //_pointToRotate.position = ExtRotation.RotatePointAroundAxis(_anchor.position, _pointToRotate.position, _anchor.up, _rotateAxis * TimeEditor.deltaTime);
+            _pointToRotate.position = ExtRotation.RotatePointAroundAxis(_anchor.position, _pointToRotate.position, _anchor.up, _rotateAxis * TimeEditor.deltaTime);
+
+            /*
             Vector3 vectorDirector = _pointToRotate.position - _anchor.position;
             vectorDirector = ExtRotation.RotateVectorAroundAxis(_anchor.position, vectorDirector, _anchor.up, _rotateAxis * TimeEditor.deltaTime);
             _pointToRotate.position = _anchor.position + vectorDirector;
+            */
         }
     }
 }

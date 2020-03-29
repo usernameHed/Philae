@@ -22,7 +22,7 @@ namespace hedCommon.procedural
     /// <summary>
     /// Generate Description
     /// </summary>
-    public abstract class Generate : MonoBehaviour
+    public abstract class ProceduralShape : MonoBehaviour
     {
         [SerializeField]
         protected MeshFilter _meshFilter;
@@ -30,7 +30,7 @@ namespace hedCommon.procedural
         [SerializeField]
         protected MeshRenderer _meshRenderer;
 
-        [SerializeField, OnValueChanged("GeneratePlease")]
+        [SerializeField, OnValueChanged("GenerateShape")]
         private Vector3 _offsetMesh;
         [SerializeField]
         private bool _showVertices = false;
@@ -46,7 +46,7 @@ namespace hedCommon.procedural
         /// <summary>
         /// génère le mesh
         /// </summary>
-        public void GeneratePlease()
+        public void GenerateShape()
         {
             if (_meshFilter.sharedMesh == null)
             {

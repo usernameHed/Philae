@@ -9,13 +9,13 @@ namespace hedCommon.procedural
     /// <summary>
     /// Plane Description
     /// </summary>
-    public class ProceduralCone : Generate
+    public class ProceduralCone : ProceduralShape
     {
-        [SerializeField]
+        [SerializeField, OnValueChanged("GenerateShape")]
         private float _height = 1f;
-        [SerializeField]
+        [SerializeField, Range(0.0001f, 5), OnValueChanged("GenerateShape")]
         protected float _radius = 0.5f;
-        [SerializeField]
+        [SerializeField, Range(2, 100), OnValueChanged("GenerateShape")]
         private int _sides = 18;
 
         private int nbVerticesCap;
