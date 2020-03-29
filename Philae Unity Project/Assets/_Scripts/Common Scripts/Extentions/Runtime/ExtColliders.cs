@@ -63,6 +63,11 @@ namespace hedCommon.extension.runtime
                 MeshFilter meshFilter = meshCollider.gameObject.GetComponent<MeshFilter>();
                 FitMeshCollider(meshFilter, meshCollider);
             }
+            else if (typeCollider == typeof(CapsuleCollider))
+            {
+                CapsuleCollider capsule = (CapsuleCollider)collider;
+                FitCapsuleCollider(boundMeshRenderer, capsule);
+            }
             else
             {
                 throw new System.NotImplementedException();
@@ -157,6 +162,18 @@ namespace hedCommon.extension.runtime
             sphere.radius = boundMeshRenderer.size.Maximum() / 2f;
             sphere.center = boundMeshRenderer.center;
         }
+
+        /// <summary>
+        /// from a meshRenderer, fit a CapsuleCollider on it
+        /// </summary>
+        /// <param name="meshRenderer"></param>
+        /// <param name="sphere"></param>
+        public static void FitCapsuleCollider(Bounds boundMeshRenderer, CapsuleCollider sphere)
+        {
+            sphere.radius = boundMeshRenderer.size.Maximum() / 2f;
+            sphere.center = boundMeshRenderer.center;
+        }
+
 
         /// <summary>
         /// from a meshRenderer, fit a MeshCollider on it

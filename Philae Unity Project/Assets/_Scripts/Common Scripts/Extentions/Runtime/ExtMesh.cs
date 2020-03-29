@@ -199,5 +199,24 @@ namespace hedCommon.extension.runtime
 
             m.sharedMesh.tangents = tangents;
         }
+
+        /// <summary>
+        /// from a mesh A & B, combine together the triangles index:
+        /// triangleIndex A -> vertices A
+        /// triangleIndex B -> verticeA.Lenght + vertice B
+        /// </summary>
+        /// <param name="verticesA">array of vertice of the mesh A</param>
+        /// <param name="trianglesIndexA">triangles of mesh A</param>
+        /// <param name="triangleIndexB">triangle of mesh B</param>
+        /// <returns></returns>
+        public static int[] CombineTrianglesIndexTogether(Vector3[] verticesA, int[] trianglesIndexA, int[] triangleIndexB)
+        {
+            int offset = verticesA.Length;
+            for (int i = 0; i < triangleIndexB.Length; i++)
+            {
+                triangleIndexB[i] += offset;
+            }
+            return (ExtArray.Append(trianglesIndexA, triangleIndexB));
+        }
     }
 }
