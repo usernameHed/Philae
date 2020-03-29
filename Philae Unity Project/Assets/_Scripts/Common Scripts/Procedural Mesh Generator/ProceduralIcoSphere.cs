@@ -13,9 +13,9 @@ namespace hedCommon.procedural
     /// </summary>
     public class ProceduralIcoSphere : ProceduralShape
     {
-        [SerializeField]
+        [SerializeField, OnValueChanged("GenerateShape")]
         private float _radius = 1f;
-        [SerializeField, Range(0, 3)]
+        [SerializeField, Range(0, 3), OnValueChanged("GenerateShape")]
         private int _recursionLevel = 3;
 
         private List<Vector3> _vertList = new List<Vector3>();
@@ -30,9 +30,9 @@ namespace hedCommon.procedural
         {
             Debug.Log("generate Sphere...");
             CalculateVerticle();
+            CalculateTriangle();
             CalculateNormals();
             CalculateUvs();
-            CalculateTriangle();
         }
 
         /// <summary>
@@ -63,7 +63,11 @@ namespace hedCommon.procedural
         /// </summary>
         protected override void CalculateNormals()
         {
-            //normales = ;
+            _normales = new Vector3[_vertices.Length];
+            for (int n = 0; n < _vertices.Length; n++)
+            {
+                _normales[n] = _vertices[n].normalized;
+            }
         }
 
         /// <summary>
@@ -71,7 +75,7 @@ namespace hedCommon.procedural
         /// </summary>
         protected override void CalculateUvs()
         {
-            //uvs = ;
+            _uvs = new Vector2[_vertices.Length];
         }
 
         /// <summary>
@@ -140,7 +144,6 @@ namespace hedCommon.procedural
                 triList.Add(faces[i].v3);
             }
             _triangles = triList.ToArray();
-            _uvs = new Vector2[_vertices.Length];
         }
 
         /// <summary>

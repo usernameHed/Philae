@@ -12,27 +12,27 @@ namespace hedCommon.procedural
     /// </summary>
     public class ProceduralHalfSphere : ProceduralShape
     {
-        [SerializeField, Tooltip("radius")]
+        [SerializeField, Tooltip("radius"), OnValueChanged("GenerateShape")]
         private float _radius = 1f;
-        [SerializeField, Tooltip("longitude"), PropertyRange(0, "_longitudeEnd"), OnValueChanged("GenerateShape")]
-        private int _longitudeStart = 0;
-        [SerializeField, Tooltip("longitude"), PropertyRange("_longitudeStart", "_longitude"), OnValueChanged("GenerateShape")]
-        private int _longitudeEnd = 24;
-        [SerializeField, Tooltip("longitude"), Range(0, 30), OnValueChanged("GenerateShape")]
+        [SerializeField, Tooltip("longitude"), Range(2, 100), OnValueChanged("OnLatitudesChange")]
         private int _longitude = 24;
+        [SerializeField, Tooltip("longitude"), PropertyRange(0, "_longitudeEnd"), OnValueChanged("OnLatitudesChange")]
+        private int _longitudeStart = 0;
+        [SerializeField, Tooltip("longitude"), PropertyRange("_longitudeStart", "_longitude"), OnValueChanged("OnLatitudesChange")]
+        private int _longitudeEnd = 24;
 
         [Space(10)]
-        [SerializeField, Tooltip("longitude"), PropertyRange(0, "_latitudeEnd"), OnValueChanged("GenerateShape")]
+        [SerializeField, Tooltip("latitude"), Range(1, 100), OnValueChanged("OnLatitudesChange")]
+        private int _latitude = 17;
+        [SerializeField, Tooltip("longitude"), PropertyRange(0, "_latitudeEnd"), OnValueChanged("OnLatitudesChange")]
         private int _latitudeStart = 0;
-        [SerializeField, Tooltip("longitude"), PropertyRange("_latitudeStart", "_latitude"), OnValueChanged("GenerateShape")]
-        private int _latitudeEnd = 16;
-        [SerializeField, Tooltip("latitude"), Range(0, 30), OnValueChanged("GenerateShape")]
-        private int _latitude = 16;
+        [SerializeField, Tooltip("longitude"), PropertyRange("_latitudeStart", "_latitude"), OnValueChanged("OnLatitudesChange")]
+        private int _latitudeEnd = 9;
 
         /// <summary>
-        /// here generate the mesh...
+        /// called by OnValueChanged();
         /// </summary>
-        protected override void GenerateMesh()
+        private void OnLatitudesChange()
         {
             _longitudeStart = ExtMathf.SetBetween(_longitudeStart, 0, _longitudeEnd);
             _longitudeStart = ExtMathf.SetBetween(_longitudeStart, 0, _longitude);
@@ -42,7 +42,14 @@ namespace hedCommon.procedural
             _latitudeStart = ExtMathf.SetBetween(_latitudeStart, 0, _latitude);
             _latitudeEnd = ExtMathf.SetBetween(_latitudeEnd, _latitudeStart, _latitude);
 
+            base.GenerateShape();
+        }
 
+        /// <summary>
+        /// here generate the mesh...
+        /// </summary>
+        protected override void GenerateMesh()
+        {
             Debug.Log("generate Half Sphere...");
             CalculateVerticle();
             CalculateNormals();

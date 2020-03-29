@@ -10,10 +10,15 @@ namespace hedCommon.procedural
     {
         private const string PLANE = "GameObject/3D Procedural Object/Plane";
         private const string SPHERE = "GameObject/3D Procedural Object/Sphere";
+        private const string SPHERE_HALF = "GameObject/3D Procedural Object/Sphere Half";
         private const string CONE = "GameObject/3D Procedural Object/Cone";
         private const string CYLINDER = "GameObject/3D Procedural Object/Cylinder";
         private const string CUBE = "GameObject/3D Procedural Object/Cube";
         private const string TORUS = "GameObject/3D Procedural Object/Torus";
+        private const string DISC = "GameObject/3D Procedural Object/Disc";
+        private const string PYRAMIDS = "GameObject/3D Procedural Object/Pyramids";
+        private const string ICO_SPHERE = "GameObject/3D Procedural Object/Ico Sphere";
+        private const string TUBE = "GameObject/3D Procedural Object/Tube";
 
         [MenuItem(PLANE, false, -1)]
         private static void GeneratePlane()
@@ -24,6 +29,11 @@ namespace hedCommon.procedural
         private static void GenerateSphere()
         {
             GenerateProceduralShape<ProceduralSphere>("Sphere");
+        }
+        [MenuItem(SPHERE_HALF, false, -1)]
+        private static void GenerateSphereHalf()
+        {
+            GenerateProceduralShape<ProceduralHalfSphere>("Sphere Half");
         }
         [MenuItem(CONE, false, -1)]
         private static void GenerateCone()
@@ -44,6 +54,26 @@ namespace hedCommon.procedural
         private static void GenerateTorus()
         {
             GenerateProceduralShape<ProceduralTorus>("Torus");
+        }
+        [MenuItem(DISC, false, -1)]
+        private static void GenerateDisc()
+        {
+            GenerateProceduralShape<ProceduralDisc>("Disc");
+        }
+        [MenuItem(PYRAMIDS, false, -1)]
+        private static void GeneratePyramids()
+        {
+            GenerateProceduralShape<ProceduralPyramids>("Pyramid");
+        }
+        [MenuItem(ICO_SPHERE, false, -1)]
+        private static void GenerateIcoSphere()
+        {
+            GenerateProceduralShape<ProceduralIcoSphere>("Ico Sphere");
+        }
+        [MenuItem(TUBE, false, -1)]
+        private static void GenerateTube()
+        {
+            GenerateProceduralShape<ProceduralTube>("Tube");
         }
 
         private static void GenerateProceduralShape<T>(string nameShape) where T : ProceduralShape

@@ -11,22 +11,16 @@ namespace hedCommon.procedural
     /// </summary>
     public class ProceduralDisc : ProceduralShape
     {
-        [SerializeField]
+        [SerializeField, Range(0.0001f, 10), OnValueChanged("GenerateShape")]
         protected float _radius = 0.5f;
-        [SerializeField]
+        [SerializeField, Range(3, 100), OnValueChanged("GenerateShape")]
         private int _sides = 18;
-
-        private int nbVerticesCap;
-        protected float _topRadius = 0f;
-        private const float PI_2 = Mathf.PI * 2f;
 
         /// <summary>
         /// here generate the mesh...
         /// </summary>
         protected override void GenerateMesh()
         {
-            nbVerticesCap = _sides + 1;
-
             Debug.Log("generate Disc...");
             CalculateVerticle();
             CalculateNormals();

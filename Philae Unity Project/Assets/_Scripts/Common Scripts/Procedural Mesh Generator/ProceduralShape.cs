@@ -43,6 +43,11 @@ namespace hedCommon.procedural
         protected const float PI_2 = Mathf.PI * 2f;
         protected Mesh _meshObject;
 
+        public virtual void InitOnCreation()
+        {
+
+        }
+
         /// <summary>
         /// génère le mesh
         /// </summary>
