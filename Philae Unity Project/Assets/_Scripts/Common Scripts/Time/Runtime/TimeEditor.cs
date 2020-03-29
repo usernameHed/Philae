@@ -85,6 +85,10 @@ namespace hedCommon.time
         {
             get
             {
+                if (Instance == null)
+                {
+                    return (Time.time);
+                }
                 return (Instance._currentTime);
             }
         }
