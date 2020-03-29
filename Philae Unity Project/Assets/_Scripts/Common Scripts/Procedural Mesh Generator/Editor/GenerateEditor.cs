@@ -13,10 +13,10 @@ using static UnityEditor.EditorGUILayout;
 
 namespace hedCommon.procedural
 {
-    [CustomEditor(typeof(Generate), true)]
+    [CustomEditor(typeof(ProceduralShape), true)]
     public class GenerateEditor : DecoratorComponentsEditor
     {
-        protected Generate _generate;
+        protected ProceduralShape _generate;
 
         /// <summary>
         /// here call the constructor of the CustomWrapperEditor class,
@@ -37,7 +37,7 @@ namespace hedCommon.procedural
         /// </summary>
         public override void OnCustomEnable()
         {
-            _generate = GetTarget<Generate>();
+            _generate = GetTarget<ProceduralShape>();
         }
 
         protected override void OnCustomInspectorGUI()
@@ -47,12 +47,7 @@ namespace hedCommon.procedural
             {
                 if (GUILayout.Button("Construct"))
                 {
-                    Generate();
-                    this.ApplyModification();
-                    SaveMesh();
-                    this.ApplyModification();
-                    _generate.GenerateCollider();
-                    this.ApplyModification();
+                    Construct();
                 }
                 if (GUILayout.Button("Generate"))
                 {
@@ -71,6 +66,16 @@ namespace hedCommon.procedural
                 }
 
             }
+        }
+
+        public void Construct()
+        {
+            Generate();
+            this.ApplyModification();
+            SaveMesh();
+            this.ApplyModification();
+            _generate.GenerateCollider();
+            this.ApplyModification();
         }
 
         private void SetupReference()
@@ -97,7 +102,7 @@ namespace hedCommon.procedural
         {
             SetupReference();
             this.ApplyModification();
-            _generate.GeneratePlease();
+            _generate.GenerateShape();
         }
 
         private void SaveMesh()
