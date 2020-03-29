@@ -11,27 +11,24 @@ namespace hedCommon.procedural
     /// </summary>
     public class ProceduralPlane : Generate
     {
-        [SerializeField, Tooltip("Length")]
+        [SerializeField, Tooltip("Length"), OnValueChanged("GeneratePlease")]
         private float _length = 1f;
-        [SerializeField, Tooltip("width")]
+        [SerializeField, Tooltip("width"), OnValueChanged("GeneratePlease")]
         private float _width = 1f;
-        [SerializeField, Range(2, 100), OnValueChanged("ChangeRes"), Tooltip("resX")]
+        [SerializeField, Range(2, 100), OnValueChanged("GeneratePlease")]
         private int _resolution = 2;
 
 
         private int _resX = 2; // 2 minimum
         private int _resZ = 2;
 
-        private void ChangeRes()
-        {
-            _resX = _resZ = _resolution;
-        }
-
         /// <summary>
         /// here generate the mesh...
         /// </summary>
         protected override void GenerateMesh()
         {
+            _resX = _resZ = _resolution;
+
             Debug.Log("generate plane...");
             CalculateVerticle();
             CalculateNormals();

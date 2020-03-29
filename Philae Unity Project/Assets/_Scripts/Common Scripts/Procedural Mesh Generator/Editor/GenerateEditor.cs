@@ -111,7 +111,7 @@ namespace hedCommon.procedural
             bool canShow = this.GetPropertie("_showVertices").boolValue;
             if (canShow)
             {
-                ExtMeshEditor.ShowVerticesOfMesh(_generate.transform, _generate.MeshFilter.sharedMesh, 10);
+                ExtMeshEditor.ShowVerticesOfMesh(_generate.transform, this.GetPropertie("_vertices").GetValue<Vector3[]>(), 10);
             }
         }
     }

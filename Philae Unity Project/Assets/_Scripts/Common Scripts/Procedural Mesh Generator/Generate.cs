@@ -30,11 +30,12 @@ namespace hedCommon.procedural
         [SerializeField]
         protected MeshRenderer _meshRenderer;
 
-        [SerializeField]
+        [SerializeField, OnValueChanged("GeneratePlease")]
         private Vector3 _offsetMesh;
         [SerializeField]
         private bool _showVertices = false;
 
+        [SerializeField, ReadOnly]
         protected Vector3[] _vertices;           //verticle of object
         protected Vector3[] _normales;           //normals of all verticles
         protected Vector2[] _uvs;                //uvs of points;
@@ -60,7 +61,11 @@ namespace hedCommon.procedural
             _meshObject.normals = _normales;
             _meshObject.uv = _uvs;
             _meshObject.triangles = _triangles;
-            _meshObject.RecalculateBounds();
+            _meshObject.Optimize();
+        }
+
+        public void Optimise()
+        {
             _meshObject.Optimize();
         }
 

@@ -22,7 +22,6 @@ namespace hedCommon.procedural
         private int _longitudeEnd = 24;
 
         [Space(10)]
-
         [SerializeField, Tooltip("latitude"), Range(0, 30), OnValueChanged("GeneratePlease")]
         private int _latitude = 16;
         [SerializeField, Tooltip("longitude"), PropertyRange(0, "_latitudeEnd"), OnValueChanged("GeneratePlease")]
@@ -145,8 +144,15 @@ namespace hedCommon.procedural
                 }
             }
             //Bottom Cap
-            for (int lon = _longitudeStart; lon < _longitudeEnd; lon++)
+            for (int lon = 0; lon < _longitude; lon++)
             {
+                if (_vertices[_vertices.Length - 1] == Vector3.zero
+                    || _vertices[_vertices.Length - (lon + 2) - 1] == Vector3.zero
+                    || _vertices[_vertices.Length - (lon + 1) - 1] == Vector3.zero)
+                {
+                    continue;
+                }
+
                 _triangles[i++] = _vertices.Length - 1;
                 _triangles[i++] = _vertices.Length - (lon + 2) - 1;
                 _triangles[i++] = _vertices.Length - (lon + 1) - 1;

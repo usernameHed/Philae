@@ -20,15 +20,14 @@ namespace hedCommon.extension.editor
         /// <param name="transform"></param>
         /// <param name="mesh"></param>
         /// <param name="fontSize"></param>
-        public static void ShowVerticesOfMesh(Transform transform, Mesh mesh, int fontSize)
+        public static void ShowVerticesOfMesh(Transform transform, Vector3[] vertices, int fontSize)
         {
             Matrix4x4 matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
-            List<Vector3> positions = mesh.vertices.ToList();
-            List<PositionAndIndex> points = new List<PositionAndIndex>(positions.Count);
+            List<PositionAndIndex> points = new List<PositionAndIndex>(vertices.Length);
 
-            for (int i = 0; i < positions.Count; i++)
+            for (int i = 0; i < vertices.Length; i++)
             {
-                points.Add(new PositionAndIndex() { Position = positions[i], Index = i });
+                points.Add(new PositionAndIndex() { Position = vertices[i], Index = i });
             }
             for (int i = points.Count - 1; i >= 0; i--)
             {
