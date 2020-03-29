@@ -7,6 +7,10 @@ namespace hedCommon.extension.runtime
     public static class ExtRotation
     {
         /// <summary>
+        /// Rotate a Point around an axis
+        /// usage:
+        /// Vector3 position = ExtRotation.RotatePointAroundAxis(pivotPosition, pointToRotate, pivotUp, _rotateAxis * TimeEditor.deltaTime);
+        /// 
         /// for a given A, R, U, rotation(x, y, z):
         /// 
         /// 
@@ -31,57 +35,24 @@ namespace hedCommon.extension.runtime
         public static Vector3 RotatePointAroundAxis(Vector3 pivotPoint, Vector3 pointToRotate, Vector3 upNormalized, Vector3 rotationAxis)
         {
             Vector3 vectorDirector = pointToRotate - pivotPoint;                                       //get the vector director
-            Quaternion constrainRotation = TurretLookRotation(vectorDirector, upNormalized);            //constrain rotation from up !!
-
-            //create a TRS matrix from point & rotation
-            Matrix4x4 rotationMatrix = Matrix4x4.TRS(pivotPoint, constrainRotation, Vector3.one);
-
-            Vector3 projectedForward = ExtVector3.ProjectAOnB(vectorDirector, rotationMatrix.ForwardFast());
-            Vector3 projectedUp = ExtVector3.ProjectAOnB(vectorDirector, upNormalized);
-            float distanceForward = projectedForward.magnitude;
-            float distanceUp = projectedUp.magnitude;
-
-            if (ExtVector3.DotProduct(upNormalized, vectorDirector) < 0)
-            {
-                distanceUp *= -1;
-            }
-
-            //display [Pic 1] axis
-            Debug.DrawLine(pivotPoint, pointToRotate, new Color(1, 1, 1, 0.5f), 1.5f);
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, upNormalized, new Color(0, 1, 0, 0.2f));
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.ForwardFast(), new Color(0, 0, 1, 0.2f));
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.RightFast(), new Color(1, 0, 0, 0.2f));
-
-
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, projectedForward, new Color(1, 0.92f, 0.016f, 0.2f), 0.15f);
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint + projectedForward, projectedUp, new Color(1, 0.92f, 0.016f, 0.2f), 0.15f);
-
-            //rotate matrix in x, y & z
-            rotationMatrix = Matrix4x4.TRS(pivotPoint, constrainRotation * Quaternion.Euler(rotationAxis), Vector3.one);
-            Vector3 finalPoint = rotationMatrix.MultiplyPoint3x4(new Vector3(0, distanceUp, distanceForward));
-
-            Debug.DrawLine(pivotPoint, finalPoint, Color.green);
-            ExtDrawGuizmos.DebugWireSphere(finalPoint, Color.green, 0.1f);
-
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.ForwardFast() * distanceForward, Color.yellow, 0.15f);
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint + rotationMatrix.ForwardFast() * distanceForward, projectedUp, Color.yellow, 0.15f);
-
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, upNormalized, Color.green);
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.ForwardFast(), Color.blue);
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.RightFast(), Color.red);
-
-            ExtDrawGuizmos.DebugWireSphere(finalPoint, Color.green, 0.01f, 1.5f);
-
+            Vector3 finalPoint = RotateWithMatrix(pivotPoint, vectorDirector, upNormalized, rotationAxis);
             return (finalPoint);
         }
 
         /// <summary>
-        /// save as rotate point around axis
+        /// Rotate a vectorDirector around an axis
+        /// usage:
+        /// Vector3 vectorDirector = ExtRotation.RotateVectorAroundAxis(pivotPoint, vectorDirector, pivotUp, _rotateAxis * TimeEditor.deltaTime);
         /// </summary>
         public static Vector3 RotateVectorAroundAxis(Vector3 pivotPoint, Vector3 vectorDirector, Vector3 upNormalized, Vector3 rotationAxis)
         {
-            Quaternion constrainRotation = TurretLookRotation(vectorDirector, upNormalized);            //constrain rotation from up !!
+            Vector3 finalPoint = RotateWithMatrix(pivotPoint, vectorDirector, upNormalized, rotationAxis);
+            return (finalPoint - pivotPoint);
+        }
 
+        private static Vector3 RotateWithMatrix(Vector3 pivotPoint, Vector3 vectorDirector, Vector3 upNormalized, Vector3 rotationAxis)
+        {
+            Quaternion constrainRotation = TurretLookRotation(vectorDirector, upNormalized);            //constrain rotation from up !!
             //create a TRS matrix from point & rotation
             Matrix4x4 rotationMatrix = Matrix4x4.TRS(pivotPoint, constrainRotation, Vector3.one);
 
@@ -120,8 +91,7 @@ namespace hedCommon.extension.runtime
             ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.RightFast(), Color.red);
 
             ExtDrawGuizmos.DebugWireSphere(finalPoint, Color.green, 0.01f, 1.5f);
-
-            return (finalPoint - pivotPoint);
+            return finalPoint;
         }
 
         public static Quaternion RotateVectorDirectorFromAxis(Vector3 vectorDirector, Vector3 upNormalized, Vector3 rotationAxis)
