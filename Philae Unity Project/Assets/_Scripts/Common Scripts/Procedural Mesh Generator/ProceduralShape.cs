@@ -34,9 +34,12 @@ namespace hedCommon.procedural
         private Vector3 _offsetMesh;
         [SerializeField]
         private bool _showVertices = false;
+        [SerializeField]
+        private bool _showNormals = false;
 
         [SerializeField, ReadOnly]
         protected Vector3[] _vertices;           //verticle of object
+        [SerializeField, ReadOnly]
         protected Vector3[] _normales;           //normals of all verticles
         protected Vector2[] _uvs;                //uvs of points;
         protected int[] _triangles;              //then save triangle of objects

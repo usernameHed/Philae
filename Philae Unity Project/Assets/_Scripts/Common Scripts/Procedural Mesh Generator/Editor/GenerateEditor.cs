@@ -113,10 +113,15 @@ namespace hedCommon.procedural
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
-            bool canShow = this.GetPropertie("_showVertices").boolValue;
-            if (canShow)
+            bool canShowVertices = this.GetPropertie("_showVertices").boolValue;
+            if (canShowVertices)
             {
                 ExtMeshEditor.ShowVerticesOfMesh(_generate.transform, this.GetPropertie("_vertices").GetValue<Vector3[]>(), 10);
+            }
+            bool canShowNormal = this.GetPropertie("_showNormals").boolValue;
+            if (canShowNormal)
+            {
+                ExtMeshEditor.ShowNormals(_generate.transform, this.GetPropertie("_normales").GetValue<Vector3[]>(), this.GetPropertie("_vertices").GetValue<Vector3[]>(), Color.yellow);
             }
         }
     }

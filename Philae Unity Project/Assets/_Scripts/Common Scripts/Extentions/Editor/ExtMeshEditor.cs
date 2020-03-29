@@ -14,6 +14,18 @@ namespace hedCommon.extension.editor
             public int Index;
         }
 
+        public static void ShowNormals(Transform transform, Vector3[] normals, Vector3[] vertices, Color color)
+        {
+            Gizmos.color = color;
+            Matrix4x4 matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                Vector3 realPosition = matrix.MultiplyPoint3x4(vertices[i]);
+                Vector3 normal = matrix.MultiplyVector(normals[i]);
+                Debug.DrawRay(realPosition, normal * 0.1f, color);
+            }
+        }
+
         /// <summary>
         /// the big problem is: don't show 2 or 3 vertice at the same position...
         /// </summary>

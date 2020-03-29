@@ -12,11 +12,13 @@ namespace hedCommon.procedural
     public class ProceduralCapsule : ProceduralShape
     {
         [SerializeField, OnValueChanged("GenerateShape")]
-        private float _height = 1f;
+        private float _height = 1f;        
         [SerializeField, Range(0.0001f, 5), OnValueChanged("GenerateShape")]
         protected float _radius = 0.5f;
         [SerializeField, Range(2, 100), OnValueChanged("GenerateShape")]
-        private int _sides = 18;
+        private int _nbSides = 18;
+        [SerializeField, OnValueChanged("GenerateShape")]
+        private int _latitude = 20;
 
         private int nbVerticesCap;
         protected float _topRadius = 0.5f;
@@ -27,9 +29,9 @@ namespace hedCommon.procedural
         protected override void GenerateMesh()
         {
             _topRadius = _radius;
-            nbVerticesCap = _sides + 1;
+            nbVerticesCap = _nbSides + 1;
 
-            Debug.Log("generate Cone...");
+            Debug.Log("generate Capsule...");
             CalculateVerticle();
             CalculateNormals();
             CalculateUvs();
@@ -41,22 +43,61 @@ namespace hedCommon.procedural
         /// </summary>
         protected override void CalculateVerticle()
         {
-            //sides + top
-            _vertices = new Vector3[_sides * 2];
+            //sides + top + Bottom
+            int capsule = _nbSides * 2;
+            int sphere = (_nbSides + 1) * _latitude + 2;
+            _vertices = new Vector3[capsule + sphere];
             int vert = 0;
 
             // Sides
             int v = 0;
-            while (vert <= _vertices.Length - 2)
+            while (vert <= capsule - 2)
             {
-                float rad = (float)v / _sides * PI_2;
+                float rad = (float)v / _nbSides * PI_2;
                 _vertices[vert] = new Vector3(Mathf.Cos(rad) * _topRadius, _height, Mathf.Sin(rad) * _topRadius);
                 _vertices[vert + 1] = new Vector3(Mathf.Cos(rad) * _radius, 0, Mathf.Sin(rad) * _radius);
                 vert += 2;
                 v++;
             }
-            //_vertices[vert] = _vertices[_sides * 2 + 2];
-            //_vertices[vert + 1] = _vertices[_sides * 2 + 3];
+
+            int middleLatitude = _latitude / 2;
+
+            //up
+            _vertices[vert] = Vector3.up * _radius;
+            for (int lat = 0; lat < middleLatitude; lat++)
+            {
+                float a1 = Mathf.PI * (float)(lat + 1) / (_latitude + 1);
+                float sin1 = Mathf.Sin(a1);
+                float cos1 = Mathf.Cos(a1);
+
+                for (int lon = 0; lon <= _nbSides; lon++)
+                {
+                    float a2 = PI_2 * (float)(lon == _nbSides ? 0 : lon) / _nbSides;
+                    float sin2 = Mathf.Sin(a2);
+                    float cos2 = Mathf.Cos(a2);
+
+                    _vertices[vert + lon + lat * (_nbSides + 1) + 1] = new Vector3(sin1 * cos2, cos1, sin1 * sin2) * _radius + new Vector3(0, _height, 0);
+                }
+            }
+
+            //down
+            for (int lat = middleLatitude; lat < _latitude; lat++)
+            {
+                float a1 = Mathf.PI * (float)(lat + 1) / (_latitude + 1);
+                float sin1 = Mathf.Sin(a1);
+                float cos1 = Mathf.Cos(a1);
+
+                for (int lon = 0; lon <= _nbSides; lon++)
+                {
+                    float a2 = PI_2 * (float)(lon == _nbSides ? 0 : lon) / _nbSides;
+                    float sin2 = Mathf.Sin(a2);
+                    float cos2 = Mathf.Cos(a2);
+
+                    _vertices[vert + lon + lat * (_nbSides + 1) + 1] = new Vector3(sin1 * cos2, cos1, sin1 * sin2) * _radius;
+                }
+            }
+
+            _vertices[vert + sphere - 1] = Vector3.up * -_radius;
         }
 
         /// <summary>
@@ -64,15 +105,18 @@ namespace hedCommon.procedural
         /// </summary>
         protected override void CalculateNormals()
         {
+            int capsule = _nbSides * 2;
+            int sphere = (_nbSides + 1) * _latitude + 2;
+
             // bottom + top + sides
             _normales = new Vector3[_vertices.Length];
             int vert = 0;
 
             // Sides
             int v = 0;
-            while (vert <= _vertices.Length - 2)
+            while (vert <= capsule - 2)
             {
-                float rad = (float)v / _sides * PI_2;
+                float rad = (float)v / _nbSides * PI_2;
                 float cos = Mathf.Cos(rad);
                 float sin = Mathf.Sin(rad);
 
@@ -82,8 +126,44 @@ namespace hedCommon.procedural
                 vert += 2;
                 v++;
             }
-            //_normales[vert] = _normales[_sides * 2 + 2];
-            //_normales[vert + 1] = _normales[_sides * 2 + 3];
+
+            int middleLatitude = _latitude / 2;
+
+            //top
+            for (int lat = 0; lat < middleLatitude; lat++)
+            {
+                float a1 = Mathf.PI * (float)(lat + 1) / (_latitude + 1);
+                float sin1 = Mathf.Sin(a1);
+                float cos1 = Mathf.Cos(a1);
+
+                for (int lon = 0; lon <= _nbSides; lon++)
+                {
+                    float a2 = PI_2 * (float)(lon == _nbSides ? 0 : lon) / _nbSides;
+                    float sin2 = Mathf.Sin(a2);
+                    float cos2 = Mathf.Cos(a2);
+
+                    int indexVertice = vert + lon + lat * (_nbSides + 1) + 1;
+                    _normales[indexVertice] = (_vertices[indexVertice] - new Vector3(0, _height, 0)).normalized;
+                }
+            }
+
+            //down
+            for (int lat = middleLatitude; lat < _latitude; lat++)
+            {
+                float a1 = Mathf.PI * (float)(lat + 1) / (_latitude + 1);
+                float sin1 = Mathf.Sin(a1);
+                float cos1 = Mathf.Cos(a1);
+
+                for (int lon = 0; lon <= _nbSides; lon++)
+                {
+                    float a2 = PI_2 * (float)(lon == _nbSides ? 0 : lon) / _nbSides;
+                    float sin2 = Mathf.Sin(a2);
+                    float cos2 = Mathf.Cos(a2);
+
+                    int indexVertice = vert + lon + lat * (_nbSides + 1) + 1;
+                    _normales[indexVertice] = (_vertices[indexVertice]).normalized;
+                }
+            }
         }
 
         /// <summary>
@@ -91,14 +171,17 @@ namespace hedCommon.procedural
         /// </summary>
         protected override void CalculateUvs()
         {
+            int capsule = _nbSides * 2;
+            int sphere = (_nbSides + 1) * _latitude + 2;
+
             _uvs = new Vector2[_vertices.Length];
 
             int u = 0;
             // Sides
             int u_sides = 0;
-            while (u <= _uvs.Length - 4)
+            while (u <= capsule - 4)
             {
-                float t = (float)u_sides / _sides;
+                float t = (float)u_sides / _nbSides;
                 _uvs[u] = new Vector3(t, 1f);
                 _uvs[u + 1] = new Vector3(t, 0f);
                 u += 2;
@@ -106,6 +189,19 @@ namespace hedCommon.procedural
             }
             _uvs[u] = new Vector2(1f, 1f);
             _uvs[u + 1] = new Vector2(1f, 0f);
+
+            /*
+            //top
+            _uvs[0] = Vector2.up;
+            _uvs[_uvs.Length - 1] = Vector2.zero;
+            for (int lat = _latitudeStart; lat < _latitudeEnd; lat++)
+            {
+                for (int lon = _longitudeStart; lon <= _longitudeEnd; lon++)
+                {
+                    _uvs[lon + lat * (_longitude + 1) + 1] = new Vector2((float)lon / _longitude, 1f - (float)(lat + 1) / (_latitude + 1));
+                }
+            }
+            */
         }
 
         /// <summary>
@@ -113,7 +209,7 @@ namespace hedCommon.procedural
         /// </summary>
         protected override void CalculateTriangle()
         {
-            int nbTriangles = (_sides * 2);
+            int nbTriangles = (_nbSides * 2);
             _triangles = new int[nbTriangles * 3];
 
             int tri = 0;

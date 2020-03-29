@@ -63,19 +63,17 @@ namespace hedCommon.procedural
         protected override void CalculateVerticle()
         {
             _vertices = new Vector3[(_longitude + 1) * _latitude + 2];
-            float _pi = Mathf.PI;
-            float _2pi = _pi * 2f;
 
             _vertices[0] = Vector3.up * _radius;
             for (int lat = _latitudeStart; lat < _latitudeEnd; lat++)
             {
-                float a1 = _pi * (float)(lat + 1) / (_latitude + 1);
+                float a1 = Mathf.PI * (float)(lat + 1) / (_latitude + 1);
                 float sin1 = Mathf.Sin(a1);
                 float cos1 = Mathf.Cos(a1);
 
                 for (int lon = _longitudeStart; lon <= _longitudeEnd; lon++)
                 {
-                    float a2 = _2pi * (float)(lon == _longitude ? 0 : lon) / _longitude;
+                    float a2 = PI_2 * (float)(lon == _longitude ? 0 : lon) / _longitude;
                     float sin2 = Mathf.Sin(a2);
                     float cos2 = Mathf.Cos(a2);
 
