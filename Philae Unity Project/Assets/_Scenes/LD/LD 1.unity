@@ -367,7 +367,7 @@ PrefabInstance:
     - target: {fileID: 5381812841277033426, guid: dff26ffecf9413e4a8204af007984adb,
         type: 3}
       propertyPath: _capsule._topSphere.Position.x
-      value: -100
+      value: -120
       objectReference: {fileID: 0}
     - target: {fileID: 5381812841277033426, guid: dff26ffecf9413e4a8204af007984adb,
         type: 3}
@@ -382,7 +382,7 @@ PrefabInstance:
     - target: {fileID: 5381812841277033426, guid: dff26ffecf9413e4a8204af007984adb,
         type: 3}
       propertyPath: _capsule._bottomSphere.Position.x
-      value: -100
+      value: -120
       objectReference: {fileID: 0}
     - target: {fileID: 5381812841277033426, guid: dff26ffecf9413e4a8204af007984adb,
         type: 3}
@@ -397,7 +397,7 @@ PrefabInstance:
     - target: {fileID: 5381812841277033426, guid: dff26ffecf9413e4a8204af007984adb,
         type: 3}
       propertyPath: _capsule._capsuleMatrix.e03
-      value: -100
+      value: -120
       objectReference: {fileID: 0}
     - target: {fileID: 5381812841277033426, guid: dff26ffecf9413e4a8204af007984adb,
         type: 3}
@@ -412,7 +412,7 @@ PrefabInstance:
     - target: {fileID: 5381812841277033426, guid: dff26ffecf9413e4a8204af007984adb,
         type: 3}
       propertyPath: _capsule._p1.x
-      value: -100
+      value: -120
       objectReference: {fileID: 0}
     - target: {fileID: 5381812841277033426, guid: dff26ffecf9413e4a8204af007984adb,
         type: 3}
@@ -427,7 +427,7 @@ PrefabInstance:
     - target: {fileID: 5381812841277033426, guid: dff26ffecf9413e4a8204af007984adb,
         type: 3}
       propertyPath: _capsule._p2.x
-      value: -100
+      value: -120
       objectReference: {fileID: 0}
     - target: {fileID: 5381812841277033426, guid: dff26ffecf9413e4a8204af007984adb,
         type: 3}
@@ -6266,26 +6266,32 @@ MonoBehaviour:
   _showVertices: 0
   _vertices:
   - {x: 0, y: 0, z: 0}
-  - {x: 0.4698463, y: 0, z: 0.17101008}
-  - {x: 0.38302222, y: 0, z: 0.32139382}
+  - {x: 0.4829629, y: 0, z: 0.12940952}
+  - {x: 0.4330127, y: 0, z: 0.25}
+  - {x: 0.35355338, y: 0, z: 0.35355338}
   - {x: 0.24999999, y: 0, z: 0.43301272}
-  - {x: 0.08682405, y: 0, z: 0.4924039}
-  - {x: -0.0868241, y: 0, z: 0.49240386}
+  - {x: 0.12940954, y: 0, z: 0.4829629}
+  - {x: -0.000000021855694, y: 0, z: 0.5}
+  - {x: -0.12940958, y: 0, z: 0.4829629}
   - {x: -0.25000003, y: 0, z: 0.4330127}
-  - {x: -0.38302222, y: 0, z: 0.32139382}
-  - {x: -0.46984634, y: 0, z: 0.17101}
+  - {x: -0.35355338, y: 0, z: 0.35355338}
+  - {x: -0.4330127, y: 0, z: 0.25000003}
+  - {x: -0.48296294, y: 0, z: 0.12940946}
   - {x: -0.5, y: 0, z: -0.00000004371139}
-  - {x: -0.4698463, y: 0, z: -0.17101008}
-  - {x: -0.38302216, y: 0, z: -0.32139388}
+  - {x: -0.4829629, y: 0, z: -0.12940954}
+  - {x: -0.43301263, y: 0, z: -0.2500001}
+  - {x: -0.35355332, y: 0, z: -0.35355344}
   - {x: -0.24999996, y: 0, z: -0.43301272}
-  - {x: -0.08682407, y: 0, z: -0.4924039}
-  - {x: 0.086824074, y: 0, z: -0.49240386}
+  - {x: -0.12940949, y: 0, z: -0.48296294}
+  - {x: 0.0000000059624403, y: 0, z: -0.5}
+  - {x: 0.1294095, y: 0, z: -0.4829629}
   - {x: 0.24999996, y: 0, z: -0.43301272}
-  - {x: 0.3830223, y: 0, z: -0.3213937}
-  - {x: 0.46984634, y: 0, z: -0.17100996}
+  - {x: 0.3535535, y: 0, z: -0.35355327}
+  - {x: 0.43301278, y: 0, z: -0.24999988}
+  - {x: 0.48296294, y: 0, z: -0.12940942}
   - {x: 0.5, y: 0, z: 0.00000008742278}
   _radius: 0.5
-  _sides: 18
+  _sides: 24
 --- !u!1001 &2118636412
 PrefabInstance:
   m_ObjectHideFlags: 0

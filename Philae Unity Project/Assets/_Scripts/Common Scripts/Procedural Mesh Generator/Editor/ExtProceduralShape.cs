@@ -13,6 +13,8 @@ namespace hedCommon.procedural
         private const string SPHERE_HALF = "GameObject/3D Procedural Object/Sphere Half";
         private const string CONE = "GameObject/3D Procedural Object/Cone";
         private const string CYLINDER = "GameObject/3D Procedural Object/Cylinder";
+        private const string CAPSULE = "GameObject/3D Procedural Object/Capsule";
+        private const string CAPSULE_HALF = "GameObject/3D Procedural Object/Capsule Half";
         private const string CUBE = "GameObject/3D Procedural Object/Cube";
         private const string TORUS = "GameObject/3D Procedural Object/Torus";
         private const string DISC = "GameObject/3D Procedural Object/Disc";
@@ -44,6 +46,16 @@ namespace hedCommon.procedural
         private static void GenerateCylinder()
         {
             GenerateProceduralShape<ProceduralCylinder>("Cylinder");
+        }
+        [MenuItem(CAPSULE, false, -1)]
+        private static void GenerateCapsule()
+        {
+            GenerateProceduralShape<ProceduralCapsule>("Capsule");
+        }
+        [MenuItem(CAPSULE_HALF, false, -1)]
+        private static void GenerateCapsuleHalf()
+        {
+            GenerateProceduralShape<ProceduralCapsule>("Capsule Half");
         }
         [MenuItem(CUBE, false, -1)]
         private static void GenerateCube()
