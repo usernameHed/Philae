@@ -167,11 +167,25 @@ namespace hedCommon.extension.runtime
         /// from a meshRenderer, fit a CapsuleCollider on it
         /// </summary>
         /// <param name="meshRenderer"></param>
-        /// <param name="sphere"></param>
-        public static void FitCapsuleCollider(Bounds boundMeshRenderer, CapsuleCollider sphere)
+        /// <param name="capsule"></param>
+        public static void FitCapsuleCollider(Bounds boundMeshRenderer, CapsuleCollider capsule)
         {
-            sphere.radius = boundMeshRenderer.size.Maximum() / 2f;
-            sphere.center = boundMeshRenderer.center;
+            if (boundMeshRenderer.size.x > boundMeshRenderer.size.y && boundMeshRenderer.size.x > boundMeshRenderer.size.z)
+            {
+                capsule.direction = 0;
+            }
+            else if (boundMeshRenderer.size.z > boundMeshRenderer.size.x && boundMeshRenderer.size.z > boundMeshRenderer.size.y)
+            {
+                capsule.direction = 2;
+            }
+            else
+            {
+                capsule.direction = 1;
+            }
+            capsule.center = boundMeshRenderer.center;
+
+            capsule.radius = boundMeshRenderer.size.x / 2;
+            capsule.height = boundMeshRenderer.size.y;
         }
 
 
