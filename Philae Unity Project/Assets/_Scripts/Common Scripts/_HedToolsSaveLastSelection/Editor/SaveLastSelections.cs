@@ -103,7 +103,7 @@ namespace hedCommon.saveLastSelection
             return (false);
         }
 
-        public void DisplayButton()
+        public void DisplaySelectionsButtons()
         {
             if (_saveLastSelectionsEditorWindow == null)
             {
@@ -115,7 +115,7 @@ namespace hedCommon.saveLastSelection
                 _saveLastSelectionsEditorWindow.CurrentIndex = _saveLastSelectionsEditorWindow.SelectedObjects.Count - 1;
             }
 
-            if (GUILayout.Button("..."))
+            if (GUILayout.Button("...", ExtGUIStyles.microButton))
             {
                 ExtEditorWindow.OpenEditorWindow(ExtEditorWindow.AllNameAssemblyKnown.SceneView, out Type animationWindowType);
 
@@ -131,13 +131,13 @@ namespace hedCommon.saveLastSelection
             EditorGUI.BeginDisabledGroup(_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0);
             {
                 bool isScrollingDown = ExtEventEditor.IsScrollingDown(Event.current, out float delta);
-                if (GUILayout.Button("<") || isScrollingDown)
+                if (GUILayout.Button("<", ExtGUIStyles.microButton) || isScrollingDown)
                 {
                     AddToIndex(-1);
                     ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjects[_saveLastSelectionsEditorWindow.CurrentIndex]);
                 }
                 bool isScrollingUp = ExtEventEditor.IsScrollingUp(Event.current, out delta);
-                if (GUILayout.Button(">") || isScrollingUp)
+                if (GUILayout.Button(">", ExtGUIStyles.microButton) || isScrollingUp)
                 {
                     AddToIndex(1);
                     ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjects[_saveLastSelectionsEditorWindow.CurrentIndex]);
@@ -152,6 +152,8 @@ namespace hedCommon.saveLastSelection
                 }
             }
             EditorGUI.EndDisabledGroup();
+
+            GUILayout.FlexibleSpace();
         }
 
         private void AddNewSelection(UnityEngine.Object currentSelectedObject)

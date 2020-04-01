@@ -1,4 +1,5 @@
 ﻿using hedCommon.extension.runtime;
+using UnityEditor;
 using UnityEngine;
 
 namespace hedCommon.extension.editor
@@ -11,6 +12,7 @@ namespace hedCommon.extension.editor
         public static readonly GUIStyle box;
         public static readonly GUIStyle miniBox;
         public static readonly GUIStyle miniText;
+        public static readonly GUIStyle microButton;
 
 
         static ExtGUIStyles()
@@ -49,6 +51,9 @@ namespace hedCommon.extension.editor
             helpBox = new GUIStyle("helpBox");
             helpBox.normal.background = ExtTexture.GetTexture2D("box");
             helpBox.wordWrap = true;
+
+            microButton = EditorStyles.miniButton;
+            microButton.fontSize = 9;
         }
     }
 }

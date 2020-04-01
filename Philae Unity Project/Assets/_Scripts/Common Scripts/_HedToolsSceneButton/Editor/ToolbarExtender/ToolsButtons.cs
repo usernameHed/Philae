@@ -20,9 +20,8 @@ namespace hedCommon.toolbarExtent
             _timeScaleSlider.Init();
             _customSceneButtons.InitTextures();
 
-            ToolbarExtender.LeftToolbarGUI.Add(_saveLastSelections.DisplayButton);
-            ToolbarExtender.LeftToolbarGUI.Add(_customSceneButtons.OnLeftToolbarGUI);
-            ToolbarExtender.RightToolbarGUI.Add(_customSceneButtons.OnRightToolbarGUI);
+            ToolbarExtender.LeftToolbarGUI.Add(_saveLastSelections.DisplaySelectionsButtons);
+            ToolbarExtender.LeftToolbarGUI.Add(_customSceneButtons.DisplayScenesButton);
             ToolbarExtender.RightToolbarGUI.Add(_timeScaleSlider.DisplaySlider);
         }
     }

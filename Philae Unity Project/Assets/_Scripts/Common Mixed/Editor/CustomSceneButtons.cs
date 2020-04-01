@@ -8,11 +8,16 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using static UnityEditor.EditorGUILayout;
 
 namespace hedCommon.mixed
 {
     public class CustomSceneButtons
     {
+        private const int _heightText = 8;
+        private const int _widthButtons = 17;
+        private const int _heightButtons = 14;
+
         private Texture _wheelTexture;
         private Texture _viperTexture;
         private RefGamesAsset _refGameAsset;
@@ -29,6 +34,11 @@ namespace hedCommon.mixed
 
         public void OnLeftToolbarGUI()
         {
+            
+        }
+
+        public void DisplayScenesButton()
+        {
             if (_refGameAsset == null)
             {
                 _refGameAsset = ExtFind.GetAssetByGenericType<RefGamesAsset>();
@@ -38,44 +48,39 @@ namespace hedCommon.mixed
                     return;
                 }
             }
-            //ExtReflection.ClearConsole();
 
             GUILayout.FlexibleSpace();
 
-            if (ExtGUIButtons.ButtonImage("pin"))
+            using (VerticalScope vertical = new VerticalScope())
             {
-                ExtSelection.PingAndSelect(_refGameAsset);
-            }
-
-            GUILayout.Label("", GUILayout.Width(5));
-
-            int currentLoaded = _refGameAsset.LastIndexUsed;
-            for (int i = 0; i < _refGameAsset.CountSceneToLoad; i++)
-            {
-                GUILayout.Label("", GUILayout.Width(5));
-                bool currentLoadedScene = currentLoaded == i;
-                string levelIndex = (i + 1).ToString();
-                currentLoadedScene = GUILayout.Toggle(currentLoadedScene, new GUIContent(levelIndex, "Load all scenes inside the level " + levelIndex), EditorStyles.miniButton, GUILayout.Width(30), GUILayout.Height(25));
-                if (currentLoadedScene != (currentLoaded == i))
+                GUILayout.Label("Scenes", ExtGUIStyles.miniText, GUILayout.Height(_heightText));
+                using (HorizontalScope horizontal = new HorizontalScope())
                 {
-                    if (!Application.isPlaying)
+                    if (ExtGUIButtons.ButtonImage("pin", "Show where scenes are listed", ExtGUIStyles.microButton, GUILayout.Width(_widthButtons), GUILayout.Height(_heightButtons)))
                     {
-                        if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+                        ExtSelection.PingAndSelect(_refGameAsset);
+                    }
+                    int currentLoaded = _refGameAsset.LastIndexUsed;
+                    for (int i = 0; i < _refGameAsset.CountSceneToLoad; i++)
+                    {
+                        bool currentLoadedScene = currentLoaded == i;
+                        string levelIndex = (i + 1).ToString();
+                        currentLoadedScene = GUILayout.Toggle(currentLoadedScene, new GUIContent(levelIndex, "Load all scenes inside the level " + levelIndex), ExtGUIStyles.microButton, GUILayout.Width(_widthButtons), GUILayout.Height(_heightButtons));
+                        if (currentLoadedScene != (currentLoaded == i))
                         {
-                            return;
+                            if (!Application.isPlaying)
+                            {
+                                if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+                                {
+                                    return;
+                                }
+                            }
+                            _refGameAsset.LastIndexUsed = i;
+                            CurrentEditorGlobal.LoadSceneByIndex(i);
                         }
                     }
-                    _refGameAsset.LastIndexUsed = i;
-                    CurrentEditorGlobal.LoadSceneByIndex(i);
                 }
             }
-            
-            
-            GUILayout.Label("", GUILayout.Width(30));
-        }
-
-        public void OnRightToolbarGUI()
-        {
             GUILayout.FlexibleSpace();
         }
     }

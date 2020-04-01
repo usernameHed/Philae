@@ -25,6 +25,7 @@ namespace hedCommon.toolbarExtent
 
         public void DisplaySlider()
         {
+            GUILayout.FlexibleSpace();
             using (VerticalScope vertical = new VerticalScope())
             {
                 GUILayout.Label("timeScale", ExtGUIStyles.miniText, GUILayout.Height(_heightText));
