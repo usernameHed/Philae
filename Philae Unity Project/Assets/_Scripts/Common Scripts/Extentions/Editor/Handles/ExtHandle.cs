@@ -77,7 +77,7 @@ namespace hedCommon.extension.editor
             if (newPosition != toMove.position)
             {
                 hasChanged = true;
-                if (EditorOptions.Instance.Snap != 0 && Event.current.shift)
+                if (EditorOptions.Instance != null && EditorOptions.Instance.Snap != 0 && Event.current.shift)
                 {
                     newPosition = new Vector3(
                         RoundToGrid(newPosition.x),
@@ -101,7 +101,7 @@ namespace hedCommon.extension.editor
             if (newPosition != toMove.ExtractPosition())
             {
                 hasChanged = true;
-                if (EditorOptions.Instance.Snap != 0 && Event.current.shift)
+                if (EditorOptions.Instance != null && EditorOptions.Instance.Snap != 0 && Event.current.shift)
                 {
                     newPosition = new Vector3(
                         RoundToGrid(newPosition.x),
@@ -121,7 +121,7 @@ namespace hedCommon.extension.editor
             if (newPosition != toMove)
             {
                 hasChanged = true;
-                if (EditorOptions.Instance.Snap != 0 && Event.current.shift)
+                if (EditorOptions.Instance != null && EditorOptions.Instance.Snap != 0 && Event.current.shift)
                 {
                     newPosition = new Vector3(
                         RoundToGrid(newPosition.x),

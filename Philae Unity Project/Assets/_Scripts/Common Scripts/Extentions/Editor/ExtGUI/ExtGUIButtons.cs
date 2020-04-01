@@ -120,11 +120,11 @@ namespace hedCommon.extension.editor
         }
 
 
-        public static bool ButtonAskBefore(string textButton, Color color, string titleDialog = "Warning", string titleCOntentDialog = "Are you sure ?", params GUILayoutOption[] options)
+        public static bool ButtonAskBefore(string textButton, Color color, string titleDialog = "Warning", string titleCOntentDialog = "Are you sure ?", GUIStyle guiStyle = default, params GUILayoutOption[] options)
         {
             Color previous = GUI.backgroundColor;
             GUI.backgroundColor = color;
-            if (GUILayout.Button(ExtString.Truncate(textButton, 20, "..."), options))
+            if (GUILayout.Button(ExtString.Truncate(textButton, 20, "..."), (guiStyle) == null ? new GUIStyle(GUI.skin.button) : guiStyle, options))
             {
                 GUI.backgroundColor = previous;
                 return (ExtGUI.DrawDisplayDialog(titleDialog, titleCOntentDialog));
