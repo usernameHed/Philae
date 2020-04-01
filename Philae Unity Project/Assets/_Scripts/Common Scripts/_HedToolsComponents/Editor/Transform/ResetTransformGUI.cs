@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEditor.EditorGUILayout;
 
-namespace ExtUnityComponents.transform
+namespace extUnityComponents.transform
 {
     public class ResetTransformGUI
     {

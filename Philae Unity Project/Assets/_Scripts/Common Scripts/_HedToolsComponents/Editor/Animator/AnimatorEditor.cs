@@ -4,7 +4,7 @@ using System.Reflection;
 using static UnityEditor.EditorGUILayout;
 using hedCommon.extension.editor;
 
-namespace ExtUnityComponents
+namespace extUnityComponents
 {
     [CustomEditor(typeof(Animator))]
     public class AnimatorEditor : DecoratorComponentsEditor

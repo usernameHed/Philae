@@ -10,7 +10,7 @@ using static UnityEditor.EditorGUILayout;
 /// <summary>
 ///
 /// </summary>
-namespace ExtUnityComponents.collider
+namespace extUnityComponents.collider
 {
     [CustomEditor(typeof(BoxCollider))]
     [CanEditMultipleObjects]

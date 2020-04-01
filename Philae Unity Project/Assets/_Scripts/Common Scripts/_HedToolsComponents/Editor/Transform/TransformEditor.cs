@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Custom Transform editor.
 /// </summary>
-namespace ExtUnityComponents.transform
+namespace extUnityComponents.transform
 {
     [CustomEditor(typeof(Transform))]
     [CanEditMultipleObjects]

@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEditor.EditorGUILayout;
 
-namespace ExtUnityComponents.collider
+namespace extUnityComponents.collider
 {
     public class FitBox
     {

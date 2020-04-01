@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEditor.EditorGUILayout;
 
-namespace ExtUnityComponents.transform
+namespace extUnityComponents.transform
 {
     /// <summary>
     /// 

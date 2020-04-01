@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace ExtUnityComponents.transform
+namespace extUnityComponents.transform
 {
     [CustomEditor(typeof(LockRotationFromParent))]
     public class LockRotationFromParentEditor : DecoratorComponentsEditor

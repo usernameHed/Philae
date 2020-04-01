@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ExtUnityComponents
+namespace extUnityComponents
 {
     public interface IEditorOnly
     {

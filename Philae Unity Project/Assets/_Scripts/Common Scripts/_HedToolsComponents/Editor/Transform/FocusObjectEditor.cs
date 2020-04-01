@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEditor.EditorGUILayout;
 
-namespace ExtUnityComponents.transform
+namespace extUnityComponents.transform
 {
     [CustomEditor(typeof(FocusObject))]
     public class FocusObjectEditor : DecoratorComponentsEditor

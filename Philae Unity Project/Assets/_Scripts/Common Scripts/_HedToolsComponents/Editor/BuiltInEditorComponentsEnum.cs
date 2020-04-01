@@ -6,7 +6,7 @@
 /// for the datas
 /// </summary>
 
-namespace ExtUnityComponents
+namespace extUnityComponents
 {
     public enum BUILT_IN_EDITOR_COMPONENTS
     {

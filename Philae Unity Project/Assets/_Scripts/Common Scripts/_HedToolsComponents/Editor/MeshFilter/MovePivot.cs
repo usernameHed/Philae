@@ -8,7 +8,7 @@ using hedCommon.editor.editorWindow;
 using UnityEditor;
 #endif
 
-namespace ExtUnityComponents
+namespace extUnityComponents
 {
     /// <summary>
     /// Move, rotate & scale a parent, whild keeping children still

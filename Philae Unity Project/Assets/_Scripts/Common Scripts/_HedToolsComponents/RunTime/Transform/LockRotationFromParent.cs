@@ -1,4 +1,4 @@
-﻿using ExtUnityComponents;
+﻿using extUnityComponents;
 using hedCommon.extension.runtime;
 using Sirenix.OdinInspector;
 using System.Collections;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 #endif
 using UnityEngine;
 
-namespace ExtUnityComponents.transform
+namespace extUnityComponents.transform
 {
     [ExecuteInEditMode]
     public class LockRotationFromParent : MonoBehaviour, IEditorOnly

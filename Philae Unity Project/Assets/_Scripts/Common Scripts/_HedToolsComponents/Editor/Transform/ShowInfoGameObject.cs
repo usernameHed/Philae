@@ -6,7 +6,7 @@ using static UnityEditor.EditorGUILayout;
 using hedCommon.extension.editor;
 using hedCommon.extension.runtime;
 
-namespace ExtUnityComponents.transform
+namespace extUnityComponents.transform
 {
     public class ShowInfoGameObject
     {

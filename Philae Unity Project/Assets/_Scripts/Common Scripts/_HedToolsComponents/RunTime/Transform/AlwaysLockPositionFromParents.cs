@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace ExtUnityComponents.transform
+namespace extUnityComponents.transform
 {
     /// <summary>
     /// this script allow you to lock a child from the parent movements.

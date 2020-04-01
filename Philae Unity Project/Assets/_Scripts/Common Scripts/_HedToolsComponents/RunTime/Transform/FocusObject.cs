@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ExtUnityComponents.transform
+namespace extUnityComponents.transform
 {
     public class FocusObject : MonoBehaviour, IEditorOnly, IHaveDecoratorOnIt
     {

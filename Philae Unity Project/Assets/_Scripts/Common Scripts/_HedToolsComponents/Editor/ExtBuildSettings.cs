@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
-namespace ExtUnityComponents
+namespace extUnityComponents
 {
     public static class ExtBuildSettings
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ExtUnityComponents.transform
+namespace extUnityComponents.transform
 {
     [ExecuteInEditMode]
     public class TransformHiddedTools : MonoBehaviour, IEditorOnly
