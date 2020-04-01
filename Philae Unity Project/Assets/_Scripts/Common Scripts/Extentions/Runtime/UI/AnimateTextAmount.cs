@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using hedCommon.time;
 using hedCommon.extension.runtime.animationCurve;
+using hedCommon.extension.propertyAttribute.animationCurve;
 
 namespace hedCommon.extension.runtime
 {

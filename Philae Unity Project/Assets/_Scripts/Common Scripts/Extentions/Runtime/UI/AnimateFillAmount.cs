@@ -1,4 +1,4 @@
-﻿using hedCommon.extension.runtime.animationCurve;
+﻿using hedCommon.extension.propertyAttribute.animationCurve;
 using hedCommon.time;
 using System.Collections;
 using System.Collections.Generic;

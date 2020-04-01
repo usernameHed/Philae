@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using ExtUnityComponents;
+using extUnityComponents;
 using hedCommon.extension.editor;
 using hedCommon.geometry.shape3d;
 using static UnityEditor.EditorGUILayout;

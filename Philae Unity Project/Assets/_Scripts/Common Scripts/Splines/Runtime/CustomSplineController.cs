@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using hedCommon.mixed;
-using ExtUnityComponents;
+using extUnityComponents;
 
 namespace hedCommon.splines
 {
