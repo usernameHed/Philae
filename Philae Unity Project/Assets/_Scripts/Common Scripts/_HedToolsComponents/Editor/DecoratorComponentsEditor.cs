@@ -1,4 +1,8 @@
-﻿using hedCommon.editor.editorWindow;
+﻿/// <summary>
+/// MIT License - Copyright(c) 2019 Ugo Belfiore
+/// </summary>
+
+using hedCommon.editor.editorWindow;
 using hedCommon.extension.runtime;
 using Sirenix.OdinInspector.Editor;
 using System.Collections.Generic;
@@ -7,7 +11,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace ExtUnityComponents
+namespace extUnityComponents
 {
     public abstract class DecoratorComponentsEditor : OdinEditor
     {
@@ -205,6 +209,24 @@ namespace ExtUnityComponents
                 return (default(T));
             }
             return ((T)ConcretTarget);
+        }
+
+        public GameObject GetGameObject()
+        {
+            return (ConcretTarget.gameObject);
+        }
+        public GameObject[] GetGameObjects()
+        {
+            if (ConcretTargets == null)
+            {
+                return (null);
+            }
+            GameObject[] gameObjects = new GameObject[ConcretTargets.Length];
+            for (int i = 0; i < ConcretTargets.Length; i++)
+            {
+                gameObjects[i] = ConcretTargets[i].gameObject;
+            }
+            return (gameObjects);
         }
 
         public T[] GetTargets<T>() where T : Component
