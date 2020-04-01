@@ -20,7 +20,6 @@ namespace hedCommon.procedural
         [SerializeField, Range(2, 100), OnValueChanged("GenerateShape")]
         private int _latitude = 17;
 
-        private int nbVerticesCap;
         protected float _topRadius = 0.5f;
         private int _longitude;
 
@@ -30,8 +29,7 @@ namespace hedCommon.procedural
         protected override void GenerateMesh()
         {
             _topRadius = _radius;
-            nbVerticesCap = _nbSides + 1;
-
+            _latitude = (_latitude % 2 == 0) ? _latitude : _latitude + 1;
             _longitude = _nbSides;
 
             Debug.Log("generate Capsule...");
