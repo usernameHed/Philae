@@ -6,24 +6,65 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEditor.EditorGUILayout;
 
-namespace ExtUnityComponents
+namespace extUnityComponents
 {
     public class RigidBodyInternalProperties
     {
         private Rigidbody _currentTarget = null;
         private DecoratorComponentsEditor _currentEditor;
-        private RigidBodySpecialSettings _specialSettings;
+        private RigidBodyAdditionalMonobehaviourSettings _specialSettings;
+        private RigidBodyCenterOfMass _centerOfMass = new RigidBodyCenterOfMass();
 
         public void Init(Rigidbody parent, DecoratorComponentsEditor current)
         {
             _currentTarget = parent;
             _currentEditor = current;
-            _specialSettings = _currentTarget.transform.GetOrAddComponent<RigidBodySpecialSettings>();
-            _specialSettings.hideFlags = HideFlags.HideInInspector;
+            _specialSettings = _currentTarget.transform.GetComponent<RigidBodyAdditionalMonobehaviourSettings>();
+            InitializeLate(current);
         }
 
-        public void DisplayInternalProperties()
+        private void InitializeLate(DecoratorComponentsEditor current)
         {
+            if (_specialSettings)
+            {
+                _specialSettings.hideFlags = HideFlags.NotEditable;
+            }
+            _centerOfMass.Init(_currentTarget, current, _specialSettings);
+        }
+
+        public void CustomDisable()
+        {
+            _centerOfMass.CustomDisable();
+        }
+
+        public void InitOnFirstOnSceneGUI()
+        {
+            _centerOfMass.InitOnFirstOnSceneGUI();
+        }
+
+        public void CustomOnSceneGUI()
+        {
+            _centerOfMass.CustomOnSceneGUI();
+        }
+
+        public bool IsSpecialSettingsActive()
+        {
+            return (_specialSettings != null);
+        }
+
+        public void DisplayInternalProperties(bool justCreated, bool justDestroyed)
+        {
+            if (justDestroyed)
+            {
+                CustomDisable();
+                return;
+            }
+
+            if (justCreated)
+            {
+                InitializeLate(_currentEditor);
+            }
+
             using (HorizontalScope horizontalScope = new HorizontalScope(EditorStyles.helpBox))
             {
                 using (ExtGUIScopes.Verti())
@@ -32,6 +73,11 @@ namespace ExtUnityComponents
                     SetSleepThreshold();
                     SetMaxDepenetation();
                 }
+            }
+
+            if (_currentEditor.targets.Length < 2)
+            {
+                _centerOfMass.CustomOnInspectorGUI();
             }
         }
 
@@ -48,7 +94,7 @@ namespace ExtUnityComponents
                 GUILayout.Label("");
                 if (GUILayout.Button("Default", GUILayout.Width(70)))
                 {
-                    _currentTarget.sleepThreshold = RigidBodySpecialSettings.DEFAULT_SLEEP_THRESHOLD;
+                    _currentTarget.sleepThreshold = RigidBodyAdditionalMonobehaviourSettings.DEFAULT_SLEEP_THRESHOLD;
                     _specialSettings.SetSleepThreshold(_currentTarget.sleepThreshold);
                 }
             }
@@ -58,7 +104,7 @@ namespace ExtUnityComponents
         {
             using (ExtGUIScopes.Horiz())
             {
-                int solver = ExtGUIFloatFields.IntField(_currentTarget.solverIterations, null, out bool solverChanged, "SolverIteration", "Modify the solver iteration of the rigidbody");
+                int solver = ExtGUIFloatFields.IntField(_currentTarget.solverIterations, null, out bool solverChanged, "SolverIteration", "More you have, more precise you are, more it cost");
                 if (solverChanged)
                 {
                     _currentTarget.solverIterations = solver;
@@ -67,8 +113,23 @@ namespace ExtUnityComponents
                 GUILayout.Label("");
                 if (GUILayout.Button("Default", GUILayout.Width(70)))
                 {
-                    _currentTarget.solverIterations = RigidBodySpecialSettings.DEFAULT_SOLVER_ITERATION;
+                    _currentTarget.solverIterations = RigidBodyAdditionalMonobehaviourSettings.DEFAULT_SOLVER_ITERATION;
                     _specialSettings.SetSolverIteration(_currentTarget.solverIterations);
+                }
+            }
+            using (ExtGUIScopes.Horiz())
+            {
+                int solver = ExtGUIFloatFields.IntField(_currentTarget.solverVelocityIterations, null, out bool solverChanged, "SolverVelocityIteration", "More you have, more precise you are, more it cost");
+                if (solverChanged)
+                {
+                    _currentTarget.solverVelocityIterations = solver;
+                    _specialSettings.SetSolverVelocityIteration(_currentTarget.solverVelocityIterations);
+                }
+                GUILayout.Label("");
+                if (GUILayout.Button("Default", GUILayout.Width(70)))
+                {
+                    _currentTarget.solverVelocityIterations = RigidBodyAdditionalMonobehaviourSettings.DEFAULT_SOLVER_VELOCITY_ITERATION;
+                    _specialSettings.SetSolverVelocityIteration(_currentTarget.solverVelocityIterations);
                 }
             }
         }
@@ -86,7 +147,7 @@ namespace ExtUnityComponents
                 GUILayout.Label("");
                 if (GUILayout.Button("Default", GUILayout.Width(70)))
                 {
-                    _currentTarget.maxDepenetrationVelocity = RigidBodySpecialSettings.DEFAULT_MAX_DEPENETRATION_VELOCITY;
+                    _currentTarget.maxDepenetrationVelocity = RigidBodyAdditionalMonobehaviourSettings.DEFAULT_MAX_DEPENETRATION_VELOCITY;
                     _specialSettings.SetMaxDepenetrationVelocity(_currentTarget.maxDepenetrationVelocity);
                 }
             }

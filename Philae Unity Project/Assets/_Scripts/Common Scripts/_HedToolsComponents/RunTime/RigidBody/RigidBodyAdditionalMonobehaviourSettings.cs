@@ -3,19 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ExtUnityComponents
+namespace extUnityComponents
 {
     [ExecuteInEditMode]
-    public class RigidBodySpecialSettings : MonoBehaviour
+    public class RigidBodyAdditionalMonobehaviourSettings : MonoBehaviour
     {
         public const float DEFAULT_SLEEP_THRESHOLD = 0.005f;
         public const int DEFAULT_SOLVER_ITERATION = 6;
+        public const int DEFAULT_SOLVER_VELOCITY_ITERATION = 1;
         public const float DEFAULT_MAX_DEPENETRATION_VELOCITY = 9999f;
 
         [SerializeField]
         private float _sleepThreshold = DEFAULT_SLEEP_THRESHOLD;
         [SerializeField]
         private int _solverIteration = DEFAULT_SOLVER_ITERATION;
+        [SerializeField]
+        private int _solverVelocityIteration = DEFAULT_SOLVER_VELOCITY_ITERATION;
         [SerializeField]
         private float _maxDepenetrationVelocity = DEFAULT_MAX_DEPENETRATION_VELOCITY;
 
@@ -52,6 +55,17 @@ namespace ExtUnityComponents
 
             _solverIteration = solverIteration;
             _rigidbody.solverIterations = _solverIteration;
+        }
+
+        public void SetSolverVelocityIteration(int solverIteration)
+        {
+            if (_rigidbody == null)
+            {
+                _rigidbody = GetComponent<Rigidbody>();
+            }
+
+            _solverVelocityIteration = solverIteration;
+            _rigidbody.solverVelocityIterations = _solverVelocityIteration;
         }
 
         public void SetMaxDepenetrationVelocity(float maxDepenetrationVelocity)
@@ -92,6 +106,10 @@ namespace ExtUnityComponents
             if (_rigidbody.maxDepenetrationVelocity != _maxDepenetrationVelocity)
             {
                 _rigidbody.maxDepenetrationVelocity = _maxDepenetrationVelocity;
+            }
+            if (_rigidbody.solverVelocityIterations != _solverVelocityIteration)
+            {
+                _rigidbody.solverVelocityIterations = _solverVelocityIteration;
             }
         }
 

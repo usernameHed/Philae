@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEditor.EditorGUILayout;
 
-namespace ExtUnityComponents.transform
+namespace extUnityComponents.transform
 {
     /// <summary>
     /// 
@@ -15,9 +15,7 @@ namespace ExtUnityComponents.transform
     [CustomEditor(typeof(Rigidbody))]
     public class RigidBodyEditor : DecoratorComponentsEditor
     {
-        //private PreviewRenderUtility m_PreviewUtility;
         private RigidBodyInternalProperties _internalProperties = new RigidBodyInternalProperties();
-        private RigidBodyCenterOfMass _centerOfMass = new RigidBodyCenterOfMass();
 
         public RigidBodyEditor()
             : base(BUILT_IN_EDITOR_COMPONENTS.RigidbodyEditor)
@@ -30,7 +28,7 @@ namespace ExtUnityComponents.transform
         /// </summary>
         public override void OnCustomDisable()
         {
-            _centerOfMass.CustomDisable();
+            _internalProperties.CustomDisable();
         }
 
         /// <summary>
@@ -39,12 +37,15 @@ namespace ExtUnityComponents.transform
         /// <param name="sceneview"></param>
         protected override void InitOnFirstOnSceneGUI(SceneView sceneview)
         {
-            _centerOfMass.InitOnFirstOnSceneGUI();
+            _internalProperties.InitOnFirstOnSceneGUI();
         }
 
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
-            _centerOfMass.CustomOnSceneGUI();
+            if (_internalProperties.IsSpecialSettingsActive())
+            {
+                _internalProperties.CustomOnSceneGUI();
+            }
         }
 
         /// <summary>
@@ -59,7 +60,6 @@ namespace ExtUnityComponents.transform
             }
 
             _internalProperties.Init(GetTarget<Rigidbody>(), this);
-            _centerOfMass.Init(current, this);
         }
 
         /// <summary>
@@ -67,13 +67,12 @@ namespace ExtUnityComponents.transform
         /// </summary>
         protected override void OnCustomInspectorGUI()
         {
-            _internalProperties.DisplayInternalProperties();
-            if (targets.Length < 2)
+            GUILayout.Label("Related RigidBody Extensions:");
+            if (ExtComponentAddition.AddComponentsExtension<RigidBodyAdditionalMonobehaviourSettings>("Internal Variable", this.GetGameObject(), out bool justCreated, out bool justDestroyed))
             {
-                _centerOfMass.CustomOnInspectorGUI();
+                _internalProperties.DisplayInternalProperties(justCreated, justDestroyed);
             }
+            ExtComponentAddition.AddComponentsExtension<SleepyBody>("Fall asleep", this.GetGameObject(), out justCreated, out justDestroyed);
         }
-
-        
     }
 }

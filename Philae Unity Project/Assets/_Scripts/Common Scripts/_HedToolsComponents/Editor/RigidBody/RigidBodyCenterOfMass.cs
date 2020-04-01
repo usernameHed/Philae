@@ -7,12 +7,12 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEditor.EditorGUILayout;
 
-namespace ExtUnityComponents
+namespace extUnityComponents
 {
     public class RigidBodyCenterOfMass
     {
         private Rigidbody _currentTarget = null;
-        private RigidBodySpecialSettings _specialSettings;
+        private RigidBodyAdditionalMonobehaviourSettings _specialSettings;
         private DecoratorComponentsEditor _currentEditor;
 
         private bool _moveCenterOfMass = false;  //keep this value outside of the inspected gameObject
@@ -22,14 +22,13 @@ namespace ExtUnityComponents
         private TinyEditorWindowSceneView _tinyCenterOfMassWindow;
         private readonly string KEY_EDITOR_PREF_CENTER_OF_MASS_WINDOW = "KEY_EDITOR_PREF_CENTER_OF_MASS_WINDOW";
 
-        public void Init(Rigidbody parent, DecoratorComponentsEditor current)
+        public void Init(Rigidbody parent, DecoratorComponentsEditor current, RigidBodyAdditionalMonobehaviourSettings specialSettings)
         {
             _currentTarget = parent;
             _currentEditor = current;
             _moveCenterOfMass = false;
             _hasBeenInternallyInit = false;
-            _specialSettings = _currentTarget.transform.GetOrAddComponent<RigidBodySpecialSettings>();
-            _specialSettings.hideFlags = HideFlags.HideInInspector;
+            _specialSettings = specialSettings;
         }
 
         public void InitOnFirstOnSceneGUI()
@@ -188,7 +187,7 @@ namespace ExtUnityComponents
             if (GUILayout.Button("Restore Default"))
             {
                 ExtUndo.Record(_currentTarget, "Tool: lock children move");
-                _currentTarget.ResetCenterOfMass();
+                RestorDefault();
                 _currentEditor.Repaint();
             }
             Vector3 centerOfMass = ExtGUIVectorFields.Vector3Field(_currentTarget.centerOfMass, _currentTarget, out bool hasChanged, "Center of mass:");
@@ -197,6 +196,11 @@ namespace ExtUnityComponents
                 _currentTarget.centerOfMass = centerOfMass;
                 _currentEditor.Repaint();
             }
+        }
+
+        public void RestorDefault()
+        {
+            _currentTarget.ResetCenterOfMass();
         }
     }
 }
