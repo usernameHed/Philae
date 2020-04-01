@@ -116,6 +116,10 @@ namespace hedCommon.time
         {
             get
             {
+                if (Instance == null)
+                {
+                    return (Time.unscaledTime);
+                }
                 return (Instance._currentTimeIndependentTimeScale);
             }
         }
@@ -127,6 +131,10 @@ namespace hedCommon.time
         {
             get
             {
+                if (Instance == null)
+                {
+                    return (Time.deltaTime);
+                }
                 return (Instance._currentDeltaTime);
             }
         }
