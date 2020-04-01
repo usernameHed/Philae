@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using static UnityEditor.EditorGUILayout;
 
 namespace hedCommon.saveLastSelection
 {
@@ -18,6 +19,10 @@ namespace hedCommon.saveLastSelection
         private bool _isInit = false;
         private bool _isClosed = false;
         private FrequencyCoolDown _frequencyCoolDown = new FrequencyCoolDown();
+
+        private const int _heightText = 8;
+        private const int _widthButtons = 17;
+        private const int _heightButtons = 14;
 
         public SaveLastSelections()
         {
@@ -115,44 +120,50 @@ namespace hedCommon.saveLastSelection
                 _saveLastSelectionsEditorWindow.CurrentIndex = _saveLastSelectionsEditorWindow.SelectedObjects.Count - 1;
             }
 
-            if (GUILayout.Button("...", ExtGUIStyles.microButton))
+            using (VerticalScope vertical = new VerticalScope())
             {
-                ExtEditorWindow.OpenEditorWindow(ExtEditorWindow.AllNameAssemblyKnown.SceneView, out Type animationWindowType);
-
-                if (_saveLastSelectionsEditorWindow == null)
+                GUILayout.Label("Browse selections", ExtGUIStyles.miniTextCentered, GUILayout.Height(_heightText));
+                using (HorizontalScope horizontal = new HorizontalScope())
                 {
-                    _saveLastSelectionsEditorWindow = SaveLastSelectionsEditorWindow.ShowSaveLastSelections();
-                }
+                    if (GUILayout.Button("...", ExtGUIStyles.microButton))
+                    {
+                        ExtEditorWindow.OpenEditorWindow(ExtEditorWindow.AllNameAssemblyKnown.SceneView, out Type animationWindowType);
 
-                _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed = !_saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed;
-                _saveLastSelectionsEditorWindow.SaveCloseStatus();
-                _isClosed = _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed;
+                        if (_saveLastSelectionsEditorWindow == null)
+                        {
+                            _saveLastSelectionsEditorWindow = SaveLastSelectionsEditorWindow.ShowSaveLastSelections();
+                        }
+
+                        _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed = !_saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed;
+                        _saveLastSelectionsEditorWindow.SaveCloseStatus();
+                        _isClosed = _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed;
+                    }
+                    EditorGUI.BeginDisabledGroup(_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0);
+                    {
+                        bool isScrollingDown = ExtEventEditor.IsScrollingDown(Event.current, out float delta);
+                        if (GUILayout.Button("<", ExtGUIStyles.microButton) || isScrollingDown)
+                        {
+                            AddToIndex(-1);
+                            ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjects[_saveLastSelectionsEditorWindow.CurrentIndex]);
+                        }
+                        bool isScrollingUp = ExtEventEditor.IsScrollingUp(Event.current, out delta);
+                        if (GUILayout.Button(">", ExtGUIStyles.microButton) || isScrollingUp)
+                        {
+                            AddToIndex(1);
+                            ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjects[_saveLastSelectionsEditorWindow.CurrentIndex]);
+                        }
+                        if (_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0)
+                        {
+                            GUILayout.Label("-/-");
+                        }
+                        else
+                        {
+                            GUILayout.Label((_saveLastSelectionsEditorWindow.CurrentIndex + 1).ToString() + "/" + (_saveLastSelectionsEditorWindow.SelectedObjects.Count));
+                        }
+                    }
+                    EditorGUI.EndDisabledGroup();
+                }
             }
-            EditorGUI.BeginDisabledGroup(_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0);
-            {
-                bool isScrollingDown = ExtEventEditor.IsScrollingDown(Event.current, out float delta);
-                if (GUILayout.Button("<", ExtGUIStyles.microButton) || isScrollingDown)
-                {
-                    AddToIndex(-1);
-                    ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjects[_saveLastSelectionsEditorWindow.CurrentIndex]);
-                }
-                bool isScrollingUp = ExtEventEditor.IsScrollingUp(Event.current, out delta);
-                if (GUILayout.Button(">", ExtGUIStyles.microButton) || isScrollingUp)
-                {
-                    AddToIndex(1);
-                    ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjects[_saveLastSelectionsEditorWindow.CurrentIndex]);
-                }
-                if (_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0)
-                {
-                    GUILayout.Label("-/-");
-                }
-                else
-                {
-                    GUILayout.Label((_saveLastSelectionsEditorWindow.CurrentIndex + 1).ToString() + "/" + (_saveLastSelectionsEditorWindow.SelectedObjects.Count));
-                }
-            }
-            EditorGUI.EndDisabledGroup();
-
             GUILayout.FlexibleSpace();
         }
 

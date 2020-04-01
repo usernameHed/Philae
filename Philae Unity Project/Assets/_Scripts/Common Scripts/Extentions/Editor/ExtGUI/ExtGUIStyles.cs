@@ -12,6 +12,7 @@ namespace hedCommon.extension.editor
         public static readonly GUIStyle box;
         public static readonly GUIStyle miniBox;
         public static readonly GUIStyle miniText;
+        public static readonly GUIStyle miniTextCentered;
         public static readonly GUIStyle microButton;
 
 
@@ -38,6 +39,15 @@ namespace hedCommon.extension.editor
                 fontSize = 9,
             };
             miniText.normal.textColor = Color.white;
+
+            miniTextCentered = new GUIStyle()
+            {
+                fontSize = 9,
+            };
+            miniTextCentered.normal.textColor = Color.white;
+            miniTextCentered.alignment = TextAnchor.MiddleCenter;
+
+
 
             miniBox = new GUIStyle()
             {
