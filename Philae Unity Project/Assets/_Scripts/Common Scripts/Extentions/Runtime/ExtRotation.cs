@@ -67,30 +67,30 @@ namespace hedCommon.extension.runtime
             }
 
             //display [Pic 1] axis
-            Debug.DrawLine(pivotPoint, pivotPoint + vectorDirector, new Color(1, 1, 1, 0.5f), 1.5f);
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, upNormalized, new Color(0, 1, 0, 0.2f));
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.ForwardFast(), new Color(0, 0, 1, 0.2f));
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.RightFast(), new Color(1, 0, 0, 0.2f));
+            //Debug.DrawLine(pivotPoint, pivotPoint + vectorDirector, new Color(1, 1, 1, 0.5f), 1.5f);
+            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, upNormalized, new Color(0, 1, 0, 0.2f));
+            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.ForwardFast(), new Color(0, 0, 1, 0.2f));
+            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.RightFast(), new Color(1, 0, 0, 0.2f));
 
 
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, projectedForward, new Color(1, 0.92f, 0.016f, 0.2f), 0.15f);
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint + projectedForward, projectedUp, new Color(1, 0.92f, 0.016f, 0.2f), 0.15f);
+            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, projectedForward, new Color(1, 0.92f, 0.016f, 0.2f), 0.15f);
+            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint + projectedForward, projectedUp, new Color(1, 0.92f, 0.016f, 0.2f), 0.15f);
 
             //rotate matrix in x, y & z
             rotationMatrix = Matrix4x4.TRS(pivotPoint, constrainRotation * Quaternion.Euler(rotationAxis), Vector3.one);
             Vector3 finalPoint = rotationMatrix.MultiplyPoint3x4(new Vector3(0, distanceUp, distanceForward));
 
-            Debug.DrawLine(pivotPoint, finalPoint, Color.green);
-            ExtDrawGuizmos.DebugWireSphere(finalPoint, Color.green, 0.1f);
-
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.ForwardFast() * distanceForward, Color.yellow, 0.15f);
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint + rotationMatrix.ForwardFast() * distanceForward, projectedUp, Color.yellow, 0.15f);
-
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, upNormalized, Color.green);
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.ForwardFast(), Color.blue);
-            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.RightFast(), Color.red);
-
-            ExtDrawGuizmos.DebugWireSphere(finalPoint, Color.green, 0.01f, 1.5f);
+            //Debug.DrawLine(pivotPoint, finalPoint, Color.green);
+            //ExtDrawGuizmos.DebugWireSphere(finalPoint, Color.green, 0.1f);
+            //
+            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.ForwardFast() * distanceForward, Color.yellow, 0.15f);
+            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint + rotationMatrix.ForwardFast() * distanceForward, projectedUp, Color.yellow, 0.15f);
+            //
+            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, upNormalized, Color.green);
+            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.ForwardFast(), Color.blue);
+            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.RightFast(), Color.red);
+            //
+            //ExtDrawGuizmos.DebugWireSphere(finalPoint, Color.green, 0.01f, 1.5f);
             return finalPoint;
         }
 
@@ -207,6 +207,76 @@ namespace hedCommon.extension.runtime
                                         maxDegreesPerSecond * Time.deltaTime
                                      );
             return (smoothOrientation);
+        }
+
+        /// <summary>
+        /// smooth look rotation with clamped angle
+        /// </summary>
+        /// <param name="referenceRotation">reference rotation up, forward, right</param>
+        /// <param name="vectorDirectorToTarget">vectorDirector where we want to target</param>
+        /// <param name="left">angle in degree: clamp left from Up Axis</param>
+        /// <param name="right">angle in degree: clamp right from Up axis</param>
+        /// <param name="up">angle in degree: clamp Up axis</param>
+        /// <param name="down">angle in degree: clamp Down axis</param>
+        /// <param name="currentRotation">Current rotation of the object we want to smoothly rotate</param>
+        /// <param name="maxDegreesPerSecond">speed of rotation in degree per seconds</param>
+        /// <returns>Smooth clamped rotation</returns>
+        public static Quaternion SmoothTurretLookRotationWithClampedAxis(
+            Quaternion referenceRotation,
+            Vector3 vectorDirectorToTarget,
+            float left,
+            float right,
+            float up,
+            float down,
+            Quaternion currentRotation,
+            float maxDegreesPerSecond)
+        {
+            Quaternion finalHeadRotation = ExtRotation.TurrentLookRotationWithClampedAxis(referenceRotation, vectorDirectorToTarget, left, right, up, down);
+            Quaternion smoothOrientation = Quaternion.RotateTowards(currentRotation,
+                finalHeadRotation,
+                maxDegreesPerSecond * Time.fixedDeltaTime);
+
+            return (smoothOrientation);
+        }
+
+        /// <summary>
+        /// turret look rotation with clamped angles
+        /// </summary>
+        /// <param name="referenceRotation">reference rotation up, forward, right</param>
+        /// <param name="vectorDirectorToTarget">vectorDirector where we want to target</param>
+        /// <param name="left">angle in degree: clamp left from Up Axis</param>
+        /// <param name="right">angle in degree: clamp right from Up axis</param>
+        /// <param name="up">angle in degree: clamp Up axis</param>
+        /// <param name="down">angle in degree: clamp Down axis</param>
+        /// <returns>Clamped rotation</returns>
+        public static Quaternion TurrentLookRotationWithClampedAxis(
+            Quaternion referenceRotation,
+            Vector3 vectorDirectorToTarget,
+            float left,
+            float right,
+            float up,
+            float down)
+        {
+            Vector3 originalForward = referenceRotation * Vector3.forward;
+
+            Vector3 yAxis = Vector3.up; // world y axis
+            Vector3 dirXZ = Vector3.ProjectOnPlane(vectorDirectorToTarget, yAxis);
+            Vector3 forwardXZ = Vector3.ProjectOnPlane(originalForward, yAxis);
+            float yAngle = Vector3.Angle(dirXZ, forwardXZ) * Mathf.Sign(Vector3.Dot(yAxis, Vector3.Cross(forwardXZ, dirXZ)));
+            float yClamped = Mathf.Clamp(yAngle, left, right);
+            Quaternion yRotation = Quaternion.AngleAxis(yClamped, Vector3.up);
+
+            originalForward = yRotation * referenceRotation * Vector3.forward;
+            Vector3 xAxis = yRotation * referenceRotation * Vector3.right; // our local x axis
+            Vector3 dirYZ = Vector3.ProjectOnPlane(vectorDirectorToTarget, xAxis);
+            Vector3 forwardYZ = Vector3.ProjectOnPlane(originalForward, xAxis);
+            float xAngle = Vector3.Angle(dirYZ, forwardYZ) * Mathf.Sign(Vector3.Dot(xAxis, Vector3.Cross(forwardYZ, dirYZ)));
+            float xClamped = Mathf.Clamp(xAngle, -up, -down);
+            Quaternion xRotation = Quaternion.AngleAxis(xClamped, Vector3.right);
+
+
+            Quaternion newRotation = yRotation * referenceRotation * xRotation;
+            return (newRotation);
         }
     }
 }
