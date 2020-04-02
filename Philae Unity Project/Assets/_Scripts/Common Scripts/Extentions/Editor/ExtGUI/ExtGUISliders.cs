@@ -224,7 +224,7 @@ namespace hedCommon.extension.editor
                     valueHasChanged = true;
                     currentEditorWindow.Repaint();
                 }
-                Event.current.Use();
+                ExtEventEditor.Use();
             }
             if (isDragging && Event.current.type == EventType.MouseUp)
             {
@@ -405,7 +405,7 @@ namespace hedCommon.extension.editor
                     }
                 }
 
-                Event.current.Use();
+                ExtEventEditor.Use();
             }
             if ((isDraggingLeft || isDraggingMiddle || isDraggingRight) && Event.current.type == EventType.MouseUp)
             {

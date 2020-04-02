@@ -55,7 +55,7 @@ public static class ExtSelection
     /// <param name="objToFocus"></param>
     /// <param name="zoomAuto"></param>
     /// <param name="zoom"></param>
-    public static void FocusOnSelection(List<GameObject> objToFocus, bool zoomAuto = true, float zoom = 5f)
+    public static void FocusOnSelection(List<GameObject> objToFocus, bool zoomAuto = true, float zoom = -1f)
     {
         if (objToFocus.Count < 1)
         {
@@ -104,7 +104,7 @@ public static class ExtSelection
     }
 
 
-    public static void FocusOnSelection(GameObject objToFocus, float zoom = 5f)
+    public static void FocusOnSelection(GameObject objToFocus, float zoom = -1f)
     {
         SceneView.lastActiveSceneView.LookAt(objToFocus.transform.position);
         if (zoom != -1)

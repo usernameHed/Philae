@@ -220,7 +220,7 @@ namespace hedCommon.geometry.movable
             {
                 if (Event.current.type != EventType.Layout)
                 {
-                    Event.current.Use();
+                    ExtEventEditor.Use();
                 }
                 ExtSceneView.Frame(_lastPositionMoved);
             }

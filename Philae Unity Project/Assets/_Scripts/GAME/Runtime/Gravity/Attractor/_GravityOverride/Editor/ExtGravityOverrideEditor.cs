@@ -202,7 +202,7 @@ namespace philae.gravity.attractor.gravityOverride
                     Debug.Log("face pressed");
                     face = !face;
                     hasChanged = true;
-                    Event.current.Use();
+                    ExtEventEditor.Use();
                 }
             }
             return (face);
@@ -245,7 +245,7 @@ namespace philae.gravity.attractor.gravityOverride
                 Debug.Log("extremity pressed");
                 discGravity.Borders = !discGravity.Borders;
                 hasChanged = true;
-                Event.current.Use();
+                ExtEventEditor.Use();
             }
 
             if (!topFace)
@@ -274,7 +274,7 @@ namespace philae.gravity.attractor.gravityOverride
                     Debug.Log("Face pressed !");
                     discGravity.Face = !discGravity.Face;
                     hasChanged = true;
-                    Event.current.Use();
+                    ExtEventEditor.Use();
                 }
             }
 
@@ -312,7 +312,7 @@ namespace philae.gravity.attractor.gravityOverride
             {
                 trunk = !trunk;
                 hasChanged = true;
-                Event.current.Use();
+                ExtEventEditor.Use();
             }
             return (trunk);
         }
@@ -375,7 +375,7 @@ namespace philae.gravity.attractor.gravityOverride
             {
                 point = !point;
                 hasChanged = true;
-                Event.current.Use();
+                ExtEventEditor.Use();
             }
             return (point);
         }

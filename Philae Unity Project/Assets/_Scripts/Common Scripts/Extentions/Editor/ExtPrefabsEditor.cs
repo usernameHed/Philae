@@ -8,6 +8,17 @@ using hedCommon.extension.editor.sceneView;
 public static class ExtPrefabsEditor 
 {
     /// <summary>
+    /// is this GameObject a prefabs ?
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public static bool IsPrefab(GameObject obj)
+    {
+        var prefab = PrefabUtility.GetOutermostPrefabInstanceRoot(obj);
+        return prefab != null && prefab == obj;
+    }
+
+    /// <summary>
     /// default path is: Assets/_Prefabs/Editor/
     /// call 
     /// </summary>

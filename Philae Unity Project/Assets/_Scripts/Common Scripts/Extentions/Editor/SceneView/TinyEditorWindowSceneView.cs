@@ -602,7 +602,7 @@ namespace hedCommon.extension.editor.sceneView
             if ((current.type == EventType.MouseDrag || current.type == EventType.MouseDown)
                 && current.button == 0)
             {
-                Event.current.Use();
+                ExtEventEditor.Use();
             }
         }
     }

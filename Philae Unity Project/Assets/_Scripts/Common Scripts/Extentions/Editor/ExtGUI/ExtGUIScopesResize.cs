@@ -87,7 +87,7 @@ namespace hedCommon.extension.editor
             {
                 isResizing = true;
                 _diffMousePosition = Event.current.mousePosition.x - widthScope;
-                Event.current.Use();
+                ExtEventEditor.Use();
             }
             if (isResizing && Event.current.type == EventType.MouseDrag)
             {
@@ -97,7 +97,7 @@ namespace hedCommon.extension.editor
                     widthScope = newWidth;
                     currentEditorWindow.Repaint();
                 }
-                Event.current.Use();
+                ExtEventEditor.Use();
             }
             if (isResizing && Event.current.type == EventType.MouseUp)
             {

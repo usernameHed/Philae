@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace hedCommon.extension.runtime
+namespace hedCommon.extension.editor
 {
     public static class ExtEventEditor
     {
+        private static bool _wasMouseDown;
+        private static Vector2 _clickDownPosition;
+
         public enum Modifier
         {
             NONE = 0,
@@ -211,5 +214,30 @@ namespace hedCommon.extension.runtime
             return (false);
         }
 
+        /// <summary>
+        /// DOESN'T WORK IN ONE SHOOT, need to be called at least twice,
+        /// once on mouseDown, and once on mouseUp
+        /// </summary>
+        /// <param name="current"></param>
+        /// <returns></returns>
+        public static bool IsClickOnSceneView(Event current)
+        {
+            if (ExtEventEditor.IsLeftMouseDown(current))
+            {
+                _clickDownPosition = current.mousePosition;
+                _wasMouseDown = true;
+                return (false);
+            }
+            if (!_wasMouseDown)
+            {
+                return (false);
+            }
+            if (current.type == EventType.Used && current.mousePosition == _clickDownPosition && current.delta == Vector2.zero)
+            {
+                _wasMouseDown = false;
+                return (true);
+            }
+            return (false);
+        }
     }
 }

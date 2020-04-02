@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using hedCommon.extension.editor;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace hedCommon.tools
                         currentMousePosition = startMousePosition = e.mousePosition;
                         startRotation = rotation;
                         startPositionOnDisc = HandleUtility.ClosestPointToDisc(position, Vector3.up, size) - position;
-                        e.Use();
+                        ExtEventEditor.Use();
                         EditorGUIUtility.SetWantsMouseJumping(1);
                     }
                     break;
@@ -45,14 +46,14 @@ namespace hedCommon.tools
                         rotation = Quaternion.AngleAxis(rotationDist * -1, Vector3.up) * startRotation;
 
                         GUI.changed = true;
-                        e.Use();
+                        ExtEventEditor.Use();
                     }
                     break;
                 case EventType.MouseUp:
                     if (controlId == GUIUtility.hotControl && (e.button == 0 || e.button == 2))
                     {
                         GUIUtility.hotControl = 0;  //we no longer using the event
-                        e.Use();    //block the event: other script can't use it
+                        ExtEventEditor.Use();    //block the event: other script can't use it
                         EditorGUIUtility.SetWantsMouseJumping(0);
                         rotationDist = 0;
                     }

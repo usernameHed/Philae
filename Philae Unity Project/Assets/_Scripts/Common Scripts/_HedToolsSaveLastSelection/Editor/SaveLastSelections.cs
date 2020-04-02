@@ -20,8 +20,6 @@ namespace hedCommon.saveLastSelection
         private FrequencyCoolDown _frequencyCoolDown = new FrequencyCoolDown();
 
         private const int _heightText = 8;
-        private const int _widthButtons = 17;
-        private const int _heightButtons = 14;
 
         public SaveLastSelections()
         {
