@@ -44,8 +44,8 @@ namespace hedCommon.tools
         /// </summary>
         static ExtSymLink()
 		{
-			EditorApplication.projectWindowItemOnGUI += OnProjectWindowItemGUI;
-		}
+            EditorApplication.projectWindowItemOnGUI += OnProjectWindowItemGUI;
+        }
 
         /// <summary>
         /// Draw a little indicator if folder is a symlink
@@ -59,28 +59,51 @@ namespace hedCommon.tools
 				string path = AssetDatabase.GUIDToAssetPath(guid);
 
 				if(!string.IsNullOrEmpty(path))
-				{
-					FileAttributes attribs = File.GetAttributes(path);
-
-					if ((attribs & FOLDER_SYMLINK_ATTRIBS) == FOLDER_SYMLINK_ATTRIBS )
+                {
+                    FileAttributes attribs = File.GetAttributes(path);
+                    UpdateSymLinksParent(path);
+                    if (IsAttributeASymLink(attribs))
                     {
-						GUI.Label(r, "<=>", symlinkMarkerStyle);
+                        GUI.Label(r, "<=>", symlinkMarkerStyle);
                         _allSymLinksInProject.AddIfNotContain(path);
                     }
-                    else if ((attribs & FILE_SYMLINK_ATTRIBS) == FILE_SYMLINK_ATTRIBS && path.ContainIsPaths(_allSymLinksInProject))
+                    else if (IsAttributeAFileInsideASymLink(path, attribs))
                     {
                         GUI.Label(r, "* ", symlinkMarkerStyle);
                     }
-
                 }
-			}
+            }
 			catch {}
 		}
 
-		/// <summary>
+        private static bool IsAttributeAFileInsideASymLink(string path, FileAttributes attribs)
+        {
+            return (attribs & FILE_SYMLINK_ATTRIBS) == FILE_SYMLINK_ATTRIBS && path.ContainIsPaths(_allSymLinksInProject);
+        }
+
+        private static bool IsAttributeASymLink(FileAttributes attribs)
+        {
+            return (attribs & FOLDER_SYMLINK_ATTRIBS) == FOLDER_SYMLINK_ATTRIBS;
+        }
+
+        private static void UpdateSymLinksParent(string path)
+        {
+            while (!string.IsNullOrEmpty(path))
+            {
+                FileAttributes attribs = File.GetAttributes(path);
+                if (IsAttributeASymLink(attribs))
+                {
+                    _allSymLinksInProject.AddIfNotContain(path);
+                    return;
+                }
+                path = ExtPaths.GetDirectoryFromCompletPath(path);
+            }
+        }
+
+        /// <summary>
         /// add a folder link at the current selection in the project view
         /// </summary>
-		[MenuItem("Assets/SymLink/Add Folder Link", false, 20)]
+        [MenuItem("Assets/SymLink/Add Folder Link", false, 20)]
 		static void DoTheSymlink()
 		{
             string targetPath = GetSelectedPathOrFallback();
