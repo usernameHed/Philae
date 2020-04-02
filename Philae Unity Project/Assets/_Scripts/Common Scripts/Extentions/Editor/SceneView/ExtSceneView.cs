@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using hedCommon.extension.runtime;
 
-namespace hedCommon.extension.editor
+namespace hedCommon.extension.editor.sceneView
 {
     /// <summary>
     /// scene view calculation

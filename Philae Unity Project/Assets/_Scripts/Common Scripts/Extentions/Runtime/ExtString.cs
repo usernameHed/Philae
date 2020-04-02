@@ -215,6 +215,8 @@ namespace hedCommon.extension.runtime
             return value.Replace("\r\n", "<br />").Replace("\n", "<br />");
         }
 
+        
+
 
         /// <summary>
         /// Converts a null or "" to string.empty. Useful for XML code. Does nothing if <paramref name="value"/> already has a value

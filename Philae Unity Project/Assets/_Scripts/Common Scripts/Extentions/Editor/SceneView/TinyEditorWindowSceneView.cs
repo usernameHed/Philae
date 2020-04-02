@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace hedCommon.editor.editorWindow
+namespace hedCommon.extension.editor.sceneView
 {
     public class TinyEditorWindowSceneView
     {

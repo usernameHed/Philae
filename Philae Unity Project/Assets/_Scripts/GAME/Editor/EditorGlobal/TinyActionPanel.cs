@@ -9,7 +9,7 @@ using philae.editor.editorWindow;
 using hedCommon.time;
 using hedCommon.extension.editor;
 using hedCommon.mixed;
-using hedCommon.editor.editorWindow;
+using hedCommon.extension.editor.sceneView;
 
 namespace philae.editor.editorGlobal
 {

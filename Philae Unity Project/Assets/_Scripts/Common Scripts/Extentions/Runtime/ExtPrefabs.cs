@@ -13,6 +13,17 @@ namespace hedCommon.extension.runtime
 {
     public static class ExtPrefabs
     {
+        /// <summary>
+        /// is this GameObject a prefabs ?
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static bool IsPrefab(GameObject obj)
+        {
+            var prefab = PrefabUtility.GetOutermostPrefabInstanceRoot(obj);
+            return prefab != null && prefab == obj;
+        }
+
 #if UNITY_EDITOR
         /// <summary>
         /// Are we in prefabs mode ?

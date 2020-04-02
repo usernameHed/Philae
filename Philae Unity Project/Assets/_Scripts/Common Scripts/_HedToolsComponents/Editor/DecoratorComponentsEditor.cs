@@ -2,7 +2,7 @@
 /// MIT License - Copyright(c) 2019 Ugo Belfiore
 /// </summary>
 
-using hedCommon.editor.editorWindow;
+using hedCommon.extension.editor.sceneView;
 using hedCommon.extension.runtime;
 using Sirenix.OdinInspector.Editor;
 using System.Collections.Generic;
@@ -386,7 +386,7 @@ namespace extUnityComponents
                 method = _decoratedMethods[methodName];
             }
 
-            if (method != null)
+            if (method != null && GetEditorInstance() != null)
             {
                 method.Invoke(GetEditorInstance(), EMPTY_ARRAY);
             }

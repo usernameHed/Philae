@@ -13,6 +13,7 @@ using philae.gravity.attractor;
 using philae.data.gravity;
 using philae.gravity.physicsBody;
 using static philae.gravity.physicsBody.PhysicBody;
+using hedCommon.extension.editor.sceneView;
 
 namespace philae.gravity.zones
 {

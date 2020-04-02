@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using hedCommon.extension.editor;
+using hedCommon.extension.editor.sceneView;
 
 public static class ExtPrefabsEditor 
 {

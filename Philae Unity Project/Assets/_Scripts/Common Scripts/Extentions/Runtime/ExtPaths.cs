@@ -135,5 +135,35 @@ namespace hedCommon.extension.runtime
                                  width, height,
                                  ExtDateTime.GetDateNow());
         }
+
+        /// <summary>
+        /// is subPath is contained in a list of given path
+        /// </summary>
+        /// <param name="paths"></param>
+        /// <param name="subPath"></param>
+        /// <returns></returns>
+        public static bool ContainSubStringInList(this List<string> paths, string subPath)
+        {
+            for (int i = 0; i < paths.Count; i++)
+            {
+                if (paths[i].Contains(subPath))
+                {
+                    return (true);
+                }
+            }
+            return (false);
+        }
+
+        public static bool ContainIsPaths(this string subPath, List<string> paths)
+        {
+            for (int i = 0; i < paths.Count; i++)
+            {
+                if (subPath.Contains(paths[i]))
+                {
+                    return (true);
+                }
+            }
+            return (false);
+        }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using UnityEditorInternal;
 using UnityEditor.SceneManagement;
 using hedCommon.extension.editor.editorWindow;
+using hedCommon.extension.editor.sceneView;
 
 namespace hedCommon.extension.editor
 {

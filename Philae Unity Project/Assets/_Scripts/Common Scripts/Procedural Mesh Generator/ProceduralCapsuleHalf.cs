@@ -9,7 +9,7 @@ namespace hedCommon.procedural
     /// <summary>
     /// Plane Description
     /// </summary>
-    public class ProceduralCapsule : ProceduralShape
+    public class ProceduralCapsuleHalf : ProceduralShape
     {
         [SerializeField, OnValueChanged("GenerateShape")]
         private float _height = 1f;
@@ -17,7 +17,7 @@ namespace hedCommon.procedural
         protected float _radius = 0.5f;
         [SerializeField, Range(2, 100), OnValueChanged("GenerateShape")]
         private int _nbSides = 18;
-        [SerializeField, Range(2, 100), OnValueChanged("GenerateShape")]
+        [SerializeField, Range(4, 100), OnValueChanged("GenerateShape")]
         private int _latitude = 18;
 
         protected float _topRadius = 0.5f;
@@ -32,7 +32,7 @@ namespace hedCommon.procedural
             _topRadius = _radius;
             _latitude = (_latitude % 2 == 0) ? _latitude : _latitude + 1;
             _longitude = _nbSides;
-            _pivotRectification = -_height / 2f;
+            _pivotRectification = 0;
 
             Debug.Log("generate Capsule...");
             CalculateVerticle();
@@ -51,29 +51,36 @@ namespace hedCommon.procedural
             float radius = (_height < 0) ? -_radius : _radius;
 
             _vertices[0] = Vector3.up * radius + new Vector3(0, _height + _pivotRectification, 0);
-            for (int lat = 0; lat < _latitude; lat++)
+
+            float fakeLatitude = (_latitude - 2) * 2;
+            float a1 = 0;
+            float sin1 = 0;
+            float cos1 = 0;
+
+            for (int lat = 0; lat < _latitude - 2; lat++)
             {
-                float a1 = Mathf.PI * (float)(lat + 1) / (_latitude + 1);
-                float sin1 = Mathf.Sin(a1);
-                float cos1 = Mathf.Cos(a1);
-
-                for (int lon = 0; lon <= _longitude; lon++)
-                {
-                    float a2 = PI_2 * (float)(lon == _longitude ? 0 : lon) / _longitude;
-                    float sin2 = Mathf.Sin(a2);
-                    float cos2 = Mathf.Cos(a2);
-
-                    if (lat < _latitude / 2)
-                    {
-                        _vertices[lon + lat * (_longitude + 1) + 1] = new Vector3(sin1 * cos2, cos1, sin1 * sin2) * radius + new Vector3(0, _height + _pivotRectification, 0);
-                    }
-                    else
-                    {
-                        _vertices[lon + lat * (_longitude + 1) + 1] = new Vector3(sin1 * cos2, cos1, sin1 * sin2) * radius + new Vector3(0, _pivotRectification, 0);
-                    }
-                }
+                a1 = Mathf.PI * (float)(lat + 1) / (fakeLatitude + 1);
+                sin1 = Mathf.Sin(a1);
+                cos1 = Mathf.Cos(a1);
+                CalculateOneVerticeLongitude(radius, sin1, cos1, lat, _height);
             }
-            _vertices[_vertices.Length - 1] = Vector3.up * -radius + new Vector3(0, _pivotRectification, 0);
+
+            CalculateOneVerticeLongitude(radius, sin1, 0 + _pivotRectification, _latitude - 2, 0);
+            CalculateOneVerticeLongitude(radius, sin1, 0 + _pivotRectification, _latitude - 1, 0);
+
+            _vertices[_vertices.Length - 1] = Vector3.zero;
+        }
+
+        private void CalculateOneVerticeLongitude(float radius, float sin1, float cos1, int lat, float additionalHeight)
+        {
+            for (int lon = 0; lon <= _longitude; lon++)
+            {
+                float a2 = PI_2 * (float)(lon == _longitude ? 0 : lon) / _longitude;
+                float sin2 = Mathf.Sin(a2);
+                float cos2 = Mathf.Cos(a2);
+
+                _vertices[lon + lat * (_longitude + 1) + 1] = new Vector3(sin1 * cos2, cos1, sin1 * sin2) * radius + new Vector3(0, additionalHeight + _pivotRectification, 0);
+            }
         }
 
 
@@ -84,28 +91,14 @@ namespace hedCommon.procedural
         {
             _normales = new Vector3[_vertices.Length];
 
-            for (int lat = 0; lat < _latitude; lat++)
+            float fakeLatitude = (_latitude - 2) * 2;
+            for (int lat = 0; lat < _latitude - 2; lat++)
             {
-                float a1 = Mathf.PI * (float)(lat + 1) / (_latitude + 1);
-                float sin1 = Mathf.Sin(a1);
-                float cos1 = Mathf.Cos(a1);
-
                 for (int lon = 0; lon <= _longitude; lon++)
                 {
-                    float a2 = PI_2 * (float)(lon == _longitude ? 0 : lon) / _longitude;
-                    float sin2 = Mathf.Sin(a2);
-                    float cos2 = Mathf.Cos(a2);
+                    CalculateNormalLongitude(fakeLatitude, lat, lon);
 
-                    int indexVertice = lon + lat * (_longitude + 1) + 1;
-                    if (lat < _latitude / 2)
-                    {
-                        Vector3 vertice = _vertices[indexVertice];
-                        if (lat == (_latitude / 2) - 1)
-                        {
-                            vertice.y = _height + _pivotRectification;
-                        }
-                        _normales[indexVertice] = (vertice - new Vector3(0, _height + _pivotRectification, 0)).normalized;
-                    }
+                    /*
                     else
                     {
                         Vector3 vertice = _vertices[indexVertice];
@@ -113,12 +106,25 @@ namespace hedCommon.procedural
                         {
                             vertice.y = 0 + _pivotRectification;
                         }
-                        _normales[indexVertice] = (vertice - new Vector3(0, 0 + _pivotRectification, 0)).normalized;
+                        _normales[indexVertice] = (vertice).normalized;
                     }
+                    */
                 }
             }
             _normales[0] = Vector3.up;
             _normales[_normales.Length - 1] = Vector3.down;
+        }
+
+        private void CalculateNormalLongitude(float fakeLatitude, int lat, int lon)
+        {
+            int indexVertice = lon + lat * (_longitude + 1) + 1;
+
+            Vector3 vertice = _vertices[indexVertice];
+            if (lat == (fakeLatitude / 2) - 1)
+            {
+                vertice.y = _height + _pivotRectification;
+            }
+            _normales[indexVertice] = (vertice - new Vector3(0, _height + _pivotRectification, 0)).normalized;
         }
 
         /// <summary>
