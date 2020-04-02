@@ -2,24 +2,29 @@
 using UnityEngine;
 using System.IO;
 using hedCommon.extension.editor;
+using System.Collections.Generic;
+using hedCommon.extension.runtime;
 
-namespace Parabox
+namespace hedCommon.tools
 {
-    /**
-	 *	An editor utility for easily creating symlinks in your project.
-	 *
-	 *	Adds a Menu item under `Assets/Create/Folder (Symlink)`, and 
-	 *	draws a small indicator in the Project view for folders that are
-	 *	symlinks.
-	 */
+    /// <summary>
+    /// An editor utility for easily creating symlinks in your project.
+    /// 
+    /// Adds a Menu item under `Assets/Create/Folder(Symlink)`, and
+    /// draws a small indicator in the Project view for folders that are
+    /// symlinks.
+    /// </summary>
     [InitializeOnLoad]
 	public static class ExtSymLink
 	{
 		// FileAttributes that match a junction folder.
 		const FileAttributes FOLDER_SYMLINK_ATTRIBS = FileAttributes.Directory | FileAttributes.ReparsePoint;
+        const FileAttributes FILE_SYMLINK_ATTRIBS = FileAttributes.Directory & FileAttributes.Archive;
 
-		// Style used to draw the symlink indicator in the project view.
-		private static GUIStyle _symlinkMarkerStyle = null;
+        private static List<string> _allSymLinksInProject = new List<string>();
+
+        // Style used to draw the symlink indicator in the project view.
+        private static GUIStyle _symlinkMarkerStyle = null;
 		private static GUIStyle symlinkMarkerStyle
 		{
 			get
@@ -27,25 +32,27 @@ namespace Parabox
 				if(_symlinkMarkerStyle == null)
 				{
 					_symlinkMarkerStyle = new GUIStyle(EditorStyles.label);
-                    _symlinkMarkerStyle.normal.textColor = Color.red;
+                    _symlinkMarkerStyle.normal.textColor = Color.blue;
 					_symlinkMarkerStyle.alignment = TextAnchor.MiddleRight;
 				}
 				return _symlinkMarkerStyle;
 			}
 		}
 
-		/**
-		 *	Static constructor subscribes to projectWindowItemOnGUI delegate.
-		 */
-		static ExtSymLink()
+        /// <summary>
+        /// Static constructor subscribes to projectWindowItemOnGUI delegate.
+        /// </summary>
+        static ExtSymLink()
 		{
 			EditorApplication.projectWindowItemOnGUI += OnProjectWindowItemGUI;
 		}
 
-		/**
-		 *	Draw a little indicator if folder is a symlink
-		 */
-		private static void OnProjectWindowItemGUI(string guid, Rect r)
+        /// <summary>
+        /// Draw a little indicator if folder is a symlink
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="r"></param>
+        private static void OnProjectWindowItemGUI(string guid, Rect r)
 		{
 			try
 			{
@@ -55,11 +62,17 @@ namespace Parabox
 				{
 					FileAttributes attribs = File.GetAttributes(path);
 
-					if((attribs & FOLDER_SYMLINK_ATTRIBS) == FOLDER_SYMLINK_ATTRIBS )
+					if ((attribs & FOLDER_SYMLINK_ATTRIBS) == FOLDER_SYMLINK_ATTRIBS )
                     {
 						GUI.Label(r, "<=>", symlinkMarkerStyle);
+                        _allSymLinksInProject.AddIfNotContain(path);
                     }
-				}
+                    else if ((attribs & FILE_SYMLINK_ATTRIBS) == FILE_SYMLINK_ATTRIBS && path.ContainIsPaths(_allSymLinksInProject))
+                    {
+                        GUI.Label(r, "* ", symlinkMarkerStyle);
+                    }
+
+                }
 			}
 			catch {}
 		}
