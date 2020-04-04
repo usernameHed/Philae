@@ -15,8 +15,6 @@ using UnityEngine.InputSystem;
 public class PhilaeLinker : AbstractLinker
 {
     [FoldoutGroup("Object")]
-    public TimeEditor TimeEditor;
-    [FoldoutGroup("Object")]
     public LoopUpdater LoopUpdater;
     [FoldoutGroup("Object")]
     public SoundManager SoundManager;

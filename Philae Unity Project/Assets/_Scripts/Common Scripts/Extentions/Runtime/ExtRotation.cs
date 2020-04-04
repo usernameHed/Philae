@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using hedCommon.time;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -67,30 +68,30 @@ namespace hedCommon.extension.runtime
             }
 
             //display [Pic 1] axis
-            //Debug.DrawLine(pivotPoint, pivotPoint + vectorDirector, new Color(1, 1, 1, 0.5f), 1.5f);
-            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, upNormalized, new Color(0, 1, 0, 0.2f));
-            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.ForwardFast(), new Color(0, 0, 1, 0.2f));
-            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.RightFast(), new Color(1, 0, 0, 0.2f));
+            Debug.DrawLine(pivotPoint, pivotPoint + vectorDirector, new Color(1, 1, 1, 0.5f), 1.5f);
+            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, upNormalized, new Color(0, 1, 0, 0.2f));
+            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.ForwardFast(), new Color(0, 0, 1, 0.2f));
+            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.RightFast(), new Color(1, 0, 0, 0.2f));
 
 
-            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, projectedForward, new Color(1, 0.92f, 0.016f, 0.2f), 0.15f);
-            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint + projectedForward, projectedUp, new Color(1, 0.92f, 0.016f, 0.2f), 0.15f);
+            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, projectedForward, new Color(1, 0.92f, 0.016f, 0.2f), 0.15f);
+            ExtDrawGuizmos.DebugArrowConstant(pivotPoint + projectedForward, projectedUp, new Color(1, 0.92f, 0.016f, 0.2f), 0.15f);
 
             //rotate matrix in x, y & z
             rotationMatrix = Matrix4x4.TRS(pivotPoint, constrainRotation * Quaternion.Euler(rotationAxis), Vector3.one);
             Vector3 finalPoint = rotationMatrix.MultiplyPoint3x4(new Vector3(0, distanceUp, distanceForward));
 
-            //Debug.DrawLine(pivotPoint, finalPoint, Color.green);
-            //ExtDrawGuizmos.DebugWireSphere(finalPoint, Color.green, 0.1f);
-            //
-            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.ForwardFast() * distanceForward, Color.yellow, 0.15f);
-            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint + rotationMatrix.ForwardFast() * distanceForward, projectedUp, Color.yellow, 0.15f);
-            //
-            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, upNormalized, Color.green);
-            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.ForwardFast(), Color.blue);
-            //ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.RightFast(), Color.red);
-            //
-            //ExtDrawGuizmos.DebugWireSphere(finalPoint, Color.green, 0.01f, 1.5f);
+            Debug.DrawLine(pivotPoint, finalPoint, Color.green);
+            ExtDrawGuizmos.DebugWireSphere(finalPoint, Color.green, 0.1f);
+            
+            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.ForwardFast() * distanceForward, Color.yellow, 0.15f);
+            ExtDrawGuizmos.DebugArrowConstant(pivotPoint + rotationMatrix.ForwardFast() * distanceForward, projectedUp, Color.yellow, 0.15f);
+            
+            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, upNormalized, Color.green);
+            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.ForwardFast(), Color.blue);
+            ExtDrawGuizmos.DebugArrowConstant(pivotPoint, rotationMatrix.RightFast(), Color.red);
+            
+            ExtDrawGuizmos.DebugWireSphere(finalPoint, Color.green, 0.01f, 1.5f);
             return finalPoint;
         }
 
@@ -234,7 +235,7 @@ namespace hedCommon.extension.runtime
             Quaternion finalHeadRotation = ExtRotation.TurrentLookRotationWithClampedAxis(referenceRotation, vectorDirectorToTarget, left, right, up, down);
             Quaternion smoothOrientation = Quaternion.RotateTowards(currentRotation,
                 finalHeadRotation,
-                maxDegreesPerSecond * Time.fixedDeltaTime);
+                maxDegreesPerSecond * TimeEditor.fixedDeltaTime);
 
             return (smoothOrientation);
         }

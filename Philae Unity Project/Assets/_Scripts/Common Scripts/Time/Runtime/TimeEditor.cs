@@ -21,32 +21,32 @@ namespace hedCommon.time
     /// In editor, you can set the timeScale to negative to backward time !
     /// but warning: doen't work in play mode
     /// </summary>
-    [ExecuteInEditMode]
-    public class TimeEditor : SingletonMono<TimeEditor>
+    [InitializeOnLoad]
+    public static class TimeEditor// : SingletonMono<TimeEditor>
     {
         //private float _editModeLastUpdate;   //the last time the controller was updated while in Edit Mode
-        private float _timeScale = 1f;       //current timeScale in both editor & play mode
-        private float _currentTime;          //current time timeScale-dependent (like Time.time but in editMode)
-        private float _currentTimeIndependentTimeScale;  //current time timeScale-independent (like Time.unscaledTime but in editMode)
-        private float _currentDeltaTime;     //current deltaTime timeScale-dependent (like Time.deltaTime but in editMode)
-        private float _currentUnscaledDeltaTime; //current deltaTime timeScale-independent (like Time.unscaledDeltaTime but in editMode)
-        private float _smoothDeltaTime;      //current deltatime, smoothed X time
-        private float _smoothUnscaledDeltaTime;      //current deltatime, smoothed X time
+        private static float _timeScale = 1f;       //current timeScale in both editor & play mode
+        private static float _currentTime;          //current time timeScale-dependent (like Time.time but in editMode)
+        private static float _currentTimeIndependentTimeScale;  //current time timeScale-independent (like Time.unscaledTime but in editMode)
+        private static float _currentDeltaTime;     //current deltaTime timeScale-dependent (like Time.deltaTime but in editMode)
+        private static float _currentUnscaledDeltaTime; //current deltaTime timeScale-independent (like Time.unscaledDeltaTime but in editMode)
+        private static float _smoothDeltaTime;      //current deltatime, smoothed X time
+        private static float _smoothUnscaledDeltaTime;      //current deltatime, smoothed X time
 
-        private Queue<float> _olfDeltaTimes = new Queue<float>();         //list of all previousDeltaTime;
-        private Queue<float> _olfUnscaledDeltaTimes = new Queue<float>();         //list of all previousDeltaTime;
+        private static Queue<float> _olfDeltaTimes = new Queue<float>();         //list of all previousDeltaTime;
+        private static Queue<float> _olfUnscaledDeltaTimes = new Queue<float>();         //list of all previousDeltaTime;
 
-        private readonly int _maxAmountDeltaTimeSaved = 10; //amount of previous deltaTime to save for the smoothDeltaTime algorythm
+        private static readonly int _maxAmountDeltaTimeSaved = 10; //amount of previous deltaTime to save for the smoothDeltaTime algorythm
 
         //don't let the deltaTime get higher than 1/30: if you have low fps (bellow 30),
         //the game start to go in slow motion.
         //if you don't want this behavior, put the value at 0.4 for exemple as precaution, we don't
         //want the player, after a huge spike of 5 seconds, to travel walls !
-        private readonly float _maxSizeDeltaTime = 0.033f;
+        private static readonly float _maxSizeDeltaTime = 0.033f;
         //private readonly float _maxSizeDeltaTime = 0.033f * 1000;
 
-        private bool _isInHyperSampling = false;
-        public bool IsInHyperSampling { get { return (_isInHyperSampling); } }
+        private static bool _isInHyperSampling = false;
+        public static bool IsInHyperSampling { get { return (_isInHyperSampling); } }
 
         #region public properties
 
@@ -57,24 +57,24 @@ namespace hedCommon.time
         {
             get
             {
-                if (Instance == null)
+                if (Application.isPlaying)
                 {
                     return (Time.timeScale);
                 }
-                return (Instance._timeScale);
+                return (_timeScale);
             }
             set
             {
-                if (Instance == null)
+                if (Application.isPlaying)
                 {
                     Time.timeScale = value;
                     return;
                 }
 
-                if (value != Instance._timeScale)
+                if (value != _timeScale)
                 {
-                    Instance._timeScale = value;
-                    Time.timeScale = Mathf.Max(0, Instance._timeScale);
+                    _timeScale = value;
+                    Time.timeScale = Mathf.Max(0, _timeScale);
                 }
             }
         }
@@ -85,11 +85,11 @@ namespace hedCommon.time
         {
             get
             {
-                if (Instance == null)
+                if (Application.isPlaying)
                 {
                     return (Time.time);
                 }
-                return (Instance._currentTime);
+                return (_currentTime);
             }
         }
 
@@ -116,11 +116,11 @@ namespace hedCommon.time
         {
             get
             {
-                if (Instance == null)
+                if (Application.isPlaying)
                 {
                     return (Time.unscaledTime);
                 }
-                return (Instance._currentTimeIndependentTimeScale);
+                return (_currentTimeIndependentTimeScale);
             }
         }
 
@@ -131,11 +131,11 @@ namespace hedCommon.time
         {
             get
             {
-                if (Instance == null)
+                if (Application.isPlaying)
                 {
                     return (Time.deltaTime);
                 }
-                return (Instance._currentDeltaTime);
+                return (_currentDeltaTime);
             }
         }
 
@@ -146,7 +146,11 @@ namespace hedCommon.time
         {
             get
             {
-                return (Instance._currentUnscaledDeltaTime);
+                if (Application.isPlaying)
+                {
+                    return (Time.unscaledDeltaTime);
+                }
+                return (_currentUnscaledDeltaTime);
             }
         }
 
@@ -157,16 +161,25 @@ namespace hedCommon.time
         {
             get
             {
-                if (Instance._timeScale == 0)
+                if (Application.isPlaying)
+                {
+                    return (Time.smoothDeltaTime);
+                }
+
+                if (_timeScale == 0)
                 {
                     return (0);
                 }
 
-                return (Instance._smoothDeltaTime);
+                return (_smoothDeltaTime);
             }
         }
 
-        public static float DeltaTimeEditorAndRunTime
+        /// <summary>
+        /// get the fixedDeltaTime  in editor OR play mode, the method is different
+        /// in play mode
+        /// </summary>
+        public static float fixedDeltaTime
         {
             get
             {
@@ -218,7 +231,11 @@ namespace hedCommon.time
         {
             get
             {
-                return (Instance._smoothUnscaledDeltaTime);
+                if (Application.isPlaying)
+                {
+                    return (Time.smoothDeltaTime);
+                }
+                return (_smoothUnscaledDeltaTime);
             }
         }
         #endregion
@@ -231,63 +248,29 @@ namespace hedCommon.time
         /// 
         /// Then, Start the timer, this timer will increase every frame (in play or in editor mode), like the normal Time
         /// </summary>
-        private void OnEnable()
+        static TimeEditor()
         {
-#if UNITY_EDITOR
+            Debug.Log("start here");
             EditorApplication.update += EditorUpdate;
-#endif
+
             timeScale = 1;
             StartCoolDown();
         }
-
-        protected void OnDisable()
-        {
-#if UNITY_EDITOR
-            EditorApplication.update -= EditorUpdate;
-#endif
-        }
-
-#if UNITY_EDITOR
         /// <summary>
         /// called every editorUpdate, tell unity to execute the Update() method
         /// even if no event are triggered in the scene
         /// in the scene.
+        /// 
+        /// called every frame in play and in editor, thanks to EditorApplication.QueuePlayerLoopUpdate();
+        /// add to the current time, then save the current time for later.
         /// </summary>
-        private void EditorUpdate()
+        private static void EditorUpdate()
         {
             if (!Application.isPlaying)
             {
                 EditorApplication.QueuePlayerLoopUpdate();
             }
-        }
-#endif
 
-        /// <summary>
-        /// at start, we initialize the current time
-        /// </summary>
-        public void StartCoolDown(bool hyperSampling = false)
-        {
-            _isInHyperSampling = hyperSampling;
-            _currentTime = 0;
-            _currentTimeIndependentTimeScale = 0;
-        }
-
-        public void StopHyperSampling()
-        {
-            _isInHyperSampling = false;
-        }
-
-        public void AdvanceInHyperSampling(float deltaTime = 0.016f)
-        {
-            AdvanceFromOneFrame(deltaTime);
-        }
-
-        /// <summary>
-        /// called every frame in play and in editor, thanks to EditorApplication.QueuePlayerLoopUpdate();
-        /// add to the current time, then save the current time for later.
-        /// </summary>
-        private void Update()
-        {
             if (_isInHyperSampling)
             {
                 return;
@@ -295,13 +278,34 @@ namespace hedCommon.time
             AdvanceFromOneFrame(Time.unscaledDeltaTime);
         }
 
-        private void AdvanceFromOneFrame(float deltaTime)
+        /// <summary>
+        /// at start, we initialize the current time
+        /// </summary>
+        public static void StartCoolDown(bool hyperSampling = false)
+        {
+            _isInHyperSampling = hyperSampling;
+            _currentTime = 0;
+            _currentTimeIndependentTimeScale = 0;
+        }
+
+        public static void StopHyperSampling()
+        {
+            _isInHyperSampling = false;
+        }
+
+        public static void AdvanceInHyperSampling(float deltaTime = 0.016f)
+        {
+            AdvanceFromOneFrame(deltaTime);
+        }
+
+
+        private static void AdvanceFromOneFrame(float deltaTime)
         {
             CalculateDeltaTimes(deltaTime);
             AdvanceTime();
         }
 
-        private void CalculateDeltaTimes(float deltaTime)
+        private static void CalculateDeltaTimes(float deltaTime)
         {
             _currentUnscaledDeltaTime = deltaTime;
             _currentDeltaTime = _currentUnscaledDeltaTime * timeScale;
@@ -315,7 +319,7 @@ namespace hedCommon.time
         /// Don't allow fps to drop bellow _maxSizeDeltaTime (30FPS for 0.033f)
         /// if we are in hyperSampling, don't clamp.
         /// </summary>
-        private void ClampDeltaTime()
+        private static void ClampDeltaTime()
         {
             if (!_isInHyperSampling)
             {
@@ -326,7 +330,7 @@ namespace hedCommon.time
         /// <summary>
         /// Set and manage the smoothdeltaTime, by adding the average of the 'n' previous deltaTimes together
         /// </summary>
-        private void SetSmoothDeltaTimes()
+        private static void SetSmoothDeltaTimes()
         {
             float sumOfPreviousDeltaTimes = _olfDeltaTimes.GetSum();
             float sumOfPreviousUnslacedDeltaTime = _olfUnscaledDeltaTimes.GetSum();
@@ -352,7 +356,7 @@ namespace hedCommon.time
         /// <summary>
         /// called every frame, add delta time to the current timer, with or not timeScale
         /// </summary>
-        private void AdvanceTime()
+        private static void AdvanceTime()
         {
             _currentTime += _currentDeltaTime;
             _currentTimeIndependentTimeScale += _currentUnscaledDeltaTime;

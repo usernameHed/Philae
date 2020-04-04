@@ -94,7 +94,7 @@ namespace hedCommon.splines
             _offsetAngle = angle;
             if (forceUpdate)
             {
-                CustomUpdate(false, TimeEditor.DeltaTimeEditorAndRunTime);
+                CustomUpdate(false, TimeEditor.fixedDeltaTime);
             }
         }
 
@@ -112,7 +112,7 @@ namespace hedCommon.splines
             _offsetRadius = radius;
             if (forceUpdate)
             {
-                CustomUpdate(false, TimeEditor.DeltaTimeEditorAndRunTime);
+                CustomUpdate(false, TimeEditor.fixedDeltaTime);
             }
         }
 
@@ -658,7 +658,7 @@ namespace hedCommon.splines
             _percentInSpline = percent;
             if (update)
             {
-                CustomUpdate(false, TimeEditor.DeltaTimeEditorAndRunTime);
+                CustomUpdate(false, TimeEditor.fixedDeltaTime);
                 _oldPosition = ToMove.transform.position;
             }
         }
@@ -683,7 +683,7 @@ namespace hedCommon.splines
 
             if (update)
             {
-                CustomUpdate(false, TimeEditor.DeltaTimeEditorAndRunTime);
+                CustomUpdate(false, TimeEditor.fixedDeltaTime);
                 _oldPosition = ToMove.transform.position;
             }
         }
@@ -833,7 +833,7 @@ namespace hedCommon.splines
         private void PercentChangedFromInpector()
         {
             _currentDist = _curvySpline.TFToDistance(_percentInSpline);
-            CustomUpdate(true, TimeEditor.DeltaTimeEditorAndRunTime);
+            CustomUpdate(true, TimeEditor.fixedDeltaTime);
         }
 
         /// <summary>
@@ -843,7 +843,7 @@ namespace hedCommon.splines
         public void ChangeBaseOffsetUp(float baseOfsetUp)
         {
             BaseOffsetUp = baseOfsetUp;
-            CustomUpdate(false, TimeEditor.DeltaTimeEditorAndRunTime);
+            CustomUpdate(false, TimeEditor.fixedDeltaTime);
         }
 
         /// <summary>
@@ -898,7 +898,7 @@ namespace hedCommon.splines
             }
             if (MoveByItSelfInEditor)
             {
-                Move(TimeEditor.DeltaTimeEditorAndRunTime);
+                Move(TimeEditor.fixedDeltaTime);
             }
 #endif
 

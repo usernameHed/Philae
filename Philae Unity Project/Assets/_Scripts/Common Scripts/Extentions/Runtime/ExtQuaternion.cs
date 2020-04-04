@@ -256,9 +256,9 @@ namespace hedCommon.extension.runtime
             float y = deriv.y;
             float x = deriv.x;
 
-            currentDamp.z = ExtQuaternion.SmoothDampAngle(lookAtCurrentVector.z, lookAtWantedVector.z, ref z, time.z, maxTime.z, TimeEditor.DeltaTimeEditorAndRunTime);
-            currentDamp.y = ExtQuaternion.SmoothDampAngle(lookAtCurrentVector.y, lookAtWantedVector.y, ref y, time.y, maxTime.y, TimeEditor.DeltaTimeEditorAndRunTime);
-            currentDamp.x = ExtQuaternion.SmoothDampAngle(lookAtCurrentVector.x, lookAtWantedVector.x, ref x, time.x, maxTime.x, TimeEditor.DeltaTimeEditorAndRunTime);
+            currentDamp.z = ExtQuaternion.SmoothDampAngle(lookAtCurrentVector.z, lookAtWantedVector.z, ref z, time.z, maxTime.z, TimeEditor.fixedDeltaTime);
+            currentDamp.y = ExtQuaternion.SmoothDampAngle(lookAtCurrentVector.y, lookAtWantedVector.y, ref y, time.y, maxTime.y, TimeEditor.fixedDeltaTime);
+            currentDamp.x = ExtQuaternion.SmoothDampAngle(lookAtCurrentVector.x, lookAtWantedVector.x, ref x, time.x, maxTime.x, TimeEditor.fixedDeltaTime);
 
             deriv = new Vector3(x, y, z);
 

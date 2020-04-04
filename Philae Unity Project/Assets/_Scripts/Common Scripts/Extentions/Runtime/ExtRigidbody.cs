@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using hedCommon.time;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace hedCommon.extension.runtime
             Debug.DrawRay(rb.transform.position, dir.normalized * 0.5f, Color.cyan, 0.1f);
             //rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
             //Debug.Log("ici ajout petite force");
-            rb.velocity += dir * Physics.gravity.y * (force - 1) * Time.fixedDeltaTime;
+            rb.velocity += dir * Physics.gravity.y * (force - 1) * TimeEditor.fixedDeltaTime;
         }
 
         /// <summary>
@@ -24,7 +25,7 @@ namespace hedCommon.extension.runtime
         public static void AccelerateTo(this Rigidbody body, Vector3 targetVelocity, float maxAccel, ForceMode forceMode = ForceMode.Acceleration)
         {
             Vector3 deltaV = targetVelocity - body.velocity;
-            Vector3 accel = deltaV / Time.fixedDeltaTime;
+            Vector3 accel = deltaV / TimeEditor.fixedDeltaTime;
 
             if (accel.sqrMagnitude > maxAccel * maxAccel)
                 accel = accel.normalized * maxAccel;

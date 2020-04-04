@@ -19,13 +19,11 @@ namespace philae.editor.editorGlobal
 
         private TinyEditorWindowSceneView _actionPanel;
         private CurrentEditorGlobal _currentEditorGlobal;
-        private TimeEditor _timeEditor;
 
         public void Init(PhilaeLinker gameLinker, CurrentEditorGlobal currentEditorGlobal)
         {
             _currentEditorGlobal = currentEditorGlobal;
             _gameLinker = gameLinker;
-            _timeEditor = _gameLinker.TimeEditor;
 
             LoadAllSceneViewPic();
 
@@ -45,14 +43,16 @@ namespace philae.editor.editorGlobal
             _actionPanel.IsMinimisable = true;
         }
 
-        private void DisplayActionButtons()
-        {
-            TimeEditor.timeScale = ExtGUIFloatFields.FloatField(TimeEditor.timeScale, _timeEditor, out bool valueHasChanged, "TimeScale: ", "", 0, 1, true);
-        }
 
         public void TinyUpdate()
         {
             _actionPanel.ShowEditorWindow(DisplayActionButtons, SceneView.currentDrawingSceneView, Event.current);
+        }
+
+        private void DisplayActionButtons()
+        {
+            GUILayout.Label("action ?");
+            //TimeEditor.timeScale = ExtGUIFloatFields.FloatField(TimeEditor.timeScale, _timeEditor, out bool valueHasChanged, "TimeScale: ", "", 0, 1, true);
         }
 
         public void LateOwnGUI()

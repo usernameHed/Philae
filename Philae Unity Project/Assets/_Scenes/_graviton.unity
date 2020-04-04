@@ -1371,7 +1371,7 @@ PrefabInstance:
     - target: {fileID: 5392576495997722227, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
       propertyPath: _gravitonZoneLocalizer.ZonesWhereWeAreInside.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5392576495997722227, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
@@ -1386,7 +1386,7 @@ PrefabInstance:
     - target: {fileID: 5392576495997722227, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
       propertyPath: _gravitonZoneLocalizer._isInsideAZone
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5392576495997722227, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
@@ -1406,17 +1406,17 @@ PrefabInstance:
     - target: {fileID: 5392576497265070844, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -105.704994
+      value: -111.74814
       objectReference: {fileID: 0}
     - target: {fileID: 5392576497265070844, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 55.912613
+      value: 49.98519
       objectReference: {fileID: 0}
     - target: {fileID: 5392576497265070844, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.146391
+      value: 15.111387
       objectReference: {fileID: 0}
     - target: {fileID: 5392576497265070844, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}

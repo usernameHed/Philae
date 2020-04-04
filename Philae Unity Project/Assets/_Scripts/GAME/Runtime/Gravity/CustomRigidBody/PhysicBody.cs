@@ -1,4 +1,5 @@
 ﻿using hedCommon.extension.runtime;
+using hedCommon.time;
 using philae.gravity.graviton;
 using Sirenix.OdinInspector;
 using System;
@@ -271,7 +272,7 @@ namespace philae.gravity.physicsBody
             else
             {
                 Vector3 accelerationVector = force / Mass;
-                _velocityVector += accelerationVector * Time.fixedDeltaTime;
+                _velocityVector += accelerationVector * TimeEditor.fixedDeltaTime;
             }
         }
 
@@ -294,7 +295,7 @@ namespace philae.gravity.physicsBody
             }
             else
             {
-                _velocityVector += force * Time.fixedDeltaTime;
+                _velocityVector += force * TimeEditor.fixedDeltaTime;
             }
         }
 
@@ -369,7 +370,7 @@ namespace philae.gravity.physicsBody
 #if UNITY_EDITOR
                 Undo.RecordObject(transform, "cusotm physics move");
 #endif
-                transform.position += _velocityVector * Time.fixedDeltaTime;
+                transform.position += _velocityVector * TimeEditor.fixedDeltaTime;
                 ConstrainPosition.ApplyConstraint(ConstrainPositions, transform);
             }
         }
