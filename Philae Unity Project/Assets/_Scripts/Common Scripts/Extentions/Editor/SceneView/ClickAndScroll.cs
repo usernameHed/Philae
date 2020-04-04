@@ -14,7 +14,7 @@ namespace hedCommon.extension.editor.sceneView
     [InitializeOnLoad]
     public static class ClickAndScroll
     {
-        private const int MAX_DEPTH = 20;
+        private const int MAX_DEPTH = 40;
         private static List<GameObject> _underneethGameObjects = new List<GameObject>(MAX_DEPTH);
         private static MethodInfo _internalPickClosestGameObject;
         private static int _currentIndex = 0;

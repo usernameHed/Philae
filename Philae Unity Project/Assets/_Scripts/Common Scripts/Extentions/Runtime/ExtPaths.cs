@@ -154,6 +154,12 @@ namespace hedCommon.extension.runtime
             return (false);
         }
 
+        /// <summary>
+        /// is subPath is containted in any of the list of paths ?
+        /// </summary>
+        /// <param name="subPath"></param>
+        /// <param name="paths"></param>
+        /// <returns>true if subPath exist in at least one of the list of paths</returns>
         public static bool ContainIsPaths(this string subPath, List<string> paths)
         {
             for (int i = 0; i < paths.Count; i++)
