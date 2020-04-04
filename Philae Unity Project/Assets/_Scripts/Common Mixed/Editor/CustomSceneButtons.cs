@@ -1,6 +1,7 @@
 ﻿using hedCommon.extension.editor;
 using hedCommon.extension.runtime;
 using hedCommon.saveLastSelection;
+using hedCommon.sceneWorkflow;
 using philae.architecture;
 using philae.editor.editorGlobal;
 using System.Collections;
@@ -21,7 +22,6 @@ namespace hedCommon.mixed
         private Texture _wheelTexture;
         private Texture _viperTexture;
         private RefGamesAsset _refGameAsset;
-        //private SaveLastSelections _saveLastSelections;
 
         public void InitTextures()
         {
@@ -29,7 +29,6 @@ namespace hedCommon.mixed
             _wheelTexture = (Texture)EditorGUIUtility.Load("SceneView/wheel.png");
             _viperTexture = (Texture)EditorGUIUtility.Load("SceneView/viper.png");
             _refGameAsset = ExtFind.GetAssetByGenericType<RefGamesAsset>();
-            //_saveLastSelections = new SaveLastSelections();
         }
 
         public void OnLeftToolbarGUI()
@@ -76,12 +75,24 @@ namespace hedCommon.mixed
                                 }
                             }
                             _refGameAsset.LastIndexUsed = i;
-                            CurrentEditorGlobal.LoadSceneByIndex(i);
+                            _refGameAsset.LoadScenesByIndex(i, true, OnLoadedScenes, false);
                         }
                     }
                 }
             }
             GUILayout.FlexibleSpace();
         }
+
+        private void OnLoadedScenes(SceneAssetLister lister)
+        {
+            Debug.Log("all scenes are loaded here, we can now initialize our game");
+            if (Application.isPlaying)
+            {
+                Debug.Log("initialize in play mode & build");
+                AbstractLinker.Instance?.InitFromPlay();
+            }
+        }
+
+        //end class
     }
 }

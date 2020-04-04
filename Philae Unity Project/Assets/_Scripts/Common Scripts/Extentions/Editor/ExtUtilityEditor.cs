@@ -109,7 +109,7 @@ namespace hedCommon.extension.editor
 
         
 
-        [MenuItem("PERSO/Ext/CreateEmptyParent #e")]
+        [MenuItem("TOOLS/Ext/CreateEmptyParent #e")]
         public static void CreateEmptyParent()
         {
             if (!Selection.activeGameObject)
@@ -126,7 +126,7 @@ namespace hedCommon.extension.editor
             ExtReflection.SetExpandedRecursive(newParent, true);
         }
 
-        [MenuItem("PERSO/Ext/DeleteEmptyParent %&e")]
+        [MenuItem("TOOLS/Ext/DeleteEmptyParent %&e")]
         public static void DeleteEmptyParent()
         {
             if (!Selection.activeGameObject)

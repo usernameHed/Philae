@@ -833,6 +833,7 @@ namespace hedCommon.extension.runtime
             DebugArrow(position, direction, Color.white, duration, depthTest);
         }
 
+#if UNITY_EDITOR
         /// <summary>
         /// 	- Debugs a capsule.
         /// </summary>
@@ -898,12 +899,38 @@ namespace hedCommon.extension.runtime
             }
         }
 
+
+
         public static void DebugCapsuleFromInsidePoint(Vector3 p1, Vector3 p2, Color color, float radius = 1, float duration = 0, bool depthTest = true, bool drawPoint = true)
         {
             Vector3 extremityP1 = p1 + (p1 - p2).normalized * radius;
             Vector3 extremityP2 = p2 - (p1 - p2).normalized * radius;
             DebugCapsule(extremityP1, extremityP2, color, radius, duration, depthTest, drawPoint);
         }
+
+        /// <summary>
+        /// 	- Debugs a capsule.
+        /// </summary>
+        /// <param name='start'>
+        /// 	- The position of one end of the capsule.
+        /// </param>
+        /// <param name='end'>
+        /// 	- The position of the other end of the capsule.
+        /// </param>
+        /// <param name='radius'>
+        /// 	- The radius of the capsule.
+        /// </param>
+        /// <param name='duration'>
+        /// 	- How long to draw the capsule.
+        /// </param>
+        /// <param name='depthTest'>
+        /// 	- Whether or not the capsule should be faded when behind other objects.
+        /// </param>
+        public static void DebugCapsule(Vector3 start, Vector3 end, float radius = 1, float duration = 0, bool depthTest = true)
+        {
+            DebugCapsule(start, end, Color.white, radius, duration, depthTest);
+        }
+
 
         public static void DebugHalfCapsule(Vector3 start, Vector3 end, Color color, float radius = 1, float duration = 0, bool depthTest = true, bool drawPoint = true)
         {
@@ -950,29 +977,8 @@ namespace hedCommon.extension.runtime
             Vector3 extremityP2 = p2 - (p1 - p2).normalized * radius;
             DebugHalfCapsule(extremityP1, extremityP2, color, radius, duration, depthTest, drawPoint);
         }
+#endif
 
-        /// <summary>
-        /// 	- Debugs a capsule.
-        /// </summary>
-        /// <param name='start'>
-        /// 	- The position of one end of the capsule.
-        /// </param>
-        /// <param name='end'>
-        /// 	- The position of the other end of the capsule.
-        /// </param>
-        /// <param name='radius'>
-        /// 	- The radius of the capsule.
-        /// </param>
-        /// <param name='duration'>
-        /// 	- How long to draw the capsule.
-        /// </param>
-        /// <param name='depthTest'>
-        /// 	- Whether or not the capsule should be faded when behind other objects.
-        /// </param>
-        public static void DebugCapsule(Vector3 start, Vector3 end, float radius = 1, float duration = 0, bool depthTest = true)
-        {
-            DebugCapsule(start, end, Color.white, radius, duration, depthTest);
-        }
 
         #endregion
 
@@ -1301,6 +1307,7 @@ namespace hedCommon.extension.runtime
             DrawLocalCube(space, size, Color.white, center);
         }
 
+#if UNITY_EDITOR
         /// <summary>
         /// 	- Draws a circle.
         /// </summary>
@@ -1416,6 +1423,7 @@ namespace hedCommon.extension.runtime
         {
             DrawCircle(position, Vector3.up, Color.white, radius);
         }
+
 
         //Wiresphere already exists
 
@@ -1700,7 +1708,7 @@ namespace hedCommon.extension.runtime
         {
             Debug.LogWarning("no timplemented");
         }
-
+#endif
         #endregion
 
         #region DebugFunctions

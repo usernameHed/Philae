@@ -69,13 +69,13 @@ namespace hedCommon.extension.editor
             get { return _layoutsPath; }
         }
 
-        [MenuItem("PERSO/Layouts/Save Layout")]
+        [MenuItem("TOOLS/Layouts/Save Layout")]
         static void SaveLayoutHack()
         {
             // Saving the current layout to an asset
             ExtLayout.SaveLayoutToAsset("Assets/Editor Default Resources/Layouts/#Race.wlt");
         }
-        [MenuItem("PERSO/Layouts/Load Layout")]
+        [MenuItem("TOOLS/Layouts/Load Layout")]
         static void LoadLayoutHack()
         {
             // Loading layout from an asset

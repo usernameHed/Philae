@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace philae.architecture
+namespace hedCommon.sceneWorkflow
 {
-    [CreateAssetMenu(fileName = "SceneAssetLister", menuName = "")]
+    [CreateAssetMenu(fileName = "TOOLS/SceneAssetLister", menuName = "")]
     public class SceneAssetLister : RaceScriptableObject
     {
         public List<ExtSceneReference> SceneToLoad = new List<ExtSceneReference>();

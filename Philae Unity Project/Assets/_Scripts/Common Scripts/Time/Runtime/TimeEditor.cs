@@ -1,5 +1,4 @@
 ﻿using hedCommon.extension.runtime;
-using hedCommon.singletons;
 using System.Collections.Generic;
 #if UNITY_EDITOR
     using UnityEditor;
@@ -21,8 +20,10 @@ namespace hedCommon.time
     /// In editor, you can set the timeScale to negative to backward time !
     /// but warning: doen't work in play mode
     /// </summary>
+#if UNITY_EDITOR
     [InitializeOnLoad]
-    public static class TimeEditor// : SingletonMono<TimeEditor>
+#endif
+    public static class TimeEditor
     {
         //private float _editModeLastUpdate;   //the last time the controller was updated while in Edit Mode
         private static float _timeScale = 1f;       //current timeScale in both editor & play mode
@@ -251,11 +252,16 @@ namespace hedCommon.time
         static TimeEditor()
         {
             Debug.Log("start here");
-            EditorApplication.update += EditorUpdate;
+            _timeScale = 1f;
+            Time.timeScale = 1f;
 
-            timeScale = 1;
+#if UNITY_EDITOR
+            EditorApplication.update += EditorUpdate;
             StartCoolDown();
+#endif
         }
+
+#if UNITY_EDITOR
         /// <summary>
         /// called every editorUpdate, tell unity to execute the Update() method
         /// even if no event are triggered in the scene
@@ -277,6 +283,7 @@ namespace hedCommon.time
             }
             AdvanceFromOneFrame(Time.unscaledDeltaTime);
         }
+#endif
 
         /// <summary>
         /// at start, we initialize the current time

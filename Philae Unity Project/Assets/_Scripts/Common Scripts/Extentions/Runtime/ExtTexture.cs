@@ -25,7 +25,7 @@ namespace hedCommon.extension.runtime
             Texture2D texture = (Texture2D)EditorGUIUtility.Load("SceneView/" + imageName + ".png");
             return (texture);
         }
-#endif
+
 
         public static Texture TakeScreenCapture(Rect rect)
         {
@@ -43,6 +43,7 @@ namespace hedCommon.extension.runtime
 
             return texture;
         }
+#endif
 
         /// <summary>
         /// Saves a texture to PNG.

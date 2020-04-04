@@ -188,7 +188,7 @@ namespace hedCommon.saveLastSelection
             }
             else
             {
-                ExtSelection.Ping(_saveLastSelectionsEditorWindow.LastSelectedObject);
+                EditorGUIUtility.PingObject(_saveLastSelectionsEditorWindow.LastSelectedObject);
             }
         }
 
@@ -235,7 +235,7 @@ namespace hedCommon.saveLastSelection
                 }
 
                 GUI.color = (_saveLastSelectionsEditorWindow.LastSelectedObject == _saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon[i]) ? Color.green : Color.white;
-                using (ExtGUIScopes.Horiz())
+                using (HorizontalScope horizontalScope = new HorizontalScope())
                 {
                     if (ExtGUIButtons.ButtonImage("ping", GUILayout.Width(17), GUILayout.Height(17)))
                     {
@@ -249,7 +249,7 @@ namespace hedCommon.saveLastSelection
             }
 
             GUI.color = Color.white;
-            ExtGUI.HorizontalLine();
+            EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
 
             EditorGUI.BeginDisabledGroup(_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0);
             {

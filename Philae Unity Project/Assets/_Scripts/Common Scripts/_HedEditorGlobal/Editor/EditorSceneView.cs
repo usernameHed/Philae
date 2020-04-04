@@ -44,18 +44,9 @@ namespace hedCommon.editorGlobal
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static ExtUtilityEditor.HitSceneView GetEditorSceneViewHit()
-        {
-            return (_hitScene);
-        }
-
-        /// <summary>
         /// here we just show or hide the content of the EditorGlobal
         /// </summary>
-        [MenuItem("PERSO/Enable Global Editor")]
+        [MenuItem("TOOLS/Enable Global Editor")]
         public static void ShowOrHideGlobalEditorGUI()
         {
             if (!EditorPrefs.HasKey(IS_EDITOR_SHOWED))
@@ -77,6 +68,7 @@ namespace hedCommon.editorGlobal
         /// </summary>
         private static void CustomEnable()
         {
+            EditorApplication.update += OnUpdate;
             SceneView.duringSceneGui += OnScene;
             EditorApplication.hierarchyChanged += OnHierarchyChanged;
             _isEnabled = true;
@@ -94,6 +86,29 @@ namespace hedCommon.editorGlobal
             Debug.Log("Scene GUI : Disabled");
             _isEnabled = false;
             _editorGlobal.Disable();
+        }
+
+        /// <summary>
+        /// setup EditorGLobal
+        /// </summary>
+        private static void OnUpdate()
+        {
+            //here don't need to try in play ?
+            SetupGlobalScriptIfNull();
+
+            if (_editorGlobal.IsInit())
+            {
+                //if the key doen't exist, create it
+                if (!EditorPrefs.HasKey(IS_EDITOR_SHOWED))
+                {
+                    EditorPrefs.SetBool(IS_EDITOR_SHOWED, true);
+                }
+            }
+        }
+
+        private static void OnHierarchyChanged()
+        {
+            _editorGlobal.OnHierarchyChanged();
         }
 
         /// <summary>
@@ -122,6 +137,45 @@ namespace hedCommon.editorGlobal
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// called in OnGUI of the editor
+        /// </summary>
+        /// <param name="sceneview"></param>
+        private static void OnScene(SceneView sceneview)
+        {
+            if (_editorGlobal.IsInit() && EditorPrefs.GetBool(IS_EDITOR_SHOWED))
+            {
+                OwnGUI();
+            }
+        }
+
+        /// <summary>
+        /// call the good functions in OnGUI.
+        /// - Manage the over of an object: save the last object we over in the scene view
+        /// - call the main EditorGLobal UI
+        /// We need to save the last color, and then set it back, like every tools editor should do
+        /// </summary>
+        private static void OwnGUI()
+        {
+            if (ExtPrefabs.IsInPrefabStage())
+            {
+                return;
+            }
+
+            _currentSceneView = SceneView.currentDrawingSceneView;
+            _currentEvent = Event.current;
+
+            _oldColor = GUI.backgroundColor;
+
+            SetCurrentOverObject();
+
+            _editorGlobal.OwnGUISetups(ref _hitScene, ref _mouseEditorInfo);
+
+            EventInput();
+
+            LateOwnGUI();
         }
 
         /// <summary>
@@ -156,38 +210,6 @@ namespace hedCommon.editorGlobal
         }
 
         /// <summary>
-        /// call the good functions in OnGUI.
-        /// - Manage the over of an object: save the last object we over in the scene view
-        /// - call the main EditorGLobal UI
-        /// We need to save the last color, and then set it back, like every tools editor should do
-        /// </summary>
-        private static void OwnGUI()
-        {
-            if (ExtPrefabs.IsInPrefabStage())
-            {
-                return;
-            }
-
-            _currentSceneView = SceneView.currentDrawingSceneView;
-            _currentEvent = Event.current;
-
-            _oldColor = GUI.backgroundColor;
-
-            SetCurrentOverObject();
-
-            _editorGlobal.OwnGUISetups(ref _hitScene, ref _mouseEditorInfo);
-
-            EventInput();
-
-            LateOwnGUI();
-        }
-
-        private static void OnHierarchyChanged()
-        {
-            _editorGlobal.OnHierarchyChanged();
-        }
-
-        /// <summary>
         /// do the ending process of the OwnGUI
         /// </summary>
         private static void LateOwnGUI()
@@ -198,29 +220,14 @@ namespace hedCommon.editorGlobal
         }
 
         /// <summary>
-        /// called in OnGUI of the editor
+        /// 
         /// </summary>
-        /// <param name="sceneview"></param>
-        private static void OnScene(SceneView sceneview)
+        /// <returns></returns>
+        public static ExtUtilityEditor.HitSceneView GetEditorSceneViewHit()
         {
-            //here don't need to try in play ?
-            SetupGlobalScriptIfNull();
-
-            if (_editorGlobal.IsInit())
-            {
-                //if the key doen't exist, create it
-                if (!EditorPrefs.HasKey(IS_EDITOR_SHOWED))
-                {
-                    EditorPrefs.SetBool(IS_EDITOR_SHOWED, true);
-                }
-                //if the key who save the state is on, ok, we can show it
-                if (EditorPrefs.GetBool(IS_EDITOR_SHOWED))
-                {
-                    OwnGUI();
-                }
-            }
+            return (_hitScene);
         }
 
-
+        //end class
     }
 }

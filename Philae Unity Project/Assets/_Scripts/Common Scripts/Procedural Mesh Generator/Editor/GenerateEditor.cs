@@ -107,7 +107,7 @@ namespace hedCommon.procedural
 
         private void SaveMesh()
         {
-            Mesh mesh = ExtMesh.SaveSelectedMeshObj(_generate.gameObject, true);
+            Mesh mesh = ExtMeshEditor.SaveSelectedMeshObj(_generate.gameObject, true);
             _generate.gameObject.transform.GetOrAddComponent<MeshFilter>().sharedMesh = mesh;
         }
 

@@ -1,4 +1,5 @@
-﻿using hedCommon.extension.runtime;
+﻿using hedCommon.extension.editor;
+using hedCommon.extension.runtime;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -6,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-namespace hedCommon.extension.editor.sceneView
+namespace hedCommon.saveLastSelection
 {
     /// <summary>
     /// ContectClick
@@ -131,15 +132,34 @@ namespace hedCommon.extension.editor.sceneView
 
         private static void SelectItem(bool isShiftHeld, bool isControlHeld)
         {
-            _currentIndex = ExtMathf.SetBetween(_currentIndex, 0, _underneethGameObjects.Count - 1);
+            _currentIndex = SetBetween(_currentIndex, 0, _underneethGameObjects.Count - 1);
             if (isControlHeld)
             {
-                ExtSelection.Select(_underneethGameObjects[_currentIndex]);
+                Selection.activeGameObject = _underneethGameObjects[_currentIndex];
             }
             if (isShiftHeld)
             {
-                ExtSelection.Ping(_underneethGameObjects[_currentIndex]);
+                EditorGUIUtility.PingObject(_underneethGameObjects[_currentIndex]);
             }
+        }
+
+        private static int SetBetween(int currentValue, int value1, int value2)
+        {
+            if (value1 > value2)
+            {
+                Debug.LogError("value2 can be less than value1");
+                return (0);
+            }
+
+            if (currentValue < value1)
+            {
+                currentValue = value1;
+            }
+            if (currentValue > value2)
+            {
+                currentValue = value2;
+            }
+            return (currentValue);
         }
     }
 }

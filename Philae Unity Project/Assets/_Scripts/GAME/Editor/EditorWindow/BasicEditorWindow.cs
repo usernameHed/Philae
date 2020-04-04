@@ -61,7 +61,7 @@ namespace philae.editor.editorWindow
 
         #region Setup Camera Navigator
 
-        [MenuItem("PERSO/CameraNavigator")]
+        [MenuItem("TOOLS/CameraNavigator")]
         public static void ShowBasicNavigator()
         {
             _thisWindow = BasicEditorWindow.GetWindow<BasicEditorWindow>("BasicEditorWindow");

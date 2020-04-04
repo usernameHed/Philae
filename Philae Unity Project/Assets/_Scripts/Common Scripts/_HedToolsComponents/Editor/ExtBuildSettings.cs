@@ -11,7 +11,7 @@ namespace extUnityComponents
 {
     public static class ExtBuildSettings
     {
-        [MenuItem("PERSO/RemoveDeletedScenes")]
+        [MenuItem("TOOLS/RemoveDeletedScenes")]
         public static void CleanUpDeletedScenes()
         {
             var currentScenes = EditorBuildSettings.scenes;

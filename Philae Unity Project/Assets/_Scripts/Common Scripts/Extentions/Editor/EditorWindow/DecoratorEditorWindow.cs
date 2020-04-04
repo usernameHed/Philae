@@ -35,7 +35,7 @@ namespace hedCommon.extension.editor.editorWindow
         /// <summary>
         /// override it with "new" keyword
         /// </summary>
-        [MenuItem("PERSO/DecoratorWindow")]
+        [MenuItem("TOOLS/DecoratorWindow")]
         public static void ShowEditorWindow()
         {
             DecoratorEditorWindow window = EditorWindow.GetWindow<DecoratorEditorWindow>("DecoratorEditorWindow");

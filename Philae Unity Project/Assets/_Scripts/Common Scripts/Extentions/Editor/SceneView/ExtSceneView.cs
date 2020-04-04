@@ -21,7 +21,7 @@ namespace hedCommon.extension.editor.sceneView
 
         public static void FocusOnSelection(Vector3 position, float zoom = -1f)
         {
-            if (ExtVector3.IsClose(position, Vector3.zero, 0.1f))
+            if (ExtSceneView.IsClose(position, Vector3.zero, 0.1f))
             {
                 return;
             }
@@ -36,6 +36,21 @@ namespace hedCommon.extension.editor.sceneView
             {
                 ExtSceneView.ViewportPanZoomIn(zoom);
             }
+        }
+
+        /// <summary>
+        /// test if a Vector3 is close to another Vector3 (due to floating point inprecision)
+        /// compares the square of the distance to the square of the range as this
+        /// avoids calculating a square root which is much slower than squaring the range
+        /// </summary>
+        /// <param name="val"></param>
+        /// <param name="about"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        private static bool IsClose(Vector3 val, Vector3 about, float range)
+        {
+            float close = (val - about).sqrMagnitude;
+            return (close < range * range);
         }
 
         public static void Frame(Vector3 position)

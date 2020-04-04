@@ -102,28 +102,6 @@ namespace hedCommon.mixed
 
             }
         }
-
-        public static void LoadSceneByIndex(int index)
-        {
-            RefGamesAsset refGameAsset = ExtFind.GetAssetByGenericType<RefGamesAsset>();
-
-            if (refGameAsset == null)
-            {
-                return;
-            }
-            refGameAsset.LoadScenesByIndex(index, true, OnLoadedGame, true);
-        }
-
-        private static void OnLoadedGame(SceneAssetLister lister)
-        {
-            Debug.Log("GAME LOADED, MUST BE CALLED IN last ???");
-            //ActionWhenLoadScenes.Instance.OnLoadedGame();
-            if (Application.isPlaying)
-            {
-                Debug.Log("here in play ?");
-                AbstractLinker.Instance.InitFromPlay();
-            }
-        }
     }
 
 }

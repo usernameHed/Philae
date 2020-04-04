@@ -15,68 +15,7 @@ namespace hedCommon.extension.runtime
 {
     public static class ExtMesh
     {
-        private const string DEFAULT_LOCATION_GENERATED_MESH = "Assets/Resources/Primitive/Generated/";
-
-        /// <summary>
-        /// save the MeshFilter of the selected object in Assets/Resources/Procedural/
-        /// </summary>
-        [MenuItem("PERSO/Procedural/Save Selected Mesh")]
-        public static void SaveSelectedMesh()
-        {
-            GameObject activeOne = Selection.activeGameObject;
-            if (activeOne == null)
-                return;
-            SaveSelectedMeshObj(activeOne, false);
-        }
-
-        /// <summary>
-        /// delete the mesh asset in the gameObject if it exist
-        /// </summary>
-        /// <param name="obj"></param>
-        public static void DeleteSelectedMesh(GameObject obj)
-        {
-            MeshFilter meshRoad = obj.GetComponent<MeshFilter>();
-            if (!meshRoad)
-            {
-                return;
-            }
-            Mesh tempMesh = meshRoad.sharedMesh;
-            AssetDatabase.DeleteAsset(DEFAULT_LOCATION_GENERATED_MESH + meshRoad.sharedMesh.name);
-        }
-
-        public static Mesh SaveSelectedMeshObj(GameObject activeOne, bool replaceIfExist)
-        {
-            if (activeOne == null)
-            {
-                return (null);
-            }
-
-            MeshFilter meshRoad = activeOne.GetComponent<MeshFilter>();
-            if (meshRoad == null)
-            {
-                return (null);
-            }
-
-            Mesh meshAsset = (Mesh)UnityEngine.Object.Instantiate(meshRoad.sharedMesh);
-
-            string path = DEFAULT_LOCATION_GENERATED_MESH + activeOne.name + ".asset";
-            if (!replaceIfExist)
-            {
-                path = ExtPaths.RenameIncrementalFile(path, out int index, false);
-            }
-            else
-            {
-
-            }
-            Debug.Log(path);
-            AssetDatabase.CreateAsset(meshAsset, path);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-            ExtSelection.Ping(meshAsset);
-
-            return (meshAsset);
-        }
-
+        
         /// <summary>
         /// Returns a shared mesh to work with. If existing, it will be cleared
         /// </summary>

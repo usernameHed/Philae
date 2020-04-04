@@ -38,7 +38,23 @@ namespace hedCommon.extension.runtime
             }
 
             string result = new string(stack.ToArray());
-            return (result.ToInt());
+            return (ExtString.ToInt(result));
+        }
+
+        /// <summary>
+        /// Converts a string to an int
+        /// </summary>
+        /// <param name="value">value to convert</param>
+        /// <param name="defaultValue">default value if could not convert</param>
+        private static int ToInt(string value, int defaultValue = 0)
+        {
+            // exit if null
+            if (string.IsNullOrEmpty(value))
+                return defaultValue;
+
+            // convert
+            int rVal;
+            return int.TryParse(value, out rVal) ? rVal : defaultValue;
         }
 
         /// <summary>

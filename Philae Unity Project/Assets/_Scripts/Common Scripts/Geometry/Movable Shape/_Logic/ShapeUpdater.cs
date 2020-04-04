@@ -28,9 +28,11 @@ namespace hedCommon.geometry.movable
             _movableShape.CustomUpdateIfCanMove();
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             _movableShape.Draw(_movableShape.ColorShape);
         }
+#endif
     }
 }

@@ -13,7 +13,7 @@ using UnityEngine.Serialization;
 using System;
 using hedCommon.mixed;
 
-namespace philae.architecture
+namespace hedCommon.sceneWorkflow
 {
     [CreateAssetMenu(fileName = "RefGamesAsset", menuName = "")]
     public class RefGamesAsset : ScriptableObject
@@ -30,6 +30,7 @@ namespace philae.architecture
 
         private SceneAssetLister _lastSceneAssetUsed = null;
         private bool _activeAfterLoaded = true;
+        private bool _isActivatingScene = false;
 
         /// <summary>
         /// Load a list of scene: ALL scene present in game
@@ -37,7 +38,7 @@ namespace philae.architecture
         /// <param name="sceneName"></param>
         public void LoadScenesByIndex(int index, bool activeAfterLoaded, FuncToCallOnComplete funcToCallOnComplete, bool hardReload)
         {
-            if (_refFuncToCallOnComplete != null && !hardReload)
+            if (_isActivatingScene && !hardReload)
             {
                 throw new System.Exception("can't load twice in a row...");
             }
@@ -46,6 +47,9 @@ namespace philae.architecture
 
         private void LoadSceneFromLister(SceneAssetLister lister, bool activeAfterLoaded, FuncToCallOnComplete funcToCallOnComplete)
         {
+            UnloadCurrentLoadingScenes();
+
+            _isActivatingScene = true;
             _activeAfterLoaded = activeAfterLoaded;
             _lastSceneAssetUsed = lister;
             _refFuncToCallOnComplete = funcToCallOnComplete;
@@ -53,31 +57,35 @@ namespace philae.architecture
             if (Application.isPlaying)
             {
                 _asyncOperations.Clear();
-                Debug.Log("load main scene");
-                for (int i = 0; i < lister.SceneToLoad.Count; i++)
+                for (int i = 0; i < _lastSceneAssetUsed.SceneToLoad.Count; i++)
                 {
-                    AsyncOperation asyncOperation;
+                    _asyncOperations.Add(null);
+                }
+
+                for (int i = 0; i < _lastSceneAssetUsed.SceneToLoad.Count; i++)
+                {
                     if (i == 0)
                     {
-                        asyncOperation = SceneManager.LoadSceneAsync(lister.SceneToLoad[0].ScenePath, LoadSceneMode.Single);
-                        asyncOperation.completed += FirstSceneLoaded;
+                        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(_lastSceneAssetUsed.SceneToLoad[0].ScenePath, LoadSceneMode.Single);
                         asyncOperation.allowSceneActivation = true;
+                        asyncOperation.completed += FirstSceneLoaded;
+                        _asyncOperations[i] = asyncOperation;
                     }
                     else
                     {
-                        asyncOperation = SceneManager.LoadSceneAsync(lister.SceneToLoad[i].ScenePath, LoadSceneMode.Additive);
+                        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(_lastSceneAssetUsed.SceneToLoad[i].ScenePath, LoadSceneMode.Additive);
                         asyncOperation.allowSceneActivation = false;
-                        asyncOperation.completed += OnSceneCompleted;
-                        _asyncOperations.Add(asyncOperation);
+                        asyncOperation.completed += OnSecondarySceneCompleted;
+                        _asyncOperations[i] = asyncOperation;
                     }
                 }
             }
 #if UNITY_EDITOR
             else
             {
-                for (int i = 0; i < lister.SceneToLoad.Count; i++)
+                for (int i = 0; i < _lastSceneAssetUsed.SceneToLoad.Count; i++)
                 {
-                    EditorSceneManager.OpenScene(lister.SceneToLoad[i].ScenePath,
+                    EditorSceneManager.OpenScene(_lastSceneAssetUsed.SceneToLoad[i].ScenePath,
                         (i == 0) ? OpenSceneMode.Single : OpenSceneMode.Additive);
                 }
                 CalledWhenAllSceneAreLoaded();
@@ -85,19 +93,47 @@ namespace philae.architecture
 #endif
         }
 
+        private void UnloadCurrentLoadingScenes()
+        {
+            if (_lastSceneAssetUsed == null)
+            {
+                return;
+            }
+            for (int i = 0; i < _lastSceneAssetUsed.SceneToLoad.Count; i++)
+            {
+                SceneManager.UnloadSceneAsync(_lastSceneAssetUsed.SceneToLoad[i].ScenePath);
+            }
+        }
         
-
+        /// <summary>
+        /// called when ONE scene is loaded (we need to wait for all others scene...)
+        /// </summary>
+        /// <param name="obj"></param>
         private void FirstSceneLoaded(AsyncOperation obj)
         {
-            AbstractLinker.Instance.StartCoroutine(WaitForLoading());
+            _asyncOperations.Remove(obj);
+            if (_asyncOperations.Count == 0)
+            {
+                CalledWhenAllSceneAreLoaded();
+            }
+            else
+            {
+                ExtCoroutineWithoutMonoBehaviour.StartUniqueCoroutine(WaitForLoading());
+            }
         }
 
+        
         private IEnumerator WaitForLoading()
         {
             yield return new WaitUntil(() => AllAditiveSceneAreReady());
             ActiveAllScenes();
         }
 
+        
+        /// <summary>
+        /// test if ALL scenes are loaded
+        /// </summary>
+        /// <returns></returns>
         private bool AllAditiveSceneAreReady()
         {
             for (int i = 0; i < _asyncOperations.Count; i++)
@@ -109,21 +145,22 @@ namespace philae.architecture
             }
             return (true);
         }
-
-        private void OnSceneCompleted(AsyncOperation obj)
-        {
-            _asyncOperations.Remove(obj);
-            if (_asyncOperations.Count == 0)
-            {
-                CalledWhenAllSceneAreLoaded();
-            }
-        }
-
+        
         private void ActiveAllScenes()
         {
             for (int i = 0; i < _asyncOperations.Count; i++)
             {
                 _asyncOperations[i].allowSceneActivation = true;
+            }
+        }
+
+        private void OnSecondarySceneCompleted(AsyncOperation obj)
+        {
+            _asyncOperations.Remove(obj);
+            if (_asyncOperations.Count == 0)
+            {
+                ExtCoroutineWithoutMonoBehaviour.CleanUp();
+                CalledWhenAllSceneAreLoaded();
             }
         }
 
@@ -137,11 +174,7 @@ namespace philae.architecture
             }
             _refFuncToCallOnComplete = null;
             _lastSceneAssetUsed = null;
-
-            if (Application.isPlaying)
-            {
-                PhilaeLinker.Instance.InitFromPlay();
-            }
+            _isActivatingScene = false;
         }
 
         //end of class
