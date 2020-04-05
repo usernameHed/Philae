@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace hedCommon.sceneWorkflow
 {
-    [CreateAssetMenu(fileName = "TOOLS/SceneAssetLister", menuName = "")]
+    [CreateAssetMenu(fileName = "TOOLS/Scene Workflow/Scenes Asset Lister", menuName = "Scene Workflow/Scenes Asset Lister")]
     public class SceneAssetLister : RaceScriptableObject
     {
         public List<ExtSceneReference> SceneToLoad = new List<ExtSceneReference>();

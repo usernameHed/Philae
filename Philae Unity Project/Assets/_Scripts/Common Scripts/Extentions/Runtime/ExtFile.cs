@@ -427,9 +427,9 @@ namespace hedCommon.extension.runtime
             }
 
             string pathWhitoutName = Path.GetDirectoryName(oldPath);
-            pathWhitoutName = ExtPaths.ReformatPathForUnity(pathWhitoutName);
+            pathWhitoutName = ReformatPathForUnity(pathWhitoutName);
             string extension = Path.GetExtension(oldPath);
-            string newWantedName = ExtPaths.ReformatPathForUnity(newName);
+            string newWantedName = ReformatPathForUnity(newName);
 
             AssetDatabase.RenameAsset(oldPath, newWantedName);
             if (refreshAsset)
@@ -439,6 +439,21 @@ namespace hedCommon.extension.runtime
             string newPath = pathWhitoutName + "/" + newWantedName + extension;
             Debug.Log("renamed to: " + newPath);
             return (newPath);
+        }
+
+        /// <summary>
+        /// change a path from
+        /// Assets\path\of\file
+        /// to
+        /// Assets/path/of/file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private static string ReformatPathForUnity(string path, char characterReplacer = '-')
+        {
+            string formattedPath = path.Replace('\\', '/');
+            formattedPath = formattedPath.Replace('|', characterReplacer);
+            return (formattedPath);
         }
 #endif
     }

@@ -12,13 +12,14 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using System;
 using hedCommon.mixed;
+using hedCommon.time;
 
 namespace hedCommon.sceneWorkflow
 {
-    [CreateAssetMenu(fileName = "RefGamesAsset", menuName = "")]
-    public class RefGamesAsset : ScriptableObject
+    [CreateAssetMenu(fileName = "TOOLS/Scene Workflow/Global Scenes Lister Asset", menuName = "Scene Workflow/Global Scenes Lister Asset")]
+    public class GlobalScenesListerAsset : ScriptableObject
     {
-        [InlineEditor]
+        //[InlineEditor]
         public List<SceneAssetLister> _listSceneToLoad = new List<SceneAssetLister>();
         public int CountSceneToLoad { get { return (_listSceneToLoad.Count); } }
 
@@ -47,8 +48,6 @@ namespace hedCommon.sceneWorkflow
 
         private void LoadSceneFromLister(SceneAssetLister lister, bool activeAfterLoaded, FuncToCallOnComplete funcToCallOnComplete)
         {
-            UnloadCurrentLoadingScenes();
-
             _isActivatingScene = true;
             _activeAfterLoaded = activeAfterLoaded;
             _lastSceneAssetUsed = lister;
@@ -59,24 +58,25 @@ namespace hedCommon.sceneWorkflow
                 _asyncOperations.Clear();
                 for (int i = 0; i < _lastSceneAssetUsed.SceneToLoad.Count; i++)
                 {
-                    _asyncOperations.Add(null);
-                }
-
-                for (int i = 0; i < _lastSceneAssetUsed.SceneToLoad.Count; i++)
-                {
                     if (i == 0)
                     {
-                        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(_lastSceneAssetUsed.SceneToLoad[0].ScenePath, LoadSceneMode.Single);
-                        asyncOperation.allowSceneActivation = true;
-                        asyncOperation.completed += FirstSceneLoaded;
-                        _asyncOperations[i] = asyncOperation;
+                        SceneManager.LoadScene(_lastSceneAssetUsed.SceneToLoad[0].ScenePath, LoadSceneMode.Single);
+                        if (_lastSceneAssetUsed.SceneToLoad.Count == 1)
+                        {
+                            CalledWhenAllSceneAreLoaded();
+                            return;
+                        }
+                        else
+                        {
+                            ExtCoroutineWithoutMonoBehaviour.StartUniqueCoroutine(WaitForLoading());
+                        }
                     }
                     else
                     {
                         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(_lastSceneAssetUsed.SceneToLoad[i].ScenePath, LoadSceneMode.Additive);
                         asyncOperation.allowSceneActivation = false;
                         asyncOperation.completed += OnSecondarySceneCompleted;
-                        _asyncOperations[i] = asyncOperation;
+                         _asyncOperations.Add(asyncOperation);
                     }
                 }
             }
@@ -166,8 +166,7 @@ namespace hedCommon.sceneWorkflow
 
         public void CalledWhenAllSceneAreLoaded()
         {
-            ExtLog.Log("here all scene are loaded", Color.green);
-
+            //Debug.Log("<color='green'>here all scene are loaded</color>");
             if (_refFuncToCallOnComplete != null)
             {
                 _refFuncToCallOnComplete.Invoke(_lastSceneAssetUsed);

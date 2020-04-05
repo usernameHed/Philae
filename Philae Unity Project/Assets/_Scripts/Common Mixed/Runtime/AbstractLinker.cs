@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace hedCommon.mixed
+namespace hedCommon.sceneWorkflow
 {
-    public abstract class AbstractLinker : SingletonMono<PhilaeLinker>
+    public abstract class AbstractLinker : SingletonMono<AbstractLinker>
     {
         public abstract void InitFromEditor(bool fromPlay);
         public abstract void InitFromPlay();

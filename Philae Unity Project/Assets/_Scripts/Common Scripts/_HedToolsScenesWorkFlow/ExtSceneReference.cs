@@ -4,13 +4,14 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.SceneManagement;
 using System;
+using hedCommon.extension.runtime;
 
 #if UNITY_EDITOR
 using UnityEditor.SceneManagement;
 using UnityEditor;
 #endif
 
-namespace hedCommon.extension.runtime
+namespace hedCommon.sceneWorkflow
 {
     [Serializable]
     public class ExtSceneToLoad
@@ -129,6 +130,52 @@ namespace hedCommon.extension.runtime
         }
 
 #if UNITY_EDITOR
+        /// <summary>
+        /// get the first scene found in a directory, as ExtSceneReference
+        /// </summary>
+        /// <param name="directory">where to search</param>
+        /// <returns>first found scenes</returns>
+        public static ExtSceneReference GetSceneInDirectories(string directory = "Assets/")
+        {
+            List<ExtSceneReference> scenes = GetScenesInDirectories(directory);
+            if (scenes.Count == 0)
+            {
+                return (null);
+            }
+            return (scenes[0]);
+        }
+
+        /// <summary>
+        /// get the first scene found in a directory, as ExtSceneReference
+        /// </summary>
+        /// <param name="directory">where to search</param>
+        /// <returns>first found scenes</returns>
+        public static ExtSceneReference GetSceneFromPath(string relativePath)
+        {
+            ExtSceneReference extSceneReference = new ExtSceneReference();
+            extSceneReference.ScenePath = relativePath;
+            return (extSceneReference);
+        }
+
+        /// <summary>
+        /// get a lsit of all scene found in a directory, as ExtSceneReference
+        /// </summary>
+        /// <param name="directory">where to search</param>
+        /// <returns>list of found scenes</returns>
+        public static List<ExtSceneReference> GetScenesInDirectories(string directory = "Assets/")
+        {
+            List<UnityEngine.Object> scenes = ExtFind.GetAssetsByGenericType<UnityEngine.Object>(directory, "*.unity");
+            List<ExtSceneReference> scenesReferences = new List<ExtSceneReference>();
+            for (int i = 0; i < scenes.Count; i++)
+            {
+                ExtSceneReference extSceneReference = new ExtSceneReference();
+                extSceneReference.ScenePath = AssetDatabase.GetAssetPath(scenes[i]);
+                scenesReferences.Add(extSceneReference);
+            }
+            return (scenesReferences);
+        }
+
+
         public UnityEngine.Object GetSceneAssetAsObject
         {
             get

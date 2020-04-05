@@ -47,10 +47,10 @@ namespace hedCommon.extension.editor
                 path = "Assets";
             }
 
-            //string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/New " + typeof(T).ToString() + ".asset");
+            string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(pathToCreate);
 
-            Debug.Log("name: " + pathToCreate);
-            AssetDatabase.CreateAsset(asset, pathToCreate);
+            Debug.Log("name: " + assetPathAndName);
+            AssetDatabase.CreateAsset(asset, assetPathAndName);
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();

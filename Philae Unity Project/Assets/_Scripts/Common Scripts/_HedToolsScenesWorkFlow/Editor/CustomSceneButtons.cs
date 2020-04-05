@@ -1,5 +1,6 @@
 ﻿using hedCommon.extension.editor;
 using hedCommon.extension.runtime;
+using hedCommon.mixed;
 using hedCommon.saveLastSelection;
 using hedCommon.sceneWorkflow;
 using philae.architecture;
@@ -11,7 +12,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using static UnityEditor.EditorGUILayout;
 
-namespace hedCommon.mixed
+namespace hedCommon.sceneWorkflow
 {
     public class CustomSceneButtons
     {
@@ -19,16 +20,11 @@ namespace hedCommon.mixed
         private const int _widthButtons = 17;
         private const int _heightButtons = 14;
 
-        private Texture _wheelTexture;
-        private Texture _viperTexture;
-        private RefGamesAsset _refGameAsset;
+        private GlobalScenesListerAsset _refGameAsset;
 
         public void InitTextures()
         {
-            //texture has to be in  Assets/Editor Default Resources/
-            _wheelTexture = (Texture)EditorGUIUtility.Load("SceneView/wheel.png");
-            _viperTexture = (Texture)EditorGUIUtility.Load("SceneView/viper.png");
-            _refGameAsset = ExtFind.GetAssetByGenericType<RefGamesAsset>();
+            _refGameAsset = ExtFind.GetAssetByGenericType<GlobalScenesListerAsset>();
         }
 
         public void OnLeftToolbarGUI()
@@ -38,17 +34,23 @@ namespace hedCommon.mixed
 
         public void DisplayScenesButton()
         {
+            GUILayout.FlexibleSpace();
+
             if (_refGameAsset == null)
             {
-                _refGameAsset = ExtFind.GetAssetByGenericType<RefGamesAsset>();
+                _refGameAsset = ExtFind.GetAssetByGenericType<GlobalScenesListerAsset>();
                 if (_refGameAsset == null)
                 {
-                    Debug.LogWarning("no refGameAsset present in scene...");
+                    if (GUILayout.Button("create a Scene Assets Reference", ExtGUIStyles.microButton, GUILayout.Width(200), GUILayout.Height(_heightButtons)))
+                    {
+                        _refGameAsset = ExtScriptableObject.CreateAsset<GlobalScenesListerAsset>("Assets/ScenesListerAsset.asset");
+                        EditorGUIUtility.PingObject(_refGameAsset);
+                        Selection.activeObject = _refGameAsset;
+                    }
+                    GUILayout.FlexibleSpace();
                     return;
                 }
             }
-
-            GUILayout.FlexibleSpace();
 
             using (VerticalScope vertical = new VerticalScope())
             {
@@ -75,7 +77,8 @@ namespace hedCommon.mixed
                                 }
                             }
                             _refGameAsset.LastIndexUsed = i;
-                            _refGameAsset.LoadScenesByIndex(i, true, OnLoadedScenes, false);
+                            _refGameAsset.LoadScenesByIndex(i, true, OnLoadedScenes, true);
+                            return;
                         }
                     }
                 }
@@ -88,7 +91,6 @@ namespace hedCommon.mixed
             Debug.Log("all scenes are loaded here, we can now initialize our game");
             if (Application.isPlaying)
             {
-                Debug.Log("initialize in play mode & build");
                 AbstractLinker.Instance?.InitFromPlay();
             }
         }

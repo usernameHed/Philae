@@ -19,7 +19,7 @@ namespace hedCommon.extension.runtime
             // Gameobject is not instantiated so it's not in the scene. It's just an object in memory.
             _referenceEmptyGameObject = new GameObject();
             _referenceEmptyGameObject.isStatic = true;
-            //_referenceEmptyGameObject.hideFlags = HideFlags.HideInHierarchy;
+            _referenceEmptyGameObject.hideFlags = HideFlags.HideAndDontSave;
             return (_referenceEmptyGameObject.AddComponent<EmptyMonoBehaviour>());
         }
 

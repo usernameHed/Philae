@@ -20,7 +20,7 @@ public class PhilaeLinker : AbstractLinker
     [FoldoutGroup("Object")]
     public SoundManager SoundManager;
 
-    public RefGamesAsset RefGameAsset;
+    public GlobalScenesListerAsset RefGameAsset;
     private bool _hasInitialize = false;
 
     public override void InitFromEditor(bool fromPlay)

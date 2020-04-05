@@ -10,19 +10,18 @@ namespace hedCommon.scriptableObject
 {
     public abstract class RaceScriptableObject : ScriptableObject
     {
-        [SerializeField]
+        [HideInInspector]
         protected bool _isActive = true;
         public void SetActiveSelf(bool active)
         {
             _isActive = active;
         }
 
-        [FoldoutGroup("Debug"), SerializeField, ReadOnly]
+        [HideInInspector]
         public string FolderParentName = "";
-        [FoldoutGroup("Debug"), SerializeField, ReadOnly]
+        [HideInInspector]
         public string FolderParentPath = "";
-
-        [FoldoutGroup("Debug"), SerializeField, ReadOnly]
+        [HideInInspector]
         public string CalculatedPath = "";
 
         public virtual bool IsActiveSelf()
