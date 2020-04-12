@@ -2,14 +2,13 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using Sirenix.OdinInspector;
 
 namespace hedCommon.time
 {
     /// <summary>
     /// Display fps in game
     /// </summary>
-    [ExecuteInEditMode, TypeInfoBox("Display FPS with sprite to avoid garbage")]
+    [ExecuteInEditMode]
     public class FPSDisplay : MonoBehaviour
     {
         FrequencyCoolDown FrequencyCoolDown = new FrequencyCoolDown();
