@@ -8,7 +8,7 @@ namespace hedCommon.sceneWorkflow
 {
     public abstract class AbstractLinker : SingletonMono<AbstractLinker>
     {
-        public abstract void InitFromEditor(bool fromPlay);
+        public abstract void InitFromEditor();
         public abstract void InitFromPlay();
     }
 }

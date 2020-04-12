@@ -210,6 +210,34 @@ namespace hedCommon.extension.runtime
         }
 
         /// <summary>
+        /// get closest point from an array of points
+        /// </summary>
+        public static Vector3 GetClosestPointArray(Vector3 posEntity, Vector3[] arrayPos, out int indexFound)
+        {
+            float sqrDist = (posEntity - arrayPos[0]).sqrMagnitude;
+            indexFound = 0;
+
+            for (int i = 1; i < arrayPos.Length; i++)
+            {
+                float dist = (posEntity - arrayPos[i]).sqrMagnitude;
+                if (dist < sqrDist)
+                {
+                    sqrDist = dist;
+                    indexFound = i;
+                }
+            }
+            return (arrayPos[indexFound]);
+        }
+
+        /// <summary>
+        /// get closest point from an array of points
+        /// </summary>
+        public static Vector3 GetClosestPointArray(Vector3 posEntity, out int indexFound, params Vector3[] arrayPos)
+        {
+            return (GetClosestPointArray(posEntity, arrayPos, out indexFound));
+        }
+
+        /// <summary>
         /// from a given valueToTest, find the closest point
         /// </summary>
         /// <param name="valueToTest"></param>

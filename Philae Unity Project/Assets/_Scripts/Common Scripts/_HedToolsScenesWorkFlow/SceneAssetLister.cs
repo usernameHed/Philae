@@ -1,6 +1,5 @@
 ﻿using hedCommon.extension.runtime;
 using hedCommon.scriptableObject;
-using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -10,13 +9,14 @@ namespace hedCommon.sceneWorkflow
     [CreateAssetMenu(fileName = "TOOLS/Scene Workflow/Scenes Asset Lister", menuName = "Scene Workflow/Scenes Asset Lister")]
     public class SceneAssetLister : RaceScriptableObject
     {
+        public string NameList = "Scene List";
         public List<ExtSceneReference> SceneToLoad = new List<ExtSceneReference>();
 
 #if UNITY_EDITOR
         /// <summary>
         /// save this asset and all the assets inside to disk
         /// </summary>
-        [Button]
+        //[Button]
         public void Save()
         {
             EditorUtility.SetDirty(this);

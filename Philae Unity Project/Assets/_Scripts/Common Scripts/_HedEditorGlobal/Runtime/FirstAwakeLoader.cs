@@ -26,11 +26,11 @@ namespace hedCommon.editorGlobal
                 if (EditorPrefs.GetInt(KEY_LOAD_EDITOR_AND_PLAY) == 1)
                 {
                     EditorPrefs.SetInt(KEY_LOAD_EDITOR_AND_PLAY, 0);
-                    ExecuteOutOfPlayMode(true);
+                    ExecuteOutOfPlayMode();
                 }
                 else
                 {
-                    ExecuteOutOfPlayMode(false);
+                    ExecuteOutOfPlayMode();
                 }
             }
             else
@@ -45,10 +45,10 @@ namespace hedCommon.editorGlobal
         /// <summary>
         /// called at awake of edit mode
         /// </summary>
-        private void ExecuteOutOfPlayMode(bool fromPlay)
+        private void ExecuteOutOfPlayMode()
         {
             //Debug.Log("first awake in edit mode");
-            AbstractLinker.InitFromEditor(fromPlay);
+            AbstractLinker.InitFromEditor();
         }
 
         /// <summary>

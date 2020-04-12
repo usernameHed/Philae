@@ -43,6 +43,23 @@ namespace hedCommon.saveLastSelection
         }
 
         /// <summary>
+        /// PICK A GAMEOBJECT FROM SCENE VIEW AT POSITION
+        /// pick a gameObject from the sceneView at a given mouse position
+        /// </summary>
+        /// <param name="cam">current camera</param>
+        /// <param name="layers">layer accepted</param>
+        /// <param name="position">mouse position</param>
+        /// <param name="ignore">ignored gameObjects</param>
+        /// <param name="filter"></param>
+        /// <param name="materialIndex"></param>
+        /// <returns></returns>
+        private static GameObject PickObjectOnPos(Camera cam, int layers, Vector2 position, GameObject[] ignore, GameObject[] filter, out int materialIndex)
+        {
+            materialIndex = -1;
+            return (GameObject)_internalPickClosestGameObject.Invoke(null, new object[] { cam, layers, position, ignore, filter, materialIndex });
+        }
+
+        /// <summary>
         /// get the right click on sceneView
         /// </summary>
         /// <param name="sceneView"></param>
@@ -79,11 +96,7 @@ namespace hedCommon.saveLastSelection
             _currentIndex = 0;
         }
 
-        private static GameObject PickObjectOnPos(Camera cam, int layers, Vector2 position, GameObject[] ignore, GameObject[] filter, out int materialIndex) // PICK A GAMEOBJECT FROM SCENE VIEW AT POSITION
-        {
-            materialIndex = -1;
-            return (GameObject)_internalPickClosestGameObject.Invoke(null, new object[] { cam, layers, position, ignore, filter, materialIndex });
-        }
+        
 
         private static void AttemptToScroll()
         {

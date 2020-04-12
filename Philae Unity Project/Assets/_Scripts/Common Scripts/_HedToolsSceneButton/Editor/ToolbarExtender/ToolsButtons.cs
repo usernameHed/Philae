@@ -1,11 +1,6 @@
-﻿using hedCommon.mixed;
-using hedCommon.saveLastSelection;
+﻿using hedCommon.saveLastSelection;
 using hedCommon.sceneWorkflow;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
-using UnityEngine;
-
 
 namespace hedCommon.toolbarExtent
 {

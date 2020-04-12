@@ -1,17 +1,12 @@
 ﻿using hedCommon.editorGlobal;
 using hedCommon.extension.runtime;
-using hedCommon.mixed;
 using hedCommon.sceneWorkflow;
-using hedCommon.time;
-using philae.architecture;
 using philae.gravity.graviton;
-using philae.gravity.player;
 using philae.gravity.zones;
 using philae.sound;
 using Sirenix.OdinInspector;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PhilaeLinker : AbstractLinker
 {
@@ -23,7 +18,7 @@ public class PhilaeLinker : AbstractLinker
     public GlobalScenesListerAsset RefGameAsset;
     private bool _hasInitialize = false;
 
-    public override void InitFromEditor(bool fromPlay)
+    public override void InitFromEditor()
     {
         if (ZonesLister.Instance == null || GravitonLister.Instance == null)
         {
@@ -95,6 +90,6 @@ public class PhilaeLinker : AbstractLinker
     public void RestartGame()
     {
         Debug.Log("restart game here");
-        RefGameAsset.LoadScenesByIndex(0, true, null, false);
+        RefGameAsset.LoadScenesByIndex(0, null, false);
     }
 }

@@ -52,7 +52,7 @@ namespace philae.editor.editorGlobal
         {
             if (GUILayout.Button("Reload"))
             {
-                _philaeLinker.InitFromEditor(false);
+                _philaeLinker.InitFromEditor();
             }
 
             GUILayout.Label("Layout:");

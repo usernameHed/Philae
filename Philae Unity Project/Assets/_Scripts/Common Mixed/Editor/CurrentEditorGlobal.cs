@@ -30,7 +30,7 @@ namespace hedCommon.mixed
             _philaeLinker = (PhilaeLinker)gameLinker;
             LoadAllExternEditorWindow();
 
-            _philaeLinker.InitFromEditor(false);
+            _philaeLinker.InitFromEditor();
         }
 
         /// <summary>

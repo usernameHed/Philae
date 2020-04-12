@@ -1,17 +1,15 @@
 ﻿using hedCommon.extension.runtime;
-using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 #if UNITY_EDITOR
-    using UnityEditor;
-    using UnityEditor.SceneManagement;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 #endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using System;
-using hedCommon.mixed;
 using hedCommon.time;
 
 namespace hedCommon.sceneWorkflow
@@ -19,7 +17,6 @@ namespace hedCommon.sceneWorkflow
     [CreateAssetMenu(fileName = "TOOLS/Scene Workflow/Global Scenes Lister Asset", menuName = "Scene Workflow/Global Scenes Lister Asset")]
     public class GlobalScenesListerAsset : ScriptableObject
     {
-        //[InlineEditor]
         public List<SceneAssetLister> _listSceneToLoad = new List<SceneAssetLister>();
         public int CountSceneToLoad { get { return (_listSceneToLoad.Count); } }
 
@@ -30,26 +27,24 @@ namespace hedCommon.sceneWorkflow
         private FuncToCallOnComplete _refFuncToCallOnComplete = null;
 
         private SceneAssetLister _lastSceneAssetUsed = null;
-        private bool _activeAfterLoaded = true;
         private bool _isActivatingScene = false;
 
         /// <summary>
         /// Load a list of scene: ALL scene present in game
         /// </summary>
         /// <param name="sceneName"></param>
-        public void LoadScenesByIndex(int index, bool activeAfterLoaded, FuncToCallOnComplete funcToCallOnComplete, bool hardReload)
+        public void LoadScenesByIndex(int index, FuncToCallOnComplete funcToCallOnComplete, bool hardReload)
         {
             if (_isActivatingScene && !hardReload)
             {
                 throw new System.Exception("can't load twice in a row...");
             }
-            LoadSceneFromLister(_listSceneToLoad[index], activeAfterLoaded, funcToCallOnComplete);
+            LoadSceneFromLister(_listSceneToLoad[index], funcToCallOnComplete);
         }
 
-        private void LoadSceneFromLister(SceneAssetLister lister, bool activeAfterLoaded, FuncToCallOnComplete funcToCallOnComplete)
+        private void LoadSceneFromLister(SceneAssetLister lister, FuncToCallOnComplete funcToCallOnComplete)
         {
             _isActivatingScene = true;
-            _activeAfterLoaded = activeAfterLoaded;
             _lastSceneAssetUsed = lister;
             _refFuncToCallOnComplete = funcToCallOnComplete;
 
@@ -76,7 +71,7 @@ namespace hedCommon.sceneWorkflow
                         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(_lastSceneAssetUsed.SceneToLoad[i].ScenePath, LoadSceneMode.Additive);
                         asyncOperation.allowSceneActivation = false;
                         asyncOperation.completed += OnSecondarySceneCompleted;
-                         _asyncOperations.Add(asyncOperation);
+                        _asyncOperations.Add(asyncOperation);
                     }
                 }
             }
@@ -104,7 +99,7 @@ namespace hedCommon.sceneWorkflow
                 SceneManager.UnloadSceneAsync(_lastSceneAssetUsed.SceneToLoad[i].ScenePath);
             }
         }
-        
+
         /// <summary>
         /// called when ONE scene is loaded (we need to wait for all others scene...)
         /// </summary>
@@ -122,14 +117,14 @@ namespace hedCommon.sceneWorkflow
             }
         }
 
-        
+
         private IEnumerator WaitForLoading()
         {
             yield return new WaitUntil(() => AllAditiveSceneAreReady());
             ActiveAllScenes();
         }
 
-        
+
         /// <summary>
         /// test if ALL scenes are loaded
         /// </summary>
@@ -145,7 +140,7 @@ namespace hedCommon.sceneWorkflow
             }
             return (true);
         }
-        
+
         private void ActiveAllScenes()
         {
             for (int i = 0; i < _asyncOperations.Count; i++)
