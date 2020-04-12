@@ -25,7 +25,6 @@ namespace hedCommon.saveLastSelection
         /// <summary>
         /// override it with "new" keyword
         /// </summary>
-        [MenuItem("TOOLS/DecoratorWindow/SaveLastSelections")]
         public static SaveLastSelectionsEditorWindow ShowSaveLastSelections()
         {
             SaveLastSelectionsEditorWindow window = EditorWindow.GetWindow<SaveLastSelectionsEditorWindow>("", false, typeof(SceneView));

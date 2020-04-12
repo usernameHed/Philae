@@ -1,10 +1,6 @@
-﻿using extUnityComponents;
+﻿#if UNITY_EDITOR
 using hedCommon.extension.runtime;
-using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
-#if UNITY_EDITOR
-    using UnityEditor;
+using UnityEditor;
 #endif
 using UnityEngine;
 
@@ -18,11 +14,11 @@ namespace extUnityComponents.transform
             return (this);
         }
 
-        [FoldoutGroup("GamePlay"), Tooltip("")]
+        [Tooltip("")]
         public Transform ToLock;
-        [FoldoutGroup("GamePlay"), Tooltip("")]
+        [Tooltip("")]
         public bool RotateWithTheParent = true;
-        [FoldoutGroup("GamePlay"), Tooltip("")]
+        [Tooltip("")]
         public bool OverrideRotationUpGlobal = false;
 
         private Quaternion _saveRotation;

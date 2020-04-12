@@ -1,5 +1,4 @@
 ﻿using hedCommon.extension.runtime;
-using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +16,6 @@ public class ParentingBehaviorSettings
 public class ParentingBehavior : MonoBehaviour
 {
     //this script shouldn't be serialize here
-    [ShowInInspector]
     private ParentingBehaviorSettings _parentingBehaviorSettings;
 
     private Vector3 _startParentPosition;

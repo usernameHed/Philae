@@ -1,5 +1,4 @@
-﻿using Sirenix.OdinInspector;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,9 +12,9 @@ namespace extUnityComponents.transform
         }
 
         #region IHaveDecoratorOnIt
-        [FoldoutGroup("IHaveDecoratorOnIt"), SerializeField]
+        [SerializeField]
         private bool _showExtensions = true;
-        [FoldoutGroup("IHaveDecoratorOnIt"), SerializeField]
+        [SerializeField]
         private bool _showTinyEditorWindows = true;
         public Component GetReferenceDecoratorsComponent() => this;
 

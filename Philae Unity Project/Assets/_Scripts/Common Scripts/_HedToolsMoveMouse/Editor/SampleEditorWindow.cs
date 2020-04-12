@@ -32,7 +32,7 @@ namespace MoveMouseEditor
     /// </summary>
     public class SampleEditorWindow : EditorWindow
     {
-        [MenuItem("Window/SampleEditorWindow")]
+        [MenuItem("TOOLS/Mouse Editor/Sample")]
         static void Init()
         {
             SampleEditorWindow window = (SampleEditorWindow)EditorWindow.GetWindow(typeof(SampleEditorWindow));
@@ -55,9 +55,6 @@ namespace MoveMouseEditor
             DisplaySaveButton();
             GUILayout.Label("");
             DisplayLoadButton();
-            GUILayout.Label("");
-            GUILayout.Label("");
-            DisplayDeleteButton();
         }
 
         /// <summary>
@@ -82,23 +79,6 @@ namespace MoveMouseEditor
                 Win32Mouse.LoadPreviouslySavedPosition();
                 Debug.Log("mouse moved to the previously saved position !");
             }
-        }
-
-        /// <summary>
-        /// display delete button & open the popup if button pressed
-        /// </summary>
-        private void DisplayDeleteButton()
-        {
-            GUI.backgroundColor = Color.red;
-            if (GUILayout.Button("Delete button"))
-            {
-                if (!ExtGUI.DrawDisplayDialog(mainTitle: "delete", content: "Are you sure you want to delete ?"))
-                {
-                    return;
-                }
-                Debug.Log("content deleted !");
-            }
-            GUI.backgroundColor = Color.white;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Sirenix.OdinInspector.Editor;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using static UnityEditor.EditorGUILayout;
 

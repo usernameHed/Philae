@@ -2,8 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-
-namespace hedCommon.tools
+namespace extUnityComponents
 {
     /// <summary>
     /// Have to be set on top in the scriptExecutionOrder !

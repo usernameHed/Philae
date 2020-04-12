@@ -67,7 +67,7 @@ namespace extUnityComponents
 
             using (HorizontalScope horizontalScope = new HorizontalScope(EditorStyles.helpBox))
             {
-                using (ExtGUIScopes.Verti())
+                using (VerticalScope verticalScope = new VerticalScope())
                 {
                     SetSolverIteration();
                     SetSleepThreshold();
@@ -83,7 +83,7 @@ namespace extUnityComponents
 
         private void SetSleepThreshold()
         {
-            using (ExtGUIScopes.Horiz())
+            using (HorizontalScope horizontalScope = new HorizontalScope())
             {
                 float sleepThreshold = ExtGUIFloatFields.FloatField(_currentTarget.sleepThreshold, null, out bool sleepThresholdChanged, "SleepThreshold", "Modify SleepThreshold of the rigidBody");
                 if (sleepThresholdChanged)
@@ -102,7 +102,7 @@ namespace extUnityComponents
 
         private void SetSolverIteration()
         {
-            using (ExtGUIScopes.Horiz())
+            using (HorizontalScope horizontalScope = new HorizontalScope())
             {
                 int solver = ExtGUIFloatFields.IntField(_currentTarget.solverIterations, null, out bool solverChanged, "SolverIteration", "More you have, more precise you are, more it cost");
                 if (solverChanged)
@@ -117,7 +117,7 @@ namespace extUnityComponents
                     _specialSettings.SetSolverIteration(_currentTarget.solverIterations);
                 }
             }
-            using (ExtGUIScopes.Horiz())
+            using (HorizontalScope horizontalScope = new HorizontalScope())
             {
                 int solver = ExtGUIFloatFields.IntField(_currentTarget.solverVelocityIterations, null, out bool solverChanged, "SolverVelocityIteration", "More you have, more precise you are, more it cost");
                 if (solverChanged)
@@ -136,7 +136,7 @@ namespace extUnityComponents
 
         private void SetMaxDepenetation()
         {
-            using (ExtGUIScopes.Horiz())
+            using (HorizontalScope horizontalScope = new HorizontalScope())
             {
                 float sleepThreshold = ExtGUIFloatFields.FloatField(_currentTarget.maxDepenetrationVelocity, null, out bool maxDepenetationChanged, "MaxDepenetrationVelocity", "Modify maxDepenetrationVelocity of the rigidBody");
                 if (maxDepenetationChanged)
