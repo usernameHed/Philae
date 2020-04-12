@@ -14,7 +14,6 @@ namespace extUnityComponents.transform
     {
         private ResetTransformGUI _resetTransformGUI = new ResetTransformGUI(); //ref to script
         private LockChildren _lockChildren = new LockChildren();    //ref to script
-        private ZoomOnTransform _zoomOnTransform = new ZoomOnTransform();
         private ShowInfoGameObject _showInfoGameObject = new ShowInfoGameObject();
 
         private TransformHiddedTools[] _transformHiddedTools;
@@ -36,7 +35,6 @@ namespace extUnityComponents.transform
         {
             _resetTransformGUI.CustomDisable();
             _lockChildren.CustomDisable();
-            _zoomOnTransform.CustomDisable();
             _showInfoGameObject.CustomDisable();
         }
 
@@ -52,7 +50,6 @@ namespace extUnityComponents.transform
         protected override void CustomOnSceneGUI(SceneView sceneview)
         {
             _lockChildren.CustomOnSceneGUI();
-            _zoomOnTransform.CustomOnSceneGUI();
             _showInfoGameObject.CustomOnSceneGUI();
         }
 
@@ -76,7 +73,6 @@ namespace extUnityComponents.transform
                 _transformHiddedTools[i] = tmpTargets[i].GetOrAddComponent<TransformHiddedTools>();
             }
 
-            _zoomOnTransform.Init(GetTargets<Transform>(), this);
             _resetTransformGUI.Init(GetTargets<Transform>());
             _lockChildren.Init(current, this);
             _showInfoGameObject.Init(GetTargets<Transform>(), this, _transformHiddedTools);
@@ -92,7 +88,6 @@ namespace extUnityComponents.transform
             {
                 _lockChildren.CustomOnInspectorGUI();
             }
-            _zoomOnTransform.CustomOnInspectorGUI();
             _showInfoGameObject.CustomOnInspectorGUI();
         }
 
