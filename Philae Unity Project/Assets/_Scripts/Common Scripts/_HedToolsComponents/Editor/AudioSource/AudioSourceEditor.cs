@@ -15,36 +15,8 @@ namespace extUnityComponents.transform
     [CustomEditor(typeof(AudioSource))]
     public class AudioSourceEditor : DecoratorComponentsEditor
     {
-        //private PreviewRenderUtility m_PreviewUtility;
-
-        //private Editor previewEditor;
-
         public AudioSourceEditor()
             : base(BUILT_IN_EDITOR_COMPONENTS.AudioSourceInspector)
-        {
-
-        }
-
-        /// <summary>
-        /// called on enable
-        /// </summary>
-        public override void OnCustomEnable()
-        {
-
-        }
-
-        /// <summary>
-        /// need to clean when quitting
-        /// </summary>
-        public override void OnCustomDisable()
-        {
-
-        }
-
-        /// <summary>
-        /// This is called at the first OnInspectorGUI()
-        /// </summary>
-        protected override void InitOnFirstInspectorGUI()
         {
 
         }
@@ -58,15 +30,6 @@ namespace extUnityComponents.transform
             {
                 GUILayout.Label("test");
             }
-            /*
-            GUIStyle bgColor = new GUIStyle();
-            bgColor.normal.background = EditorGUIUtility.whiteTexture;
-
-            if (previewEditor == null)
-                previewEditor = Editor.CreateEditor(GetTarget<AudioSource>());
-
-            previewEditor.OnInteractivePreviewGUI(GUILayoutUtility.GetRect(256, 256), bgColor);
-            */
         }
     }
 }
