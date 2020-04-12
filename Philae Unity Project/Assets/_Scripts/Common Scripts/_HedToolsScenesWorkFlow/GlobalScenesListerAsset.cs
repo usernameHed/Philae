@@ -12,8 +12,10 @@ namespace hedCommon.sceneWorkflow
     [CreateAssetMenu(fileName = "TOOLS/Scene Workflow/Global Scenes Lister Asset", menuName = "Scene Workflow/Global Scenes Lister Asset")]
     public class GlobalScenesListerAsset : ScriptableObject
     {
-        public List<SceneAssetLister> _listSceneToLoad = new List<SceneAssetLister>();
+        [SerializeField]
+        private List<SceneAssetLister> _listSceneToLoad = new List<SceneAssetLister>();
         public int CountSceneToLoad { get { return (_listSceneToLoad.Count); } }
+        public SceneAssetLister GetSceneAddet(int index) { return (_listSceneToLoad[index]); }
 
         public int LastIndexUsed = -1;
 

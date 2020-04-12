@@ -74,6 +74,8 @@ namespace hedCommon.sceneWorkflow
                             }
                             _refGameAsset.LastIndexUsed = i;
                             _refGameAsset.LoadScenesByIndex(i, OnLoadedScenes, hardReload: true);
+                            EditorGUIUtility.PingObject(_refGameAsset.GetSceneAddet(i));
+                            Selection.activeObject = _refGameAsset.GetSceneAddet(i);
                             return;
                         }
                     }
