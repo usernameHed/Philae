@@ -251,7 +251,6 @@ namespace hedCommon.time
         /// </summary>
         static TimeEditor()
         {
-            Debug.Log("start here");
             _timeScale = 1f;
             Time.timeScale = 1f;
 

@@ -38,7 +38,7 @@ namespace hedCommon.saveLastSelection
         {
             _isInit = true;
             _saveLastSelectionsEditorWindow = SaveLastSelectionsEditorWindow.ShowSaveLastSelections();
-            _isClosed = _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed;
+            _isClosed = _saveLastSelectionsEditorWindow.IsClosed;
         }
 
         private void UpdateEditor()
@@ -130,10 +130,8 @@ namespace hedCommon.saveLastSelection
                         {
                             _saveLastSelectionsEditorWindow = SaveLastSelectionsEditorWindow.ShowSaveLastSelections();
                         }
-
-                        _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed = !_saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed;
-                        _saveLastSelectionsEditorWindow.SaveCloseStatus();
-                        _isClosed = _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed;
+                        _saveLastSelectionsEditorWindow.ToggleOpenCloseDisplay();
+                        _isClosed = _saveLastSelectionsEditorWindow.IsClosed;
                     }
                     EditorGUI.BeginDisabledGroup(_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0);
                     {
@@ -151,11 +149,14 @@ namespace hedCommon.saveLastSelection
                         }
                         if (_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0)
                         {
-                            GUILayout.Label("-/-");
+                            GUIContent gUIContent = new GUIContent("-/-", "there is no previously selected objects");
+                            GUILayout.Label(gUIContent);
                         }
                         else
                         {
-                            GUILayout.Label((_saveLastSelectionsEditorWindow.CurrentIndex + 1).ToString() + "/" + (_saveLastSelectionsEditorWindow.SelectedObjects.Count));
+                            string showCount = (_saveLastSelectionsEditorWindow.CurrentIndex + 1).ToString() + "/" + (_saveLastSelectionsEditorWindow.SelectedObjects.Count);
+                            GUIContent gUIContent = new GUIContent(showCount, "Scroll Up/Down to browse previous/next");
+                            GUILayout.Label(gUIContent);
                         }
                     }
                     EditorGUI.EndDisabledGroup();
@@ -172,9 +173,14 @@ namespace hedCommon.saveLastSelection
                 _saveLastSelectionsEditorWindow.SelectedObjects.RemoveAt(0);
             }
             _saveLastSelectionsEditorWindow.SelectedObjects.Add(_saveLastSelectionsEditorWindow.LastSelectedObject);
+
             _saveLastSelectionsEditorWindow.CurrentIndex = _saveLastSelectionsEditorWindow.SelectedObjects.Count - 1;
 
             _saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon = ExtList.RemoveRedundancy(_saveLastSelectionsEditorWindow.SelectedObjects);
+            while (_saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon.Count >= SaveLastSelectionsEditorWindow.NUMBER_SHOWN_OBJECTS)
+            {
+                _saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon.RemoveAt(0);
+            }
         }
 
 
@@ -185,6 +191,7 @@ namespace hedCommon.saveLastSelection
             if (select)
             {
                 Selection.activeObject = _saveLastSelectionsEditorWindow.LastSelectedObject;
+                EditorGUIUtility.PingObject(_saveLastSelectionsEditorWindow.LastSelectedObject);
             }
             else
             {
@@ -208,19 +215,14 @@ namespace hedCommon.saveLastSelection
             {
                 return;
             }
-            if (_saveLastSelectionsEditorWindow.TinyEditorWindowSceneView == null)
+            if (!_saveLastSelectionsEditorWindow.IsClosed)
             {
-                return;
+                _saveLastSelectionsEditorWindow.Display(DrawList);
             }
-            if (!_saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed)
-            {
-                _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.ShowEditorWindow(DrawList, SceneView.currentDrawingSceneView, Event.current);
-                
-            }
-            if (_isClosed != _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed)
+            if (_isClosed != _saveLastSelectionsEditorWindow.IsClosed)
             {
                 _saveLastSelectionsEditorWindow.SaveCloseStatus();
-                _isClosed = _saveLastSelectionsEditorWindow.TinyEditorWindowSceneView.IsClosed;
+                _isClosed = _saveLastSelectionsEditorWindow.IsClosed;
             }
         }
 
@@ -237,13 +239,23 @@ namespace hedCommon.saveLastSelection
                 GUI.color = (_saveLastSelectionsEditorWindow.LastSelectedObject == _saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon[i]) ? Color.green : Color.white;
                 using (HorizontalScope horizontalScope = new HorizontalScope())
                 {
-                    if (ExtGUIButtons.ButtonImage("ping", GUILayout.Width(17), GUILayout.Height(17)))
+                    GUIContent buttonPingContent = new GUIContent("p", "Ping object without selecting it");
+                    if (GUILayout.Button(buttonPingContent, ExtGUIStyles.microButton, GUILayout.Width(17)))
                     {
                         ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon[i], false);
                     }
-                    if (GUILayout.Button(_saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon[i].name))
+                    string nameObjectToSelect = _saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon[i].name;
+                    GUIContent buttonSelectContent = new GUIContent(nameObjectToSelect, nameObjectToSelect + ": Select and Ping");
+                    if (GUILayout.Button(buttonSelectContent, ExtGUIStyles.microButton))
                     {
                         ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon[i]);
+                    }
+                    GUIContent buttonDeletContent = new GUIContent("x", "Delete object from list");
+                    if (GUILayout.Button(buttonDeletContent, ExtGUIStyles.microButton, GUILayout.Width(17)))
+                    {
+                        UnityEngine.Object toRemove = _saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon[i];
+                        _saveLastSelectionsEditorWindow.SelectedObjects.Remove(toRemove, true);
+                        _saveLastSelectionsEditorWindow.SelectedObjectsWithoutDoublon.Remove(toRemove);
                     }
                 }
             }
@@ -253,7 +265,7 @@ namespace hedCommon.saveLastSelection
 
             EditorGUI.BeginDisabledGroup(_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0);
             {
-                if (GUILayout.Button("clear"))
+                if (GUILayout.Button("clear", ExtGUIStyles.microButton))
                 {
                     _saveLastSelectionsEditorWindow.Reset();
                 }

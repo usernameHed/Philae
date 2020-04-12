@@ -1,9 +1,5 @@
-﻿using hedCommon.extension.editor;
-using hedCommon.extension.editor.editorWindow;
-using hedCommon.extension.editor.sceneView;
-using hedCommon.extension.runtime;
+﻿using hedCommon.extension.editor.editorWindow;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -12,16 +8,17 @@ namespace hedCommon.saveLastSelection
 {
     public class SaveLastSelectionsEditorWindow : DecoratorEditorWindow
     {
-        public const int NUMBER_SELECTED_OBJECTS = 20;
+        public const int NUMBER_SELECTED_OBJECTS = 1000;
+        public const int NUMBER_SHOWN_OBJECTS = 20;
 
         public List<UnityEngine.Object> SelectedObjects = new List<UnityEngine.Object>(NUMBER_SELECTED_OBJECTS);
         public UnityEngine.Object LastSelectedObject;
-        public List<UnityEngine.Object> SelectedObjectsWithoutDoublon = new List<UnityEngine.Object>(NUMBER_SELECTED_OBJECTS);
+        public List<UnityEngine.Object> SelectedObjectsWithoutDoublon = new List<UnityEngine.Object>(NUMBER_SHOWN_OBJECTS);
         public int CurrentIndex;
 
-        public TinyEditorWindowSceneView TinyEditorWindowSceneView = new TinyEditorWindowSceneView();
-        private const string KEY_EDITOR_PREF_SAVE_LAST_SELECTION = "KEY_EDITOR_PREF_SAVE_LAST_SELECTION";
         private const string KEY_EDITOR_PREF_SAVE_LAST_SELECTION_CLOSED = "KEY_EDITOR_PREF_SAVE_LAST_SELECTION_CLOSED";
+        private SaveLastSelectionEditorWindowShowUtility _displayInside = null;
+        public bool IsClosed { get { return (_displayInside == null); } }
 
         private static Rect _positionHidedEditorWindow = new Rect(10000, 10000, 0, 0);
 
@@ -36,19 +33,43 @@ namespace hedCommon.saveLastSelection
             window.SetMinSize(new Vector2(0, 0));
             window.SetMaxSize(new Vector2(0, 0));
             window.position = _positionHidedEditorWindow;
-            window.ConstructTinyEditorWindow();
             return (window);
+        }
+
+        public void ToggleOpenCloseDisplay()
+        {
+            if (_displayInside)
+            {
+                _displayInside.Close();
+                _displayInside = null;
+            }
+            else
+            {
+                _displayInside = EditorWindow.GetWindow<SaveLastSelectionEditorWindowShowUtility>("Save Selection", true);
+                //_displayInside = ScriptableObject.CreateInstance(typeof(SaveLastSelectionEditorWindowShowUtility)) as SaveLastSelectionEditorWindowShowUtility;
+                _displayInside.Show();
+            }
+            SaveCloseStatus();
+        }
+
+        public void Display(Action action)
+        {
+            _displayInside?.ShowEditorWindow(action);
         }
 
         public void ConstructTinyEditorWindow()
         {
-            TinyEditorWindowSceneView.TinyInit(KEY_EDITOR_PREF_SAVE_LAST_SELECTION, "Save Last Selection", TinyEditorWindowSceneView.DEFAULT_POSITION.UP_LEFT);
-            TinyEditorWindowSceneView.IsClosed = EditorPrefs.GetBool(KEY_EDITOR_PREF_SAVE_LAST_SELECTION_CLOSED);
+            bool isClosed = EditorPrefs.GetBool(KEY_EDITOR_PREF_SAVE_LAST_SELECTION_CLOSED);
+            if (!isClosed)
+            {
+                _displayInside = ScriptableObject.CreateInstance(typeof(SaveLastSelectionEditorWindowShowUtility)) as SaveLastSelectionEditorWindowShowUtility;
+                _displayInside.ShowUtility();
+            }
         }
 
         public void SaveCloseStatus()
         {
-            EditorPrefs.SetBool(KEY_EDITOR_PREF_SAVE_LAST_SELECTION_CLOSED, TinyEditorWindowSceneView.IsClosed);
+            EditorPrefs.SetBool(KEY_EDITOR_PREF_SAVE_LAST_SELECTION_CLOSED, _displayInside == null);
         }
 
         public void Reset()
