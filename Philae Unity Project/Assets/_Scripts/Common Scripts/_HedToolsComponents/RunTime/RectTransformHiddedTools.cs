@@ -7,6 +7,10 @@ namespace extUnityComponents
     [ExecuteInEditMode]
     public class RectTransformHiddedTools : MonoBehaviour, IEditorOnly
     {
+        public bool ShowName = false;
+        public Color ColorText = Color.white;
+        public bool HideHandle = false;
+
         private void Awake()
         {
             this.hideFlags = HideFlags.HideInInspector;

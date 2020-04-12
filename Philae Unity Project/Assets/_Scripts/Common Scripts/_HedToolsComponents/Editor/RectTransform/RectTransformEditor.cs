@@ -21,11 +21,14 @@ namespace extUnityComponents.transform
         /// </summary>
         private Canvas _canvasRef;
 
-        
+        private ShowInfoGameObject _showInfoGameObject = new ShowInfoGameObject();
+
+
+
         private float _saveDeltaSizeRatio;
         private static bool _homothety;
         private bool _isCanvas;
-        private RectTransformHiddedTools _rectTransformHiddedTools;
+        private TransformHiddedTools[] _rectTransformHiddedTools;
 
 
         public RectTransformEditor()
@@ -47,7 +50,12 @@ namespace extUnityComponents.transform
         /// </summary>
         public override void OnCustomDisable()
         {
+            _showInfoGameObject.CustomDisable();
+        }
 
+        protected override void CustomOnSceneGUI(SceneView sceneview)
+        {
+            _showInfoGameObject.CustomOnSceneGUI();
         }
 
         /// <summary>
@@ -55,8 +63,14 @@ namespace extUnityComponents.transform
         /// </summary>
         protected override void InitOnFirstInspectorGUI()
         {
-            _rectTransformHiddedTools = ConcretTarget.GetOrAddComponent<RectTransformHiddedTools>();
+            Transform[] tmpTargets = GetTargets<Transform>();
+            _rectTransformHiddedTools = new TransformHiddedTools[tmpTargets.Length];
+            for (int i = 0; i < tmpTargets.Length; i++)
+            {
+                _rectTransformHiddedTools[i] = tmpTargets[i].GetOrAddComponent<TransformHiddedTools>();
+            }
             _canvasRef = ConcretTarget.gameObject.GetComponent<Canvas>();
+            _showInfoGameObject.Init(GetTargets<Transform>(), this, _rectTransformHiddedTools);
         }
 
         /// <summary>
@@ -72,6 +86,7 @@ namespace extUnityComponents.transform
             {
                 DisplayNotCanvaGUI();
             }
+            _showInfoGameObject.CustomOnInspectorGUI();
         }
 
         /// <summary>
@@ -80,23 +95,6 @@ namespace extUnityComponents.transform
         private void DisplayCanvasGUI()
         {
 
-        }
-
-        /// <summary>
-        /// this option allow to scale the object and keep his aspect ratio.
-        /// </summary>
-        private void ApplyLockHomotetie()
-        {
-            using (HorizontalScope horizontalScope = new HorizontalScope(EditorStyles.helpBox))
-            {
-                GUILayout.Label("Locked Scaling Ratio");
-                //_homothety = GUILayout.Toggle(_homothety, (_homothety) ? "Homothetic" : "Free", EditorStyles.miniButton);
-                _homothety = ExtGUIToggles.Toggle(_homothety, null, (_homothety) ? "Homothetic" : "Free", out bool valueHasChanged, EditorStyles.miniButton);
-                if (valueHasChanged && _homothety)
-                {
-                    _saveDeltaSizeRatio = (((RectTransform)ConcretTarget).sizeDelta.y / ((RectTransform)ConcretTarget).sizeDelta.x + 0.00001f);
-                }
-            }
         }
 
         /// <summary>
@@ -135,14 +133,6 @@ namespace extUnityComponents.transform
                     rectTarget.localScale = Vector3.one;
                 }
             }
-
-            ApplyLockHomotetie();
-        }
-
-        protected override void OnEditorUpdate()
-        {
-            float y = ((RectTransform)ConcretTarget).sizeDelta.x * _saveDeltaSizeRatio;
-            ((RectTransform)ConcretTarget).sizeDelta = new Vector2(((RectTransform)ConcretTarget).sizeDelta.x, y);
         }
     }
 }
