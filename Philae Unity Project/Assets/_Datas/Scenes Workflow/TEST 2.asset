@@ -12,12 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b796d07a1c7d34d88b343dffc77328, type: 3}
   m_Name: TEST 2
   m_EditorClassIdentifier: 
-  _isActive: 1
   FolderParentName: _Architecture
   FolderParentPath: Assets/_Scripts/_GAME/_Architecture
   CalculatedPath: Assets/_Scripts/_GAME/_Architecture/RaceTrackSelection.asset
+  NameList: Scene List
   SceneToLoad:
   - sceneAsset: {fileID: 102900000, guid: bda83a242557326479763fbfe924af4b, type: 3}
     scenePath: Assets/_Scenes/TEST 2.unity
-  - sceneAsset: {fileID: 102900000, guid: e43bd87ef1ef8b147b4a71efa95e92a1, type: 3}
-    scenePath: Assets/_Scenes/TEST 3.unity

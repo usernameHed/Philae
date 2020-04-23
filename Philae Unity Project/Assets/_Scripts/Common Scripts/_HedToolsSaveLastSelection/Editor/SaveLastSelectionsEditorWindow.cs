@@ -35,6 +35,25 @@ namespace hedCommon.saveLastSelection
             return (window);
         }
 
+        public bool IsContainingThisType<T>(out UnityEngine.Object found)
+        {
+            found = null;
+
+            for (int i = SelectedObjects.Count - 1; i >= 0; i--)
+            {
+                if (SelectedObjects[i] == null)
+                {
+                    continue;
+                }
+                if (typeof(T).IsAssignableFrom(SelectedObjects[i].GetType()))
+                {
+                    found = SelectedObjects[i];
+                    return (true);
+                }
+            }
+            return (false);
+        }
+
         public void ToggleOpenCloseDisplay()
         {
             if (_displayInside)

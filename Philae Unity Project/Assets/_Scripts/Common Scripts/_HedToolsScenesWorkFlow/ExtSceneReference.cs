@@ -47,6 +47,16 @@ namespace hedCommon.sceneWorkflow
     [System.Serializable]
     public class ExtSceneReference : ISerializationCallbackReceiver
     {
+        [MenuItem("TOOLS/Scene Workflow/Remove Deleted Scenes")]
+        public static void CleanUpDeletedScenes()
+        {
+            var currentScenes = EditorBuildSettings.scenes;
+            var filteredScenes = currentScenes.Where(ebss => File.Exists(ebss.path)).ToArray();
+            EditorBuildSettings.scenes = filteredScenes;
+
+            SceneReferencePropertyDrawer.BuildUtils.OpenBuildSettings();
+        }
+
         public struct CustomSceneReference
         {
             public bool IsActiveOnBuild;
@@ -459,14 +469,6 @@ namespace hedCommon.sceneWorkflow
 
             tooltipMsg = "Open the 'Build Settings' Window for managing scenes." + readOnlyWarning;
 
-            //WantToActiveOnBuild = EditorGUILayout.Toggle();
-            /*
-            if (DrawUtils.ButtonHelper(buttonRect, "Settings", "Build Settings", EditorStyles.miniButtonRight, tooltipMsg))
-            {
-                BuildUtils.OpenBuildSettings();
-            }
-            */
-
             if (DrawUtils.ButtonHelper(buttonRect, "Settings", "Build Settings", EditorStyles.miniButtonRight, tooltipMsg))
             {
                 BuildUtils.OpenBuildSettings();
@@ -523,7 +525,7 @@ namespace hedCommon.sceneWorkflow
         /// <summary>
         /// Various BuildSettings interactions
         /// </summary>
-        static private class BuildUtils
+        public static  class BuildUtils
         {
             // time in seconds that we have to wait before we query again when IsReadOnly() is called.
             public static float minCheckWait = 3;

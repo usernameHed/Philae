@@ -9,6 +9,27 @@ namespace hedCommon.extension.runtime
     {
         public static readonly Vector3[] GeneralDirections = new Vector3[] { Vector3.right, Vector3.up, Vector3.forward, Vector3.left, Vector3.down, Vector3.back };
 
+        public enum Axis2D
+        {
+            IGNORE_X = 0,
+            IGNORE_Y = 1,
+            IGNORE_Z = 2,
+        }
+
+        public static float Distance2D(Vector3 point1, Vector3 point2, Axis2D ignoreAxis)
+        {
+            switch (ignoreAxis)
+            {
+                case Axis2D.IGNORE_X:
+                    return (Vector2.Distance(new Vector2(point1.y, point1.z), new Vector2(point2.y, point2.z)));
+                case Axis2D.IGNORE_Y:
+                    return (Vector2.Distance(new Vector2(point1.x, point1.z), new Vector2(point2.x, point2.z)));
+                case Axis2D.IGNORE_Z:
+                default:
+                    return (Vector2.Distance(new Vector2(point1.x, point1.y), new Vector2(point2.x, point2.y)));
+            }
+        }
+
         #region nullVector
         /// <summary>
         /// define a null vector

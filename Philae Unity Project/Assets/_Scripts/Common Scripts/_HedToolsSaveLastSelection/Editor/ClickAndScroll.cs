@@ -1,4 +1,5 @@
-﻿using hedCommon.extension.editor;
+﻿using hedCommon.eventEditor;
+using hedCommon.extension.editor;
 using hedCommon.extension.runtime;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,14 +66,25 @@ namespace hedCommon.saveLastSelection
         /// <param name="sceneView"></param>
         private static void OnSceneGUI(SceneView sceneView)
         {
-            if (ExtEventEditor.IsClickOnSceneView(Event.current))
+            if (ExtMouse.IsClickOnSceneView(Event.current))
             {
                 SaveAllGameObjectUnderneethMouse(Event.current.mousePosition, sceneView);
             }
             else
             {
+                AttemptToCtrlClick();
                 AttemptToScroll();
             }
+        }
+
+        private static bool AttemptToCtrlClick()
+        {
+            if (ExtMouse.IsLeftMouseDown(Event.current) && Event.current.control)
+            {
+                Debug.Log("here attempt to clic on parent, warning to keep ctrl normal behaviour. Search for 'Clone' up");
+                return (true);
+            }
+            return (false);
         }
 
         /// <summary>
@@ -105,8 +117,8 @@ namespace hedCommon.saveLastSelection
                 return;
             }
 
-            bool isScrollingDown = ExtEventEditor.IsScrollingDown(Event.current, out float delta);
-            bool isScrollingUp = ExtEventEditor.IsScrollingUp(Event.current, out delta);
+            bool isScrollingDown = ExtMouse.IsScrollingDown(Event.current, out float delta);
+            bool isScrollingUp = ExtMouse.IsScrollingUp(Event.current, out delta);
 
             if (!isScrollingDown && !isScrollingUp)
             {

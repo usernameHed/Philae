@@ -35,7 +35,7 @@ namespace hedCommon.toolbarExtent
 		static void OnUpdate()
 		{
 			// Relying on the fact that toolbar is ScriptableObject and gets deleted when layout changes
-			if (m_currentToolbar == null)
+			if (m_currentToolbar == null && !EditorApplication.isCompiling)
 			{
 				// Find toolbar
 				var toolbars = Resources.FindObjectsOfTypeAll(m_toolbarType);

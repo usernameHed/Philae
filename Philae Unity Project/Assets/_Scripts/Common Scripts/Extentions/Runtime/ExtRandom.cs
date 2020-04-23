@@ -231,26 +231,36 @@ namespace hedCommon.extension.runtime
         /// <param name="radius">radius of circle</param>
         /// <param name="toreCenter">Excluse center from random</param>
         /// <returns></returns>
-        public static Vector3 GetRandomInsideUnitSphere(float radius, float toreCenter = 0)
+        public static Vector3 GetRandomInsideUnitSphere(float radius)
         {
-            if (toreCenter == 0)
-                return (UnityEngine.Random.insideUnitSphere * radius);
+            return (UnityEngine.Random.insideUnitSphere * radius);
+        }
 
+        public static Vector3 GetRandomInsideUnitSphere(Vector3 radius)
+        {
+            Vector3 sphere = Vector3.zero;
+            int absRandom = GetRandomNumber(0, 2);
+            absRandom = (absRandom == 0) ? -1 : 1;
+
+            sphere.x = GetRandomNumber(0f, radius.x) * absRandom;
+            sphere.y = GetRandomNumber(0f, radius.y) * absRandom;
+            sphere.z = GetRandomNumber(0f, radius.z) * absRandom;
+            return (sphere);
+        }
+
+        public static Vector3 GetRandomTorus(float radius, float toreCenter)
+        {
             if (toreCenter > radius)
             {
                 Debug.LogError("radiusCenter can't be superior then radius");
             }
-
             Vector3 donut = Vector3.zero;
-            for (int i = 0; i < 3; i++)
-            {
-                int absRandom = GetRandomNumber(0, 2);
-                absRandom = (absRandom == 0) ? -1 : 1;
+            int absRandom = GetRandomNumber(0, 2);
+            absRandom = (absRandom == 0) ? -1 : 1;
 
-                donut.x = GetRandomNumber(toreCenter, radius) * absRandom;
-                donut.y = GetRandomNumber(toreCenter, radius) * absRandom;
-                donut.z = GetRandomNumber(toreCenter, radius) * absRandom;
-            }
+            donut.x = GetRandomNumber(toreCenter, radius) * absRandom;
+            donut.y = GetRandomNumber(toreCenter, radius) * absRandom;
+            donut.z = GetRandomNumber(toreCenter, radius) * absRandom;
             return (donut);
         }
 

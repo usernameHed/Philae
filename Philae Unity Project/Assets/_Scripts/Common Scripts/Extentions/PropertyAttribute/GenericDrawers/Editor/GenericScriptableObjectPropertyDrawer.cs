@@ -158,12 +158,11 @@ namespace hedCommon.extension.propertyAttribute.generic
 
         private float DrawProperty(Rect position, SerializedProperty property, float y)
         {
-            if (property.name.Equals("m_Script"))
-            {
-                return 0;
-            }
+            EditorGUI.BeginDisabledGroup(property.name.Equals("m_Script"));
+
             float height = EditorGUI.GetPropertyHeight(property, new GUIContent(property.displayName), true);
             EditorGUI.PropertyField(new Rect(position.x, y, position.width, height), property, true);
+            EditorGUI.EndDisabledGroup();
             return height + EditorGUIUtility.standardVerticalSpacing;
         }
     }

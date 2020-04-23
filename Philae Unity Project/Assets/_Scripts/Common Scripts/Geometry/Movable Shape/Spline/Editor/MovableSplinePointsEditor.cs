@@ -1,4 +1,5 @@
 ﻿using extUnityComponents.transform;
+using hedCommon.eventEditor;
 using hedCommon.extension.editor;
 using hedCommon.extension.editor.sceneView;
 using hedCommon.extension.runtime;
@@ -155,12 +156,12 @@ namespace hedCommon.geometry.movable
                 return;
             }
 
-            if (ExtEventEditor.IsLeftMouseDown(Event.current) && !_isDragging)
+            if (ExtMouse.IsLeftMouseDown(Event.current) && !_isDragging)
             {
                 _isDragging = true;
                 _initialPositionDrag = Event.current.mousePosition;
             }
-            if (ExtEventEditor.IsLeftMouseUp(Event.current))
+            if (ExtMouse.IsLeftMouseUp(Event.current))
             {
                 _endDragPosition = Event.current.mousePosition;
                 ChangePointSelectionStateInsideMouseRectangleSelection();
@@ -256,7 +257,7 @@ namespace hedCommon.geometry.movable
         /// </summary>
         private void AttemptToUselectPoints()
         {
-            if (ExtEventEditor.IsLeftMouseUp(Event.current) && ExtVector3.IsClose(_initialPositionDrag, _endDragPosition, 0.01f))
+            if (ExtMouse.IsLeftMouseUp(Event.current) && ExtVector3.IsClose(_initialPositionDrag, _endDragPosition, 0.01f))
             {
                 UnSelectPoints();
             }

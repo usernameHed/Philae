@@ -25,24 +25,6 @@ namespace hedCommon.extension.runtime
             Texture2D texture = (Texture2D)EditorGUIUtility.Load("SceneView/" + imageName + ".png");
             return (texture);
         }
-
-
-        public static Texture TakeScreenCapture(Rect rect)
-        {
-            int width = (int)rect.width;
-            int height = (int)rect.height;
-            int x = (int)rect.x;
-            int y = (int)rect.y;
-            Vector2 position = new Vector2(x, y);
-
-            Color[] pixels = UnityEditorInternal.InternalEditorUtility.ReadScreenPixel(position, width, height);
-
-            Texture2D texture = new Texture2D(width, height);
-            texture.SetPixels(pixels);
-            texture.Apply();
-
-            return texture;
-        }
 #endif
 
         /// <summary>

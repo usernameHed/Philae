@@ -314,6 +314,16 @@ namespace hedCommon.extension.runtime
             return (-1);
         }
 
+        /// <summary>
+        /// pick a random number in array
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        public static T PickRandom<T>(this T[] collection)
+        {
+            return (collection[UnityEngine.Random.Range(0, collection.Length)]);
+        }
 
         #region General Methods
 

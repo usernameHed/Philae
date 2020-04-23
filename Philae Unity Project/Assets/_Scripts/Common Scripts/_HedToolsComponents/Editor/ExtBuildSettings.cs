@@ -10,14 +10,6 @@ namespace extUnityComponents
 {
     public static class ExtBuildSettings
     {
-        [MenuItem("TOOLS/RemoveDeletedScenes")]
-        public static void CleanUpDeletedScenes()
-        {
-            var currentScenes = EditorBuildSettings.scenes;
-            var filteredScenes = currentScenes.Where(ebss => File.Exists(ebss.path)).ToArray();
-            EditorBuildSettings.scenes = filteredScenes;
-        }
-
         /// <summary>
         /// called when you are building your game
         /// index: the order of execution (if you have multiple PostProcessScene)

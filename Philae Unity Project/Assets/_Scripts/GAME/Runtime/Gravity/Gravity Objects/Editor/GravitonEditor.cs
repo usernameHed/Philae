@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEditor;
 using extUnityComponents;
 using hedCommon.extension.editor;
-using hedCommon.geometry.shape3d;
-using static UnityEditor.EditorGUILayout;
 using hedCommon.extension.runtime;
 using hedCommon.editorGlobal;
 using philae.gravity.graviton;
@@ -14,6 +12,7 @@ using philae.data.gravity;
 using philae.gravity.physicsBody;
 using static philae.gravity.physicsBody.PhysicBody;
 using hedCommon.extension.editor.sceneView;
+using hedCommon.eventEditor;
 
 namespace philae.gravity.zones
 {

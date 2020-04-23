@@ -15,6 +15,8 @@ namespace hedCommon.saveLastSelection
     public class SaveLastSelections
     {
         private SaveLastSelectionsEditorWindow _saveLastSelectionsEditorWindow;
+        public SaveLastSelectionsEditorWindow GetSaveWindow() { return (_saveLastSelectionsEditorWindow); }
+
         private bool _isInit = false;
         private bool _isClosed = false;
         private FrequencyCoolDown _frequencyCoolDown = new FrequencyCoolDown();
@@ -135,13 +137,13 @@ namespace hedCommon.saveLastSelection
                     }
                     EditorGUI.BeginDisabledGroup(_saveLastSelectionsEditorWindow.SelectedObjects.Count == 0);
                     {
-                        bool isScrollingDown = ExtEventEditor.IsScrollingDown(Event.current, out float delta);
+                        bool isScrollingDown = ExtMouse.IsScrollingDown(Event.current, out float delta);
                         if (GUILayout.Button("<", ExtGUIStyles.microButton) || isScrollingDown)
                         {
                             AddToIndex(-1);
                             ForceSelection(_saveLastSelectionsEditorWindow.SelectedObjects[_saveLastSelectionsEditorWindow.CurrentIndex]);
                         }
-                        bool isScrollingUp = ExtEventEditor.IsScrollingUp(Event.current, out delta);
+                        bool isScrollingUp = ExtMouse.IsScrollingUp(Event.current, out delta);
                         if (GUILayout.Button(">", ExtGUIStyles.microButton) || isScrollingUp)
                         {
                             AddToIndex(1);
