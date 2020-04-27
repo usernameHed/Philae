@@ -18,6 +18,12 @@ public static class ExtPrefabsEditor
         return prefab != null && prefab == obj;
     }
 
+    public static bool IsPrefab(GameObject obj, out GameObject prefab)
+    {
+        prefab = PrefabUtility.GetOutermostPrefabInstanceRoot(obj);
+        return prefab != null && prefab == obj;
+    }
+
     /// <summary>
     /// default path is: Assets/_Prefabs/Editor/
     /// call 
