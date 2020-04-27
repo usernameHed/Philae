@@ -27,6 +27,8 @@ namespace hedCommon.tools
         private static List<int> _allGameObjectInFrameWork = new List<int>(500);
         private static List<System.Type> _allNonPersistentType = new List<System.Type>() { typeof(TransformHiddedTools), typeof(AnimatorHiddedTools), typeof(MeshFilterHiddedTools), typeof(RectTransformHiddedTools), typeof(RectTransformHiddedTools) };
 
+        private static bool _needToSetupListOfGameObject = true;
+
         // Style used to draw the symlink indicator in the project view.
         private static GUIStyle _symlinkMarkerStyle = null;
 		private static GUIStyle symlinkMarkerStyle
@@ -56,16 +58,19 @@ namespace hedCommon.tools
         [UnityEditor.Callbacks.DidReloadScripts]
         private static void OnScriptsReloaded()
         {
-            UpdateListGameObjects();
+            Debug.Log("here compiled !");
+            _needToSetupListOfGameObject = true;
         }
 
         private static void OnHierarchyWindowChanged()
         {
-            UpdateListGameObjects();
+            _needToSetupListOfGameObject = true;
         }
 
         private static void UpdateListGameObjects()
         {
+            _needToSetupListOfGameObject = false;
+
             // Check here
             GameObject[] allGameObjects = Object.FindObjectsOfType(typeof(GameObject)) as GameObject[];
 
@@ -121,6 +126,11 @@ namespace hedCommon.tools
         {
             try
             {
+                if (_needToSetupListOfGameObject)
+                {
+                    UpdateListGameObjects();
+                }
+
                 // place the icoon to the right of the list:
                 Rect r = new Rect(selectionRect);
                 r.x = r.width - 20;
