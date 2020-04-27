@@ -8,6 +8,7 @@ using extUnityComponents.transform;
 using extUnityComponents;
 using System;
 using System.Reflection;
+using hedCommon.time;
 
 namespace hedCommon.tools
 {
@@ -54,8 +55,8 @@ namespace hedCommon.tools
 
         private static bool _needToSetupListOfGameObject = true;
         private const BindingFlags _flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic;
-
-        // Style used to draw the symlink indicator in the project view.
+        private static EditorChronoWithNoTimeEditor _editorChronoWithNoTimeEditor = new EditorChronoWithNoTimeEditor();
+        private const float LIMIT_BETWEEN_TWO_LOADING = 1f;
         private static GUIStyle _symlinkMarkerStyle = null;
 
         #region Display marker
@@ -82,6 +83,7 @@ namespace hedCommon.tools
             EditorApplication.projectWindowItemOnGUI += OnProjectWindowItemGUI;
             EditorApplication.hierarchyWindowItemOnGUI += OnHierarchyItemGUI;
             EditorApplication.hierarchyChanged += OnHierarchyWindowChanged;
+            _needToSetupListOfGameObject = true;
         }
 
         [UnityEditor.Callbacks.DidReloadScripts]
@@ -99,6 +101,7 @@ namespace hedCommon.tools
         private static void UpdateListGameObjects()
         {
             _needToSetupListOfGameObject = false;
+            _editorChronoWithNoTimeEditor.StartChrono(LIMIT_BETWEEN_TWO_LOADING);
 
             // Check here
             GameObject[] allGameObjects = UnityEngine.Object.FindObjectsOfType(typeof(GameObject)) as GameObject[];
@@ -106,7 +109,9 @@ namespace hedCommon.tools
             _allGameObjectInFrameWork.Clear();
             foreach (GameObject g in allGameObjects)
             {
-                if (IsPrefabsAndInSymLink(g) || HasComponentInSymLink(g) || HasSymLinkAssetInsideComponent(g))
+                bool isSomethingInsideFrameWork = IsPrefabsAndInSymLink(g) || HasComponentInSymLink(g) || HasSymLinkAssetInsideComponent(g);
+                Debug.Log(g.name + ", " + isSomethingInsideFrameWork, g);
+                if (isSomethingInsideFrameWork)
                 {
                     _allGameObjectInFrameWork.AddIfNotContain(g.GetInstanceID());
                 }
@@ -229,7 +234,7 @@ namespace hedCommon.tools
         {
             try
             {
-                if (_needToSetupListOfGameObject)
+                if (_needToSetupListOfGameObject && _editorChronoWithNoTimeEditor.IsNotRunning())
                 {
                     UpdateListGameObjects();
                 }

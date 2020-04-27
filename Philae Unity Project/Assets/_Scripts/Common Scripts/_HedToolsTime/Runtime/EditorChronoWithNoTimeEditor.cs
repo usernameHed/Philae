@@ -53,6 +53,10 @@ namespace hedCommon.time
             return (false);
         }
 
+        public bool IsNotRunning()
+        {
+            return (!IsRunning());
+        }
 
         /// <summary>
         /// return true if the timer is finished
