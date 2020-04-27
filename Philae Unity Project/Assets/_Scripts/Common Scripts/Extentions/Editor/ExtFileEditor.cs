@@ -212,10 +212,5 @@ namespace hedCommon.extension.editor
                 CopyAll(diSourceSubDir, nextTargetSubDir, overrideFile);
             }
         }
-
-        public static string GetPath(this Object asset)
-        {
-            return (AssetDatabase.GetAssetPath(asset));
-        }
     }
 }
