@@ -89,7 +89,6 @@ namespace hedCommon.tools
         [UnityEditor.Callbacks.DidReloadScripts]
         private static void OnScriptsReloaded()
         {
-            Debug.Log("here compiled !");
             _needToSetupListOfGameObject = true;
         }
 
@@ -110,7 +109,6 @@ namespace hedCommon.tools
             foreach (GameObject g in allGameObjects)
             {
                 bool isSomethingInsideFrameWork = IsPrefabsAndInSymLink(g) || HasComponentInSymLink(g) || HasSymLinkAssetInsideComponent(g);
-                Debug.Log(g.name + ", " + isSomethingInsideFrameWork, g);
                 if (isSomethingInsideFrameWork)
                 {
                     _allGameObjectInFrameWork.AddIfNotContain(g.GetInstanceID());
@@ -127,6 +125,7 @@ namespace hedCommon.tools
             }
             UnityEngine.Object parentObject = PrefabUtility.GetCorrespondingObjectFromSource(prefab);
             string path = AssetDatabase.GetAssetPath(parentObject);
+            UpdateSymLinksParent(path);
             FileAttributes attribs = File.GetAttributes(path);
             return (IsAttributeAFileInsideASymLink(path, attribs));
         }
@@ -146,6 +145,7 @@ namespace hedCommon.tools
                 {
                     MonoScript script = MonoScript.FromMonoBehaviour(mono); // gets script as an asset
                     string path = script.GetPath();
+                    UpdateSymLinksParent(path);
                     FileAttributes attribs = File.GetAttributes(path);
                     if (IsAttributeAFileInsideASymLink(path, attribs))
                     {
@@ -190,16 +190,21 @@ namespace hedCommon.tools
                                 continue;
                             }
 
-                            UnityEngine.Object propertyValue = property.GetValue(component, null) as UnityEngine.Object;
-                            if (propertyValue is UnityEngine.Object && !propertyValue.IsTruelyNull())
+                            try
                             {
-                                string path = propertyValue.GetPath();
-                                FileAttributes attribs = File.GetAttributes(path);
-                                if (IsAttributeAFileInsideASymLink(path, attribs))
+                                UnityEngine.Object propertyValue = property.GetValue(component, null) as UnityEngine.Object;
+                                if (propertyValue is UnityEngine.Object && !propertyValue.IsTruelyNull())
                                 {
-                                    return (true);
+                                    string path = propertyValue.GetPath();
+                                    UpdateSymLinksParent(path);
+                                    FileAttributes attribs = File.GetAttributes(path);
+                                    if (IsAttributeAFileInsideASymLink(path, attribs))
+                                    {
+                                        return (true);
+                                    }
                                 }
                             }
+                            catch { }
                         }
                         catch { }
                     }
@@ -213,6 +218,7 @@ namespace hedCommon.tools
                             if (fieldValue is UnityEngine.Object && !fieldValue.IsTruelyNull())
                             {
                                 string path = fieldValue.GetPath();
+                                UpdateSymLinksParent(path);
                                 FileAttributes attribs = File.GetAttributes(path);
                                 if (IsAttributeAFileInsideASymLink(path, attribs))
                                 {
