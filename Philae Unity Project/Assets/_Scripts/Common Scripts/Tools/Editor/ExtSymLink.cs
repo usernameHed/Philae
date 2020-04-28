@@ -179,54 +179,52 @@ namespace hedCommon.tools
                     PropertyInfo[] properties = componentType.GetProperties(_flags);
                     foreach (PropertyInfo property in properties)
                     {
-                        try
-                        {
-                            if (_allForbiddenPropertyName.Contains(property.Name))
-                            {
-                                continue;
-                            }
-                            if (_allForbiddenPropertyType.Contains(property.PropertyType))
-                            {
-                                continue;
-                            }
 
-                            try
-                            {
-                                UnityEngine.Object propertyValue = property.GetValue(component, null) as UnityEngine.Object;
-                                if (propertyValue is UnityEngine.Object && !propertyValue.IsTruelyNull())
-                                {
-                                    string path = propertyValue.GetPath();
-                                    UpdateSymLinksParent(path);
-                                    FileAttributes attribs = File.GetAttributes(path);
-                                    if (IsAttributeAFileInsideASymLink(path, attribs))
-                                    {
-                                        return (true);
-                                    }
-                                }
-                            }
-                            catch { }
+                        if (_allForbiddenPropertyName.Contains(property.Name))
+                        {
+                            continue;
                         }
-                        catch { }
+                        if (_allForbiddenPropertyType.Contains(property.PropertyType))
+                        {
+                            continue;
+                        }
+                        if (property.IsDefined(typeof(ObsoleteAttribute), true))
+                        {
+                            continue;
+                        }
+                        UnityEngine.Object propertyValue = property.GetValue(component, null) as UnityEngine.Object;
+
+                        if (propertyValue is UnityEngine.Object && !propertyValue.IsTruelyNull())
+                        {
+                            string path = propertyValue.GetPath();
+                            UpdateSymLinksParent(path);
+                            FileAttributes attribs = File.GetAttributes(path);
+                            if (IsAttributeAFileInsideASymLink(path, attribs))
+                            {
+                                return (true);
+                            }
+                        }
                     }
                     
                     FieldInfo[] fields = componentType.GetFields(_flags);
                     foreach (FieldInfo field in fields)
                     {
-                        try
+                        if (field.IsDefined(typeof(ObsoleteAttribute), true))
                         {
-                            UnityEngine.Object fieldValue = field.GetValue(component) as UnityEngine.Object;
-                            if (fieldValue is UnityEngine.Object && !fieldValue.IsTruelyNull())
+                            continue;
+                        }
+                        UnityEngine.Object fieldValue = field.GetValue(component) as UnityEngine.Object;
+
+                        if (fieldValue is UnityEngine.Object && !fieldValue.IsTruelyNull())
+                        {
+                            string path = fieldValue.GetPath();
+                            UpdateSymLinksParent(path);
+                            FileAttributes attribs = File.GetAttributes(path);
+                            if (IsAttributeAFileInsideASymLink(path, attribs))
                             {
-                                string path = fieldValue.GetPath();
-                                UpdateSymLinksParent(path);
-                                FileAttributes attribs = File.GetAttributes(path);
-                                if (IsAttributeAFileInsideASymLink(path, attribs))
-                                {
-                                    return (true);
-                                }
+                                return (true);
                             }
                         }
-                        catch { }
                     }
                     
                 }
