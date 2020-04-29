@@ -1,6 +1,6 @@
 ﻿using hedCommon.eventEditor;
 using hedCommon.extension.runtime;
-using MoveMouseEditor;
+using hedCommon.MoveMouseEditor;
 using System;
 using System.Collections;
 using System.Collections.Generic;

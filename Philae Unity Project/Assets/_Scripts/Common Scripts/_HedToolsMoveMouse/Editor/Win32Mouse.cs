@@ -25,7 +25,7 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace MoveMouseEditor
+namespace hedCommon.MoveMouseEditor
 {
     public static class Win32Mouse
     {

@@ -25,7 +25,7 @@ using hedCommon.extension.editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace MoveMouseEditor
+namespace hedCommon.MoveMouseEditor
 {
     /// <summary>
     /// exemple of an EditorWindow

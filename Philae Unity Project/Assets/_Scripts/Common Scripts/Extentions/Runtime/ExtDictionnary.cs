@@ -9,6 +9,14 @@ namespace hedCommon.extension.runtime
 {
     public static class ExtDictionnary
     {
+        public static void AddIfNotContaint<T, U>(this Dictionary<T, U> self, T key, U valueToAdd)
+        {
+            if (!self.TryGetValue(key, out U value))
+            {
+                self.Add(key, valueToAdd);
+            }
+        }
+
         public static void Query<K, V>(this Dictionary<K, V> self, K key, Action<V> f) where V : UnityEngine.Object
         {
             var v = default(V);
