@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using hedCommon.time;
-using hedCommon.extension.runtime.animationCurve;
 using hedCommon.extension.propertyAttribute.animationCurve;
+using hedCommon.time;
 
 namespace hedCommon.extension.runtime.animate
 {
@@ -11,7 +12,7 @@ namespace hedCommon.extension.runtime.animate
     public class AnimateTextAmount : MonoBehaviour
     {
         [SerializeField]
-        private TextMeshProUGUI _text;
+        private TextMeshProUGUI _text = default;
         [SerializeField]
         private string _preText = "";
         [SerializeField]
@@ -54,15 +55,19 @@ namespace hedCommon.extension.runtime.animate
 
         public void Animate(int from, int to, float time)
         {
+            _time = time;
+            Animate(from, to);
+        }
+
+        public void Animate(int from, int to)
+        {
             _fillAmountFrom = from;
             _fillAmountTo = to;
-            _time = time;
             _animationLaunched = true;
             _chrono.StartChrono(_time, false);
             InitStartValue();
         }
 
-        [ContextMenu("Animate")]
         public void Animate()
         {
             Animate(_fillAmountFrom, _fillAmountTo, _time);
@@ -76,6 +81,11 @@ namespace hedCommon.extension.runtime.animate
             }
 
             Calculate();
+        }
+
+        public void SetMaxValue(int max)
+        {
+            _text.text = _preText + max + _postText;
         }
 
         private void InitStartValue()
