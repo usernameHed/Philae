@@ -33,7 +33,7 @@ namespace hedCommon.extension.editor.screenCapture
                 {
                     Texture screenShot = focusedWindow.TakeEditorWindowCapture();
                     Object asset = screenShot.SaveScreenCapture(focusedWindow.GetType().Name);
-                    ExtExecute.ShowExplorer(AssetDatabase.GetAssetPath(asset));
+                    ExtWindowComands.ShowInExplorer(asset);
                 }
             }
         }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace hedCommon.persistantPlayMode
+namespace hedCommon.onProjectWindowItemGUI.persistantPlayMode
 {
     [InitializeOnLoad]
     public static class PersistantPlayMode
