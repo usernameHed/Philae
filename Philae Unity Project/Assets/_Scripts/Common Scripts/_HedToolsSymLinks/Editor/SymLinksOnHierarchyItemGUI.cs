@@ -22,100 +22,135 @@ namespace hedCommon.symlinks
     [InitializeOnLoad]
     public static class SymLinksOnHierarchyItemGUI
     {
-        public struct GameObjectsInfo
-        {
-            public int Id;
-            public bool HasBeeSetupped;
-            public bool IsInFrameWork;
-        }
+        private const string SYMLINK_TOOLTIP = "In Symlink: ";
 
-        private static Dictionary<int, GameObjectsInfo> _gameObjectsInfo = new Dictionary<int, GameObjectsInfo>(300);
-
-
-        private static List<int> _allGameObjectInFrameWork = new List<int>(500);
-
-        private static bool _needToSetupListOfGameObject = true;
-        private static EditorChronoWithNoTimeEditor _editorChronoWithNoTimeEditor = new EditorChronoWithNoTimeEditor();
-        private const float LIMIT_BETWEEN_TWO_LOADING = 1f;
+        //Don't use dictionnary ! it crash !!
+        private static List<int> _gameObjectsId = new List<int>(300);
+        private static List<UnityEngine.Object> _gameObjectsList = new List<UnityEngine.Object>(300);
+        private static List<bool> _gameObjectsHasBeenSetup = new List<bool>(300);
+        private static List<bool> _gameObjectsIsInFrameWork = new List<bool>(300);
+        private static List<string> _toolTipInfo = new List<string>(300);
+        private static bool _needToSetup = false;
 
         /// <summary>
         /// Static constructor subscribes to projectWindowItemOnGUI delegate.
         /// </summary>
         static SymLinksOnHierarchyItemGUI()
-		{
+        {
             EditorApplication.hierarchyWindowItemOnGUI -= OnHierarchyItemGUI;
             EditorApplication.hierarchyWindowItemOnGUI += OnHierarchyItemGUI;
 
             EditorApplication.hierarchyChanged -= OnHierarchyWindowChanged;
             EditorApplication.hierarchyChanged += OnHierarchyWindowChanged;
 
-            _needToSetupListOfGameObject = true;
+            _needToSetup = false;
         }
 
         public static void ResetSymLinksDatas()
         {
-            
+            _gameObjectsId.Clear();
+            _gameObjectsList.Clear();
+            _toolTipInfo.Clear();
+            _gameObjectsHasBeenSetup.Clear();
+            _gameObjectsIsInFrameWork.Clear();
         }
-
 
         [UnityEditor.Callbacks.DidReloadScripts]
         private static void OnScriptsReloaded()
         {
-            _needToSetupListOfGameObject = true;
+            _needToSetup = true;
         }
 
         private static void OnHierarchyWindowChanged()
         {
-            _needToSetupListOfGameObject = true;
-        }
-
-        private static void UpdateListGameObjects()
-        {
-            _needToSetupListOfGameObject = false;
-            _editorChronoWithNoTimeEditor.StartChrono(LIMIT_BETWEEN_TWO_LOADING);
-
-            // Check here
-            GameObject[] allGameObjects = UnityEngine.Object.FindObjectsOfType(typeof(GameObject)) as GameObject[];
-
-            _allGameObjectInFrameWork.Clear();
-            foreach (GameObject g in allGameObjects)
-            {
-                bool isSomethingInsideFrameWork = DetermineIfGameObjectIsInSymLink.IsPrefabsAndInSymLink(g, ref SymLinksOnProjectWindowItemGUI.AllSymLinksAssetPathSaved)
-                    || DetermineIfGameObjectIsInSymLink.HasComponentInSymLink(g, ref SymLinksOnProjectWindowItemGUI.AllSymLinksAssetPathSaved)
-                    || DetermineIfGameObjectIsInSymLink.HasSymLinkAssetInsideComponent(g, ref SymLinksOnProjectWindowItemGUI.AllSymLinksAssetPathSaved);
-
-                if (isSomethingInsideFrameWork)
-                {
-                    _allGameObjectInFrameWork.AddIfNotContain(g.GetInstanceID());
-                }
-            }
+            _needToSetup = true;
         }
 
         /// <summary>
         /// called at every frameGUI for every gaemObjects inside hierarchy
         /// </summary>
-        /// <param name="instanceID"></param>
+        /// <param name="instanceId"></param>
         /// <param name="selectionRect"></param>
-        private static void OnHierarchyItemGUI(int instanceID, Rect selectionRect)
+        private static void OnHierarchyItemGUI(int instanceId, Rect selectionRect)
         {
             try
             {
-                if (_needToSetupListOfGameObject && _editorChronoWithNoTimeEditor.IsNotRunning())
+                if (_needToSetup)
                 {
-                    UpdateListGameObjects();
+                    ResetHasBeenSetupOfGameObjects();
+                    _needToSetup = false;
                 }
 
-                // place the icoon to the right of the list:
-                Rect r = new Rect(selectionRect);
-                r.x = r.width - 20;
-                r.width = 18;
-
-                if (_allGameObjectInFrameWork.Contains(instanceID))
+                bool succes = _gameObjectsId.ContainIndex(instanceId, out int index);
+                if (!succes)
                 {
-                    ExtSymLinks.DisplayTinyMarker(selectionRect);
+                    UnityEngine.Object targetGameObject = EditorUtility.InstanceIDToObject(instanceId);
+                    if (targetGameObject == null)
+                    {
+                        return;
+                    }
+                    _gameObjectsId.Add(instanceId);
+                    _gameObjectsList.Add(targetGameObject);
+                    _toolTipInfo.Add(SYMLINK_TOOLTIP);
+                    _gameObjectsHasBeenSetup.Add(false);
+                    _gameObjectsIsInFrameWork.Add(false);
+                    index = _gameObjectsId.Count - 1;
+                    SetupGameObject(index);
+                }
+
+                if (!_gameObjectsHasBeenSetup[index])
+                {
+                    SetupGameObject(index);
+                }
+
+                if (_gameObjectsIsInFrameWork[index])
+                {
+                    DisplayMarker(selectionRect, _toolTipInfo[index]);
                 }
             }
-            catch { }
+            catch (Exception e) { Debug.Log(e); }
+        }
+
+        private static void ResetHasBeenSetupOfGameObjects()
+        {
+            for (int i = 0; i < _gameObjectsHasBeenSetup.Count; i++)
+            {
+                _gameObjectsHasBeenSetup[i] = false;
+                _toolTipInfo[i] = SYMLINK_TOOLTIP;
+            }
+        }
+
+        /// <summary>
+        /// From an instance id, setup the info:
+        /// HasBennSetup at true
+        /// determine if gameObject is inside framework or not !
+        /// </summary>
+        /// <param name="instanceId"></param>
+        /// <param name="info"></param>
+        private static void SetupGameObject(int index)
+        {
+            string toolTip = _toolTipInfo[index];
+            bool prefab = DetermineIfGameObjectIsInSymLink.IsPrefabsAndInSymLink(_gameObjectsList[index] as GameObject, ref SymLinksOnProjectWindowItemGUI.AllSymLinksAssetPathSaved, ref toolTip);
+            bool component = DetermineIfGameObjectIsInSymLink.HasComponentInSymLink(_gameObjectsList[index] as GameObject, ref SymLinksOnProjectWindowItemGUI.AllSymLinksAssetPathSaved, ref toolTip);
+            bool assets = DetermineIfGameObjectIsInSymLink.HasSymLinkAssetInsideComponent(_gameObjectsList[index] as GameObject, ref SymLinksOnProjectWindowItemGUI.AllSymLinksAssetPathSaved, ref toolTip);
+            bool isSomethingInsideFrameWork = prefab || component || assets;
+
+            _toolTipInfo[index] = toolTip;
+
+            _gameObjectsHasBeenSetup[index] = true;
+            _gameObjectsIsInFrameWork[index] = isSomethingInsideFrameWork;
+        }
+
+        /// <summary>
+        /// display the marker at the given position
+        /// </summary>
+        /// <param name="selectionRect"></param>
+        private static void DisplayMarker(Rect selectionRect, string toolTip)
+        {
+            Rect r = new Rect(selectionRect);
+            r.x = r.width - 20;
+            r.width = 18;
+            ExtSymLinks.DisplayTinyMarker(selectionRect, toolTip);
         }
     }
 }

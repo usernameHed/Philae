@@ -22,6 +22,7 @@ namespace hedCommon.symlinks
     public static class ExtSymLinks
     {
         private static GUIStyle _symlinkMarkerStyle = null;
+        private static GUIContent _guiContent = null;
         private static GUIStyle SymlinkMarkerStyle
         {
             get
@@ -36,13 +37,15 @@ namespace hedCommon.symlinks
             }
         }
 
-        public static void DisplayBigMarker(Rect r)
+        public static void DisplayBigMarker(Rect r, string toolTip)
         {
-            GUI.Label(r, "<=>", ExtSymLinks.SymlinkMarkerStyle);
+            _guiContent = new GUIContent("<=>", toolTip);
+            GUI.Label(r, _guiContent, ExtSymLinks.SymlinkMarkerStyle);
         }
-        public static void DisplayTinyMarker(Rect r)
+        public static void DisplayTinyMarker(Rect r, string toolTip)
         {
-            GUI.Label(r, "*  ", ExtSymLinks.SymlinkMarkerStyle);
+            _guiContent = new GUIContent("*  ", toolTip);
+            GUI.Label(r, _guiContent, ExtSymLinks.SymlinkMarkerStyle);
         }
 
         public static void ResetSymLinksDatas()

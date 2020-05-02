@@ -45,7 +45,7 @@ namespace hedCommon.symlinks
         /// </summary>
         /// <param name="g">possible prefabs to test</param>
         /// <returns>true if gameObject IS a prefabs, AND inside a symLink folder</returns>
-        public static bool IsPrefabsAndInSymLink(GameObject g, ref List<string> allSymLinksAssetPathSaved)
+        public static bool IsPrefabsAndInSymLink(GameObject g, ref List<string> allSymLinksAssetPathSaved, ref string toolTipInfo)
         {
             bool isPrefab = ExtPrefabsEditor.IsPrefab(g, out GameObject prefab);
             if (!isPrefab)
@@ -57,7 +57,14 @@ namespace hedCommon.symlinks
             string path = AssetDatabase.GetAssetPath(parentObject);
             DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(path, ref allSymLinksAssetPathSaved);
             FileAttributes attribs = File.GetAttributes(path);
-            return (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref allSymLinksAssetPathSaved));
+
+            bool isInPrefab = DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref allSymLinksAssetPathSaved);
+            if (isInPrefab)
+            {
+                toolTipInfo += "\n - Prefab root";
+            }
+
+            return (isInPrefab);
         }
 
         /// <summary>
@@ -65,8 +72,9 @@ namespace hedCommon.symlinks
         /// </summary>
         /// <param name="gameObject"></param>
         /// <returns></returns>
-        public static bool HasComponentInSymLink(GameObject g, ref List<string> allSymLinksAssetPathSaved)
+        public static bool HasComponentInSymLink(GameObject g, ref List<string> allSymLinksAssetPathSaved, ref string toolTip)
         {
+            bool hasComponent = false;
             MonoBehaviour[] monoBehaviours = g.GetComponents<MonoBehaviour>();
             for (int i = 0; i < monoBehaviours.Length; i++)
             {
@@ -79,15 +87,18 @@ namespace hedCommon.symlinks
                     FileAttributes attribs = File.GetAttributes(path);
                     if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref allSymLinksAssetPathSaved))
                     {
-                        return (true);
+                        toolTip += "\n - " + script.name + " c#";
+                        hasComponent = true;
                     }
                 }
             }
-            return (false);
+            return (hasComponent);
         }
 
-        public static bool HasSymLinkAssetInsideComponent(GameObject g, ref List<string> allSymLinksAssetPathSaved)
+        public static bool HasSymLinkAssetInsideComponent(GameObject g, ref List<string> allSymLinksAssetPathSaved, ref string toolTip)
         {
+            bool hasAsset = false;
+
             Component[] components = g.GetComponents<Component>();
             if (components == null || components.Length == 0)
             {
@@ -97,7 +108,10 @@ namespace hedCommon.symlinks
             for (int i = 0; i < components.Length; i++)
             {
                 Component component = components[i];
-
+                if (component == null)
+                {
+                    continue;
+                }
                 Type componentType = component.GetType();
 
                 if (_allNonPersistentTypeComponents.Contains(componentType))
@@ -131,7 +145,8 @@ namespace hedCommon.symlinks
                             FileAttributes attribs = File.GetAttributes(path);
                             if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref allSymLinksAssetPathSaved))
                             {
-                                return (true);
+                                toolTip += "\n - " + propertyValue.name + " in " + ShortType(component.GetType().ToString());
+                                hasAsset = true;
                             }
                         }
                     }
@@ -152,7 +167,8 @@ namespace hedCommon.symlinks
                             FileAttributes attribs = File.GetAttributes(path);
                             if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref allSymLinksAssetPathSaved))
                             {
-                                return (true);
+                                toolTip += "\n - " + fieldValue.name + " in " + ShortType(component.GetType().ToString());
+                                hasAsset = true;
                             }
                         }
                     }
@@ -161,9 +177,13 @@ namespace hedCommon.symlinks
                 catch { }
             }
 
-            return (false);
+            return (hasAsset);
         }
 
+        private static string ShortType(string fullType)
+        {
+            return (Path.GetExtension(fullType).Replace(".", ""));
+        }
 
 
         //end of class

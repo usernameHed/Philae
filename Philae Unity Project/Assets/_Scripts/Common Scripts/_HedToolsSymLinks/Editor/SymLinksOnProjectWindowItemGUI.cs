@@ -59,11 +59,11 @@ namespace hedCommon.symlinks
                     DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(path, ref AllSymLinksAssetPathSaved);
                     if (DetermineIfAssetIsOrIsInSymLink.IsAttributeASymLink(attribs))
                     {
-                        ExtSymLinks.DisplayBigMarker(r);
+                        ExtSymLinks.DisplayBigMarker(r, "this folder is a symlink");
                     }
                     else if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref AllSymLinksAssetPathSaved))
                     {
-                        ExtSymLinks.DisplayTinyMarker(r);
+                        ExtSymLinks.DisplayTinyMarker(r, "this object is inside a symlink folder");
                     }
                 }
             }
