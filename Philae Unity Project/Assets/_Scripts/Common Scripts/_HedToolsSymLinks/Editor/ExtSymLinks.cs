@@ -21,14 +21,6 @@ namespace hedCommon.symlinks
     /// </summary>
     public static class ExtSymLinks
     {
-        private static List<string> _allSymLinksAssetPathSaved = new List<string>(300);
-        public static void AddPathOfSymLinkAsset(string path)
-        {
-            _allSymLinksAssetPathSaved.AddIfNotContain(path);
-        }
-        private const FileAttributes FOLDER_SYMLINK_ATTRIBS = FileAttributes.Directory | FileAttributes.ReparsePoint;
-        private const FileAttributes FILE_SYMLINK_ATTRIBS = FileAttributes.Directory & FileAttributes.Archive;
-
         private static GUIStyle _symlinkMarkerStyle = null;
         private static GUIStyle SymlinkMarkerStyle
         {
@@ -55,37 +47,8 @@ namespace hedCommon.symlinks
 
         public static void ResetSymLinksDatas()
         {
-            _allSymLinksAssetPathSaved.Clear();
-        }
-
-        /// <summary>
-        /// is this 
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="attribs"></param>
-        /// <returns></returns>
-        public static bool IsAttributeAFileInsideASymLink(string path, FileAttributes attribs)
-        {
-            return (attribs & FILE_SYMLINK_ATTRIBS) == FILE_SYMLINK_ATTRIBS && path.ContainIsPaths(_allSymLinksAssetPathSaved);
-        }
-
-        public static bool IsAttributeASymLink(FileAttributes attribs)
-        {
-            return (attribs & FOLDER_SYMLINK_ATTRIBS) == FOLDER_SYMLINK_ATTRIBS;
-        }
-
-        public static void UpdateSymLinksParent(string path)
-        {
-            while (!string.IsNullOrEmpty(path))
-            {
-                FileAttributes attribs = File.GetAttributes(path);
-                if (IsAttributeASymLink(attribs))
-                {
-                    ExtSymLinks.AddPathOfSymLinkAsset(path);
-                    return;
-                }
-                path = ExtPaths.GetDirectoryFromCompletPath(path);
-            }
+            SymLinksOnProjectWindowItemGUI.ResetSymLinksDatas();
+            SymLinksOnHierarchyItemGUI.ResetSymLinksDatas();
         }
     }
 }

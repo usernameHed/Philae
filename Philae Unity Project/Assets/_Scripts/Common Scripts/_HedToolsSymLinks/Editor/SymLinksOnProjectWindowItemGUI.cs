@@ -22,6 +22,12 @@ namespace hedCommon.symlinks
     [InitializeOnLoad]
     public static class SymLinksOnProjectWindowItemGUI
     {
+        public static List<string> AllSymLinksAssetPathSaved = new List<string>(300);
+        public static void AddPathOfSymLinkAsset(string path)
+        {
+            AllSymLinksAssetPathSaved.AddIfNotContain(path);
+        }
+
         /// <summary>
         /// Static constructor subscribes to projectWindowItemOnGUI delegate.
         /// </summary>
@@ -29,6 +35,11 @@ namespace hedCommon.symlinks
 		{
             EditorApplication.projectWindowItemOnGUI -= OnProjectWindowItemGUI;
             EditorApplication.projectWindowItemOnGUI += OnProjectWindowItemGUI;
+        }
+
+        public static void ResetSymLinksDatas()
+        {
+            AllSymLinksAssetPathSaved.Clear();
         }
 
         /// <summary>
@@ -45,12 +56,12 @@ namespace hedCommon.symlinks
 				if (!string.IsNullOrEmpty(path))
                 {
                     FileAttributes attribs = File.GetAttributes(path);
-                    ExtSymLinks.UpdateSymLinksParent(path);
-                    if (ExtSymLinks.IsAttributeASymLink(attribs))
+                    DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(path, ref AllSymLinksAssetPathSaved);
+                    if (DetermineIfAssetIsOrIsInSymLink.IsAttributeASymLink(attribs))
                     {
                         ExtSymLinks.DisplayBigMarker(r);
                     }
-                    else if (ExtSymLinks.IsAttributeAFileInsideASymLink(path, attribs))
+                    else if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref AllSymLinksAssetPathSaved))
                     {
                         ExtSymLinks.DisplayTinyMarker(r);
                     }
