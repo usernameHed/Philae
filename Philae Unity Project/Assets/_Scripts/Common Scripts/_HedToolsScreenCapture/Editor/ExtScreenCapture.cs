@@ -49,6 +49,7 @@ namespace hedCommon.extension.editor.screenCapture
             Texture2D screenShot2d = (Texture2D)screenCapture;
             string finalPath = path + nameFile + ".png";
             finalPath = ExtPaths.RenameIncrementalFile(finalPath, out int index, false);
+            ExtFileEditor.CreateEntirePathIfNotExist(finalPath);
             screenShot2d.SaveToPNG(finalPath);
 
             if (updateAssetDataBase)

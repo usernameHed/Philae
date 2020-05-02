@@ -45,7 +45,7 @@ namespace hedCommon.symlinks
         /// </summary>
         /// <param name="g">possible prefabs to test</param>
         /// <returns>true if gameObject IS a prefabs, AND inside a symLink folder</returns>
-        public static bool IsPrefabsAndInSymLink(GameObject g, ref List<string> allSymLinksAssetPathSaved, ref string toolTipInfo)
+        public static bool IsPrefabsAndInSymLink(GameObject g, ref List<string> allSymLinksAssetPathSaved, ref string toolTipInfo, ref string path)
         {
             bool isPrefab = ExtPrefabsEditor.IsPrefab(g, out GameObject prefab);
             if (!isPrefab)
@@ -54,7 +54,7 @@ namespace hedCommon.symlinks
             }
 
             UnityEngine.Object parentObject = PrefabUtility.GetCorrespondingObjectFromSource(prefab);
-            string path = AssetDatabase.GetAssetPath(parentObject);
+            path = AssetDatabase.GetAssetPath(parentObject);
             DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(path, ref allSymLinksAssetPathSaved);
             FileAttributes attribs = File.GetAttributes(path);
 
@@ -72,7 +72,7 @@ namespace hedCommon.symlinks
         /// </summary>
         /// <param name="gameObject"></param>
         /// <returns></returns>
-        public static bool HasComponentInSymLink(GameObject g, ref List<string> allSymLinksAssetPathSaved, ref string toolTip)
+        public static bool HasComponentInSymLink(GameObject g, ref List<string> allSymLinksAssetPathSaved, ref string toolTip, ref string path)
         {
             bool hasComponent = false;
             MonoBehaviour[] monoBehaviours = g.GetComponents<MonoBehaviour>();
@@ -82,7 +82,7 @@ namespace hedCommon.symlinks
                 if (mono != null && mono.hideFlags == HideFlags.None && !_allNonPersistentTypeComponents.Contains(mono.GetType()))
                 {
                     MonoScript script = MonoScript.FromMonoBehaviour(mono); // gets script as an asset
-                    string path = script.GetPath();
+                    path = script.GetPath();
                     DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(path, ref allSymLinksAssetPathSaved);
                     FileAttributes attribs = File.GetAttributes(path);
                     if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref allSymLinksAssetPathSaved))
@@ -95,7 +95,7 @@ namespace hedCommon.symlinks
             return (hasComponent);
         }
 
-        public static bool HasSymLinkAssetInsideComponent(GameObject g, ref List<string> allSymLinksAssetPathSaved, ref string toolTip)
+        public static bool HasSymLinkAssetInsideComponent(GameObject g, ref List<string> allSymLinksAssetPathSaved, ref string toolTip, ref string path)
         {
             bool hasAsset = false;
 
@@ -140,7 +140,7 @@ namespace hedCommon.symlinks
 
                         if (propertyValue is UnityEngine.Object && !propertyValue.IsTruelyNull())
                         {
-                            string path = propertyValue.GetPath();
+                            path = propertyValue.GetPath();
                             DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(path, ref allSymLinksAssetPathSaved);
                             FileAttributes attribs = File.GetAttributes(path);
                             if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref allSymLinksAssetPathSaved))
@@ -162,7 +162,7 @@ namespace hedCommon.symlinks
 
                         if (fieldValue is UnityEngine.Object && !fieldValue.IsTruelyNull())
                         {
-                            string path = fieldValue.GetPath();
+                            path = fieldValue.GetPath();
                             DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(path, ref allSymLinksAssetPathSaved);
                             FileAttributes attribs = File.GetAttributes(path);
                             if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref allSymLinksAssetPathSaved))

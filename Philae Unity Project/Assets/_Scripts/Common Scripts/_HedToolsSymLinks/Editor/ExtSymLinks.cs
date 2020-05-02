@@ -37,13 +37,15 @@ namespace hedCommon.symlinks
             }
         }
 
-        public static void DisplayBigMarker(Rect r, string toolTip)
+        public static void DisplayBigMarker(Rect r, string toolTip, Color color)
         {
+            SymlinkMarkerStyle.normal.textColor = color;
             _guiContent = new GUIContent("<=>", toolTip);
             GUI.Label(r, _guiContent, ExtSymLinks.SymlinkMarkerStyle);
         }
-        public static void DisplayTinyMarker(Rect r, string toolTip)
+        public static void DisplayTinyMarker(Rect r, string toolTip, Color color)
         {
+            SymlinkMarkerStyle.normal.textColor = color;
             _guiContent = new GUIContent("*  ", toolTip);
             GUI.Label(r, _guiContent, ExtSymLinks.SymlinkMarkerStyle);
         }

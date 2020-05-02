@@ -24,6 +24,19 @@ namespace hedCommon.extension.editor
             return (directoryCreated);
         }
 
+        public static void CreateEntirePathIfNotExist(string path)
+        {
+            Debug.Log(path);
+            string[] directories = path.Split('/');
+            string finalPath = "";
+            for (int i = 0; i < directories.Length - 1; i++)
+            {
+                finalPath += directories[i] + "/";
+                CreateDirectoryIfNotExist(finalPath);
+            }
+        }
+
+
         public static void DeleteDirectory(string localPath, bool recursive = true, bool refreshProject = true)
         {
             bool directoryDeleted = ExtFile.DeleteADirectory(localPath, recursive);

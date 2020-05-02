@@ -23,9 +23,13 @@ namespace hedCommon.symlinks
     public static class SymLinksOnProjectWindowItemGUI
     {
         public static List<string> AllSymLinksAssetPathSaved = new List<string>(300);
+        
         public static void AddPathOfSymLinkAsset(string path)
         {
-            AllSymLinksAssetPathSaved.AddIfNotContain(path);
+            if (AllSymLinksAssetPathSaved.AddIfNotContain(path))
+            {
+                AllSymLinksAssetPathSaved.Sort();
+            }
         }
 
         /// <summary>
@@ -53,18 +57,20 @@ namespace hedCommon.symlinks
 			{
 				string path = AssetDatabase.GUIDToAssetPath(guid);
 
-				if (!string.IsNullOrEmpty(path))
+				if (string.IsNullOrEmpty(path))
                 {
-                    FileAttributes attribs = File.GetAttributes(path);
-                    DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(path, ref AllSymLinksAssetPathSaved);
-                    if (DetermineIfAssetIsOrIsInSymLink.IsAttributeASymLink(attribs))
-                    {
-                        ExtSymLinks.DisplayBigMarker(r, "this folder is a symlink");
-                    }
-                    else if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref AllSymLinksAssetPathSaved))
-                    {
-                        ExtSymLinks.DisplayTinyMarker(r, "this object is inside a symlink folder");
-                    }
+                    return;
+                }
+
+                FileAttributes attribs = File.GetAttributes(path);
+                DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(path, ref AllSymLinksAssetPathSaved);
+                if (DetermineIfAssetIsOrIsInSymLink.IsAttributeASymLink(attribs))
+                {
+                    ExtSymLinks.DisplayBigMarker(r, "this folder is a symlink", SymLinksColorChoice.ChooseColorFromPath(path));
+                }
+                else if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref AllSymLinksAssetPathSaved))
+                {
+                    ExtSymLinks.DisplayTinyMarker(r, "this object is inside a symlink folder", SymLinksColorChoice.ChooseColorFromPath(path));
                 }
             }
 			catch {}
