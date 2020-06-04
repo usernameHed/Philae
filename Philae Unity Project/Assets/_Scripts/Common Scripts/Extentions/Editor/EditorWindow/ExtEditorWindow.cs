@@ -46,11 +46,6 @@ namespace hedCommon.extension.editor.editorWindow
             raceTrackNavigator.Close();
         }
 
-        public static EditorWindow FocusedWindow()
-        {
-            return (EditorWindow.focusedWindow);
-        }
-
         /// <summary>
         /// from a given name, Open an EditorWindow.
         /// you can also do:

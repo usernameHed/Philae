@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _colorSymlinks:
   - {r: 1, g: 0, b: 0.032357693, a: 1}
-  - {r: 0, g: 0, b: 1, a: 1}
   _defaultColor: {r: 0, g: 0, b: 1, a: 1}

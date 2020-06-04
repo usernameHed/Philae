@@ -19,7 +19,6 @@ namespace hedCommon.symlinks
     /// draws a small indicator in the Project view for folders that are
     /// symlinks.
     /// </summary>
-    [InitializeOnLoad]
     public static class SymLinksCreation
     {
         private const FileAttributes FOLDER_SYMLINK_ATTRIBS = FileAttributes.Directory | FileAttributes.ReparsePoint;

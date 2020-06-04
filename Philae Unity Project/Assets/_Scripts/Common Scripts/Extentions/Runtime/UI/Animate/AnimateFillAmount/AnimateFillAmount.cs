@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace hedCommon.extension.runtime.animate
+namespace hedCommon.extension.runtime.animate.fillamount
 {
     [ExecuteInEditMode]
     public class AnimateFillAmount : MonoBehaviour
     {
         [SerializeField]
-        private Image _image;
+        private Image _image = default;
 
         [SerializeField]
         private float _fillAmountFrom = 0f;
@@ -20,7 +20,7 @@ namespace hedCommon.extension.runtime.animate
         [SerializeField, Curve(0, 1, 0, 1)]
         private AnimationCurve _curve = new AnimationCurve();
         [SerializeField]
-        private FillAmountPosition _fillAmountPositionReference;
+        private FillAmountPosition _fillAmountPositionReference = default;
 
         private FrequencyChrono _chrono = new FrequencyChrono();
 
@@ -50,10 +50,14 @@ namespace hedCommon.extension.runtime.animate
             InitStartValue();
         }
 
-        [ContextMenu("Animate")]
         public void Animate()
         {
             Animate(_fillAmountFrom, _fillAmountTo, _time);
+        }
+
+        public void SetPercent(float percent)
+        {
+            _image.fillAmount = percent;
         }
 
         private void Update()

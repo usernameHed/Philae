@@ -8,6 +8,8 @@ using System.IO;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 
 namespace hedCommon.symlinks
 {
@@ -25,6 +27,7 @@ namespace hedCommon.symlinks
             typeof(RectTransformHiddedTools),
             typeof(RectTransformHiddedTools),
             typeof(RigidBodyAdditionalMonobehaviourSettings),
+            typeof(NavMeshAgent)
         };
 
         private static List<string> _allForbiddenPropertyName = new List<string>()
@@ -54,14 +57,19 @@ namespace hedCommon.symlinks
             }
 
             UnityEngine.Object parentObject = PrefabUtility.GetCorrespondingObjectFromSource(prefab);
-            path = AssetDatabase.GetAssetPath(parentObject);
-            DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(path, ref allSymLinksAssetPathSaved);
-            FileAttributes attribs = File.GetAttributes(path);
+            string newPath = AssetDatabase.GetAssetPath(parentObject);
+            if (newPath.IsNullOrEmpty())
+            {
+                return (false);
+            }
+            DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(newPath, ref allSymLinksAssetPathSaved);
+            FileAttributes attribs = File.GetAttributes(newPath);
 
-            bool isInPrefab = DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref allSymLinksAssetPathSaved);
+            bool isInPrefab = DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(newPath, attribs, ref allSymLinksAssetPathSaved);
             if (isInPrefab)
             {
                 toolTipInfo += "\n - Prefab root";
+                path = newPath;
             }
 
             return (isInPrefab);
@@ -82,13 +90,18 @@ namespace hedCommon.symlinks
                 if (mono != null && mono.hideFlags == HideFlags.None && !_allNonPersistentTypeComponents.Contains(mono.GetType()))
                 {
                     MonoScript script = MonoScript.FromMonoBehaviour(mono); // gets script as an asset
-                    path = script.GetPath();
-                    DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(path, ref allSymLinksAssetPathSaved);
-                    FileAttributes attribs = File.GetAttributes(path);
-                    if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref allSymLinksAssetPathSaved))
+                    string newPath = script.GetPath();
+                    if (newPath.IsNullOrEmpty())
+                    {
+                        continue;
+                    }
+                    DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(newPath, ref allSymLinksAssetPathSaved);
+                    FileAttributes attribs = File.GetAttributes(newPath);
+                    if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(newPath, attribs, ref allSymLinksAssetPathSaved))
                     {
                         toolTip += "\n - " + script.name + " c#";
                         hasComponent = true;
+                        path = newPath;
                     }
                 }
             }
@@ -123,16 +136,7 @@ namespace hedCommon.symlinks
                     PropertyInfo[] properties = componentType.GetProperties(_flags);
                     foreach (PropertyInfo property in properties)
                     {
-
-                        if (_allForbiddenPropertyName.Contains(property.Name))
-                        {
-                            continue;
-                        }
-                        if (_allForbiddenPropertyType.Contains(property.PropertyType))
-                        {
-                            continue;
-                        }
-                        if (property.IsDefined(typeof(ObsoleteAttribute), true))
+                        if (IsPropertyAnException(component, property))
                         {
                             continue;
                         }
@@ -140,13 +144,18 @@ namespace hedCommon.symlinks
 
                         if (propertyValue is UnityEngine.Object && !propertyValue.IsTruelyNull())
                         {
-                            path = propertyValue.GetPath();
-                            DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(path, ref allSymLinksAssetPathSaved);
-                            FileAttributes attribs = File.GetAttributes(path);
-                            if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref allSymLinksAssetPathSaved))
+                            string newPath = propertyValue.GetPath();
+                            if (newPath.IsNullOrEmpty())
+                            {
+                                continue;
+                            }
+                            DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(newPath, ref allSymLinksAssetPathSaved);
+                            FileAttributes attribs = File.GetAttributes(newPath);
+                            if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(newPath, attribs, ref allSymLinksAssetPathSaved))
                             {
                                 toolTip += "\n - " + propertyValue.name + " in " + ShortType(component.GetType().ToString());
                                 hasAsset = true;
+                                path = newPath;
                             }
                         }
                     }
@@ -162,13 +171,18 @@ namespace hedCommon.symlinks
 
                         if (fieldValue is UnityEngine.Object && !fieldValue.IsTruelyNull())
                         {
-                            path = fieldValue.GetPath();
-                            DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(path, ref allSymLinksAssetPathSaved);
-                            FileAttributes attribs = File.GetAttributes(path);
-                            if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(path, attribs, ref allSymLinksAssetPathSaved))
+                            string newPath = fieldValue.GetPath();
+                            if (newPath.IsNullOrEmpty())
+                            {
+                                continue;
+                            }
+                            DetermineIfAssetIsOrIsInSymLink.UpdateSymLinksParent(newPath, ref allSymLinksAssetPathSaved);
+                            FileAttributes attribs = File.GetAttributes(newPath);
+                            if (DetermineIfAssetIsOrIsInSymLink.IsAttributeAFileInsideASymLink(newPath, attribs, ref allSymLinksAssetPathSaved))
                             {
                                 toolTip += "\n - " + fieldValue.name + " in " + ShortType(component.GetType().ToString());
                                 hasAsset = true;
+                                path = newPath;
                             }
                         }
                     }
@@ -178,6 +192,37 @@ namespace hedCommon.symlinks
             }
 
             return (hasAsset);
+        }
+
+        /// <summary>
+        /// ignore some property
+        /// </summary>
+        /// <param name="component"></param>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        private static bool IsPropertyAnException(Component component, PropertyInfo property)
+        {
+            if (_allForbiddenPropertyName.Contains(property.Name))
+            {
+                return (true);
+            }
+            if (_allForbiddenPropertyType.Contains(property.PropertyType))
+            {
+                return (true);
+            }
+            if (property.IsDefined(typeof(ObsoleteAttribute), true))
+            {
+                return (true);
+            }
+            if (component.GetType() == typeof(Animator))
+            {
+                if (property.Name.Equals("runtimeAnimatorController") || property.Name.Equals("avatar"))
+                {
+                    return (false);
+                }
+                return (true);
+            }
+            return (false);
         }
 
         private static string ShortType(string fullType)

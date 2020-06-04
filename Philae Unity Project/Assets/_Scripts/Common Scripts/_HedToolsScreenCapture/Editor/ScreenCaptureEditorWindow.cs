@@ -28,7 +28,7 @@ namespace hedCommon.extension.editor.screenCapture
                 && lastKeyChange.control
                 && lastKeyChange.alt)
             {
-                EditorWindow focusedWindow = ExtEditorWindow.FocusedWindow();
+                EditorWindow focusedWindow = EditorWindow.focusedWindow;
                 if (focusedWindow)
                 {
                     Texture screenShot = focusedWindow.TakeEditorWindowCapture();

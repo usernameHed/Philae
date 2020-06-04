@@ -8,7 +8,7 @@ namespace hedCommon.extension.editor.screenCapture
 {
     public static class ExtScreenCapture
     {
-        private const string DEFAULT_LOCATION_SCREENSHOTS = "Assets/Resources/ScreenShots/";
+        private const string DEFAULT_LOCATION_SCREENSHOTS = "Assets/Editor Default Resources/ScreenShots/";
 
 
         public static Color PickColorAtPosition(Vector2 position)
@@ -18,7 +18,9 @@ namespace hedCommon.extension.editor.screenCapture
 
         public static Texture TakeEditorWindowCapture(this EditorWindow editorWindow)
         {
-            return (TakeScreenCapture(editorWindow.position));
+            Rect rect = editorWindow.position;
+            rect.height += 20;
+            return (TakeScreenCapture(rect));
         }
 
         public static Texture TakeScreenCapture(Rect rect)

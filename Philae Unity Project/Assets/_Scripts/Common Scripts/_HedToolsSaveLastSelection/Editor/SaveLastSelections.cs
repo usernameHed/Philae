@@ -19,7 +19,7 @@ namespace hedCommon.saveLastSelection
 
         private bool _isInit = false;
         private bool _isClosed = false;
-        private FrequencyCoolDown _frequencyCoolDown = new FrequencyCoolDown();
+        private EditorChronoWithNoTimeEditor _frequencyCoolDown = new EditorChronoWithNoTimeEditor();
 
         private const int _heightText = 8;
 
@@ -50,7 +50,7 @@ namespace hedCommon.saveLastSelection
                 if (_frequencyCoolDown.IsNotRunning())
                 {
                     _saveLastSelectionsEditorWindow = SaveLastSelectionsEditorWindow.ShowSaveLastSelections();
-                    _frequencyCoolDown.StartCoolDown(2f);
+                    _frequencyCoolDown.StartChrono(2f);
                 }
                 return;
             }
