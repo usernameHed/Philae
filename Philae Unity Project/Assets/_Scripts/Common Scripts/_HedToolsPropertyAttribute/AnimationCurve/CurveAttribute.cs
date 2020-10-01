@@ -10,13 +10,52 @@ namespace hedCommon.extension.propertyAttribute.animationCurve
     /// </summary>
     public class CurveAttribute : PropertyAttribute
     {
-        public FloatRange X;
-        public FloatRange Y;
+        public float XMaxValue = 0f;
+        public float XMinValue = 0f;
+        public float YMaxValue = 0f;
+        public float YMinValue = 0f;
+
+        public string XMinVariable = "";
+        public string XMaxVariable = "";
+        public string YMinVariable = "";
+        public string YMaxVariable = "";
 
         public CurveAttribute(float xMin, float xMax, float yMin, float yMax)
         {
-            this.X = new FloatRange(xMin, xMax);
-            this.Y = new FloatRange(yMin, yMax);
+            this.XMinValue = xMin;
+            this.XMaxValue = xMax;
+            this.YMinValue = yMin;
+            this.YMaxValue = yMax;
+        }
+
+        public CurveAttribute(string xMinVariable, string xMaxVariable, string yMinVariable, string yMaxVariable)
+        {
+            this.XMinVariable = xMinVariable;
+            this.XMaxVariable = xMaxVariable;
+            this.YMinVariable = yMinVariable;
+            this.YMaxVariable = yMaxVariable;
+        }
+
+        public CurveAttribute(float xMin, string xMaxVariable, float yMin, float yMax)
+        {
+            this.XMinValue = xMin;
+            this.XMaxVariable = xMaxVariable;
+            this.YMinValue = yMin;
+            this.YMaxValue = yMax;
+        }
+        public CurveAttribute(float xMin, float xMax, float yMin, string yMaxVariable)
+        {
+            this.XMinValue = xMin;
+            this.XMaxValue = xMax;
+            this.YMinValue = yMin;
+            this.YMaxVariable = yMaxVariable;
+        }
+        public CurveAttribute(float xMin, string xMaxVariable, float yMin, string yMaxVariable)
+        {
+            this.XMinValue = xMin;
+            this.XMaxVariable = xMaxVariable;
+            this.YMinValue = yMin;
+            this.YMaxVariable = yMaxVariable;
         }
     }
 }

@@ -253,5 +253,10 @@ namespace hedCommon.extension.runtime
 
             cursor.SetX(currentX, false);
         }
+
+        public static void SetSize(this RectTransform rectTransform, float width, float height)
+        {
+            rectTransform.sizeDelta = new Vector2(width, height);
+        }
     }
 }

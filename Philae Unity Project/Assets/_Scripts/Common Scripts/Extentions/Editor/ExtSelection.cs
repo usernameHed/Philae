@@ -8,6 +8,22 @@ using hedCommon.extension.runtime;
 
 public static class ExtSelection
 {
+    public static void SelectDirectory(string path)
+    {
+        // Check the path has no '/' at the end, if it dose remove it,
+        // Obviously in this example it doesn't but it might
+        // if your getting the path some other way.
+
+        if (path[path.Length - 1] == '/')
+            path = path.Substring(0, path.Length - 1);
+
+        // Load object
+        UnityEngine.Object obj = AssetDatabase.LoadAssetAtPath(path, typeof(UnityEngine.Object));
+
+        // Select the object in the project folder
+        PingAndSelect(obj);
+    }
+
     /// <summary>
     /// return true if one of the parent (or itself), is selected
     /// </summary>

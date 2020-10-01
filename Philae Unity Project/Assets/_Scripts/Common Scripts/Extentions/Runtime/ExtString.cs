@@ -460,6 +460,33 @@ namespace hedCommon.extension.runtime
             return null;
         }
 
+        public static char Pop(this string s, int index, out string remaining)
+        {
+            char c = s[0];
+            remaining = s.Remove(index, 1);
+
+            return c;
+        }
+
+        public static string Concat(this IList<string> stringArray, string separator)
+        {
+            return stringArray.Concat(separator, 0, stringArray.Count);
+        }
+
+        public static string Concat(this IList<string> stringArray, string separator, int startIndex, int count)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = startIndex; i < Mathf.Min(startIndex + count, stringArray.Count); i++)
+            {
+                stringBuilder.Append(stringArray[i]);
+                if (i < stringArray.Count - 1)
+                {
+                    stringBuilder.Append(separator);
+                }
+            }
+            return stringBuilder.ToString();
+        }
+
         #endregion
     }
 }

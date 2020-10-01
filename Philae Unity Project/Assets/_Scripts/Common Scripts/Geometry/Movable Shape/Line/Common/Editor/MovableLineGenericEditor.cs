@@ -197,7 +197,7 @@ namespace hedCommon.geometry.movable
             for (int i = 0; i < PointsSelected.Count; i++)
             {
                 Vector3 middleLine = ExtVector3.GetMeanOfXPoints(PointsSelected[i].GetGlobalPointPosition(), PointsSelected[i].GetMiddleLine());
-                ExtSceneView.DisplayStringIn3D(middleLine, i.ToString(), Color.black);
+                ExtSceneView.DisplayStringInSceneView(middleLine, i.ToString(), Color.black);
             }
         }
 

@@ -49,7 +49,7 @@ namespace hedCommon.extension.editor
             for (int i = points.Count - 1; i >= 0; i--)
             {
                 Vector3 currentPosition = points[i].Position;
-                ExtSceneView.DisplayStringIn3D(matrix.MultiplyPoint3x4(points[i].Position), (points[i].Index + 1).ToString(), Color.white, fontSize);
+                ExtSceneView.DisplayStringInSceneView(matrix.MultiplyPoint3x4(points[i].Position), (points[i].Index + 1).ToString(), Color.white, fontSize);
                 points.RemoveAt(i);
                 int duplicate = 0;
                 for (int k = points.Count - 1; k >= 0; k--)
@@ -57,7 +57,7 @@ namespace hedCommon.extension.editor
                     if (currentPosition == points[k].Position)
                     {
                         duplicate++;
-                        ExtSceneView.DisplayStringIn3D(matrix.MultiplyPoint3x4(points[k].Position + new Vector3(0, 0.02f * duplicate, 0)), (points[k].Index + 1).ToString(), Color.white, fontSize);
+                        ExtSceneView.DisplayStringInSceneView(matrix.MultiplyPoint3x4(points[k].Position + new Vector3(0, 0.02f * duplicate, 0)), (points[k].Index + 1).ToString(), Color.white, fontSize);
                         points.RemoveAt(k);
                         k = points.Count - 1;
                     }

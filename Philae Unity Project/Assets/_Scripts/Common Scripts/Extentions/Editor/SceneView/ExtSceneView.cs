@@ -72,7 +72,7 @@ namespace hedCommon.extension.editor.sceneView
         /// </summary>
         /// <param name="position"></param>
         /// <param name="toDisplay"></param>
-        public static void DisplayStringIn3D(Vector3 position, string toDisplay, Color color, int fontSize = 20)
+        public static void DisplayStringInSceneView(Vector3 position, string toDisplay, Color color, int fontSize = 20)
         {
             GUIStyle textStyle = new GUIStyle();
             textStyle.fontSize = fontSize;

@@ -12,8 +12,56 @@ namespace hedCommon.extension.propertyAttribute.animationCurve
             CurveAttribute curve = attribute as CurveAttribute;
             if (property.propertyType == SerializedPropertyType.AnimationCurve)
             {
-                EditorGUI.CurveField(position, property, Color.cyan, new Rect(curve.X.Min, curve.Y.Min, curve.X.Max, curve.Y.Max));
+                float currentXMin = GetVariableValue(position, property, curve.XMinVariable, curve.XMinValue, out bool canDrawXMin);
+                if (!canDrawXMin)
+                {
+                    return;
+                }
+                float currentXMax = GetVariableValue(position, property, curve.XMaxVariable, curve.XMaxValue, out bool canDrawXMax);
+                if (!canDrawXMax)
+                {
+                    return;
+                }
+                float currentYMin = GetVariableValue(position, property, curve.YMinVariable, curve.YMinValue, out bool canDrawYMin);
+                if (!canDrawYMin)
+                {
+                    return;
+                }
+                float currentYMax = GetVariableValue(position, property, curve.YMaxVariable, curve.YMaxValue, out bool canDrawYMax);
+                if (!canDrawYMax)
+                {
+                    return;
+                }
+                float xMax = currentXMax - currentXMin;
+                float yMax = currentYMax - currentYMin;
+                EditorGUI.CurveField(position, property, Color.cyan, new Rect(currentXMin, currentYMin, xMax, yMax));
             }
+        }
+
+        private float GetVariableValue(Rect position, SerializedProperty property, string rangeVariable, float defaultValue, out bool canDraw)
+        {
+            canDraw = true;
+            if (!string.IsNullOrEmpty(rangeVariable))
+            {
+                SerializedProperty max = property.serializedObject.FindProperty(rangeVariable);
+                if (max == null)
+                {
+                    EditorGUI.HelpBox(position, "variable " + rangeVariable + " doesn't exist !", MessageType.Error);
+                    canDraw = false;
+                    return (0);
+                }
+                else if (max.propertyType != SerializedPropertyType.Float)
+                {
+                    EditorGUI.HelpBox(position, "variable " + rangeVariable + " is not a float !", MessageType.Error);
+                    canDraw = false;
+                    return (0);
+                }
+                else
+                {
+                    return (property.serializedObject.FindProperty(rangeVariable).floatValue);
+                }
+            }
+            return (defaultValue);
         }
     }
 }

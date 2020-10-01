@@ -495,25 +495,16 @@ namespace hedCommon.extension.runtime
         {
             Vector3 left = CrossProduct(forwardDir, upDir);
             Vector3 right = -left;
-
-            //Debug.DrawRay(debugPos, left, Color.magenta, 5f);
-            //Debug.DrawRay(debugPos, right, Color.magenta, 5f);
-
-
             dotRight = DotProduct(right, toGoDir);
             dotLeft = DotProduct(left, toGoDir);
-            //Debug.Log("left: " + dotLeft + ", right: " + dotRight);
             if (dotRight > 0)
             {
-                //Debug.Log("go right");
                 return (1);
             }
             else if (dotLeft > 0)
             {
-                //Debug.Log("go left");
                 return (-1);
             }
-            //Debug.Log("go pls");
             return (0);
         }
 
@@ -1028,6 +1019,20 @@ namespace hedCommon.extension.runtime
             float sign = Mathf.Sign(Vector3.Dot(n, Vector3.Cross(a, b)));       //Cross for testing -1, 0, 1
             float signed_angle = angle * sign;                                  // angle in [-179,180]
             float angle360 = (signed_angle + 360) % 360;                       // angle in [0,360]
+            return (angle360);
+        }
+
+        /// <summary>
+        /// renvoi l'angle entre deux vecteur, avec le 3eme vecteur de référence
+        /// </summary>
+        /// <param name="a">vecteur A</param>
+        /// <param name="b">vecteur B</param>
+        /// <param name="n">reference</param>
+        /// <returns>Retourne un angle en degré</returns>
+        public static float Angle360(Vector3 a, Vector3 b)
+        {
+            float angle = Vector3.Angle(a, b);                                  // angle in [0,180]
+            float angle360 = (angle + 360) % 360;                       // angle in [0,360]
             return (angle360);
         }
         #endregion

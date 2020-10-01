@@ -109,5 +109,75 @@ namespace hedCommon.extension.runtime
             }
             return (curve);
         }
+
+        /// <summary>
+        /// inverse an Animation curve
+        /// curve need to be strictly monotonic to be able to do that
+        /// (NO 2 times the same value)
+        /// </summary>
+        /// <param name="curve"></param>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public static float EvaluateInverse(this AnimationCurve curve, float time)
+        {
+            AnimationCurve inverseCurve = ExtAnimationCurve.ReverseCurve(curve);
+            return (inverseCurve.Evaluate(time));
+        }
+
+        public static AnimationCurve ReverseCurve(AnimationCurve c)
+        {
+            // TODO: check c is strictly monotonic and Piecewise linear, log error otherwise
+            var rev = new AnimationCurve();
+            for (int i = 0; i < c.keys.Length; i++)
+            {
+                var kf = c.keys[i];
+                var rkf = new Keyframe(kf.value, kf.time);
+                if (kf.inTangent < 0)
+                {
+                    rkf.inTangent = 1 / kf.outTangent;
+                    rkf.outTangent = 1 / kf.inTangent;
+                }
+                else
+                {
+                    rkf.inTangent = 1 / kf.inTangent;
+                    rkf.outTangent = 1 / kf.outTangent;
+                }
+                rev.AddKey(rkf);
+            }
+            return rev;
+        }
+
+        /// <summary>
+        /// get the time, from a value
+        /// </summary>
+        /// <param name="c"></param>
+        /// <param name="value"></param>
+        /// <param name="precision"></param>
+        /// <returns></returns>
+        public static float TimeFromValue(AnimationCurve c, float value, float precision = 1e-6f)
+        {
+            float minTime = c.keys[0].time;
+            float maxTime = c.keys[c.keys.Length - 1].time;
+            float best = (maxTime + minTime) / 2;
+            float bestVal = c.Evaluate(best);
+            int it = 0;
+            const int maxIt = 1000;
+            float sign = Mathf.Sign(c.keys[c.keys.Length - 1].value - c.keys[0].value);
+            while (it < maxIt && Mathf.Abs(minTime - maxTime) > precision)
+            {
+                if ((bestVal - value) * sign > 0)
+                {
+                    maxTime = best;
+                }
+                else
+                {
+                    minTime = best;
+                }
+                best = (maxTime + minTime) / 2;
+                bestVal = c.Evaluate(best);
+                it++;
+            }
+            return best;
+        }
     }
 }

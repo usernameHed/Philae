@@ -1,9 +1,0 @@
-{
-    "name": "ToolBuddy.Curvy",
-    "references": [
-        "FluffyUnderware.DevTools",
-        "LibTessDotNet"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": []
-}

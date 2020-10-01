@@ -126,7 +126,7 @@ namespace hedCommon.geometry.movable
             for (int i = 0; i < Points.Count; i++)
             {
                 Vector3 pointPosition = Points[i].GetGlobalPointPosition();
-                ExtSceneView.DisplayStringIn3D(pointPosition, i.ToString(), Color.black);
+                ExtSceneView.DisplayStringInSceneView(pointPosition, i.ToString(), Color.black);
             }
         }
 
