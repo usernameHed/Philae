@@ -69,12 +69,12 @@ namespace hedCommon.procedural
             _meshObject.normals = _normales;
             _meshObject.uv = _uvs;
             _meshObject.triangles = _triangles;
-            _meshObject.Optimize();
+            ;
         }
 
         public void Optimise()
         {
-            _meshObject.Optimize();
+            ;
         }
 
         public void OffsetMesh()

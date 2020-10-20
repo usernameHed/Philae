@@ -39,9 +39,11 @@ namespace hedCommon.extension.editor
                 case Tool.Rect:
                     DoHandleRect(toMove, true, out hasChanged);
                     break;
+                    /*
                 case Tool.Transform:
                     DoHandleTransform(toMove, true, out hasChanged);
                     break;
+                    */
             }
         }
         public static void DoMultiHandle(ref Matrix4x4 toMove, out bool hasChanged)
@@ -212,7 +214,7 @@ namespace hedCommon.extension.editor
                 Undo.RecordObject(toMove.gameObject.transform, "handle Point move");
             }
         }
-
+        /*
         public static void DoHandleTransform(Transform toMove, bool record, out bool hasChanged)
         {
             hasChanged = false;
@@ -239,6 +241,7 @@ namespace hedCommon.extension.editor
                 }
             }
         }
+        */
 
 
         public static void Free2DMoveHandle(ref Vector2 position, float size, Quaternion rotation)

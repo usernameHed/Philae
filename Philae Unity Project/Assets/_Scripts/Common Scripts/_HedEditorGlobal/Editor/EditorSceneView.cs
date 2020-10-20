@@ -69,7 +69,7 @@ namespace hedCommon.editorGlobal
         private static void CustomEnable()
         {
             EditorApplication.update += OnUpdate;
-            SceneView.duringSceneGui += OnScene;
+            SceneView.onSceneGUIDelegate += OnScene;
             EditorApplication.hierarchyChanged += OnHierarchyChanged;
             _isEnabled = true;
         }
@@ -81,7 +81,7 @@ namespace hedCommon.editorGlobal
         /// </summary>
         private static void Disable()
         {
-            SceneView.duringSceneGui -= OnScene;
+            SceneView.onSceneGUIDelegate -= OnScene;
             EditorApplication.hierarchyChanged -= OnHierarchyChanged;
             Debug.Log("Scene GUI : Disabled");
             _isEnabled = false;

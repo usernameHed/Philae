@@ -196,7 +196,7 @@ namespace extUnityComponents
             _hasInitSceneGUI = false;
             _hasInitEditorUpdate = false;
             _hasInitInspector = false;
-            SceneView.duringSceneGui -= OwnOnSceneGUI;
+            SceneView.onSceneGUIDelegate -= OwnOnSceneGUI;
             EditorApplication.update -= CustomEditorApplicationUpdate;
             EditorApplication.hierarchyChanged -= OnHierarchyChanged;
             OnCustomDisable();
@@ -546,8 +546,8 @@ namespace extUnityComponents
 
                 //_meshFilterHiddedTools = _concretTarget.GetOrAddComponent<MeshFilterHiddedTools>();
 
-                SceneView.duringSceneGui -= OwnOnSceneGUI;
-                SceneView.duringSceneGui += OwnOnSceneGUI;
+                SceneView.onSceneGUIDelegate -= OwnOnSceneGUI;
+                SceneView.onSceneGUIDelegate += OwnOnSceneGUI;
                 EditorApplication.update -= CustomEditorApplicationUpdate;
                 EditorApplication.update += CustomEditorApplicationUpdate;
 
