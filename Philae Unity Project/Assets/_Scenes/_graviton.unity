@@ -54,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 12
+    serializedVersion: 10
     m_Resolution: 2
     m_BakeResolution: 40
     m_AtlasSize: 1024
@@ -62,7 +62,6 @@ LightmapSettings:
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
     m_CompAOExponentDirect: 0
-    m_ExtractAmbientOcclusion: 0
     m_Padding: 2
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
@@ -77,16 +76,10 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 512
     m_PVRBounces: 2
-    m_PVREnvironmentSampleCount: 256
-    m_PVREnvironmentReferencePointCount: 2048
-    m_PVRFilteringMode: 1
-    m_PVRDenoiserTypeDirect: 1
-    m_PVRDenoiserTypeIndirect: 1
-    m_PVRDenoiserTypeAO: 1
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
-    m_PVREnvironmentMIS: 1
+    m_PVRFilteringMode: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
@@ -94,8 +87,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaDirect: 0.5
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
-    m_ExportTrainingData: 0
-    m_TrainingDataDestination: TrainingData
+    m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -220,7 +212,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -374,31 +365,10 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: df5ca13bbe395ca42b202f4f8d4e0884, type: 3}
 --- !u!4 &97250201 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: df5ca13bbe395ca42b202f4f8d4e0884,
+  m_CorrespondingSourceObject: {fileID: 400000, guid: df5ca13bbe395ca42b202f4f8d4e0884,
     type: 3}
   m_PrefabInstance: {fileID: 97250200}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &97250202 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: df5ca13bbe395ca42b202f4f8d4e0884,
-    type: 3}
-  m_PrefabInstance: {fileID: 97250200}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &97250203
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 97250202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7957031ad32d0fb4e9535cf20b3cb154, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowName: 0
-  ColorText: {r: 1, g: 1, b: 1, a: 1}
-  HideHandle: 0
 --- !u!1 &105203015
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,7 +442,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -566,7 +535,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -660,7 +628,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -802,7 +769,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -912,7 +878,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1006,7 +971,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1160,31 +1124,10 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: b52ea624496f77742a7f676ef7724231, type: 3}
 --- !u!4 &521122504 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: b52ea624496f77742a7f676ef7724231,
+  m_CorrespondingSourceObject: {fileID: 400002, guid: b52ea624496f77742a7f676ef7724231,
     type: 3}
   m_PrefabInstance: {fileID: 521122503}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &521122505 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: b52ea624496f77742a7f676ef7724231,
-    type: 3}
-  m_PrefabInstance: {fileID: 521122503}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &521122506
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 521122505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7957031ad32d0fb4e9535cf20b3cb154, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowName: 0
-  ColorText: {r: 1, g: 1, b: 1, a: 1}
-  HideHandle: 0
 --- !u!1001 &545362726
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1271,31 +1214,10 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: df5ca13bbe395ca42b202f4f8d4e0884, type: 3}
 --- !u!4 &545362727 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: df5ca13bbe395ca42b202f4f8d4e0884,
+  m_CorrespondingSourceObject: {fileID: 400000, guid: df5ca13bbe395ca42b202f4f8d4e0884,
     type: 3}
   m_PrefabInstance: {fileID: 545362726}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &545362728 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: df5ca13bbe395ca42b202f4f8d4e0884,
-    type: 3}
-  m_PrefabInstance: {fileID: 545362726}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &545362729
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 545362728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7957031ad32d0fb4e9535cf20b3cb154, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowName: 0
-  ColorText: {r: 1, g: 1, b: 1, a: 1}
-  HideHandle: 0
 --- !u!1001 &547159610
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1316,7 +1238,7 @@ PrefabInstance:
     - target: {fileID: 5392576495997722225, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20
+      value: 7.9
       objectReference: {fileID: 0}
     - target: {fileID: 5392576495997722225, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
@@ -1326,7 +1248,7 @@ PrefabInstance:
     - target: {fileID: 5392576495997722225, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 242.9
       objectReference: {fileID: 0}
     - target: {fileID: 5392576495997722225, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
@@ -1436,7 +1358,7 @@ PrefabInstance:
     - target: {fileID: 5392576495997722226, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
       propertyPath: HideHandle
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5392576497265070846, guid: 2376e8836daab2d4aa537cf39cddb436,
         type: 3}
@@ -1700,7 +1622,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1794,7 +1715,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1901,31 +1821,10 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: b52ea624496f77742a7f676ef7724231, type: 3}
 --- !u!4 &978542823 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: b52ea624496f77742a7f676ef7724231,
+  m_CorrespondingSourceObject: {fileID: 400002, guid: b52ea624496f77742a7f676ef7724231,
     type: 3}
   m_PrefabInstance: {fileID: 978542822}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &978542824 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: b52ea624496f77742a7f676ef7724231,
-    type: 3}
-  m_PrefabInstance: {fileID: 978542822}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &978542825
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 978542824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7957031ad32d0fb4e9535cf20b3cb154, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowName: 0
-  ColorText: {r: 1, g: 1, b: 1, a: 1}
-  HideHandle: 0
 --- !u!1 &1000769848
 GameObject:
   m_ObjectHideFlags: 0
@@ -2060,31 +1959,10 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: b52ea624496f77742a7f676ef7724231, type: 3}
 --- !u!4 &1029237609 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: b52ea624496f77742a7f676ef7724231,
+  m_CorrespondingSourceObject: {fileID: 400002, guid: b52ea624496f77742a7f676ef7724231,
     type: 3}
   m_PrefabInstance: {fileID: 1029237608}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1029237610 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: b52ea624496f77742a7f676ef7724231,
-    type: 3}
-  m_PrefabInstance: {fileID: 1029237608}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1029237611
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1029237610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7957031ad32d0fb4e9535cf20b3cb154, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowName: 0
-  ColorText: {r: 1, g: 1, b: 1, a: 1}
-  HideHandle: 0
 --- !u!1 &1069669633
 GameObject:
   m_ObjectHideFlags: 0
@@ -2219,31 +2097,10 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: df5ca13bbe395ca42b202f4f8d4e0884, type: 3}
 --- !u!4 &1075585948 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: df5ca13bbe395ca42b202f4f8d4e0884,
+  m_CorrespondingSourceObject: {fileID: 400000, guid: df5ca13bbe395ca42b202f4f8d4e0884,
     type: 3}
   m_PrefabInstance: {fileID: 1075585947}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1075585949 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: df5ca13bbe395ca42b202f4f8d4e0884,
-    type: 3}
-  m_PrefabInstance: {fileID: 1075585947}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1075585950
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1075585949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7957031ad32d0fb4e9535cf20b3cb154, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowName: 0
-  ColorText: {r: 1, g: 1, b: 1, a: 1}
-  HideHandle: 0
 --- !u!1001 &1080677417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2330,31 +2187,10 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 718982019bdc0e043bcc9bf5496f004f, type: 3}
 --- !u!4 &1080677418 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 718982019bdc0e043bcc9bf5496f004f,
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 718982019bdc0e043bcc9bf5496f004f,
     type: 3}
   m_PrefabInstance: {fileID: 1080677417}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1080677419 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 718982019bdc0e043bcc9bf5496f004f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1080677417}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1080677420
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1080677419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7957031ad32d0fb4e9535cf20b3cb154, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowName: 0
-  ColorText: {r: 1, g: 1, b: 1, a: 1}
-  HideHandle: 0
 --- !u!1 &1081512017
 GameObject:
   m_ObjectHideFlags: 0
@@ -2442,7 +2278,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2536,7 +2371,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2658,7 +2492,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2799,7 +2632,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2893,7 +2725,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3001,7 +2832,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3202,31 +3032,10 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 7aef5addea2ef604aa2d5a764facf1d1, type: 3}
 --- !u!4 &1616979116 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 7aef5addea2ef604aa2d5a764facf1d1,
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 7aef5addea2ef604aa2d5a764facf1d1,
     type: 3}
   m_PrefabInstance: {fileID: 1616979115}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1616979117 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 7aef5addea2ef604aa2d5a764facf1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1616979115}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1616979118
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1616979117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7957031ad32d0fb4e9535cf20b3cb154, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowName: 0
-  ColorText: {r: 1, g: 1, b: 1, a: 1}
-  HideHandle: 0
 --- !u!1 &1665498035
 GameObject:
   m_ObjectHideFlags: 0
@@ -3300,7 +3109,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3394,7 +3202,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3535,7 +3342,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3802,7 +3608,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -4067,31 +3872,10 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: df5ca13bbe395ca42b202f4f8d4e0884, type: 3}
 --- !u!4 &1999064270 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: df5ca13bbe395ca42b202f4f8d4e0884,
+  m_CorrespondingSourceObject: {fileID: 400000, guid: df5ca13bbe395ca42b202f4f8d4e0884,
     type: 3}
   m_PrefabInstance: {fileID: 1999064269}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1999064271 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: df5ca13bbe395ca42b202f4f8d4e0884,
-    type: 3}
-  m_PrefabInstance: {fileID: 1999064269}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1999064272
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1999064271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7957031ad32d0fb4e9535cf20b3cb154, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowName: 0
-  ColorText: {r: 1, g: 1, b: 1, a: 1}
-  HideHandle: 0
 --- !u!1001 &2123021848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4178,28 +3962,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 7aef5addea2ef604aa2d5a764facf1d1, type: 3}
 --- !u!4 &2123021849 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 7aef5addea2ef604aa2d5a764facf1d1,
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 7aef5addea2ef604aa2d5a764facf1d1,
     type: 3}
   m_PrefabInstance: {fileID: 2123021848}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2123021850 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 7aef5addea2ef604aa2d5a764facf1d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 2123021848}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2123021851
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2123021850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7957031ad32d0fb4e9535cf20b3cb154, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowName: 0
-  ColorText: {r: 1, g: 1, b: 1, a: 1}
-  HideHandle: 0

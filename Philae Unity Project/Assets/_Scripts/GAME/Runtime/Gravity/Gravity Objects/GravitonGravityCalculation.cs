@@ -159,6 +159,10 @@ namespace philae.gravity.graviton
 
         public void OnCustomDrawGizmos()
         {
+            if (!_graviton)
+            {
+                return;
+            }
             if (!_graviton.SettingsGlobal.ShowForce)
             {
                 return;

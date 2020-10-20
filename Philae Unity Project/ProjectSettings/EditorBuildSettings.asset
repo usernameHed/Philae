@@ -27,6 +27,6 @@ EditorBuildSettings:
     path: Assets/_Scenes/TEST 3.unity
     guid: e43bd87ef1ef8b147b4a71efa95e92a1
   - enabled: 1
-    path: Assets/_Scenes/TEST 2.unity
+    path: Assets/_Scenes/TEST MESH.unity
     guid: bda83a242557326479763fbfe924af4b
   m_configObjects: {}

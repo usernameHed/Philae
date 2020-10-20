@@ -81,6 +81,10 @@ namespace philae.gravity.graviton
 
         private void OnDrawGizmos()
         {
+            if (_graviton == null)
+            {
+                return;
+            }
             ExtDrawGuizmos.DebugWireSphere(_graviton.Position, Color.cyan, GetRadiusFromSize());
         }
 
